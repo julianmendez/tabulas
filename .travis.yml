@@ -1,0 +1,20 @@
+
+#
+# Configuration file for Travis CI
+# http://travis-ci.org/
+#
+
+language: scala
+
+scala:
+   - 2.11.0
+
+install:
+  - mvn install -DskipTests=true -Dmaven.javadoc.skip=false -B -V
+
+after_success:
+  - mvn clean cobertura:cobertura coveralls:report
+
+sudo: false
+
+
