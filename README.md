@@ -14,8 +14,8 @@ Tabulas is an experimental semi-automatic Scala reimplementation of Tabula, whic
 To clone and compile the project:
 
 ```
-$ git clone https://github.com/julianmendez/tabula.git
-$ cd tabula
+$ git clone https://github.com/julianmendez/tabulas.git
+$ cd tabulas
 $ mvn clean install
 ```
 
