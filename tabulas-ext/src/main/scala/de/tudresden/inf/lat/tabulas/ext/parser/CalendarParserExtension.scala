@@ -12,7 +12,7 @@ import de.tudresden.inf.lat.tabulas.renderer.SimpleFormatRenderer
 import de.tudresden.inf.lat.tabulas.table.TableMap
 
 /**
- * This models an extension that reads comma separated values and writes them
+ * This models an extension that reads comma-separated values and writes them
  * with the default format.
  *
  */
