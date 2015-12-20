@@ -78,7 +78,7 @@ order = \
  id \
  -author
 ``` 
-order the instances by `id` (ascending) and then by author (descending).
+orders the instances by `id` (ascending) and then by author (descending).
  
 The instances come just after the type definition, with the following syntax:
 ```properties
