@@ -5,8 +5,8 @@
 [![Build Status](https://travis-ci.org/julianmendez/tabulas.png?branch=master)](https://travis-ci.org/julianmendez/tabulas)
 
 
-Tabulas is a system to manage human-readable tables using files. It uses a specific type of file format that is similar to a Java .properties, but allows defining the same property for different objects.
-Tabulas is an experimental semi-automatic Scala reimplementation of Tabula, which is implemented in Java.
+Tabulas is a system to manage human-readable tables using files. Tabulas is an experimental semi-automatic [Scala](http://www.scala-lang.org/) reimplementation of [Tabula](http://github.com/julianmendez/tabula), which is implemented in Java.
+It uses a specific type of file format that is similar to a [Java Properties](http://docs.oracle.com/javase/8/docs/api/java/util/Properties.html#load-java.io.Reader-), but allows defining the same property for different objects.
 
 
 ## Source code
@@ -29,7 +29,79 @@ $ mvn clean install
 This software is distributed under the [Apache License Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt).
 
 
+## Format
+
+The Tabula format has *primitive types* and *composite types*. Unless something different is stated in the [release notes](http://github.com/julianmendez/tabula/blob/master/RELEASE-NOTES.md), the primitive types are:
+* `String`: any string without any newline ('\n' 0x0A, '\r' 0x0D), and not ending in backslash ('\' 0x5C), neither in blanks ('\t' 0x08, ' ' 0x20)  
+* `URI`: any valid Uniform Resource Identifier
+* `List_String`: list of space-separated words
+* `List_URI`: list of space-separated URIs
+
+With this format it is possible to define one or many composite *types*. Each type is defined by its *fields*. The *instances* of each type are listed just after the type definition.
+The name of a type or field can be any *identifier*. A identifier is a word that is not any of the reserved words: `type`, `def`, `new`, `id`.
+Instances can be identified by the field `id`.
+
+Each type is defined as follows:
+```properties
+type = TYPE_NAME
+```
+where *TYPE_NAME* can be any identifier.
+
+Each type has its *fields*, defined as follow:
+```properties
+def = \
+ FIELD_NAME_0:FIELD_TYPE_0 \
+ FIELD_NAME_1:FIELD_TYPE_1 \
+...
+ FIELD_NAME_n:FIELD_TYPE_n
+```
+where each *FIELD_NAME* can be any identifier,
+and each *FIELD_TYPE* can be any of the primitive types.
+
+The order in which the instances are shown is defined as follows:
+```properties
+order = \
+ [-]FIELD_NAME_a_0 \
+ [-]FIELD_NAME_a_1 \
+ ...
+ [-]FIELD_NAME_a_k
+```
+where the `-` is optional and used to denote reverse order. For example:
+```properties
+order = \
+ id \
+ -author
+``` 
+order the instances by `id` (ascending) and then by author (descending).
+ 
+The instances come just after the type definition, with the following syntax:
+```properties
+new =
+FIELD_NAME_0 = VALUE_0
+FIELD_NAME_1 = VALUE_1
+...
+FIELD_NAME_n = VALUE_n
+```
+where each *FIELD_NAME* is one of the already declared field names in the type and each *VALUE* contains a String accoding to the field type.
+
+The *values* can be any Tabula String. The blanks ('\t' 0x08, ' ' 0x20) at the beginning and at the end are removed. To declare a multi-line value, each line must finish with backslash ('\' 0x5C), except the last one. For the sake of simplicity there is no difference between a multi-line value or the concatenation of all those lines. This means that:
+```properties
+field_name = \
+ a \
+ b \
+ c
+```
+is the same as
+```properties
+field_name = a b c
+```
+However, the format will normalize and present them differently according to the declared type. Thus, the values of fields with type `List_String` and `List_URI` will be presented as multi-line values.
+
+
 ## Example
+
+This is an example of a library file. Each book record contains an identifier (`id`), a title (`title`), the authors (`authors`), a link to the abstract on the web (`web`), and a list of links to the documents (`documents`). This file is ordered by identifier.
+
 
 ```properties
 # simple format 1.0.0
@@ -76,3 +148,8 @@ documents = \
 
 
 ```
+
+## Contact
+
+In case you need more information, please contact @julianmendez .
+
