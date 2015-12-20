@@ -11,14 +11,14 @@ import de.tudresden.inf.lat.tabulas.renderer.SimpleFormatRenderer
 import de.tudresden.inf.lat.tabulas.table.TableMap
 
 /**
- * This models an extension that reads comma separated values and writes them
+ * This models an extension that reads comma-separated values and writes them
  * with the default format.
  *
  */
 class CsvParserExtension extends Extension {
 
   val Name: String = "parsecsv"
-  val Help: String = "(input) (output) : create output file with a simple text format parsing a comma separated values (CSV) file"
+  val Help: String = "(input) (output) : create output file with a simple text format parsing a comma-separated values (CSV) file"
   val RequiredArguments: Int = 2
 
   override def process(arguments: List[String]): Boolean = {

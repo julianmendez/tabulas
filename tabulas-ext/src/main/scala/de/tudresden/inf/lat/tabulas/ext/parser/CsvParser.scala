@@ -21,7 +21,7 @@ import de.tudresden.inf.lat.tabulas.table.TableMap
 import de.tudresden.inf.lat.tabulas.table.TableMapImpl
 
 /**
- * Parser of a table in comma separated values format.
+ * Parser of a table in comma-separated values format.
  *
  */
 class CsvParser extends Parser {

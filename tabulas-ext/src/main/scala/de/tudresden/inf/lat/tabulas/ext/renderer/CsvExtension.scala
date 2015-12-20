@@ -11,13 +11,13 @@ import de.tudresden.inf.lat.tabulas.table.TableMap
 import de.tudresden.inf.lat.tabulas.parser.SimpleFormatParser
 
 /**
- * This models an extension that writes the output in comma separated values.
+ * This models an extension that writes the output in comma-separated values.
  *
  */
 class CsvExtension extends Extension {
 
   val Name: String = "csv"
-  val Help: String = "(input) (output) : create output as a comma separated values (CSV) file"
+  val Help: String = "(input) (output) : create output as a comma-separated values (CSV) file"
   val RequiredArguments: Int = 2
 
   override def process(arguments: List[String]): Boolean = {
