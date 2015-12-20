@@ -26,8 +26,8 @@
 
 <p><a href="https://travis-ci.org/julianmendez/tabulas"><img src="https://travis-ci.org/julianmendez/tabulas.png?branch=master" alt="Build Status"></a></p>
 
-<p>Tabulas is a system to manage human-readable tables using files. It uses a specific type of file format that is similar to a Java .properties, but allows defining the same property for different objects.
-Tabulas is an experimental semi-automatic Scala reimplementation of Tabula, which is implemented in Java.</p>
+<p>Tabulas is a system to manage human-readable tables using files. Tabulas is an experimental semi-automatic <a href="http://www.scala-lang.org/">Scala</a> reimplementation of <a href="http://github.com/julianmendez/tabula">Tabula</a>, which is implemented in Java.
+It uses a specific type of file format that is similar to a <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Properties.html#load-java.io.Reader-">Java Properties</a> file, but allows defining the same property for different objects.</p>
 
 <h2>
 <a id="source-code" class="anchor" href="#source-code" aria-hidden="true"><span class="octicon octicon-link"></span></a>Source code</h2>
@@ -48,6 +48,142 @@ $ mvn clean install
 <a id="license" class="anchor" href="#license" aria-hidden="true"><span class="octicon octicon-link"></span></a>License</h2>
 
 <p>This software is distributed under the <a href="http://www.apache.org/licenses/LICENSE-2.0.txt">Apache License Version 2.0</a>.</p>
+
+<h2>
+<a id="release-notes" class="anchor" href="#release-notes" aria-hidden="true"><span class="octicon octicon-link"></span></a>Release notes</h2>
+
+<p>See <a href="http://github.com/julianmendez/tabulas/blob/master/RELEASE-NOTES.md">release notes</a>.</p>
+
+<h2>
+<a id="format" class="anchor" href="#format" aria-hidden="true"><span class="octicon octicon-link"></span></a>Format</h2>
+
+<p>The Tabula format has <em>primitive types</em> and <em>composite types</em>. Unless something different is stated in the <a href="http://github.com/julianmendez/tabula/blob/master/RELEASE-NOTES.md">release notes</a>, the primitive types are:</p>
+
+<ul>
+<li>
+<code>String</code>: any string without any newline ('\n' 0x0A, '\r' 0x0D), and not ending in backslash ('\' 0x5C), neither in blanks ('\t' 0x08, ' ' 0x20)<br>
+</li>
+<li>
+<code>URI</code>: any valid Uniform Resource Identifier</li>
+<li>
+<code>List_String</code>: list of space-separated words</li>
+<li>
+<code>List_URI</code>: list of space-separated URIs</li>
+</ul>
+
+<p>With this format it is possible to define one or many composite <em>types</em>. Each type is defined by its <em>fields</em>. The <em>instances</em> of each type are listed just after the type definition.
+The name of a type or field can be any <em>identifier</em>. A identifier is a word that is not any of the reserved words: <code>type</code>, <code>def</code>, <code>new</code>, <code>id</code>.
+Instances can be identified by the field <code>id</code>.</p>
+
+<p>Each type is defined as follows:</p>
+
+<div class="highlight highlight-source-ini"><pre><span class="pl-k">type</span> = TYPE_NAME</pre></div>
+
+<p>where <em>TYPE_NAME</em> can be any identifier.</p>
+
+<p>Each type has its <em>fields</em>, defined as follow:</p>
+
+<div class="highlight highlight-source-ini"><pre><span class="pl-k">def</span> = \
+ FIELD_NAME_0:FIELD_TYPE_0 \
+ FIELD_NAME_1:FIELD_TYPE_1 \
+...
+ FIELD_NAME_n:FIELD_TYPE_n</pre></div>
+
+<p>where each <em>FIELD_NAME</em> can be any identifier,
+and each <em>FIELD_TYPE</em> can be any of the primitive types.</p>
+
+<p>The order in which the instances are shown is defined as follows:</p>
+
+<div class="highlight highlight-source-ini"><pre><span class="pl-k">order</span> = \
+ [-]FIELD_NAME_a_0 \
+ [-]FIELD_NAME_a_1 \
+ ...
+ [-]FIELD_NAME_a_k</pre></div>
+
+<p>where the <code>-</code> is optional and used to denote reverse order. For example:</p>
+
+<div class="highlight highlight-source-ini"><pre><span class="pl-k">order</span> = \
+ id \
+ -author</pre></div>
+
+<p>orders the instances by <code>id</code> (ascending) and then by author (descending).</p>
+
+<p>The instances come just after the type definition, with the following syntax:</p>
+
+<div class="highlight highlight-source-ini"><pre><span class="pl-k">new</span> =
+<span class="pl-k">FIELD_NAME_0</span> = VALUE_0
+<span class="pl-k">FIELD_NAME_1</span> = VALUE_1
+...
+<span class="pl-k">FIELD_NAME_n</span> = VALUE_n</pre></div>
+
+<p>where each <em>FIELD_NAME</em> is one of the already declared field names in the type and each <em>VALUE</em> contains a String accoding to the field type.</p>
+
+<p>The <em>values</em> can be any Tabula String. The blanks ('\t' 0x08, ' ' 0x20) at the beginning and at the end are removed. To declare a multi-line value, each line must finish with backslash ('\' 0x5C), except the last one. For the sake of simplicity there is no difference between a multi-line value or the concatenation of all those lines. This means that:</p>
+
+<div class="highlight highlight-source-ini"><pre><span class="pl-k">field_name</span> = \
+ a \
+ b \
+ c</pre></div>
+
+<p>is the same as</p>
+
+<div class="highlight highlight-source-ini"><pre><span class="pl-k">field_name</span> = a b c</pre></div>
+
+<p>However, the format will normalize and present them differently according to the declared type. Thus, the values of fields with type <code>List_String</code> and <code>List_URI</code> will be presented as multi-line values.</p>
+
+<h2>
+<a id="example" class="anchor" href="#example" aria-hidden="true"><span class="octicon octicon-link"></span></a>Example</h2>
+
+<p>This is an example of a library file. Each book record contains an identifier (<code>id</code>), a title (<code>title</code>), the authors (<code>authors</code>), a link to the abstract on the web (<code>web</code>), and a list of links to the documents (<code>documents</code>). This file is ordered by identifier.</p>
+
+<div class="highlight highlight-source-ini"><pre><span class="pl-c"># simple format 1.0.0</span>
+
+
+<span class="pl-k">type</span> = record 
+
+
+<span class="pl-k">def</span> = \
+ id:String \
+ title:String \
+ authors:List_String \
+ web:URI \
+ documents:List_URI
+
+
+<span class="pl-k">order</span> = \
+ id
+
+
+<span class="pl-k">new</span> = 
+<span class="pl-k">id</span> = arXiv:1412.2223
+<span class="pl-k">title</span> = A topological approach to non-Archimedean Mathematics
+<span class="pl-k">authors</span> = \
+ Vieri_Benci \
+ Lorenzo_Luperi_Baglini
+<span class="pl-k">web</span> = http://arxiv.org/abs/1412.2223
+<span class="pl-k">documents</span> = \
+ http://arxiv.org/pdf/1412.2223<span class="pl-c">#pdf \</span>
+ http://arxiv.org/ps/1412.2223<span class="pl-c">#ps \</span>
+ http://arxiv.org/format/1412.2223<span class="pl-c">#other</span>
+
+
+<span class="pl-k">new</span> = 
+<span class="pl-k">id</span> = arXiv:1412.3313
+<span class="pl-k">title</span> = Infinitary stability theory
+<span class="pl-k">authors</span> = \
+ Sebastien_Vasey
+<span class="pl-k">web</span> = http://arxiv.org/abs/1412.3313
+<span class="pl-k">documents</span> = \
+ http://arxiv.org/pdf/1412.3313<span class="pl-c">#pdf \</span>
+ http://arxiv.org/ps/1412.3313<span class="pl-c">#ps \</span>
+ http://arxiv.org/format/1412.3313<span class="pl-c">#other</span>
+
+</pre></div>
+
+<h2>
+<a id="contact" class="anchor" href="#contact" aria-hidden="true"><span class="octicon octicon-link"></span></a>Contact</h2>
+
+<p>In case you need more information, please contact <a href="https://github.com/julianmendez" class="user-mention">@julianmendez</a> .</p>
 
       <footer class="site-footer">
         <span class="site-footer-owner"><a href="https://github.com/julianmendez/tabulas">Tabulas</a> is maintained by <a href="https://github.com/julianmendez">julianmendez</a>.</span>
