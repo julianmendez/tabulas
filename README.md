@@ -21,12 +21,18 @@ $ mvn clean install
 
 
 ## Author
+
 [Julian Mendez](http://lat.inf.tu-dresden.de/~mendez/)
 
 
 ## License
 
 This software is distributed under the [Apache License Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt).
+
+
+## Release notes
+
+See [release notes](http://github.com/julianmendez/tabulas/blob/master/RELEASE-NOTES.md).
 
 
 ## Format
