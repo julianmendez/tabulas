@@ -1,15 +1,16 @@
 
 ## Release Notes
 
-| version | release date | Java |
-|:--------|:-------------|:----:|
-| v0.1.0  | 2015-12-21   | 7    |
+| version | release date | Scala  |
+|:--------|:-------------|:------:|
+| v0.1.0  | 2015-12-21   | 2.11.0 |
 
 
 
 ### v0.1.0
 *(2015-12-21)*
-* runs on Java 7
+* compiled with Scala 2.11.0
+* requires `scala-library-2.11.0.jar`
 * primitive types:
  * String
  * URI
