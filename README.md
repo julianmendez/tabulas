@@ -9,6 +9,18 @@ Tabulas is a system to manage human-readable tables using files. Tabulas is an e
 It uses a specific type of file format that is similar to a [Java Properties](http://docs.oracle.com/javase/8/docs/api/java/util/Properties.html#load-java.io.Reader-) file, but allows defining the same property for different objects.
 
 
+## Download
+
+* Use as dependency:
+```xml
+<dependency>
+  <groupId>de.tu-dresden.inf.lat.tabulas</groupId>
+  <artifactId>tabulas-ext</artifactId>
+  <version>0.1.0</version>
+</dependency>
+```
+
+
 ## Source code
 
 To clone and compile the project:
@@ -17,7 +29,7 @@ $ git clone https://github.com/julianmendez/tabulas.git
 $ cd tabulas
 $ mvn clean install
 ```
-The created executable library, its sources, and its Javadoc will be in `tabulas-distribution/target`.
+The created executable library and its sources will be in `tabulas-distribution/target`.
 
 To compile the project offline, first download the dependencies:
 ```
