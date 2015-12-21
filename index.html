@@ -39,6 +39,42 @@ $ cd tabulas
 $ mvn clean install
 </code></pre>
 
+<p>The created executable library, its sources, and its Javadoc will be in <code>tabulas-distribution/target</code>.</p>
+
+<p>To compile the project offline, first download the dependencies:</p>
+
+<pre><code>$ mvn dependency:go-offline
+</code></pre>
+
+<p>and once offline, use:</p>
+
+<pre><code>$ mvn --offline clean install
+</code></pre>
+
+<p>The bundles uploaded to <a href="https://oss.sonatype.org/">Sonatype</a> are created with:</p>
+
+<pre><code>$ mvn clean install -DperformRelease=true
+</code></pre>
+
+<p>and then on each module:</p>
+
+<pre><code>$ cd target
+$ jar -cf bundle.jar tabulas-*
+</code></pre>
+
+<p>and on the main directory:</p>
+
+<pre><code>$ cd target
+$ jar -cf bundle.jar tabulas-parent-*
+</code></pre>
+
+<p>The version number is updated with:</p>
+
+<pre><code>$ mvn versions:set -DnewVersion=NEW_VERSION
+</code></pre>
+
+<p>where <em>NEW_VERSION</em> is the new version.</p>
+
 <h2>
 <a id="author" class="anchor" href="#author" aria-hidden="true"><span class="octicon octicon-link"></span></a>Author</h2>
 
