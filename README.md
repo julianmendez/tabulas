@@ -11,7 +11,8 @@ It uses a specific type of file format that is similar to a [Java Properties](ht
 
 ## Download
 
-* Use as dependency:
+* [executable JAR file](https://sourceforge.net/projects/latitude/files/tabulas/0.1.0/tabulas-0.1.0.jar/download)
+* as dependency:
 ```xml
 <dependency>
   <groupId>de.tu-dresden.inf.lat.tabulas</groupId>
