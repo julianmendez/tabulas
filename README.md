@@ -31,6 +31,7 @@ $ cd tabulas
 $ mvn clean install
 ```
 The created executable library and its sources will be in `tabulas-distribution/target`.
+This executable JAR file requires the [Scala library](http://search.maven.org/#search|gav|1|g%3A%22org.scala-lang%22%20AND%20a%3A%22scala-library%22) in the same directory. The required version is shown in the [release notes](http://github.com/julianmendez/tabulas/blob/master/RELEASE-NOTES.md).
 
 To compile the project offline, first download the dependencies:
 ```
