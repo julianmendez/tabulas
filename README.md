@@ -68,7 +68,7 @@ See [release notes](http://github.com/julianmendez/tabulas/blob/master/RELEASE-N
 ## Format
 
 The Tabula format has *primitive types* and *composite types*. Unless something different is stated in the [release notes](http://github.com/julianmendez/tabula/blob/master/RELEASE-NOTES.md), the primitive types are:
-* `String`: any string without any newline ('\n' 0x0A, '\r' 0x0D), and not ending in backslash ('\' 0x5C), neither in blanks ('\t' 0x08, ' ' 0x20)  
+* `String`: any string without any newline (`'\n'` 0x0A, `'\r'` 0x0D), and not ending in backslash (`'\'` 0x5C), neither in blanks (`'\t'` 0x08, `' '` 0x20)  
 * `URI`: any valid Uniform Resource Identifier
 * `List_String`: list of space-separated words
 * `List_URI`: list of space-separated URIs
@@ -120,7 +120,7 @@ FIELD_NAME_n = VALUE_n
 ```
 where each *FIELD_NAME* is one of the already declared field names in the type and each *VALUE* contains a String accoding to the field type.
 
-The *values* can be any Tabula String. The blanks ('\t' 0x08, ' ' 0x20) at the beginning and at the end are removed. To declare a multi-line value, each line must finish with backslash ('\' 0x5C), except the last one. For the sake of simplicity there is no difference between a multi-line value or the concatenation of all those lines. This means that:
+The *values* can be any Tabula String. The blanks (`'\t'` 0x08, `' '` 0x20) at the beginning and at the end are removed. To declare a multi-line value, each line must finish with backslash (`'\'` 0x5C), except the last one. For the sake of simplicity there is no difference between a multi-line value or the concatenation of all those lines. This means that:
 ```properties
 field_name = \
  a \
