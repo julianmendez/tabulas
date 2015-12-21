@@ -12,12 +12,42 @@ It uses a specific type of file format that is similar to a [Java Properties](ht
 ## Source code
 
 To clone and compile the project:
-
 ```
 $ git clone https://github.com/julianmendez/tabulas.git
 $ cd tabulas
 $ mvn clean install
 ```
+The created executable library, its sources, and its Javadoc will be in `tabulas-distribution/target`.
+
+To compile the project offline, first download the dependencies:
+```
+$ mvn dependency:go-offline
+```
+and once offline, use:
+```
+$ mvn --offline clean install
+```
+
+The bundles uploaded to [Sonatype](https://oss.sonatype.org/) are created with:
+```
+$ mvn clean install -DperformRelease=true
+```
+and then on each module:
+```
+$ cd target
+$ jar -cf bundle.jar tabulas-*
+```
+and on the main directory:
+```
+$ cd target
+$ jar -cf bundle.jar tabulas-parent-*
+```
+
+The version number is updated with:
+```
+$ mvn versions:set -DnewVersion=NEW_VERSION
+```
+where *NEW_VERSION* is the new version.
 
 
 ## Author
