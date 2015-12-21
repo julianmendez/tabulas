@@ -3,12 +3,12 @@
 
 | version | release date | Java |
 |:--------|:-------------|:----:|
-| v0.1.0  | unreleased   | 7    |
+| v0.1.0  | 2015-12-21   | 7    |
 
 
 
 ### v0.1.0
-*(unreleased)*
+*(2015-12-21)*
 * runs on Java 7
 * primitive types:
  * String
