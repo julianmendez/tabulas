@@ -24,10 +24,25 @@
 
 <p><em>System to manage human-readable tables using files</em></p>
 
-<p><a href="https://travis-ci.org/julianmendez/tabulas"><img src="https://travis-ci.org/julianmendez/tabulas.png?branch=master" alt="Build Status"></a></p>
+<p><a href="https://travis-ci.org/julianmendez/tabulas"><img src="https://travis-ci.org/julianmendez/tabulas.png?branch=master" alt="Build Status"></a>
+<a href="http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22de.tu-dresden.inf.lat.tabulas%22"><img src="https://maven-badges.herokuapp.com/maven-central/de.tu-dresden.inf.lat.tabulas/tabulas-parent/badge.svg" alt="Maven Central"></a></p>
 
 <p>Tabulas is a system to manage human-readable tables using files. Tabulas is an experimental semi-automatic <a href="http://www.scala-lang.org/">Scala</a> reimplementation of <a href="http://github.com/julianmendez/tabula">Tabula</a>, which is implemented in Java.
 It uses a specific type of file format that is similar to a <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Properties.html#load-java.io.Reader-">Java Properties</a> file, but allows defining the same property for different objects.</p>
+
+<h2>
+<a id="download" class="anchor" href="#download" aria-hidden="true"><span class="octicon octicon-link"></span></a>Download</h2>
+
+<ul>
+<li><a href="https://sourceforge.net/projects/latitude/files/tabulas/0.1.0/tabulas-0.1.0.jar/download">executable JAR file</a></li>
+<li>as dependency:</li>
+</ul>
+
+<div class="highlight highlight-text-xml"><pre>&lt;<span class="pl-ent">dependency</span>&gt;
+  &lt;<span class="pl-ent">groupId</span>&gt;de.tu-dresden.inf.lat.tabulas&lt;/<span class="pl-ent">groupId</span>&gt;
+  &lt;<span class="pl-ent">artifactId</span>&gt;tabulas-ext&lt;/<span class="pl-ent">artifactId</span>&gt;
+  &lt;<span class="pl-ent">version</span>&gt;0.1.0&lt;/<span class="pl-ent">version</span>&gt;
+&lt;/<span class="pl-ent">dependency</span>&gt;</pre></div>
 
 <h2>
 <a id="source-code" class="anchor" href="#source-code" aria-hidden="true"><span class="octicon octicon-link"></span></a>Source code</h2>
@@ -39,7 +54,8 @@ $ cd tabulas
 $ mvn clean install
 </code></pre>
 
-<p>The created executable library, its sources, and its Javadoc will be in <code>tabulas-distribution/target</code>.</p>
+<p>The created executable library and its sources will be in <code>tabulas-distribution/target</code>.
+This executable JAR file requires the <a href="http://search.maven.org/#search%7Cgav%7C1%7Cg%3A%22org.scala-lang%22%20AND%20a%3A%22scala-library%22">Scala library</a> in the same directory. The required version is shown in the <a href="http://github.com/julianmendez/tabulas/blob/master/RELEASE-NOTES.md">release notes</a>.</p>
 
 <p>To compile the project offline, first download the dependencies:</p>
 
@@ -97,7 +113,7 @@ $ jar -cf bundle.jar tabulas-parent-*
 
 <ul>
 <li>
-<code>String</code>: any string without any newline ('\n' 0x0A, '\r' 0x0D), and not ending in backslash ('\' 0x5C), neither in blanks ('\t' 0x08, ' ' 0x20)<br>
+<code>String</code>: any string without any newline (<code>'\n'</code> 0x0A, <code>'\r'</code> 0x0D), and not ending in backslash (<code>'\'</code> 0x5C), neither in blanks (<code>'\t'</code> 0x08, <code>' '</code> 0x20)<br>
 </li>
 <li>
 <code>URI</code>: any valid Uniform Resource Identifier</li>
@@ -154,7 +170,7 @@ and each <em>FIELD_TYPE</em> can be any of the primitive types.</p>
 
 <p>where each <em>FIELD_NAME</em> is one of the already declared field names in the type and each <em>VALUE</em> contains a String accoding to the field type.</p>
 
-<p>The <em>values</em> can be any Tabula String. The blanks ('\t' 0x08, ' ' 0x20) at the beginning and at the end are removed. To declare a multi-line value, each line must finish with backslash ('\' 0x5C), except the last one. For the sake of simplicity there is no difference between a multi-line value or the concatenation of all those lines. This means that:</p>
+<p>The <em>values</em> can be any Tabula String. The blanks (<code>'\t'</code> 0x08, <code>' '</code> 0x20) at the beginning and at the end are removed. To declare a multi-line value, each line must finish with backslash (<code>'\'</code> 0x5C), except the last one. For the sake of simplicity there is no difference between a multi-line value or the concatenation of all those lines. This means that:</p>
 
 <div class="highlight highlight-source-ini"><pre><span class="pl-k">field_name</span> = \
  a \
