@@ -3,6 +3,7 @@
 
 
 [![Build Status](https://travis-ci.org/julianmendez/tabulas.png?branch=master)](https://travis-ci.org/julianmendez/tabulas)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/de.tu-dresden.inf.lat.tabulas/tabulas-parent/badge.svg)](http://search.maven.org/#search|ga|1|g%3A%22de.tu-dresden.inf.lat.tabulas%22)
 
 
 Tabulas is a system to manage human-readable tables using files. Tabulas is an experimental semi-automatic [Scala](http://www.scala-lang.org/) reimplementation of [Tabula](http://github.com/julianmendez/tabula), which is implemented in Java.
