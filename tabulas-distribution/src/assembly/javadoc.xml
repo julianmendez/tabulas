@@ -13,14 +13,6 @@
 	<fileSets>
 
 		<fileSet>
-			<directory>${basedir}/../tabulas-core/target/apidocs/</directory>
-			<outputDirectory>.</outputDirectory>
-			<includes>
-				<include>**</include>
-			</includes>
-		</fileSet>
-
-		<fileSet>
 			<directory>${basedir}/../tabulas-ext/target/apidocs/</directory>
 			<outputDirectory>.</outputDirectory>
 			<includes>
