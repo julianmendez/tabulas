@@ -57,7 +57,7 @@
 							</descriptors>
 						</configuration>
 					</execution>
-<!--
+
 					<execution>
 						<id>create-library-javadoc</id>
 						<phase>package</phase>
@@ -71,7 +71,7 @@
 							</descriptors>
 						</configuration>
 					</execution>
--->
+
 				</executions>
 			</plugin>
 
