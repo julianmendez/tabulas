@@ -31,7 +31,7 @@
 ```
 $ mvn clean install
 ```
-* release: `target/tabulas-0.1.0.zip`
+* release: `tabulas-distribution/target/tabulas-0.1.0.jar`
 
 
 
