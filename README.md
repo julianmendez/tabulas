@@ -13,6 +13,7 @@ It uses a specific type of file format that is similar to a [Java Properties](ht
 ## Download
 
 * [executable JAR file](https://sourceforge.net/projects/latitude/files/tabulas/0.1.0/tabulas-0.1.0.jar/download)
+* [The Central Repository](https://repo1.maven.org/maven2/de/tu-dresden/inf/lat/tabulas/)
 * as dependency:
 ```xml
 <dependency>
