@@ -24,63 +24,6 @@ It uses a specific type of file format that is similar to a [Java Properties](ht
 ```
 
 
-## Source code
-
-To clone and compile the project:
-```
-$ git clone https://github.com/julianmendez/tabulas.git
-$ cd tabulas
-$ mvn clean install
-```
-The created executable library, its sources, and its Javadoc will be in `tabulas-distribution/target`.
-This executable JAR file requires the [Scala library](http://search.maven.org/#search|gav|1|g%3A%22org.scala-lang%22%20AND%20a%3A%22scala-library%22) in the same directory. The required version is shown in the [release notes](http://github.com/julianmendez/tabulas/blob/master/RELEASE-NOTES.md).
-
-To compile the project offline, first download the dependencies:
-```
-$ mvn dependency:go-offline
-```
-and once offline, use:
-```
-$ mvn --offline clean install
-```
-
-The bundles uploaded to [Sonatype](https://oss.sonatype.org/) are created with:
-```
-$ mvn clean install -DperformRelease=true
-```
-and then on each module:
-```
-$ cd target
-$ jar -cf bundle.jar tabulas-*
-```
-and on the main directory:
-```
-$ cd target
-$ jar -cf bundle.jar tabulas-parent-*
-```
-
-The version number is updated with:
-```
-$ mvn versions:set -DnewVersion=NEW_VERSION
-```
-where *NEW_VERSION* is the new version.
-
-
-## Author
-
-[Julian Mendez](http://lat.inf.tu-dresden.de/~mendez/)
-
-
-## License
-
-This software is distributed under the [Apache License Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt).
-
-
-## Release notes
-
-See [release notes](http://github.com/julianmendez/tabulas/blob/master/RELEASE-NOTES.md).
-
-
 ## Format
 
 The Tabula format has *primitive types* and *composite types*. Unless something different is stated in the [release notes](http://github.com/julianmendez/tabula/blob/master/RELEASE-NOTES.md), the primitive types are:
@@ -200,6 +143,64 @@ documents = \
 
 
 ```
+
+
+## Source code
+
+To clone and compile the project:
+```
+$ git clone https://github.com/julianmendez/tabulas.git
+$ cd tabulas
+$ mvn clean install
+```
+The created executable library, its sources, and its Javadoc will be in `tabulas-distribution/target`.
+This executable JAR file requires the [Scala library](http://search.maven.org/#search|gav|1|g%3A%22org.scala-lang%22%20AND%20a%3A%22scala-library%22) in the same directory. The required version is shown in the [release notes](http://github.com/julianmendez/tabulas/blob/master/RELEASE-NOTES.md).
+
+To compile the project offline, first download the dependencies:
+```
+$ mvn dependency:go-offline
+```
+and once offline, use:
+```
+$ mvn --offline clean install
+```
+
+The bundles uploaded to [Sonatype](https://oss.sonatype.org/) are created with:
+```
+$ mvn clean install -DperformRelease=true
+```
+and then on each module:
+```
+$ cd target
+$ jar -cf bundle.jar tabulas-*
+```
+and on the main directory:
+```
+$ cd target
+$ jar -cf bundle.jar tabulas-parent-*
+```
+
+The version number is updated with:
+```
+$ mvn versions:set -DnewVersion=NEW_VERSION
+```
+where *NEW_VERSION* is the new version.
+
+
+## Author
+
+[Julian Mendez](http://lat.inf.tu-dresden.de/~mendez/)
+
+
+## License
+
+This software is distributed under the [Apache License Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt).
+
+
+## Release notes
+
+See [release notes](http://github.com/julianmendez/tabulas/blob/master/RELEASE-NOTES.md).
+
 
 ## Contact
 
