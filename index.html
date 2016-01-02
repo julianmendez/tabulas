@@ -46,68 +46,6 @@ It uses a specific type of file format that is similar to a <a href="http://docs
 &lt;/<span class="pl-ent">dependency</span>&gt;</pre></div>
 
 <h2>
-<a id="source-code" class="anchor" href="#source-code" aria-hidden="true"><span class="octicon octicon-link"></span></a>Source code</h2>
-
-<p>To clone and compile the project:</p>
-
-<pre><code>$ git clone https://github.com/julianmendez/tabulas.git
-$ cd tabulas
-$ mvn clean install
-</code></pre>
-
-<p>The created executable library, its sources, and its Javadoc will be in <code>tabulas-distribution/target</code>.
-This executable JAR file requires the <a href="http://search.maven.org/#search%7Cgav%7C1%7Cg%3A%22org.scala-lang%22%20AND%20a%3A%22scala-library%22">Scala library</a> in the same directory. The required version is shown in the <a href="http://github.com/julianmendez/tabulas/blob/master/RELEASE-NOTES.md">release notes</a>.</p>
-
-<p>To compile the project offline, first download the dependencies:</p>
-
-<pre><code>$ mvn dependency:go-offline
-</code></pre>
-
-<p>and once offline, use:</p>
-
-<pre><code>$ mvn --offline clean install
-</code></pre>
-
-<p>The bundles uploaded to <a href="https://oss.sonatype.org/">Sonatype</a> are created with:</p>
-
-<pre><code>$ mvn clean install -DperformRelease=true
-</code></pre>
-
-<p>and then on each module:</p>
-
-<pre><code>$ cd target
-$ jar -cf bundle.jar tabulas-*
-</code></pre>
-
-<p>and on the main directory:</p>
-
-<pre><code>$ cd target
-$ jar -cf bundle.jar tabulas-parent-*
-</code></pre>
-
-<p>The version number is updated with:</p>
-
-<pre><code>$ mvn versions:set -DnewVersion=NEW_VERSION
-</code></pre>
-
-<p>where <em>NEW_VERSION</em> is the new version.</p>
-
-<h2>
-<a id="author" class="anchor" href="#author" aria-hidden="true"><span class="octicon octicon-link"></span></a>Author</h2>
-
-<p><a href="http://lat.inf.tu-dresden.de/%7Emendez/">Julian Mendez</a></p>
-
-<h2>
-<a id="license" class="anchor" href="#license" aria-hidden="true"><span class="octicon octicon-link"></span></a>License</h2>
-
-<p>This software is distributed under the <a href="http://www.apache.org/licenses/LICENSE-2.0.txt">Apache License Version 2.0</a>.</p>
-
-<h2>
-<a id="release-notes" class="anchor" href="#release-notes" aria-hidden="true"><span class="octicon octicon-link"></span></a>Release notes</h2>
-
-<p>See <a href="http://github.com/julianmendez/tabulas/blob/master/RELEASE-NOTES.md">release notes</a>.</p>
-
-<h2>
 <a id="format" class="anchor" href="#format" aria-hidden="true"><span class="octicon octicon-link"></span></a>Format</h2>
 
 <p>The Tabula format has <em>primitive types</em> and <em>composite types</em>. Unless something different is stated in the <a href="http://github.com/julianmendez/tabula/blob/master/RELEASE-NOTES.md">release notes</a>, the primitive types are:</p>
@@ -232,6 +170,68 @@ and each <em>FIELD_TYPE</em> can be any of the primitive types.</p>
  http://arxiv.org/format/1412.3313<span class="pl-c">#other</span>
 
 </pre></div>
+
+<h2>
+<a id="source-code" class="anchor" href="#source-code" aria-hidden="true"><span class="octicon octicon-link"></span></a>Source code</h2>
+
+<p>To clone and compile the project:</p>
+
+<pre><code>$ git clone https://github.com/julianmendez/tabulas.git
+$ cd tabulas
+$ mvn clean install
+</code></pre>
+
+<p>The created executable library, its sources, and its Javadoc will be in <code>tabulas-distribution/target</code>.
+This executable JAR file requires the <a href="http://search.maven.org/#search%7Cgav%7C1%7Cg%3A%22org.scala-lang%22%20AND%20a%3A%22scala-library%22">Scala library</a> in the same directory. The required version is shown in the <a href="http://github.com/julianmendez/tabulas/blob/master/RELEASE-NOTES.md">release notes</a>.</p>
+
+<p>To compile the project offline, first download the dependencies:</p>
+
+<pre><code>$ mvn dependency:go-offline
+</code></pre>
+
+<p>and once offline, use:</p>
+
+<pre><code>$ mvn --offline clean install
+</code></pre>
+
+<p>The bundles uploaded to <a href="https://oss.sonatype.org/">Sonatype</a> are created with:</p>
+
+<pre><code>$ mvn clean install -DperformRelease=true
+</code></pre>
+
+<p>and then on each module:</p>
+
+<pre><code>$ cd target
+$ jar -cf bundle.jar tabulas-*
+</code></pre>
+
+<p>and on the main directory:</p>
+
+<pre><code>$ cd target
+$ jar -cf bundle.jar tabulas-parent-*
+</code></pre>
+
+<p>The version number is updated with:</p>
+
+<pre><code>$ mvn versions:set -DnewVersion=NEW_VERSION
+</code></pre>
+
+<p>where <em>NEW_VERSION</em> is the new version.</p>
+
+<h2>
+<a id="author" class="anchor" href="#author" aria-hidden="true"><span class="octicon octicon-link"></span></a>Author</h2>
+
+<p><a href="http://lat.inf.tu-dresden.de/%7Emendez/">Julian Mendez</a></p>
+
+<h2>
+<a id="license" class="anchor" href="#license" aria-hidden="true"><span class="octicon octicon-link"></span></a>License</h2>
+
+<p>This software is distributed under the <a href="http://www.apache.org/licenses/LICENSE-2.0.txt">Apache License Version 2.0</a>.</p>
+
+<h2>
+<a id="release-notes" class="anchor" href="#release-notes" aria-hidden="true"><span class="octicon octicon-link"></span></a>Release notes</h2>
+
+<p>See <a href="http://github.com/julianmendez/tabulas/blob/master/RELEASE-NOTES.md">release notes</a>.</p>
 
 <h2>
 <a id="contact" class="anchor" href="#contact" aria-hidden="true"><span class="octicon octicon-link"></span></a>Contact</h2>
