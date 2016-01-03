@@ -72,7 +72,7 @@ class TableMapImpl extends TableMap {
   override def toString(): String = {
     val sbuf: StringBuffer = new StringBuffer()
     val tableIds: List[String] = getTableIds()
-    for (tableId: String <- tableIds) {
+    tableIds.foreach { tableId =>
       sbuf.append(tableId)
       sbuf.append("=")
       sbuf.append(getTable(tableId))

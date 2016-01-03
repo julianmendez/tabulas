@@ -333,9 +333,7 @@ class CalendarParser extends Parser {
     }
 
     val ret: TableMapImpl = new TableMapImpl()
-    for (key: String <- map.keySet()) {
-      ret.put(key, map.get(key))
-    }
+    map.keySet().foreach { key => ret.put(key, map.get(key)) }
     return ret
   }
 

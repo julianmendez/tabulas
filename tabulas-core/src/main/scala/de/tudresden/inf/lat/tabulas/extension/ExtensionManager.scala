@@ -31,7 +31,7 @@ class ExtensionManager extends Extension {
     this()
     if (extensions != null) {
       this.extensions.addAll(extensions)
-      for (extension: Extension <- extensions) {
+      extensions.foreach { extension =>
         val key: String = extension.getExtensionName()
         if (this.extensionMap.containsKey(key)) {
           throw new ExtensionException(
@@ -68,7 +68,7 @@ class ExtensionManager extends Extension {
 
   override def getHelp(): String = {
     val sbuf: StringBuffer = new StringBuffer()
-    for (extension: Extension <- this.extensions) {
+    this.extensions.foreach { extension =>
       sbuf.append(extension.getExtensionName())
       sbuf.append(Space)
       sbuf.append(extension.getHelp())

@@ -71,9 +71,7 @@ class CsvParser extends Parser {
 
   private def createSortedTable(fields: List[String]): TableImpl = {
     var tableType: CompositeTypeImpl = new CompositeTypeImpl()
-    for (fieldName: String <- fields) {
-      tableType.declareField(fieldName, DefaultFieldType)
-    }
+    fields.foreach { fieldName => tableType.declareField(fieldName, DefaultFieldType) }
 
     val ret = new TableImpl()
     ret.setType(tableType)
@@ -81,10 +79,8 @@ class CsvParser extends Parser {
   }
 
   def normalize(fieldName: String): String = {
-    var name = if (fieldName == null) { Underscore } else { fieldName.trim() }
-    if (name.isEmpty()) {
-      name = Underscore
-    }
+    var auxName: String = if (fieldName == null) { Underscore } else { fieldName.trim() }
+    val name = if (auxName.isEmpty()) { Underscore } else { auxName }
 
     val ret: StringBuffer = new StringBuffer()
     for (index <- 0 to (name.length() - 1)) {
