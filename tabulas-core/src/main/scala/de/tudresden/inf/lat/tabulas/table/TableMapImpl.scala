@@ -3,6 +3,7 @@ package de.tudresden.inf.lat.tabulas.table
 
 import java.util.ArrayList
 import java.util.List
+import java.util.Map
 import java.util.TreeMap
 
 import scala.collection.JavaConversions.asScalaBuffer
@@ -13,7 +14,7 @@ import scala.collection.JavaConversions.asScalaBuffer
  */
 class TableMapImpl extends TableMap {
 
-  private val map: TreeMap[String, Table] = new TreeMap[String, Table]()
+  private val map: Map[String, Table] = new TreeMap[String, Table]()
 
   /**
    * Returns the identifiers of the stored tables.
@@ -21,7 +22,7 @@ class TableMapImpl extends TableMap {
    * @return the identifiers of the stored tables
    */
   def getTableIds(): List[String] = {
-    val ret: ArrayList[String] = new ArrayList[String]()
+    val ret: List[String] = new ArrayList[String]()
     ret.addAll(this.map.keySet())
     ret
   }

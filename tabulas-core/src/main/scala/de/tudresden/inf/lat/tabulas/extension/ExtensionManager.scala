@@ -2,6 +2,7 @@ package de.tudresden.inf.lat.tabulas.extension
 
 import java.util.ArrayList
 import java.util.List
+import java.util.Map
 import java.util.TreeMap
 
 import scala.collection.JavaConversions.asScalaBuffer
@@ -18,8 +19,8 @@ class ExtensionManager extends Extension {
   val NewLine: Char = '\n'
   val Space: Char = ' '
 
-  val extensions: ArrayList[Extension] = new ArrayList[Extension]()
-  val extensionMap: TreeMap[String, Extension] = new TreeMap[String, Extension]()
+  val extensions: List[Extension] = new ArrayList[Extension]()
+  val extensionMap: Map[String, Extension] = new TreeMap[String, Extension]()
 
   /**
    * Constructs an extension manager.
@@ -48,7 +49,7 @@ class ExtensionManager extends Extension {
       false
     } else {
       val command: String = arguments.get(0)
-      val newArguments: ArrayList[String] = new ArrayList[String]()
+      val newArguments: List[String] = new ArrayList[String]()
       newArguments.addAll(arguments)
       newArguments.remove(0)
       val extension: Extension = this.extensionMap.get(command)

@@ -6,6 +6,7 @@ import java.io.InputStreamReader
 import java.io.Reader
 import java.util.ArrayList
 import java.util.List
+import java.util.Map
 import java.util.Stack
 import java.util.TreeMap
 
@@ -167,7 +168,7 @@ class CalendarParser extends Parser {
   }
 
   private def preload(input: BufferedReader): List[Pair] = {
-    val ret: ArrayList[Pair] = new ArrayList[Pair]()
+    val ret: List[Pair] = new ArrayList[Pair]()
     var sbuf: StringBuffer = new StringBuffer()
     var finish: Boolean = false
     var lineCounter: Int = 0
@@ -233,7 +234,7 @@ class CalendarParser extends Parser {
   }
 
   def parseMap(input: BufferedReader): TableMap = {
-    val map: TreeMap[String, TableImpl] = new TreeMap[String, TableImpl]()
+    val map: Map[String, TableImpl] = new TreeMap[String, TableImpl]()
 
     map.put(CalendarTypeLabel, new TableImpl(new SimplifiedCompositeType(
       CalendarTypeFields)))
@@ -255,7 +256,7 @@ class CalendarParser extends Parser {
     val tableIdStack: Stack[String] = new Stack[String]()
     val recordStack: Stack[Record] = new Stack[Record]()
     val tableStack: Stack[TableImpl] = new Stack[TableImpl]()
-    val generatedIds: ArrayList[Int] = new ArrayList[Int]()
+    val generatedIds: List[Int] = new ArrayList[Int]()
 
     val lines: List[Pair] = preload(input)
     var lineCounter: Int = 0

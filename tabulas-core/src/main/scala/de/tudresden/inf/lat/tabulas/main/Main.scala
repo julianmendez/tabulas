@@ -1,6 +1,7 @@
 package de.tudresden.inf.lat.tabulas.main
 
 import java.util.ArrayList
+import java.util.List
 
 import de.tudresden.inf.lat.tabulas.extension.DefaultExtension
 import de.tudresden.inf.lat.tabulas.extension.Extension
@@ -20,7 +21,7 @@ object Main {
    * Constructs a new main class.
    */
   {
-    val extensions: ArrayList[Extension] = new ArrayList[Extension]()
+    val extensions: List[Extension] = new ArrayList[Extension]()
     extensions.add(new DefaultExtension())
     extensions.add(new NormalizationExtension())
 
@@ -29,7 +30,7 @@ object Main {
 
   def run(args: Array[String]): Unit = {
     if ((args != null) && ((args.length == 2) || (args.length == 3))) {
-      val arguments: ArrayList[String] = new ArrayList[String]();
+      val arguments: List[String] = new ArrayList[String]();
       for (index <- 0 to (args.length - 1)) {
         arguments.add(args(index))
       }

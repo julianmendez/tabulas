@@ -17,10 +17,10 @@ import de.tudresden.inf.lat.tabulas.datatype.Record
 class TableImpl extends Table {
 
   private var tableType: CompositeType = new CompositeTypeImpl()
-  private val list: ArrayList[Record] = new ArrayList[Record]
-  private val identifiers: TreeSet[String] = new TreeSet[String]()
-  private val sortingOrder: ArrayList[String] = new ArrayList[String]
-  private val fieldsWithReverseOrder: TreeSet[String] = new TreeSet[String]()
+  private val list: List[Record] = new ArrayList[Record]
+  private val identifiers: Set[String] = new TreeSet[String]()
+  private val sortingOrder: List[String] = new ArrayList[String]
+  private val fieldsWithReverseOrder: Set[String] = new TreeSet[String]()
 
   def this(other: Table) = {
     this()
@@ -76,7 +76,7 @@ class TableImpl extends Table {
   }
 
   override def getRecords(): List[Record] = {
-    val ret: ArrayList[Record] = new ArrayList[Record]
+    val ret: List[Record] = new ArrayList[Record]
     ret.addAll(this.list)
     Collections.sort(ret, new RecordComparator(this.sortingOrder))
     ret

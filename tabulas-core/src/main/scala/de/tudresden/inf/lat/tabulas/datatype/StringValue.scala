@@ -27,7 +27,7 @@ class StringValue extends PrimitiveTypeValue {
   }
 
   override def renderAsList(): List[String] = {
-    val ret: ArrayList[String] = new ArrayList[String]()
+    val ret: List[String] = new ArrayList[String]()
     ret.add(render())
     Collections.unmodifiableList(ret)
 

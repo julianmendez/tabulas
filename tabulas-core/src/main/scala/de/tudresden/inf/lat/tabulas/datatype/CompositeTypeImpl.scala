@@ -4,6 +4,7 @@ package de.tudresden.inf.lat.tabulas.datatype
 import java.util.ArrayList
 import java.util.Collections
 import java.util.List
+import java.util.Map
 import java.util.TreeMap
 
 import scala.collection.JavaConversions.asScalaBuffer
@@ -14,8 +15,8 @@ import scala.collection.JavaConversions.asScalaBuffer
  */
 class CompositeTypeImpl extends CompositeType {
 
-  private val fields: ArrayList[String] = new ArrayList[String]
-  private val fieldType: TreeMap[String, String] = new TreeMap[String, String]
+  private val fields: List[String] = new ArrayList[String]
+  private val fieldType: Map[String, String] = new TreeMap[String, String]
 
   override def getFields(): List[String] = {
     Collections.unmodifiableList(this.fields)

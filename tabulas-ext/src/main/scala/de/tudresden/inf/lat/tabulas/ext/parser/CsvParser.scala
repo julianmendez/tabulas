@@ -48,7 +48,7 @@ class CsvParser extends Parser {
   }
 
   def getColumns(line0: String): List[String] = {
-    val ret: ArrayList[String] = new ArrayList[String]()
+    val ret: List[String] = new ArrayList[String]()
     val line: String = if (line0 == null) { "" } else { line0.trim() }
     var current: StringBuffer = new StringBuffer()
     var betweenQuotes: Boolean = false
@@ -94,7 +94,7 @@ class CsvParser extends Parser {
   }
 
   def normalizeHeaders(headers: List[String], lineCounter: Int): List[String] = {
-    val ret: ArrayList[String] = new ArrayList[String]()
+    val ret: List[String] = new ArrayList[String]()
     var idCount: Int = 0
     for (header: String <- headers) {
       val fieldName: String = normalize(header)

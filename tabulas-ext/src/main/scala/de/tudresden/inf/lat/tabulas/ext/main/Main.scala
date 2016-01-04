@@ -1,6 +1,7 @@
 package de.tudresden.inf.lat.tabulas.ext.main
 
 import java.util.ArrayList
+import java.util.List
 
 import de.tudresden.inf.lat.tabulas.ext.parser.CalendarParserExtension
 import de.tudresden.inf.lat.tabulas.ext.parser.CsvParserExtension
@@ -26,7 +27,7 @@ object Main {
    * Constructs a new main class.
    */
   {
-    val extensions: ArrayList[Extension] = new ArrayList[Extension]()
+    val extensions: List[Extension] = new ArrayList[Extension]()
     extensions.add(new DefaultExtension())
     extensions.add(new CsvParserExtension())
     extensions.add(new CalendarParserExtension());
@@ -41,7 +42,7 @@ object Main {
 
   def run(args: Array[String]): Unit = {
     if ((args != null) && ((args.length == 2) || (args.length == 3) || (args.length == 4))) {
-      val arguments: ArrayList[String] = new ArrayList[String]();
+      val arguments: List[String] = new ArrayList[String]();
       for (index <- 0 to (args.length - 1)) {
         arguments.add(args(index))
       }

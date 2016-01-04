@@ -6,6 +6,9 @@ import java.io.IOException
 import java.io.InputStreamReader
 import java.io.Reader
 import java.util.ArrayList
+import java.util.List
+import java.util.Map
+import java.util.Set
 import java.util.StringTokenizer
 import java.util.TreeMap
 import java.util.TreeSet
@@ -101,8 +104,8 @@ class SimpleFormatParser extends Parser {
   }
 
   private def setSortingOrder(line: String, table: TableImpl): Unit = {
-    val fieldsWithReverseOrder: TreeSet[String] = new TreeSet[String]()
-    val list: ArrayList[String] = new ArrayList[String]
+    val fieldsWithReverseOrder: Set[String] = new TreeSet[String]()
+    val list: List[String] = new ArrayList[String]
     val stok: StringTokenizer = new StringTokenizer(getValue(line))
     while (stok.hasMoreTokens()) {
       var token: String = stok.nextToken()
@@ -220,7 +223,7 @@ class SimpleFormatParser extends Parser {
   }
 
   def parseMap(input: BufferedReader): TableMap = {
-    val map: TreeMap[String, TableImpl] = new TreeMap[String, TableImpl]()
+    val map: Map[String, TableImpl] = new TreeMap[String, TableImpl]()
 
     var line: String = ""
     var currentTable: TableImpl = null

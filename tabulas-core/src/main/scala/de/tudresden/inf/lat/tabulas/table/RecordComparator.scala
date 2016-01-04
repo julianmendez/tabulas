@@ -17,15 +17,15 @@ import de.tudresden.inf.lat.tabulas.datatype.Record
  */
 class RecordComparator extends Comparator[Record] {
 
-  private val sortingOrder: ArrayList[String] = new ArrayList[String]
-  private val fieldsWithReverseOrder: TreeSet[String] = new TreeSet[String]()
+  private val sortingOrder: List[String] = new ArrayList[String]
+  private val fieldsWithReverseOrder: Set[String] = new TreeSet[String]()
 
   def this(sortingOrder0: List[String]) = {
     this()
     this.sortingOrder.addAll(sortingOrder0)
   }
 
-  def this(sortingOrder0: List[String], fieldsWithReverseOrder0: TreeSet[String]) = {
+  def this(sortingOrder0: List[String], fieldsWithReverseOrder0: Set[String]) = {
     this()
     this.sortingOrder.addAll(sortingOrder0)
     this.fieldsWithReverseOrder.addAll(fieldsWithReverseOrder0)

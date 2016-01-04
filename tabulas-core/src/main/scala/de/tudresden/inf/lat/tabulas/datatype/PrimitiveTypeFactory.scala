@@ -1,6 +1,7 @@
 package de.tudresden.inf.lat.tabulas.datatype;
 
 import java.util.TreeMap
+import java.util.Map
 
 /**
  * This models a factory of primitive types.
@@ -8,7 +9,7 @@ import java.util.TreeMap
  */
 class PrimitiveTypeFactory {
 
-  private val map: TreeMap[String, PrimitiveType] = new TreeMap[String, PrimitiveType]()
+  private val map: Map[String, PrimitiveType] = new TreeMap[String, PrimitiveType]()
 
   private def add(primType: PrimitiveType): Unit = {
     this.map.put(primType.getTypeName(), primType);

@@ -3,6 +3,7 @@ package de.tudresden.inf.lat.tabulas.table
 
 import java.util.ArrayList
 import java.util.List
+import java.util.Map
 import java.util.TreeMap
 
 import scala.collection.JavaConversions.asScalaBuffer
@@ -16,7 +17,7 @@ import de.tudresden.inf.lat.tabulas.datatype.Record
  */
 class RecordImpl extends Record {
 
-  private val map: TreeMap[String, PrimitiveTypeValue] = new TreeMap[String, PrimitiveTypeValue]()
+  private val map: Map[String, PrimitiveTypeValue] = new TreeMap[String, PrimitiveTypeValue]()
 
   override def get(key: String): PrimitiveTypeValue = {
     if (key == null) { null } else { this.map.get(key) }
@@ -29,7 +30,7 @@ class RecordImpl extends Record {
   }
 
   override def getProperties(): List[String] = {
-    val ret: ArrayList[String] = new ArrayList[String]
+    val ret: List[String] = new ArrayList[String]
     ret.addAll(map.keySet())
     ret
   }
