@@ -15,9 +15,7 @@ class SimplifiedCompositeType extends CompositeType {
 
   def this(knownFields: Array[String]) {
     this()
-    for (field: String <- knownFields) {
-      this.dataType.declareField(field, DefaultFieldType)
-    }
+    knownFields.foreach { field => this.dataType.declareField(field, DefaultFieldType) }
   }
 
   override def getFields(): List[String] = {

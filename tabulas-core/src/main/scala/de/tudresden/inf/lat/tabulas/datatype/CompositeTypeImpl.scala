@@ -11,7 +11,7 @@ import scala.collection.JavaConversions.asScalaBuffer
 
 /**
  * Default implementation of a composite type.
- * 
+ *
  */
 class CompositeTypeImpl extends CompositeType {
 
@@ -32,7 +32,7 @@ class CompositeTypeImpl extends CompositeType {
 
   /**
    * Declares a field.
-   * 
+   *
    * @param field
    *            field name
    * @param typeStr
@@ -71,9 +71,7 @@ class CompositeTypeImpl extends CompositeType {
 
   override def toString(): String = {
     val sbuf: StringBuffer = new StringBuffer()
-    for (field: String <- this.fields) {
-      sbuf.append(field + ":" + this.fieldType.get(field) + " ")
-    }
+    this.fields.foreach { field => sbuf.append(field + ":" + this.fieldType.get(field) + " ") }
     sbuf.toString()
   }
 
