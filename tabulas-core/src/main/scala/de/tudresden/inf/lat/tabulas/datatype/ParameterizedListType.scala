@@ -16,13 +16,13 @@ class ParameterizedListType extends PrimitiveType {
   def this(parameter0: PrimitiveType) = {
     this()
     if (parameter0 == null) {
-      throw new IllegalArgumentException("Null argument.") 
+      throw new IllegalArgumentException("Null argument.")
     }
     this.parameter = parameter0
   }
 
   override def getTypeName(): String = {
-		TypePrefix + this.parameter.getTypeName()
+    TypePrefix + this.parameter.getTypeName()
   }
 
   override def isList(): Boolean = {
@@ -39,12 +39,12 @@ class ParameterizedListType extends PrimitiveType {
   }
 
   def getParameter(): PrimitiveType = {
-		this.parameter
-	}
+    this.parameter
+  }
 
   def castInstance(value: PrimitiveTypeValue): ParameterizedListValue = {
-		parse(value.render())
-	}
+    parse(value.render())
+  }
 
   override def hashCode(): Int = {
     this.parameter.hashCode()

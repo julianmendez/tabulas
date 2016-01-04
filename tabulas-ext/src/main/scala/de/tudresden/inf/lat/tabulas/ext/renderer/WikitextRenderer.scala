@@ -50,13 +50,13 @@ class WikitextRenderer extends Renderer {
     if (list != null) {
       output.write(prefix);
       for (value: PrimitiveTypeValue <- list) {
-				if (value.getType().equals(new URIType())) {
-					val link: URIValue = (new URIType()).castInstance(value)
-					writeLinkIfNotEmpty(output, "", link)
-				} else {
-					val strVal: StringValue = (new StringType()).castInstance(value)
-					writeStringIfNotEmpty(output, "", strVal)
-				}
+        if (value.getType().equals(new URIType())) {
+          val link: URIValue = (new URIType()).castInstance(value)
+          writeLinkIfNotEmpty(output, "", link)
+        } else {
+          val strVal: StringValue = (new StringType()).castInstance(value)
+          writeStringIfNotEmpty(output, "", strVal)
+        }
       }
       true
     } else {
@@ -164,5 +164,4 @@ class WikitextRenderer extends Renderer {
   }
 
 }
-
 

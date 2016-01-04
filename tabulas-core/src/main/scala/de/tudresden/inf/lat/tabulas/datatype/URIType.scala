@@ -22,8 +22,8 @@ class URIType extends PrimitiveType {
   }
 
   def castInstance(value: PrimitiveTypeValue): URIValue = {
-		parse(value.render())
-	}
+    parse(value.render())
+  }
 
   override def hashCode(): Int = {
     getTypeName().hashCode()
@@ -35,7 +35,7 @@ class URIType extends PrimitiveType {
     } else if (obj == null) {
       false
     } else {
-       (obj.isInstanceOf[URIType]) 
+      (obj.isInstanceOf[URIType])
     }
   }
 

@@ -250,4 +250,3 @@ class SqlRenderer extends Renderer {
 
 }
 
-

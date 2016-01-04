@@ -68,13 +68,13 @@ class HtmlRenderer extends Renderer {
   def writeParameterizedListIfNotEmpty(output: Writer, list: ParameterizedListValue): Boolean = {
     if (list != null) {
       for (value: PrimitiveTypeValue <- list) {
-				if (value.getType().equals(new URIType())) {
-					val link: URIValue = (new URIType()).castInstance(value)
-					writeLinkIfNotEmpty(output, link)
-				} else {
-					val strVal: StringValue = (new StringType()).castInstance(value)
-					writeStringIfNotEmpty(output, strVal)
-				}
+        if (value.getType().equals(new URIType())) {
+          val link: URIValue = (new URIType()).castInstance(value)
+          writeLinkIfNotEmpty(output, link)
+        } else {
+          val strVal: StringValue = (new StringType()).castInstance(value)
+          writeStringIfNotEmpty(output, strVal)
+        }
       }
       true
     } else {

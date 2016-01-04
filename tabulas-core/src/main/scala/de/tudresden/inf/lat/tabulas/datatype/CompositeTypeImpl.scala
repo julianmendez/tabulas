@@ -75,4 +75,3 @@ class CompositeTypeImpl extends CompositeType {
 
 }
 
-
