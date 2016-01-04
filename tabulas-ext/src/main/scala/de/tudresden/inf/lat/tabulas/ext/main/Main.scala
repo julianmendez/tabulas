@@ -3,6 +3,8 @@ package de.tudresden.inf.lat.tabulas.ext.main
 import java.util.ArrayList
 import java.util.List
 
+import scala.Range
+
 import de.tudresden.inf.lat.tabulas.ext.parser.CalendarParserExtension
 import de.tudresden.inf.lat.tabulas.ext.parser.CsvParserExtension
 import de.tudresden.inf.lat.tabulas.ext.renderer.CsvExtension
@@ -43,9 +45,7 @@ object Main {
   def run(args: Array[String]): Unit = {
     if ((args != null) && ((args.length == 2) || (args.length == 3) || (args.length == 4))) {
       val arguments: List[String] = new ArrayList[String]();
-      for (index <- 0 to (args.length - 1)) {
-        arguments.add(args(index))
-      }
+      Range(0, args.length).foreach { index => arguments.add(args(index)) }
       this.manager.process(arguments)
     } else {
       System.out.println(Header + this.manager.getHelp())

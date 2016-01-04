@@ -8,6 +8,7 @@ import java.io.Reader
 import java.util.ArrayList
 import java.util.List
 
+import scala.Range
 import scala.collection.JavaConversions.asScalaBuffer
 
 import de.tudresden.inf.lat.tabulas.datatype.CompositeTypeImpl
@@ -83,7 +84,7 @@ class CsvParser extends Parser {
     val name = if (auxName.isEmpty()) { Underscore } else { auxName }
 
     val ret: StringBuffer = new StringBuffer()
-    for (index <- 0 to (name.length() - 1)) {
+    Range(0, name.length()).foreach { index =>
       var ch: Char = name.charAt(index)
       if (!Character.isLetterOrDigit(ch)) {
         ch = UnderscoreChar
