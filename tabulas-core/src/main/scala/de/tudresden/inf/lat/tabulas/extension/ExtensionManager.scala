@@ -32,7 +32,7 @@ class ExtensionManager extends Extension {
     this()
     if (extensions != null) {
       this.extensions.addAll(extensions)
-      extensions.foreach { extension =>
+      extensions.foreach(extension => {
         val key: String = extension.getExtensionName()
         if (this.extensionMap.containsKey(key)) {
           throw new ExtensionException(
@@ -40,7 +40,7 @@ class ExtensionManager extends Extension {
               + key + "' was at least twice.")
         }
         this.extensionMap.put(key, extension)
-      }
+      })
     }
   }
 
@@ -69,12 +69,12 @@ class ExtensionManager extends Extension {
 
   override def getHelp(): String = {
     val sbuf: StringBuffer = new StringBuffer()
-    this.extensions.foreach { extension =>
+    this.extensions.foreach(extension => {
       sbuf.append(extension.getExtensionName())
       sbuf.append(Space)
       sbuf.append(extension.getHelp())
       sbuf.append(NewLine)
-    }
+    })
     sbuf.toString()
   }
 

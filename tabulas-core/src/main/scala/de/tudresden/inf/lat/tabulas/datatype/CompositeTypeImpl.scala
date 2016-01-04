@@ -60,9 +60,7 @@ class CompositeTypeImpl extends CompositeType {
       var ret: Boolean = getFields().equals(other.getFields())
       if (ret) {
         val fields: List[String] = getFields()
-        for (field: String <- fields) {
-          ret = ret && getFieldType(field).equals(other.getFieldType(field))
-        }
+        ret = ret && fields.forall(field => getFieldType(field).equals(other.getFieldType(field)))
       }
       ret
     }
@@ -71,7 +69,7 @@ class CompositeTypeImpl extends CompositeType {
 
   override def toString(): String = {
     val sbuf: StringBuffer = new StringBuffer()
-    this.fields.foreach { field => sbuf.append(field + ":" + this.fieldType.get(field) + " ") }
+    this.fields.foreach(field => sbuf.append(field + ":" + this.fieldType.get(field) + " "))
     sbuf.toString()
   }
 

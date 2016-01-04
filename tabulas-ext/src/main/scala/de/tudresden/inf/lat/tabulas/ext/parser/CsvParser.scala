@@ -72,7 +72,7 @@ class CsvParser extends Parser {
 
   private def createSortedTable(fields: List[String]): TableImpl = {
     var tableType: CompositeTypeImpl = new CompositeTypeImpl()
-    fields.foreach { fieldName => tableType.declareField(fieldName, DefaultFieldType) }
+    fields.foreach(fieldName => tableType.declareField(fieldName, DefaultFieldType))
 
     val ret = new TableImpl()
     ret.setType(tableType)
@@ -84,13 +84,13 @@ class CsvParser extends Parser {
     val name = if (auxName.isEmpty()) { Underscore } else { auxName }
 
     val ret: StringBuffer = new StringBuffer()
-    Range(0, name.length()).foreach { index =>
+    Range(0, name.length()).foreach(index => {
       var ch: Char = name.charAt(index)
       if (!Character.isLetterOrDigit(ch)) {
         ch = UnderscoreChar
       }
       ret.append(ch)
-    }
+    })
     ret.toString()
   }
 

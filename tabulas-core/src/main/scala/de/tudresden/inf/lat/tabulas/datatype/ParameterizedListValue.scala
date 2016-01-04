@@ -52,7 +52,7 @@ class ParameterizedListValue extends ArrayList[PrimitiveTypeValue] with Primitiv
 
   override def renderAsList(): List[String] = {
     val ret: List[String] = new ArrayList[String]()
-    this.foreach { elem => ret.add(elem.render()) }
+    this.foreach(elem => ret.add(elem.render()))
     Collections.unmodifiableList(ret)
   }
 

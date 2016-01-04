@@ -276,7 +276,7 @@ class SimpleFormatParser extends Parser {
     }
 
     val ret: TableMapImpl = new TableMapImpl()
-    map.keySet().foreach { key => ret.put(key, map.get(key)) }
+    map.keySet().foreach(key => ret.put(key, map.get(key)))
     ret
   }
 

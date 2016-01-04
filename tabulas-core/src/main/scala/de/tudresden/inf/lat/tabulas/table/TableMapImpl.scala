@@ -61,9 +61,7 @@ class TableMapImpl extends TableMap {
       val other: TableMap = obj.asInstanceOf[TableMap]
       var ret: Boolean = getTableIds().equals(other.getTableIds())
       val tableIds: List[String] = getTableIds()
-      for (tableId: String <- tableIds) {
-        ret = ret && getTable(tableId).equals(other.getTable(tableId))
-      }
+      ret = ret && tableIds.forall(tableId => getTable(tableId).equals(other.getTable(tableId)))
       ret
     } else {
       false
@@ -73,12 +71,12 @@ class TableMapImpl extends TableMap {
   override def toString(): String = {
     val sbuf: StringBuffer = new StringBuffer()
     val tableIds: List[String] = getTableIds()
-    tableIds.foreach { tableId =>
+    tableIds.foreach(tableId => {
       sbuf.append(tableId)
       sbuf.append("=")
       sbuf.append(getTable(tableId))
       sbuf.append("\n")
-    }
+    })
     sbuf.toString()
   }
 

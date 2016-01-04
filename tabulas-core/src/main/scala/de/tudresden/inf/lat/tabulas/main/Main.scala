@@ -33,7 +33,7 @@ object Main {
   def run(args: Array[String]): Unit = {
     if ((args != null) && ((args.length == 2) || (args.length == 3))) {
       val arguments: List[String] = new ArrayList[String]();
-      Range(0, args.length).foreach { index => arguments.add(args(index)) }
+      Range(0, args.length).foreach(index => arguments.add(args(index)))
       this.manager.process(arguments)
     } else {
       System.out.println(Header + this.manager.getHelp())

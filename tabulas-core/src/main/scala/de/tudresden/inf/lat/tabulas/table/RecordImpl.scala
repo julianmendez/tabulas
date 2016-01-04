@@ -41,9 +41,7 @@ class RecordImpl extends Record {
     } else if (o.isInstanceOf[Record]) {
       val other: Record = o.asInstanceOf[Record]
       var ret: Boolean = getProperties().equals(other.getProperties())
-      for (property: String <- getProperties()) {
-        ret = ret && get(property).equals(other.get(property))
-      }
+      ret = ret && getProperties().forall(property => get(property).equals(other.get(property)))
       ret
     } else {
       false
