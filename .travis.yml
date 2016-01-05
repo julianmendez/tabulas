@@ -11,7 +11,7 @@ scala:
 
 jdk:
   - oraclejdk8
-  
+
 install:
   - mvn install -DskipTests=true -Dmaven.javadoc.skip=false -B -V
 
