@@ -73,10 +73,10 @@ class SqlRenderer extends Renderer {
   def writeParameterizedListIfNotEmpty(output: UncheckedWriter, field: String, list: ParameterizedListValue): Boolean = {
     if (list != null && !list.isEmpty()) {
       output.write(Apostrophe)
-      for (value: PrimitiveTypeValue <- list) {
+      list.foreach(value => {
         output.write(sanitize(value.toString()))
         output.write(ParserConstant.Space)
-      }
+      })
       output.write(Apostrophe)
       true
     } else {
@@ -148,10 +148,10 @@ class SqlRenderer extends Renderer {
   def renderAllRecords(output: UncheckedWriter, tableName: String, table: CompositeTypeValue): Unit = {
     val list: List[Record] = table.getRecords()
     output.write(ParserConstant.NewLine)
-    for (record: Record <- list) {
+    list.foreach(record => {
       render(output, tableName, record, table.getType().getFields())
       output.write(ParserConstant.NewLine)
-    }
+    })
     output.write(ParserConstant.NewLine)
   }
 
@@ -225,12 +225,12 @@ class SqlRenderer extends Renderer {
   def render(output: UncheckedWriter, tableMap: TableMap): Unit = {
     try {
       renderPrefix(output)
-      for (tableName: String <- tableMap.getTableIds()) {
+      tableMap.getTableIds().foreach(tableName => {
         val table: Table = tableMap.getTable(tableName)
         renderTypes(output, tableName, table)
         renderAllRecords(output, tableName, table)
         renderOrder(output, tableName, table)
-      }
+      })
       output.write(ParserConstant.NewLine)
       output.flush()
     } catch {

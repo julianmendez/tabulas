@@ -37,13 +37,13 @@ class SimpleFormatRenderer extends Renderer {
       output.write(ParserConstant.Space + ParserConstant.EqualsSign)
       if (value.getType().isList()) {
         val list: List[String] = value.renderAsList()
-        for (link: String <- list) {
+        list.foreach(link => {
           output.write(ParserConstant.Space
             + ParserConstant.LineContinuationSymbol)
           output.write(ParserConstant.NewLine)
           output.write(ParserConstant.Space)
           output.write(link.toString())
-        }
+        })
 
       } else {
         output.write(ParserConstant.Space)
@@ -62,20 +62,20 @@ class SimpleFormatRenderer extends Renderer {
     output.write(ParserConstant.NewRecordToken + ParserConstant.Space)
     output.write(ParserConstant.EqualsSign + ParserConstant.Space)
 
-    for (field: String <- fields) {
+    fields.foreach(field => {
       val value: PrimitiveTypeValue = record.get(field)
       if (value != null) {
         writeIfNotEmpty(output, field, value);
       }
-    }
+    })
   }
 
   def renderAllRecords(output: UncheckedWriter, table: Table): Unit = {
     val list: List[Record] = table.getRecords()
-    for (record: Record <- list) {
+    list.foreach(record => {
       render(output, record, table.getType().getFields())
       output.write(ParserConstant.NewLine)
-    }
+    })
     output.write(ParserConstant.NewLine)
   }
 
@@ -93,7 +93,7 @@ class SimpleFormatRenderer extends Renderer {
     output.write(ParserConstant.TypeDefinitionToken + ParserConstant.Space)
     output.write(ParserConstant.EqualsSign)
 
-    for (field: String <- table.getType().getFields()) {
+    table.getType().getFields().foreach(field => {
       output.write(ParserConstant.Space
         + ParserConstant.LineContinuationSymbol)
       output.write(ParserConstant.NewLine)
@@ -101,7 +101,7 @@ class SimpleFormatRenderer extends Renderer {
       output.write(field)
       output.write(ParserConstant.TypeSign)
       output.write(table.getType().getFieldType(field))
-    }
+    })
     output.write(ParserConstant.NewLine)
   }
 
@@ -110,7 +110,7 @@ class SimpleFormatRenderer extends Renderer {
     output.write(ParserConstant.SortingOrderDeclarationToken + ParserConstant.Space)
     output.write(ParserConstant.EqualsSign)
 
-    for (field: String <- table.getSortingOrder()) {
+    table.getSortingOrder().foreach(field => {
       output.write(ParserConstant.Space + ParserConstant.LineContinuationSymbol)
       output.write(ParserConstant.NewLine)
       output.write(ParserConstant.Space)
@@ -118,19 +118,19 @@ class SimpleFormatRenderer extends Renderer {
         output.write(ParserConstant.ReverseOrderSign)
       }
       output.write(field)
-    }
+    })
     output.write(ParserConstant.NewLine)
   }
 
   def render(output: UncheckedWriter, tableMap: TableMap): Unit = {
     output.write(Prefix)
-    for (tableName: String <- tableMap.getTableIds()) {
+    tableMap.getTableIds().foreach(tableName => {
       val table: Table = tableMap.getTable(tableName)
       renderTypeSelection(output, tableName, table)
       renderTypeDefinition(output, table)
       renderOrder(output, table)
       renderAllRecords(output, table)
-    }
+    })
     output.write(ParserConstant.NewLine)
     output.flush()
   }

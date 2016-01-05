@@ -51,7 +51,7 @@ class WikitextRenderer extends Renderer {
   def writeParameterizedListIfNotEmpty(output: UncheckedWriter, prefix: String, list: ParameterizedListValue): Boolean = {
     if (list != null) {
       output.write(prefix);
-      for (value: PrimitiveTypeValue <- list) {
+      list.foreach(value => {
         if (value.getType().equals(new URIType())) {
           val link: URIValue = (new URIType()).castInstance(value)
           writeLinkIfNotEmpty(output, "", link)
@@ -59,7 +59,7 @@ class WikitextRenderer extends Renderer {
           val strVal: StringValue = (new StringType()).castInstance(value)
           writeStringIfNotEmpty(output, "", strVal)
         }
-      }
+      })
       true
     } else {
       false
@@ -83,7 +83,7 @@ class WikitextRenderer extends Renderer {
 
   def render(output: UncheckedWriter, record: Record, fields: List[String]): Unit = {
 
-    for (field: String <- fields) {
+    fields.foreach(field => {
       val value: PrimitiveTypeValue = record.get(field)
       output.write("|")
       if (value == null) {
@@ -107,24 +107,24 @@ class WikitextRenderer extends Renderer {
         }
 
       }
-    }
+    })
   }
 
   def renderAllRecords(output: UncheckedWriter, table: CompositeTypeValue): Unit = {
     val list: List[Record] = table.getRecords()
     output.write("{|\n")
     output.write("|-\n")
-    for (record: Record <- list) {
+    list.foreach(record => {
       render(output, record, table.getType().getFields())
       output.write("|-\n")
-    }
+    })
     output.write("|}\n")
   }
 
   def renderMap(output: UncheckedWriter, map: Map[String, String]): Unit = {
     output.write("{| border=\"1\"\n")
     output.write("|-\n")
-    for (key: String <- map.keySet()) {
+    map.keySet().foreach(key => {
       val value: String = map.get(key)
       output.write("| ")
       output.write(key)
@@ -133,7 +133,7 @@ class WikitextRenderer extends Renderer {
       output.write(value)
       output.write("\n")
       output.write("|-\n")
-    }
+    })
     output.write("|}\n")
     output.write("\n")
   }
@@ -141,10 +141,10 @@ class WikitextRenderer extends Renderer {
   def render(output: UncheckedWriter, tableMap: TableMap): Unit = {
     try {
       output.write("\n")
-      for (tableId: String <- tableMap.getTableIds()) {
+      tableMap.getTableIds().foreach(tableId => {
         val table: Table = tableMap.getTable(tableId)
         renderAllRecords(output, table)
-      }
+      })
       output.write("\n")
       output.write("\n")
       output.flush()

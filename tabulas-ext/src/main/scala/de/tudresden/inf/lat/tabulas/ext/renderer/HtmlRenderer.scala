@@ -67,7 +67,7 @@ class HtmlRenderer extends Renderer {
 
   def writeParameterizedListIfNotEmpty(output: UncheckedWriter, list: ParameterizedListValue): Boolean = {
     if (list != null) {
-      for (value: PrimitiveTypeValue <- list) {
+      list.foreach(value => {
         if (value.getType().equals(new URIType())) {
           val link: URIValue = (new URIType()).castInstance(value)
           writeLinkIfNotEmpty(output, link)
@@ -75,7 +75,7 @@ class HtmlRenderer extends Renderer {
           val strVal: StringValue = (new StringType()).castInstance(value)
           writeStringIfNotEmpty(output, strVal)
         }
-      }
+      })
       true
     } else {
       false
@@ -97,7 +97,7 @@ class HtmlRenderer extends Renderer {
   }
 
   def render(output: UncheckedWriter, record: Record, fields: List[String]): Unit = {
-    for (field: String <- fields) {
+    fields.foreach(field => {
       val value: PrimitiveTypeValue = record.get(field)
       if (value == null) {
         output.write("<td> </td>\n")
@@ -126,23 +126,23 @@ class HtmlRenderer extends Renderer {
         }
 
       }
-    }
+    })
   }
 
   def renderAllRecords(output: UncheckedWriter, table: Table): Unit = {
     val list: List[Record] = table.getRecords()
     output.write("<table summary=\"\">\n")
-    for (record: Record <- list) {
+    list.foreach(record => {
       output.write("<tr>\n")
       render(output, record, table.getType().getFields())
       output.write("</tr>\n")
-    }
+    })
     output.write("</table>\n")
   }
 
   def renderMap(output: UncheckedWriter, map: Map[String, String]): Unit = {
     output.write("<table summary=\"\" border=\"1\">\n")
-    for (key: String <- map.keySet()) {
+    map.keySet().foreach(key => {
       val value: String = map.get(key)
       output.write("<tr>\n")
       output.write("<td>")
@@ -152,7 +152,7 @@ class HtmlRenderer extends Renderer {
       output.write(value)
       output.write("</td>\n")
       output.write("</tr>\n")
-    }
+    })
     output.write("</table>\n")
     output.write("\n")
   }
@@ -160,10 +160,10 @@ class HtmlRenderer extends Renderer {
   def render(output: UncheckedWriter, tableMap: TableMap): Unit = {
     try {
       output.write(Prefix)
-      for (tableName: String <- tableMap.getTableIds()) {
+      tableMap.getTableIds().foreach(tableName => {
         val table: Table = tableMap.getTable(tableName)
         renderAllRecords(output, table)
-      }
+      })
       output.write("\n")
       output.write("\n")
       output.write(Suffix)

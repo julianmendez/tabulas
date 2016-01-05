@@ -55,10 +55,10 @@ class CsvRenderer extends Renderer {
   def writeParameterizedListIfNotEmpty(output: UncheckedWriter, field: String, list: ParameterizedListValue): Boolean = {
     if (list != null && !list.isEmpty()) {
       output.write(Quotes)
-      for (value: PrimitiveTypeValue <- list) {
+      list.foreach(value => {
         output.write(sanitize(value.toString()))
         output.write(ParserConstant.Space)
-      }
+      })
       output.write(Quotes)
       true
     } else {
@@ -116,9 +116,9 @@ class CsvRenderer extends Renderer {
 
   def renderAllRecords(output: UncheckedWriter, table: Table): Unit = {
     val list: List[Record] = table.getRecords()
-    for (record: Record <- list) {
+    list.foreach(record => {
       render(output, record, table.getType().getFields())
-    }
+    })
   }
 
   def renderTypeSelection(output: UncheckedWriter, tableName: String, table: Table): Unit = {
@@ -126,10 +126,10 @@ class CsvRenderer extends Renderer {
     output.write(tableName)
     output.write(Quotes)
     val n: Int = table.getType().getFields().size()
-    for (index <- 1 to (n - 1)) {
+    Range(1, n).foreach(index => {
       output.write(Comma)
       output.write(Null)
-    }
+    })
     output.write(ParserConstant.NewLine)
   }
 
@@ -150,12 +150,12 @@ class CsvRenderer extends Renderer {
 
   def render(output: UncheckedWriter, tableMap: TableMap): Unit = {
     try {
-      for (tableName: String <- tableMap.getTableIds()) {
+      tableMap.getTableIds().foreach(tableName => {
         val table: Table = tableMap.getTable(tableName)
         renderTypeSelection(output, tableName, table)
         renderTypeDefinition(output, table)
         renderAllRecords(output, table)
-      }
+      })
       output.flush()
     } catch {
       case e: IOException => {
