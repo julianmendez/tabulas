@@ -9,6 +9,9 @@ language: scala
 scala:
    - 2.12.0-M3
 
+jdk:
+  - oraclejdk8
+  
 install:
   - mvn install -DskipTests=true -Dmaven.javadoc.skip=false -B -V
 
