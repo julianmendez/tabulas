@@ -158,21 +158,15 @@ class HtmlRenderer extends Renderer {
   }
 
   def render(output: UncheckedWriter, tableMap: TableMap): Unit = {
-    try {
-      output.write(Prefix)
-      tableMap.getTableIds().foreach(tableName => {
-        val table: Table = tableMap.getTable(tableName)
-        renderAllRecords(output, table)
-      })
-      output.write("\n")
-      output.write("\n")
-      output.write(Suffix)
-      output.flush()
-    } catch {
-      case e: IOException => {
-        throw new RuntimeException(e)
-      }
-    }
+    output.write(Prefix)
+    tableMap.getTableIds().foreach(tableName => {
+      val table: Table = tableMap.getTable(tableName)
+      renderAllRecords(output, table)
+    })
+    output.write("\n")
+    output.write("\n")
+    output.write(Suffix)
+    output.flush()
   }
 
   override def render(tableMap: TableMap): Unit = {

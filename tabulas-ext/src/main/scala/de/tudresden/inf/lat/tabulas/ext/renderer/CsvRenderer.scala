@@ -149,19 +149,13 @@ class CsvRenderer extends Renderer {
   }
 
   def render(output: UncheckedWriter, tableMap: TableMap): Unit = {
-    try {
-      tableMap.getTableIds().foreach(tableName => {
-        val table: Table = tableMap.getTable(tableName)
-        renderTypeSelection(output, tableName, table)
-        renderTypeDefinition(output, table)
-        renderAllRecords(output, table)
-      })
-      output.flush()
-    } catch {
-      case e: IOException => {
-        throw new RuntimeException(e)
-      }
-    }
+    tableMap.getTableIds().foreach(tableName => {
+      val table: Table = tableMap.getTable(tableName)
+      renderTypeSelection(output, tableName, table)
+      renderTypeDefinition(output, table)
+      renderAllRecords(output, table)
+    })
+    output.flush()
   }
 
   override def render(tableMap: TableMap): Unit = {

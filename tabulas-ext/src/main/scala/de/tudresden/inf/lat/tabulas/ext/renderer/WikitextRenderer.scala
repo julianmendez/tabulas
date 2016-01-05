@@ -139,20 +139,14 @@ class WikitextRenderer extends Renderer {
   }
 
   def render(output: UncheckedWriter, tableMap: TableMap): Unit = {
-    try {
-      output.write("\n")
-      tableMap.getTableIds().foreach(tableId => {
-        val table: Table = tableMap.getTable(tableId)
-        renderAllRecords(output, table)
-      })
-      output.write("\n")
-      output.write("\n")
-      output.flush()
-    } catch {
-      case e: IOException => {
-        throw new RuntimeException(e)
-      }
-    }
+    output.write("\n")
+    tableMap.getTableIds().foreach(tableId => {
+      val table: Table = tableMap.getTable(tableId)
+      renderAllRecords(output, table)
+    })
+    output.write("\n")
+    output.write("\n")
+    output.flush()
   }
 
   override def render(tableMap: TableMap): Unit = {

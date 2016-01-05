@@ -223,21 +223,15 @@ class SqlRenderer extends Renderer {
   }
 
   def render(output: UncheckedWriter, tableMap: TableMap): Unit = {
-    try {
-      renderPrefix(output)
-      tableMap.getTableIds().foreach(tableName => {
-        val table: Table = tableMap.getTable(tableName)
-        renderTypes(output, tableName, table)
-        renderAllRecords(output, tableName, table)
-        renderOrder(output, tableName, table)
-      })
-      output.write(ParserConstant.NewLine)
-      output.flush()
-    } catch {
-      case e: IOException => {
-        throw new RuntimeException(e)
-      }
-    }
+    renderPrefix(output)
+    tableMap.getTableIds().foreach(tableName => {
+      val table: Table = tableMap.getTable(tableName)
+      renderTypes(output, tableName, table)
+      renderAllRecords(output, tableName, table)
+      renderOrder(output, tableName, table)
+    })
+    output.write(ParserConstant.NewLine)
+    output.flush()
   }
 
   override def render(tableMap: TableMap): Unit = {
