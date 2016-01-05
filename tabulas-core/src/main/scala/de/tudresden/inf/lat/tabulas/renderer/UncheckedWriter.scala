@@ -3,9 +3,9 @@ package de.tudresden.inf.lat.tabulas.renderer
 import java.io.Writer
 
 /**
- * This models an unchecked writer. This looks like a {@link Writer}, but throws
- * an {@link UncheckedIOException} where a <code>Writer</code> throws an
- * {@link IOException}.
+ * This models an unchecked writer. This looks like a {@link java.io.Writer}, but throws
+ * an {@link java.io.UncheckedIOException} where a <code>Writer</code> throws an
+ * {@link java.io.IOException}.
  *
  * @author Julian Mendez
  *
@@ -17,7 +17,7 @@ trait UncheckedWriter {
    *
    * @param character
    *            character
-   * @throws UncheckedIOException
+   * @throws java.io.UncheckedIOException
    *             if something goes wrong with input/output
    */
   def write(character: Int): Unit
@@ -27,7 +27,7 @@ trait UncheckedWriter {
    *
    * @param charBuffer
    *            array of characters
-   * @throws UncheckedIOException
+   * @throws java.io.UncheckedIOException
    *             if something goes wrong with input/output
    */
   def write(charBuffer: Array[Char]): Unit
@@ -41,7 +41,7 @@ trait UncheckedWriter {
    *            offset
    * @param length
    *            number of characters to write
-   * @throws UncheckedIOException
+   * @throws java.io.UncheckedIOException
    *             if something goes wrong with input/output
    */
   def write(charBuffer: Array[Char], offset: Int, length: Int): Unit
@@ -51,7 +51,7 @@ trait UncheckedWriter {
    *
    * @param str
    *            string
-   * @throws UncheckedIOException
+   * @throws java.io.UncheckedIOException
    *             if something goes wrong with input/output
    */
   def write(str: String): Unit
@@ -65,7 +65,7 @@ trait UncheckedWriter {
    *            offset
    * @param length
    *            number of characters to write
-   * @throws UncheckedIOException
+   * @throws java.io.UncheckedIOException
    *             if something goes wrong with input/output
    */
   def write(str: String, offset: Int, length: Int): Unit
@@ -73,7 +73,7 @@ trait UncheckedWriter {
   /**
    * Closes the stream, flushing it first.
    *
-   * @throws UncheckedIOException
+   * @throws java.io.UncheckedIOException
    *             if something goes wrong with input/output
    */
   def close(): Unit
@@ -81,7 +81,7 @@ trait UncheckedWriter {
   /**
    * Flushes the stream.
    *
-   * @throws UncheckedIOException
+   * @throws java.io.UncheckedIOException
    *             if something goes wrong with input/output
    */
   def flush(): Unit
@@ -92,7 +92,7 @@ trait UncheckedWriter {
    * @param character
    *            character
    * @return this writer
-   * @throws UncheckedIOException
+   * @throws java.io.UncheckedIOException
    *             if something goes wrong with input/output
    */
   def append(character: Char): UncheckedWriter
@@ -103,7 +103,7 @@ trait UncheckedWriter {
    * @param charSequence
    *            character sequence
    * @return this writer
-   * @throws UncheckedIOException
+   * @throws java.io.UncheckedIOException
    *             if something goes wrong with input/output
    */
   def append(charSequence: CharSequence): UncheckedWriter
@@ -118,7 +118,7 @@ trait UncheckedWriter {
    * @param end
    *            end of the sequence
    * @return this writer
-   * @throws UncheckedIOException
+   * @throws java.io.UncheckedIOException
    *             if something goes wrong with input/output
    */
   def append(charSequence: CharSequence, start: Int, end: Int): UncheckedWriter
