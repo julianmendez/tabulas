@@ -20,6 +20,8 @@ import de.tudresden.inf.lat.tabulas.datatype.URIType
 import de.tudresden.inf.lat.tabulas.datatype.URIValue
 import de.tudresden.inf.lat.tabulas.parser.ParserConstant
 import de.tudresden.inf.lat.tabulas.renderer.Renderer
+import de.tudresden.inf.lat.tabulas.renderer.UncheckedWriter
+import de.tudresden.inf.lat.tabulas.renderer.UncheckedWriterImpl
 import de.tudresden.inf.lat.tabulas.table.Table
 import de.tudresden.inf.lat.tabulas.table.TableMap
 
@@ -35,7 +37,7 @@ class WikitextRenderer extends Renderer {
     output = output0
   }
 
-  def writeStringIfNotEmpty(output: Writer, prefix: String, str: StringValue): Boolean = {
+  def writeStringIfNotEmpty(output: UncheckedWriter, prefix: String, str: StringValue): Boolean = {
     if (str != null && !str.toString().trim().isEmpty()) {
       output.write(prefix)
       output.write(str.toString())
@@ -46,7 +48,7 @@ class WikitextRenderer extends Renderer {
     }
   }
 
-  def writeParameterizedListIfNotEmpty(output: Writer, prefix: String, list: ParameterizedListValue): Boolean = {
+  def writeParameterizedListIfNotEmpty(output: UncheckedWriter, prefix: String, list: ParameterizedListValue): Boolean = {
     if (list != null) {
       output.write(prefix);
       for (value: PrimitiveTypeValue <- list) {
@@ -64,7 +66,7 @@ class WikitextRenderer extends Renderer {
     }
   }
 
-  def writeLinkIfNotEmpty(output: Writer, prefix: String, link: URIValue): Boolean = {
+  def writeLinkIfNotEmpty(output: UncheckedWriter, prefix: String, link: URIValue): Boolean = {
     if (link != null && !link.isEmpty()) {
       output.write(prefix);
       output.write("[")
@@ -79,7 +81,7 @@ class WikitextRenderer extends Renderer {
     }
   }
 
-  def render(output: Writer, record: Record, fields: List[String]): Unit = {
+  def render(output: UncheckedWriter, record: Record, fields: List[String]): Unit = {
 
     for (field: String <- fields) {
       val value: PrimitiveTypeValue = record.get(field)
@@ -108,7 +110,7 @@ class WikitextRenderer extends Renderer {
     }
   }
 
-  def renderAllRecords(output: Writer, table: CompositeTypeValue): Unit = {
+  def renderAllRecords(output: UncheckedWriter, table: CompositeTypeValue): Unit = {
     val list: List[Record] = table.getRecords()
     output.write("{|\n")
     output.write("|-\n")
@@ -119,7 +121,7 @@ class WikitextRenderer extends Renderer {
     output.write("|}\n")
   }
 
-  def renderMap(output: Writer, map: Map[String, String]): Unit = {
+  def renderMap(output: UncheckedWriter, map: Map[String, String]): Unit = {
     output.write("{| border=\"1\"\n")
     output.write("|-\n")
     for (key: String <- map.keySet()) {
@@ -136,7 +138,7 @@ class WikitextRenderer extends Renderer {
     output.write("\n")
   }
 
-  def render(output: Writer, tableMap: TableMap): Unit = {
+  def render(output: UncheckedWriter, tableMap: TableMap): Unit = {
     try {
       output.write("\n")
       for (tableId: String <- tableMap.getTableIds()) {
@@ -154,13 +156,7 @@ class WikitextRenderer extends Renderer {
   }
 
   override def render(tableMap: TableMap): Unit = {
-    try {
-      render(this.output, tableMap)
-    } catch {
-      case e: IOException => {
-        throw new RuntimeException(e)
-      }
-    }
+    render(new UncheckedWriterImpl(this.output), tableMap)
   }
 
 }

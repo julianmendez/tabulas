@@ -5,9 +5,7 @@ import java.io.IOException
 import java.io.OutputStreamWriter
 import java.io.Writer
 import java.util.List
-
 import scala.collection.JavaConversions.asScalaBuffer
-
 import de.tudresden.inf.lat.tabulas.datatype.ParameterizedListValue
 import de.tudresden.inf.lat.tabulas.datatype.PrimitiveTypeValue
 import de.tudresden.inf.lat.tabulas.datatype.Record
@@ -17,6 +15,8 @@ import de.tudresden.inf.lat.tabulas.parser.ParserConstant
 import de.tudresden.inf.lat.tabulas.renderer.Renderer
 import de.tudresden.inf.lat.tabulas.table.Table
 import de.tudresden.inf.lat.tabulas.table.TableMap
+import de.tudresden.inf.lat.tabulas.renderer.UncheckedWriter
+import de.tudresden.inf.lat.tabulas.renderer.UncheckedWriterImpl
 
 /**
  * Renderer of tables in comma-separated values format.
@@ -39,7 +39,7 @@ class CsvRenderer extends Renderer {
     str.replace(Quotes, QuotesReplacement)
   }
 
-  def writeStringIfNotEmpty(output: Writer, field: String, value: StringValue): Boolean = {
+  def writeStringIfNotEmpty(output: UncheckedWriter, field: String, value: StringValue): Boolean = {
     if (field != null && !field.trim().isEmpty() && value != null
       && !value.toString().trim().isEmpty()) {
       output.write(Quotes)
@@ -52,7 +52,7 @@ class CsvRenderer extends Renderer {
     }
   }
 
-  def writeParameterizedListIfNotEmpty(output: Writer, field: String, list: ParameterizedListValue): Boolean = {
+  def writeParameterizedListIfNotEmpty(output: UncheckedWriter, field: String, list: ParameterizedListValue): Boolean = {
     if (list != null && !list.isEmpty()) {
       output.write(Quotes)
       for (value: PrimitiveTypeValue <- list) {
@@ -67,7 +67,7 @@ class CsvRenderer extends Renderer {
     }
   }
 
-  def writeLinkIfNotEmpty(output: Writer, field: String, link: URIValue): Boolean = {
+  def writeLinkIfNotEmpty(output: UncheckedWriter, field: String, link: URIValue): Boolean = {
     if (link != null && !link.isEmpty()) {
       output.write(Quotes)
       output.write(sanitize(link.toString()))
@@ -79,7 +79,7 @@ class CsvRenderer extends Renderer {
     }
   }
 
-  def render(output: Writer, record: Record, fields: List[String]): Unit = {
+  def render(output: UncheckedWriter, record: Record, fields: List[String]): Unit = {
 
     var first: Boolean = true
     for (field: String <- fields) {
@@ -114,14 +114,14 @@ class CsvRenderer extends Renderer {
     output.write(ParserConstant.NewLine)
   }
 
-  def renderAllRecords(output: Writer, table: Table): Unit = {
+  def renderAllRecords(output: UncheckedWriter, table: Table): Unit = {
     val list: List[Record] = table.getRecords()
     for (record: Record <- list) {
       render(output, record, table.getType().getFields())
     }
   }
 
-  def renderTypeSelection(output: Writer, tableName: String, table: Table): Unit = {
+  def renderTypeSelection(output: UncheckedWriter, tableName: String, table: Table): Unit = {
     output.write(Quotes)
     output.write(tableName)
     output.write(Quotes)
@@ -133,7 +133,7 @@ class CsvRenderer extends Renderer {
     output.write(ParserConstant.NewLine)
   }
 
-  def renderTypeDefinition(output: Writer, table: Table): Unit = {
+  def renderTypeDefinition(output: UncheckedWriter, table: Table): Unit = {
     var first: Boolean = true
     for (field: String <- table.getType().getFields()) {
       if (first) {
@@ -148,7 +148,7 @@ class CsvRenderer extends Renderer {
     output.write(ParserConstant.NewLine)
   }
 
-  def render(output: Writer, tableMap: TableMap): Unit = {
+  def render(output: UncheckedWriter, tableMap: TableMap): Unit = {
     try {
       for (tableName: String <- tableMap.getTableIds()) {
         val table: Table = tableMap.getTable(tableName)
@@ -165,13 +165,7 @@ class CsvRenderer extends Renderer {
   }
 
   override def render(tableMap: TableMap): Unit = {
-    try {
-      render(this.output, tableMap)
-    } catch {
-      case e: IOException => {
-        throw new RuntimeException(e)
-      }
-    }
+    render(new UncheckedWriterImpl(this.output), tableMap)
   }
 
 }

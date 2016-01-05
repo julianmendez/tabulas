@@ -6,10 +6,8 @@ import java.io.OutputStreamWriter
 import java.io.Writer
 import java.util.List
 import java.util.Map
-
 import scala.collection.JavaConversions.asScalaBuffer
 import scala.collection.JavaConversions.asScalaSet
-
 import de.tudresden.inf.lat.tabulas.datatype.ParameterizedListValue
 import de.tudresden.inf.lat.tabulas.datatype.PrimitiveTypeValue
 import de.tudresden.inf.lat.tabulas.datatype.Record
@@ -20,6 +18,8 @@ import de.tudresden.inf.lat.tabulas.datatype.URIValue
 import de.tudresden.inf.lat.tabulas.renderer.Renderer
 import de.tudresden.inf.lat.tabulas.table.Table
 import de.tudresden.inf.lat.tabulas.table.TableMap
+import de.tudresden.inf.lat.tabulas.renderer.UncheckedWriter
+import de.tudresden.inf.lat.tabulas.renderer.UncheckedWriterImpl
 
 /**
  * Renderer of a table that creates an HTML document.
@@ -55,7 +55,7 @@ class HtmlRenderer extends Renderer {
     output = output0
   }
 
-  def writeStringIfNotEmpty(output: Writer, str: StringValue): Boolean = {
+  def writeStringIfNotEmpty(output: UncheckedWriter, str: StringValue): Boolean = {
     if (str != null && !str.toString().trim().isEmpty()) {
       output.write(str.toString())
       output.write("\n")
@@ -65,7 +65,7 @@ class HtmlRenderer extends Renderer {
     }
   }
 
-  def writeParameterizedListIfNotEmpty(output: Writer, list: ParameterizedListValue): Boolean = {
+  def writeParameterizedListIfNotEmpty(output: UncheckedWriter, list: ParameterizedListValue): Boolean = {
     if (list != null) {
       for (value: PrimitiveTypeValue <- list) {
         if (value.getType().equals(new URIType())) {
@@ -82,7 +82,7 @@ class HtmlRenderer extends Renderer {
     }
   }
 
-  def writeLinkIfNotEmpty(output: Writer, link: URIValue): Boolean = {
+  def writeLinkIfNotEmpty(output: UncheckedWriter, link: URIValue): Boolean = {
     if (link != null && !link.isEmpty()) {
       output.write("<a href=\"")
       output.write(link.getUriNoLabel().toASCIIString())
@@ -96,7 +96,7 @@ class HtmlRenderer extends Renderer {
     }
   }
 
-  def render(output: Writer, record: Record, fields: List[String]): Unit = {
+  def render(output: UncheckedWriter, record: Record, fields: List[String]): Unit = {
     for (field: String <- fields) {
       val value: PrimitiveTypeValue = record.get(field)
       if (value == null) {
@@ -129,7 +129,7 @@ class HtmlRenderer extends Renderer {
     }
   }
 
-  def renderAllRecords(output: Writer, table: Table): Unit = {
+  def renderAllRecords(output: UncheckedWriter, table: Table): Unit = {
     val list: List[Record] = table.getRecords()
     output.write("<table summary=\"\">\n")
     for (record: Record <- list) {
@@ -140,7 +140,7 @@ class HtmlRenderer extends Renderer {
     output.write("</table>\n")
   }
 
-  def renderMap(output: Writer, map: Map[String, String]): Unit = {
+  def renderMap(output: UncheckedWriter, map: Map[String, String]): Unit = {
     output.write("<table summary=\"\" border=\"1\">\n")
     for (key: String <- map.keySet()) {
       val value: String = map.get(key)
@@ -157,7 +157,7 @@ class HtmlRenderer extends Renderer {
     output.write("\n")
   }
 
-  def render(output: Writer, tableMap: TableMap): Unit = {
+  def render(output: UncheckedWriter, tableMap: TableMap): Unit = {
     try {
       output.write(Prefix)
       for (tableName: String <- tableMap.getTableIds()) {
@@ -176,13 +176,7 @@ class HtmlRenderer extends Renderer {
   }
 
   override def render(tableMap: TableMap): Unit = {
-    try {
-      render(this.output, tableMap)
-    } catch {
-      case e: IOException => {
-        throw new RuntimeException(e)
-      }
-    }
+    render(new UncheckedWriterImpl(this.output), tableMap)
   }
 
 }

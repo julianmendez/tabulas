@@ -1,7 +1,6 @@
 
 package de.tudresden.inf.lat.tabulas.renderer
 
-import java.io.IOException
 import java.io.OutputStreamWriter
 import java.io.Writer
 import java.util.List
@@ -29,7 +28,7 @@ class SimpleFormatRenderer extends Renderer {
     output = output0
   }
 
-  def writeIfNotEmpty(output: Writer, field: String,
+  def writeIfNotEmpty(output: UncheckedWriter, field: String,
     value: PrimitiveTypeValue): Boolean = {
     if (field != null && !field.trim().isEmpty() && value != null
       && !value.isEmpty()) {
@@ -57,7 +56,7 @@ class SimpleFormatRenderer extends Renderer {
     }
   }
 
-  def render(output: Writer, record: Record, fields: List[String]): Unit = {
+  def render(output: UncheckedWriter, record: Record, fields: List[String]): Unit = {
 
     output.write(ParserConstant.NewLine + ParserConstant.NewLine)
     output.write(ParserConstant.NewRecordToken + ParserConstant.Space)
@@ -71,7 +70,7 @@ class SimpleFormatRenderer extends Renderer {
     }
   }
 
-  def renderAllRecords(output: Writer, table: Table): Unit = {
+  def renderAllRecords(output: UncheckedWriter, table: Table): Unit = {
     val list: List[Record] = table.getRecords()
     for (record: Record <- list) {
       render(output, record, table.getType().getFields())
@@ -80,7 +79,7 @@ class SimpleFormatRenderer extends Renderer {
     output.write(ParserConstant.NewLine)
   }
 
-  def renderTypeSelection(output: Writer, tableName: String, table: Table): Unit = {
+  def renderTypeSelection(output: UncheckedWriter, tableName: String, table: Table): Unit = {
     output.write(ParserConstant.NewLine + ParserConstant.NewLine)
     output.write(ParserConstant.TypeSelectionToken + ParserConstant.Space)
     output.write(ParserConstant.EqualsSign)
@@ -89,7 +88,7 @@ class SimpleFormatRenderer extends Renderer {
     output.write(ParserConstant.NewLine)
   }
 
-  def renderTypeDefinition(output: Writer, table: Table): Unit = {
+  def renderTypeDefinition(output: UncheckedWriter, table: Table): Unit = {
     output.write(ParserConstant.NewLine + ParserConstant.NewLine)
     output.write(ParserConstant.TypeDefinitionToken + ParserConstant.Space)
     output.write(ParserConstant.EqualsSign)
@@ -106,7 +105,7 @@ class SimpleFormatRenderer extends Renderer {
     output.write(ParserConstant.NewLine)
   }
 
-  def renderOrder(output: Writer, table: Table): Unit = {
+  def renderOrder(output: UncheckedWriter, table: Table): Unit = {
     output.write(ParserConstant.NewLine + ParserConstant.NewLine)
     output.write(ParserConstant.SortingOrderDeclarationToken + ParserConstant.Space)
     output.write(ParserConstant.EqualsSign)
@@ -123,7 +122,7 @@ class SimpleFormatRenderer extends Renderer {
     output.write(ParserConstant.NewLine)
   }
 
-  def render(output: Writer, tableMap: TableMap): Unit = {
+  def render(output: UncheckedWriter, tableMap: TableMap): Unit = {
     output.write(Prefix)
     for (tableName: String <- tableMap.getTableIds()) {
       val table: Table = tableMap.getTable(tableName)
@@ -137,13 +136,7 @@ class SimpleFormatRenderer extends Renderer {
   }
 
   override def render(tableMap: TableMap): Unit = {
-    try {
-      render(this.output, tableMap)
-    } catch {
-      case e: IOException => {
-        throw new RuntimeException(e)
-      }
-    }
+    render(new UncheckedWriterImpl(this.output), tableMap)
   }
 
 }
