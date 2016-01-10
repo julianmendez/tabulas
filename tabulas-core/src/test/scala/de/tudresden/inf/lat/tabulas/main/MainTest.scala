@@ -1,0 +1,102 @@
+package de.tudresden.inf.lat.tabulas.main
+
+import java.io.BufferedReader
+import java.io.FileReader
+import java.io.StringWriter
+import java.util.List
+
+import scala.collection.JavaConversions.asScalaBuffer
+
+import org.junit.Assert
+import org.junit.Test
+
+import de.tudresden.inf.lat.tabulas.datatype.CompositeType
+import de.tudresden.inf.lat.tabulas.datatype.CompositeTypeImpl
+import de.tudresden.inf.lat.tabulas.datatype.StringValue
+import de.tudresden.inf.lat.tabulas.parser.SimpleFormatParser
+import de.tudresden.inf.lat.tabulas.renderer.SimpleFormatRenderer
+import de.tudresden.inf.lat.tabulas.table.Table
+import de.tudresden.inf.lat.tabulas.table.TableImpl
+import de.tudresden.inf.lat.tabulas.table.TableMap
+import de.tudresden.inf.lat.tabulas.table.TableMapImpl
+
+/**
+ * This is a test of modification of a Tabula file.
+ */
+class MainTest {
+
+  val InputFileName: String = "src/test/resources/example.properties"
+  val ExpectedOutputFileName: String = "src/test/resources/example-modified.properties"
+
+  val FieldAuthors: String = "authors"
+  val FieldRecord: String = "record"
+  val FieldNumberOfAuthors: String = "numberOfAuthors"
+  val TypeOfNumberOfAuthors: String = "String"
+  val NewLine: String = "\n"
+
+  @Test
+  def addNewFieldOldTest(): Unit = {
+
+    // This is an example of source code where the number of authors is
+    // a computed value
+
+    // Read the table map
+    val oldTableMap: TableMap = new SimpleFormatParser(new FileReader(InputFileName)).parse()
+
+    // Make a copy of the tableMap
+    // val newTableMap: TableMapImpl = new TableMapImpl(oldTableMap)
+    val newTableMap: TableMapImpl = new TableMapImpl()
+    oldTableMap.getTableIds().foreach(tableId => newTableMap.put(tableId, oldTableMap.getTable(tableId)))
+
+    // Get the main table
+    val table: Table = newTableMap.getTable(FieldRecord)
+
+    // Make a copy of the main table
+    val newTable: TableImpl = new TableImpl(table)
+
+    // Add the new table to the new table map
+    newTableMap.put(FieldRecord, newTable)
+
+    // Get type of main table
+    val oldType: CompositeType = table.getType()
+
+    // Make a copy of type
+    // val newType: CompositeTypeImpl = new CompositeTypeImpl(oldType)
+    val newType: CompositeTypeImpl = new CompositeTypeImpl()
+    oldType.getFields().foreach(field => newType.declareField(field, oldType.getFieldType(field)))
+
+    // Add new declaration with number of authors
+    if (!newType.getFields().contains(FieldNumberOfAuthors)) {
+      newType.declareField(FieldNumberOfAuthors, TypeOfNumberOfAuthors)
+    }
+
+    // Update type of table
+    newTable.setType(newType)
+
+    // Compute the number of authors for each record
+    table.getRecords().foreach(record => {
+      val authors: List[String] = record.get(FieldAuthors).renderAsList()
+      val numberOfAuthors: Int = authors.size()
+      record.set(FieldNumberOfAuthors, new StringValue("" + numberOfAuthors))
+    })
+
+    // Store the new table map
+    val writer: StringWriter = new StringWriter()
+    val renderer: SimpleFormatRenderer = new SimpleFormatRenderer(writer)
+    renderer.render(newTableMap)
+
+    // Read the expected output
+    val sbuf: StringBuffer = new StringBuffer()
+    val reader: BufferedReader = new BufferedReader(new FileReader(ExpectedOutputFileName))
+    var line = reader.readLine()
+    while (line != null) {
+      sbuf.append(line + NewLine)
+      line = reader.readLine()
+    }
+    reader.close()
+
+    // Compare the expected output with the actual output
+    Assert.assertEquals(sbuf.toString(), writer.toString())
+  }
+
+}
