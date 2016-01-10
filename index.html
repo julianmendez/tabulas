@@ -27,8 +27,8 @@
 <p><a href="https://travis-ci.org/julianmendez/tabulas"><img src="https://travis-ci.org/julianmendez/tabulas.png?branch=master" alt="Build Status"></a>
 <a href="http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22de.tu-dresden.inf.lat.tabulas%22"><img src="https://maven-badges.herokuapp.com/maven-central/de.tu-dresden.inf.lat.tabulas/tabulas-parent/badge.svg" alt="Maven Central"></a></p>
 
-<p>Tabulas is a system to manage human-readable tables using files. Tabulas is an experimental semi-automatic <a href="http://www.scala-lang.org/">Scala</a> reimplementation of <a href="http://github.com/julianmendez/tabula">Tabula</a>, which is implemented in Java.
-It uses a specific type of file format that is similar to a <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Properties.html#load-java.io.Reader-">Java Properties</a> file, but allows defining the same property for different objects.</p>
+<p>Tabulas is a system to manage human-readable tables using files. Tabulas is an experimental semi-automatic <a href="http://www.scala-lang.org/">Scala</a> reimplementation of <a href="https://github.com/julianmendez/tabula">Tabula</a>, which is implemented in Java.
+It uses a specific type of file format that is similar to a <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Properties.html#load-java.io.Reader-">Java Properties</a> file, but allows defining the same property for different objects.</p>
 
 <h2>
 <a id="download" class="anchor" href="#download" aria-hidden="true"><span class="octicon octicon-link"></span></a>Download</h2>
@@ -48,7 +48,7 @@ It uses a specific type of file format that is similar to a <a href="http://docs
 <h2>
 <a id="format" class="anchor" href="#format" aria-hidden="true"><span class="octicon octicon-link"></span></a>Format</h2>
 
-<p>The Tabula format has <em>primitive types</em> and <em>composite types</em>. Unless something different is stated in the <a href="http://github.com/julianmendez/tabula/blob/master/RELEASE-NOTES.md">release notes</a>, the primitive types are:</p>
+<p>The Tabula format has <em>primitive types</em> and <em>composite types</em>. Unless something different is stated in the <a href="https://github.com/julianmendez/tabula/blob/master/RELEASE-NOTES.md">release notes</a>, the primitive types are:</p>
 
 <ul>
 <li>
@@ -171,6 +171,20 @@ and each <em>FIELD_TYPE</em> can be any of the primitive types.</p>
 
 </pre></div>
 
+<p>An example like this one is used for the unit tests.</p>
+
+<p>For example, the <a href="https://github.com/julianmendez/tabulas/blob/master/tabulas-core/src/test/scala/de/tudresden/inf/lat/tabulas/main/MainTest.scala">MainTest</a> class does the following steps:</p>
+
+<ul>
+<li>read the <a href="https://github.com/julianmendez/tabulas/blob/master/tabulas-core/src/test/resources/example.properties">example file</a>
+</li>
+<li>add a new field <code>numberOfAuthors</code>
+</li>
+<li>add to each record the number of authors </li>
+<li>compare the <a href="https://github.com/julianmendez/tabulas/blob/master/tabulas-core/src/test/resources/example-modified.properties">expected result</a>
+</li>
+</ul>
+
 <h2>
 <a id="source-code" class="anchor" href="#source-code" aria-hidden="true"><span class="octicon octicon-link"></span></a>Source code</h2>
 
@@ -182,7 +196,7 @@ $ mvn clean install
 </code></pre>
 
 <p>The created executable library, its sources, and its Javadoc will be in <code>tabulas-distribution/target</code>.
-This executable JAR file requires the <a href="http://search.maven.org/#search%7Cgav%7C1%7Cg%3A%22org.scala-lang%22%20AND%20a%3A%22scala-library%22">Scala library</a> in the same directory. The required version is shown in the <a href="http://github.com/julianmendez/tabulas/blob/master/RELEASE-NOTES.md">release notes</a>.</p>
+This executable JAR file requires the <a href="http://search.maven.org/#search%7Cgav%7C1%7Cg%3A%22org.scala-lang%22%20AND%20a%3A%22scala-library%22">Scala library</a> in the same directory. The required version is shown in the <a href="https://github.com/julianmendez/tabulas/blob/master/RELEASE-NOTES.md">release notes</a>.</p>
 
 <p>To compile the project offline, first download the dependencies:</p>
 
@@ -226,12 +240,12 @@ $ jar -cf bundle.jar tabulas-parent-*
 <h2>
 <a id="license" class="anchor" href="#license" aria-hidden="true"><span class="octicon octicon-link"></span></a>License</h2>
 
-<p>This software is distributed under the <a href="http://www.apache.org/licenses/LICENSE-2.0.txt">Apache License Version 2.0</a>.</p>
+<p>This software is distributed under the <a href="https://www.apache.org/licenses/LICENSE-2.0.txt">Apache License Version 2.0</a>.</p>
 
 <h2>
 <a id="release-notes" class="anchor" href="#release-notes" aria-hidden="true"><span class="octicon octicon-link"></span></a>Release notes</h2>
 
-<p>See <a href="http://github.com/julianmendez/tabulas/blob/master/RELEASE-NOTES.md">release notes</a>.</p>
+<p>See <a href="https://github.com/julianmendez/tabulas/blob/master/RELEASE-NOTES.md">release notes</a>.</p>
 
 <h2>
 <a id="contact" class="anchor" href="#contact" aria-hidden="true"><span class="octicon octicon-link"></span></a>Contact</h2>
