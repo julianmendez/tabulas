@@ -28,9 +28,9 @@ class MainTest {
   val InputFileName: String = "src/test/resources/example.properties"
   val ExpectedOutputFileName: String = "src/test/resources/example-modified.properties"
 
-  val FieldAuthors: String = "authors"
-  val FieldRecord: String = "record"
-  val FieldNumberOfAuthors: String = "numberOfAuthors"
+  val TypeNameRecord: String = "record"
+  val FieldNameAuthors: String = "authors"
+  val FieldNameNumberOfAuthors: String = "numberOfAuthors"
   val TypeOfNumberOfAuthors: String = "String"
   val NewLine: String = "\n"
 
@@ -49,13 +49,13 @@ class MainTest {
     oldTableMap.getTableIds().foreach(tableId => newTableMap.put(tableId, oldTableMap.getTable(tableId)))
 
     // Get the main table
-    val table: Table = newTableMap.getTable(FieldRecord)
+    val table: Table = newTableMap.getTable(TypeNameRecord)
 
     // Make a copy of the main table
     val newTable: TableImpl = new TableImpl(table)
 
     // Add the new table to the new table map
-    newTableMap.put(FieldRecord, newTable)
+    newTableMap.put(TypeNameRecord, newTable)
 
     // Get type of main table
     val oldType: CompositeType = table.getType()
@@ -66,8 +66,8 @@ class MainTest {
     oldType.getFields().foreach(field => newType.declareField(field, oldType.getFieldType(field)))
 
     // Add new declaration with number of authors
-    if (!newType.getFields().contains(FieldNumberOfAuthors)) {
-      newType.declareField(FieldNumberOfAuthors, TypeOfNumberOfAuthors)
+    if (!newType.getFields().contains(FieldNameNumberOfAuthors)) {
+      newType.declareField(FieldNameNumberOfAuthors, TypeOfNumberOfAuthors)
     }
 
     // Update type of table
@@ -75,9 +75,9 @@ class MainTest {
 
     // Compute the number of authors for each record
     table.getRecords().foreach(record => {
-      val authors: List[String] = record.get(FieldAuthors).renderAsList()
+      val authors: List[String] = record.get(FieldNameAuthors).renderAsList()
       val numberOfAuthors: Int = authors.size()
-      record.set(FieldNumberOfAuthors, new StringValue("" + numberOfAuthors))
+      record.set(FieldNameNumberOfAuthors, new StringValue("" + numberOfAuthors))
     })
 
     // Store the new table map
