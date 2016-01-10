@@ -3,7 +3,6 @@ package de.tudresden.inf.lat.tabulas.main
 import java.io.BufferedReader
 import java.io.FileReader
 import java.io.StringWriter
-import java.util.List
 
 import scala.collection.JavaConversions.asScalaBuffer
 
@@ -12,6 +11,8 @@ import org.junit.Test
 
 import de.tudresden.inf.lat.tabulas.datatype.CompositeType
 import de.tudresden.inf.lat.tabulas.datatype.CompositeTypeImpl
+import de.tudresden.inf.lat.tabulas.datatype.PrimitiveTypeValue
+import de.tudresden.inf.lat.tabulas.datatype.Record
 import de.tudresden.inf.lat.tabulas.datatype.StringValue
 import de.tudresden.inf.lat.tabulas.parser.SimpleFormatParser
 import de.tudresden.inf.lat.tabulas.renderer.SimpleFormatRenderer
@@ -33,6 +34,19 @@ class MainTest {
   val FieldNameNumberOfAuthors: String = "numberOfAuthors"
   val TypeOfNumberOfAuthors: String = "String"
   val NewLine: String = "\n"
+
+  /**
+   * Returns the number of authors for a given record.
+   *
+   * @param record
+   *            record
+   * @return the number of authors for a given record
+   */
+  def computeFieldValue(record: Record): StringValue = {
+    val value: PrimitiveTypeValue = record.get(FieldNameAuthors)
+    val size: Int = if (value == null) { 0 } else { value.renderAsList().size() }
+    new StringValue("" + size)
+  }
 
   @Test
   def addNewFieldOldTest(): Unit = {
@@ -74,11 +88,7 @@ class MainTest {
     newTable.setType(newType)
 
     // Compute the number of authors for each record
-    table.getRecords().foreach(record => {
-      val authors: List[String] = record.get(FieldNameAuthors).renderAsList()
-      val numberOfAuthors: Int = authors.size()
-      record.set(FieldNameNumberOfAuthors, new StringValue("" + numberOfAuthors))
-    })
+    table.getRecords().foreach(record => record.set(FieldNameNumberOfAuthors, computeFieldValue(record)))
 
     // Store the new table map
     val writer: StringWriter = new StringWriter()
