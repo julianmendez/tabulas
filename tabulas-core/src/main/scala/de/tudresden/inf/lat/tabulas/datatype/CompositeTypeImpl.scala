@@ -18,6 +18,17 @@ class CompositeTypeImpl extends CompositeType {
   private val fields: List[String] = new ArrayList[String]
   private val fieldType: Map[String, String] = new TreeMap[String, String]
 
+  /**
+   * Constructs a new composite type using another one.
+   *
+   * @param otherType
+   *            other type
+   */
+  def this(otherType: CompositeType) = {
+    this()
+    otherType.getFields().foreach(field => declareField(field, otherType.getFieldType(field)))
+  }
+
   override def getFields(): List[String] = {
     Collections.unmodifiableList(this.fields)
   }

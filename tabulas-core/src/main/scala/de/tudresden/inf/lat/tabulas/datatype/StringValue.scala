@@ -5,13 +5,34 @@ import java.util.ArrayList
 import java.util.Collections
 import java.util.List
 
+/**
+ * This models a string value.
+ *
+ */
 class StringValue extends PrimitiveTypeValue {
 
   private var str: String = ""
 
+  /**
+   * Constructs a new string value using a string.
+   *
+   * @param str0
+   *            string
+   */
   def this(str0: String) = {
     this()
     str = if (str0 == null) { "" } else { str0 }
+  }
+
+  /**
+   * Constructs a new string value using another string value.
+   *
+   * @param other
+   *            a string value
+   */
+  def this(other: StringValue) = {
+    this()
+    this.str = other.str
   }
 
   override def getType(): PrimitiveType = {

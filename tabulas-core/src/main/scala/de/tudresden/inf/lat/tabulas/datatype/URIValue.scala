@@ -8,7 +8,7 @@ import java.util.Collections
 import java.util.List
 
 /**
- * This models a link.
+ * This models a URI.
  *
  */
 class URIValue extends PrimitiveTypeValue {
@@ -17,9 +17,26 @@ class URIValue extends PrimitiveTypeValue {
 
   private var uri: URI = null
 
+  /**
+   * Constructs a new URI value using a string.
+   *
+   * @param link
+   *            URI
+   */
   def this(link: String) = {
     this()
     this.uri = createURI(link)
+  }
+
+  /**
+   * Constructs a new URI value using another URI value.
+   *
+   * @param other
+   *            URI value
+   */
+  def this(other: URIValue) {
+    this()
+    this.uri = other.getUri()
   }
 
   override def getType(): PrimitiveType = {

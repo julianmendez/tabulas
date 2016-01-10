@@ -19,6 +19,17 @@ class RecordImpl extends Record {
 
   private val map: Map[String, PrimitiveTypeValue] = new TreeMap[String, PrimitiveTypeValue]()
 
+  /**
+   * Constructs a new record using another one.
+   *
+   * @param otherRecord
+   *            other record
+   */
+  def this(otherRecord: Record) = {
+    this()
+    otherRecord.getProperties().foreach(property => set(property, otherRecord.get(property)))
+  }
+
   override def get(key: String): PrimitiveTypeValue = {
     if (key == null) { null } else { this.map.get(key) }
   }

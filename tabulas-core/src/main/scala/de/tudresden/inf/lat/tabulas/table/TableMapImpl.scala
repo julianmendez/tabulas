@@ -17,6 +17,17 @@ class TableMapImpl extends TableMap {
   private val map: Map[String, Table] = new TreeMap[String, Table]()
 
   /**
+   * Constructs a new table map using another one.
+   *
+   * @param otherTableMap
+   *            other table map
+   */
+  def this(otherTableMap: TableMap) = {
+    this()
+    otherTableMap.getTableIds().foreach(tableId => put(tableId, otherTableMap.getTable(tableId)))
+  }
+
+  /**
    * Returns the identifiers of the stored tables.
    *
    * @return the identifiers of the stored tables

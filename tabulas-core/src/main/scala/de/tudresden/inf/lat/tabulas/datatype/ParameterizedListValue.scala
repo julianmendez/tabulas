@@ -4,8 +4,8 @@ package de.tudresden.inf.lat.tabulas.datatype
 import java.util.ArrayList
 import java.util.Collections
 import java.util.List
-
 import scala.collection.JavaConversions.asScalaBuffer
+import java.util.Objects
 
 /**
  * This models a list of elements with a parameterized type.
@@ -19,12 +19,29 @@ class ParameterizedListValue extends ArrayList[PrimitiveTypeValue] with Primitiv
 
   var parameter: PrimitiveType = null
 
+  /**
+   * Constructs a new parameterized list value.
+   *
+   * @param parameter0
+   *            primitive type
+   */
   def this(parameter0: PrimitiveType) = {
     this()
-    if (parameter0 == null) {
-      throw new IllegalArgumentException("Null argument.")
-    }
+    Objects.requireNonNull(parameter0)
     this.parameter = parameter0
+  }
+
+  /**
+   * Constructs a new parameterized list value using another parameterized
+   * list value.
+   *
+   * @param other
+   *            parameterized list value
+   */
+  def this(other: ParameterizedListValue) = {
+    this()
+    Objects.requireNonNull(other)
+    this.parameter = other.getParameter()
   }
 
   override def getType(): PrimitiveType = {
