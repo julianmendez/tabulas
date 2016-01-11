@@ -171,11 +171,12 @@ class SimpleFormatParser extends Parser {
       if (line.startsWith(ParserConstant.CommentSymbol)) {
         new Pair(lineCounter, "")
       } else {
-        var multiLine: String = line
+        var multiLine: String = line.trim()
         while (multiLine.endsWith(ParserConstant.LineContinuationSymbol)) {
           multiLine = multiLine.substring(0, multiLine.length() - ParserConstant.LineContinuationSymbol.length()) + ParserConstant.Space
           line = input.readLine()
           if (line != null) {
+            line = line.trim()
             lineCounter += 1
             multiLine += line
           }
