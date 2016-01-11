@@ -31,8 +31,8 @@ class SqlRenderer extends Renderer {
   val CreateDatabase: String = "create database"
   val Use: String = "use"
   val CreateTable: String = "create table"
-  val OpenPar: String = "("
-  val ClosePar: String = ")"
+  val LeftPar: String = "("
+  val RightPar: String = ")"
   val DefaultFieldType: String = "varchar(" + DefaultSize + ")"
   val Comma: String = ","
   val Semicolon: String = ";"
@@ -107,7 +107,7 @@ class SqlRenderer extends Renderer {
     output.write(ParserConstant.Space)
     output.write(Values)
     output.write(ParserConstant.Space)
-    output.write(OpenPar)
+    output.write(LeftPar)
     output.write(ParserConstant.Space)
 
     var first: Boolean = true
@@ -141,7 +141,7 @@ class SqlRenderer extends Renderer {
       }
     }
     output.write(ParserConstant.NewLine)
-    output.write(ClosePar)
+    output.write(RightPar)
     output.write(Semicolon)
   }
 
@@ -159,7 +159,7 @@ class SqlRenderer extends Renderer {
     output.write(ParserConstant.NewLine + ParserConstant.NewLine)
     output.write(CreateTable + ParserConstant.Space)
     output.write(tableName + ParserConstant.Space)
-    output.write(OpenPar)
+    output.write(LeftPar)
     output.write(ParserConstant.NewLine)
     var first: Boolean = true
     for (field: String <- table.getType().getFields()) {
@@ -174,7 +174,7 @@ class SqlRenderer extends Renderer {
       output.write(DefaultFieldType)
     }
     output.write(ParserConstant.NewLine)
-    output.write(ClosePar)
+    output.write(RightPar)
     output.write(Semicolon)
     output.write(ParserConstant.NewLine)
     output.write(ParserConstant.NewLine)
