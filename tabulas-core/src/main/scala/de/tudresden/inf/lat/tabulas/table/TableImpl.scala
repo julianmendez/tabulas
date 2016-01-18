@@ -91,9 +91,7 @@ class TableImpl extends Table {
   }
 
   override def equals(obj: Any): Boolean = {
-    if (this == obj) {
-      true
-    } else if (obj.isInstanceOf[Table]) {
+    if (obj.isInstanceOf[Table]) {
       val other: Table = obj.asInstanceOf[Table]
       getSortingOrder().equals(other.getSortingOrder()) &&
         getFieldsWithReverseOrder().equals(other.getFieldsWithReverseOrder()) &&

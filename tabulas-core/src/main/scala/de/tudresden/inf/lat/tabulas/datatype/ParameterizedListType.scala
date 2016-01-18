@@ -2,6 +2,7 @@
 package de.tudresden.inf.lat.tabulas.datatype
 
 import java.util.StringTokenizer;
+import java.util.Objects
 
 /**
  * This models the type of a list of elements with a parameterized type.
@@ -51,9 +52,7 @@ class ParameterizedListType extends PrimitiveType {
   }
 
   override def equals(obj: Any): Boolean = {
-    if (this == obj) {
-      true
-    } else if (obj == null) {
+    if (Objects.isNull(obj)) {
       false
     } else if (obj.isInstanceOf[ParameterizedListType]) {
       val other: ParameterizedListType = obj.asInstanceOf[ParameterizedListType]

@@ -2,6 +2,7 @@
 package de.tudresden.inf.lat.tabulas.datatype
 
 import java.util.List
+import java.util.Objects
 
 /**
  * This models a simplified composite type where the fields have the same type.
@@ -31,9 +32,7 @@ class SimplifiedCompositeType extends CompositeType {
   }
 
   override def equals(obj: Any): Boolean = {
-    if (this == obj) {
-      true
-    } else if (obj == null) {
+    if (Objects.isNull(obj)) {
       false
     } else if (obj.isInstanceOf[SimplifiedCompositeType]) {
       val other: SimplifiedCompositeType = obj.asInstanceOf[SimplifiedCompositeType]

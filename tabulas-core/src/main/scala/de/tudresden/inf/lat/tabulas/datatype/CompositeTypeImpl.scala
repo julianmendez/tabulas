@@ -63,9 +63,6 @@ class CompositeTypeImpl extends CompositeType {
   }
 
   override def equals(obj: Any): Boolean = {
-    if (this == obj) {
-      true
-    }
     if (obj.isInstanceOf[CompositeType]) {
       val other: CompositeType = obj.asInstanceOf[CompositeType]
       var ret: Boolean = getFields().equals(other.getFields())

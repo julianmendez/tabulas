@@ -63,9 +63,7 @@ class StringValue extends PrimitiveTypeValue {
   }
 
   override def equals(obj: Any): Boolean = {
-    if (this == obj) {
-      true
-    } else if (obj.isInstanceOf[StringValue]) {
+    if (obj.isInstanceOf[StringValue]) {
       val other: StringValue = obj.asInstanceOf[StringValue]
       this.str.equals(other.str)
     } else {

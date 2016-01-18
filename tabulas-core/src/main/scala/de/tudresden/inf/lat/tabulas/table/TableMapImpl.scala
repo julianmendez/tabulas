@@ -66,9 +66,7 @@ class TableMapImpl extends TableMap {
   }
 
   override def equals(obj: Any): Boolean = {
-    if (this == obj) {
-      true
-    } else if (obj.isInstanceOf[TableMap]) {
+    if (obj.isInstanceOf[TableMap]) {
       val other: TableMap = obj.asInstanceOf[TableMap]
       var ret: Boolean = getTableIds().equals(other.getTableIds())
       val tableIds: List[String] = getTableIds()

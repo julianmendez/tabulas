@@ -100,9 +100,7 @@ class URIValue extends PrimitiveTypeValue {
   }
 
   override def equals(obj: Any): Boolean = {
-    if (this == obj) {
-      true
-    } else if (!(obj.isInstanceOf[URIValue])) {
+    if (!(obj.isInstanceOf[URIValue])) {
       false
     } else {
       val other: URIValue = obj.asInstanceOf[URIValue];

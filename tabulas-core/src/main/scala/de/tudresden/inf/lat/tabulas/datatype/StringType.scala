@@ -1,6 +1,8 @@
 
 package de.tudresden.inf.lat.tabulas.datatype
 
+import java.util.Objects
+
 /**
  * This models the primitive data type String.
  *
@@ -30,9 +32,7 @@ class StringType extends PrimitiveType {
   }
 
   override def equals(obj: Any): Boolean = {
-    if (this == obj) {
-      true
-    } else if (obj == null) {
+    if (Objects.isNull(obj)) {
       false
     } else {
       (obj.isInstanceOf[StringType])
