@@ -48,9 +48,9 @@ class SqlRenderer extends Renderer {
 
   private var output: Writer = new OutputStreamWriter(System.out)
 
-  def this(output0: Writer) = {
+  def this(output: Writer) = {
     this()
-    output = output0
+    this.output = output
   }
 
   def sanitize(str: String): String = {

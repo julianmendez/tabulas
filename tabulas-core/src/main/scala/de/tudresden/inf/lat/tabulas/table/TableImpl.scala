@@ -57,10 +57,10 @@ class TableImpl extends Table {
     this.sortingOrder
   }
 
-  def setSortingOrder(sortingOrder0: List[String]): Unit = {
+  def setSortingOrder(sortingOrder: List[String]): Unit = {
     this.sortingOrder.clear()
-    if (sortingOrder0 != null) {
-      this.sortingOrder.addAll(sortingOrder0)
+    if (sortingOrder != null) {
+      this.sortingOrder.addAll(sortingOrder)
     }
   }
 
@@ -68,10 +68,10 @@ class TableImpl extends Table {
     this.fieldsWithReverseOrder
   }
 
-  def setFieldsWithReverseOrder(fieldsWithReverseOrder0: Set[String]): Unit = {
+  def setFieldsWithReverseOrder(fieldsWithReverseOrder: Set[String]): Unit = {
     this.fieldsWithReverseOrder.clear()
-    if (fieldsWithReverseOrder0 != null) {
-      this.fieldsWithReverseOrder.addAll(fieldsWithReverseOrder0)
+    if (fieldsWithReverseOrder != null) {
+      this.fieldsWithReverseOrder.addAll(fieldsWithReverseOrder)
     }
   }
 

@@ -16,12 +16,12 @@ class StringValue extends PrimitiveTypeValue {
   /**
    * Constructs a new string value using a string.
    *
-   * @param str0
+   * @param str
    *            string
    */
-  def this(str0: String) = {
+  def this(str: String) = {
     this()
-    str = if (str0 == null) { "" } else { str0 }
+    this.str = if (str == null) { "" } else { str }
   }
 
   /**

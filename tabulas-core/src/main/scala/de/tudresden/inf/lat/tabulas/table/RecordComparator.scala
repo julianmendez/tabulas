@@ -20,15 +20,15 @@ class RecordComparator extends Comparator[Record] {
   private val sortingOrder: List[String] = new ArrayList[String]
   private val fieldsWithReverseOrder: Set[String] = new TreeSet[String]()
 
-  def this(sortingOrder0: List[String]) = {
+  def this(sortingOrder: List[String]) = {
     this()
-    this.sortingOrder.addAll(sortingOrder0)
+    this.sortingOrder.addAll(sortingOrder)
   }
 
-  def this(sortingOrder0: List[String], fieldsWithReverseOrder0: Set[String]) = {
+  def this(sortingOrder: List[String], fieldsWithReverseOrder: Set[String]) = {
     this()
-    this.sortingOrder.addAll(sortingOrder0)
-    this.fieldsWithReverseOrder.addAll(fieldsWithReverseOrder0)
+    this.sortingOrder.addAll(sortingOrder)
+    this.fieldsWithReverseOrder.addAll(fieldsWithReverseOrder)
   }
 
   def getSortingOrder(): List[String] = {

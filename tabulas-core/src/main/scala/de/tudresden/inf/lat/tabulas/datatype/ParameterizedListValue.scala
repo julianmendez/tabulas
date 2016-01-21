@@ -22,13 +22,13 @@ class ParameterizedListValue extends ArrayList[PrimitiveTypeValue] with Primitiv
   /**
    * Constructs a new parameterized list value.
    *
-   * @param parameter0
+   * @param parameter
    *            primitive type
    */
-  def this(parameter0: PrimitiveType) = {
+  def this(parameter: PrimitiveType) = {
     this()
-    Objects.requireNonNull(parameter0)
-    this.parameter = parameter0
+    Objects.requireNonNull(parameter)
+    this.parameter = parameter
   }
 
   /**

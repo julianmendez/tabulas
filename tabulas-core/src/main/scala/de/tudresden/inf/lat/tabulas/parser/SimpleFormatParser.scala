@@ -50,9 +50,9 @@ class SimpleFormatParser extends Parser {
 
   }
 
-  def this(input0: Reader) = {
+  def this(input: Reader) = {
     this()
-    this.input = input0
+    this.input = input
   }
 
   def getKey(line: String): String = {

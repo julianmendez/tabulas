@@ -40,12 +40,12 @@ class CsvParser extends Parser {
   /**
    * Constructs a new parser.
    *
-   * @param input0
+   * @param input
    *            input
    */
-  def this(input0: Reader) = {
+  def this(input: Reader) = {
     this()
-    this.input = input0
+    this.input = input
   }
 
   def getColumns(line0: String): List[String] = {

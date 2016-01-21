@@ -14,12 +14,12 @@ class ParameterizedListType extends PrimitiveType {
 
   var parameter: PrimitiveType = null
 
-  def this(parameter0: PrimitiveType) = {
+  def this(parameter: PrimitiveType) = {
     this()
-    if (parameter0 == null) {
+    if (parameter == null) {
       throw new IllegalArgumentException("Null argument.")
     }
-    this.parameter = parameter0
+    this.parameter = parameter
   }
 
   override def getTypeName(): String = {
