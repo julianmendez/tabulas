@@ -1,8 +1,8 @@
 
 package de.tudresden.inf.lat.tabulas.datatype
 
-import java.util.StringTokenizer;
 import java.util.Objects
+import java.util.StringTokenizer
 
 /**
  * This models the type of a list of elements with a parameterized type.
@@ -16,9 +16,7 @@ class ParameterizedListType extends PrimitiveType {
 
   def this(parameter: PrimitiveType) = {
     this()
-    if (parameter == null) {
-      throw new IllegalArgumentException("Null argument.")
-    }
+    Objects.requireNonNull(parameter)
     this.parameter = parameter
   }
 
