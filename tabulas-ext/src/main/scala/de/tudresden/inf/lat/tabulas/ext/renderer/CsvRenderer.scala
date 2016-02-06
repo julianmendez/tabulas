@@ -5,6 +5,7 @@ import java.io.OutputStreamWriter
 import java.io.Writer
 import java.util.List
 import java.util.Objects
+import java.util.Optional
 
 import scala.Range
 import scala.collection.JavaConversions.asScalaBuffer
@@ -91,8 +92,9 @@ class CsvRenderer extends Renderer {
       } else {
         output.write(Comma)
       }
-      val value: PrimitiveTypeValue = record.get(field)
-      if (value != null) {
+      val optValue: Optional[PrimitiveTypeValue] = record.get(field)
+      if (optValue.isPresent()) {
+        val value: PrimitiveTypeValue = optValue.get()
         if (value.isInstanceOf[StringValue]) {
           val strVal: StringValue = value.asInstanceOf[StringValue]
           writeStringIfNotEmpty(output, field, strVal)

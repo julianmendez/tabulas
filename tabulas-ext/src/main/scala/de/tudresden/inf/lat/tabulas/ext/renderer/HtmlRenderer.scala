@@ -1,13 +1,16 @@
 
 package de.tudresden.inf.lat.tabulas.ext.renderer
 
-import java.io.IOException
 import java.io.OutputStreamWriter
 import java.io.Writer
 import java.util.List
 import java.util.Map
+import java.util.Objects
+import java.util.Optional
+
 import scala.collection.JavaConversions.asScalaBuffer
 import scala.collection.JavaConversions.asScalaSet
+
 import de.tudresden.inf.lat.tabulas.datatype.ParameterizedListValue
 import de.tudresden.inf.lat.tabulas.datatype.PrimitiveTypeValue
 import de.tudresden.inf.lat.tabulas.datatype.Record
@@ -16,11 +19,10 @@ import de.tudresden.inf.lat.tabulas.datatype.StringValue
 import de.tudresden.inf.lat.tabulas.datatype.URIType
 import de.tudresden.inf.lat.tabulas.datatype.URIValue
 import de.tudresden.inf.lat.tabulas.renderer.Renderer
-import de.tudresden.inf.lat.tabulas.table.Table
-import de.tudresden.inf.lat.tabulas.table.TableMap
 import de.tudresden.inf.lat.tabulas.renderer.UncheckedWriter
 import de.tudresden.inf.lat.tabulas.renderer.UncheckedWriterImpl
-import java.util.Objects
+import de.tudresden.inf.lat.tabulas.table.Table
+import de.tudresden.inf.lat.tabulas.table.TableMap
 
 /**
  * Renderer of a table that creates an HTML document.
@@ -99,11 +101,9 @@ class HtmlRenderer extends Renderer {
 
   def render(output: UncheckedWriter, record: Record, fields: List[String]): Unit = {
     fields.foreach(field => {
-      val value: PrimitiveTypeValue = record.get(field)
-      if (value == null) {
-        output.write("<td> </td>\n")
-        output.write("\n")
-      } else {
+      val optValue: Optional[PrimitiveTypeValue] = record.get(field)
+      if (optValue.isPresent()) {
+        val value: PrimitiveTypeValue = optValue.get()
         if (value.isInstanceOf[StringValue]) {
           output.write("<td> ")
           val strVal: StringValue = value.asInstanceOf[StringValue]
@@ -126,6 +126,9 @@ class HtmlRenderer extends Renderer {
           throw new IllegalStateException("Invalid value '" + value.toString() + "'.")
         }
 
+      } else {
+        output.write("<td> </td>\n")
+        output.write("\n")
       }
     })
   }

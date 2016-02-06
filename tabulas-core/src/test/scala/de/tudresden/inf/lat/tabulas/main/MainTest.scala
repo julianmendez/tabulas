@@ -44,7 +44,7 @@ class MainTest {
    * @return the number of authors for a given record
    */
   def computeFieldValue(record: Record): StringValue = {
-    val value: PrimitiveTypeValue = record.get(FieldNameAuthors)
+    val value: PrimitiveTypeValue = record.get(FieldNameAuthors).get()
     val size: Int = if (Objects.isNull(value)) { 0 } else { value.renderAsList().size() }
     new StringValue("" + size)
   }

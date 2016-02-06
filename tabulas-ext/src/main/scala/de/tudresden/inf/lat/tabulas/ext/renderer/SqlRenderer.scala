@@ -5,6 +5,7 @@ import java.io.OutputStreamWriter
 import java.io.Writer
 import java.util.List
 import java.util.Objects
+import java.util.Optional
 
 import scala.collection.JavaConversions.asScalaBuffer
 
@@ -118,8 +119,9 @@ class SqlRenderer extends Renderer {
         output.write(Comma)
       }
       output.write(ParserConstant.NewLine)
-      val value: PrimitiveTypeValue = record.get(field)
-      if (value != null) {
+      val optValue: Optional[PrimitiveTypeValue] = record.get(field)
+      if (optValue.isPresent()) {
+        val value: PrimitiveTypeValue = optValue.get()
         if (value.isInstanceOf[StringValue]) {
           val strVal: StringValue = value.asInstanceOf[StringValue]
           writeStringIfNotEmpty(output, field, strVal)

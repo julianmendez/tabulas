@@ -57,35 +57,35 @@ class SimpleFormatParser extends Parser {
     this.input = input
   }
 
-  def getKey(line: String): String = {
+  def getKey(line: String): Optional[String] = {
     if (Objects.isNull(line)) {
-      null
+      Optional.empty()
     } else {
       val pos: Int = line.indexOf(ParserConstant.EqualsSign)
       if (pos == -1) {
-        line
+        Optional.of(line)
       } else {
-        line.substring(0, pos).trim()
+        Optional.of(line.substring(0, pos).trim())
       }
     }
   }
 
-  def getValue(line: String): String = {
+  def getValue(line: String): Optional[String] = {
     if (Objects.isNull(line)) {
-      null
+      Optional.empty()
     } else {
       val pos: Int = line.indexOf(ParserConstant.EqualsSign)
       if (pos == -1) {
-        ""
+        Optional.of("")
       } else {
-        line.substring(pos + ParserConstant.EqualsSign.length(), line.length()).trim()
+        Optional.of(line.substring(pos + ParserConstant.EqualsSign.length(), line.length()).trim())
       }
     }
   }
 
   def parseTypes(line: String, lineCounter: Int): CompositeTypeImpl = {
     val ret = new CompositeTypeImpl()
-    val stok: StringTokenizer = new StringTokenizer(getValue(line))
+    val stok: StringTokenizer = new StringTokenizer(getValue(line).get())
     val factory: PrimitiveTypeFactory = new PrimitiveTypeFactory()
     while (stok.hasMoreTokens()) {
       val token: String = stok.nextToken()
@@ -108,7 +108,7 @@ class SimpleFormatParser extends Parser {
   private def setSortingOrder(line: String, table: TableImpl): Unit = {
     val fieldsWithReverseOrder: Set[String] = new TreeSet[String]()
     val list: List[String] = new ArrayList[String]
-    val stok: StringTokenizer = new StringTokenizer(getValue(line))
+    val stok: StringTokenizer = new StringTokenizer(getValue(line).get())
     while (stok.hasMoreTokens()) {
       var token: String = stok.nextToken()
       if (token.startsWith(ParserConstant.StandardOrderSign)) {
@@ -188,17 +188,21 @@ class SimpleFormatParser extends Parser {
   }
 
   private def isIdProperty(line: String): Boolean = {
-    val key: String = getKey(line)
-    key.equals(ParserConstant.IdKeyword)
+    val optKey: Optional[String] = getKey(line)
+    if (optKey.isPresent()) {
+      optKey.get().equals(ParserConstant.IdKeyword)
+    } else {
+      false
+    }
   }
 
-  private def getIdProperty(line: String): String = {
-    val key: String = getKey(line)
-    val valueStr: String = getValue(line)
-    if (key.equals(ParserConstant.IdKeyword)) {
-      valueStr
+  private def getIdProperty(line: String): Optional[String] = {
+    val optKey: Optional[String] = getKey(line)
+    val optValueStr: Optional[String] = getValue(line)
+    if (optKey.isPresent() && optValueStr.isPresent() && optKey.get().equals(ParserConstant.IdKeyword)) {
+      Optional.of(optValueStr.get())
     } else {
-      null
+      Optional.empty()
     }
   }
 
@@ -209,19 +213,23 @@ class SimpleFormatParser extends Parser {
         + lineCounter + ")")
     }
 
-    val key: String = getKey(line)
-    val valueStr: String = getValue(line)
-    val value: PrimitiveTypeValue = getTypedValue(key, valueStr, currentTable.getType(), lineCounter)
-    if (key.equals(ParserConstant.IdKeyword)) {
-      if (currentTable.getIdentifiers().contains(valueStr)) {
-        throw new ParseException("Identifier '"
-          + ParserConstant.IdKeyword + ParserConstant.Space
-          + ParserConstant.EqualsSign + ParserConstant.Space
-          + valueStr + "' is duplicated (line " + lineCounter
-          + ").")
+    val optKey: Optional[String] = getKey(line)
+    val optValueStr: Optional[String] = getValue(line)
+    if (optKey.isPresent() && optValueStr.isPresent()) {
+      val key: String = optKey.get()
+      val valueStr: String = optValueStr.get()
+      val value: PrimitiveTypeValue = getTypedValue(key, valueStr, currentTable.getType(), lineCounter)
+      if (key.equals(ParserConstant.IdKeyword)) {
+        if (currentTable.getIdentifiers().contains(valueStr)) {
+          throw new ParseException("Identifier '"
+            + ParserConstant.IdKeyword + ParserConstant.Space
+            + ParserConstant.EqualsSign + ParserConstant.Space
+            + valueStr + "' is duplicated (line " + lineCounter
+            + ").")
+        }
       }
+      record.set(key, value)
     }
-    record.set(key, value)
   }
 
   def parseMap(input: BufferedReader): TableMap = {
@@ -238,12 +246,15 @@ class SimpleFormatParser extends Parser {
       lineCounter = pair.getLineCounter()
       if (Objects.nonNull(line) && !line.trim().isEmpty()) {
         if (isTypeSelection(line)) {
-          val tableName: String = getValue(line)
-          if (!map.containsKey(tableName)) {
-            map.put(tableName, new TableImpl(
-              new TableImpl()))
+          val optTableName: Optional[String] = getValue(line)
+          if (optTableName.isPresent()) {
+            val tableName: String = optTableName.get()
+            if (!map.containsKey(tableName)) {
+              map.put(tableName, new TableImpl(
+                new TableImpl()))
+            }
+            currentTable = map.get(tableName)
           }
-          currentTable = map.get(tableName)
 
         } else if (isTypeDefinition(line)) {
           currentTable.setType(parseTypes(line, lineCounter))
@@ -261,8 +272,11 @@ class SimpleFormatParser extends Parser {
           if (isIdProperty(line)) {
             var successful: Boolean = false
             if (Objects.isNull(currentId)) {
-              currentId = getIdProperty(line)
-              successful = currentTable.addId(currentId)
+              val optCurrentId: Optional[String] = getIdProperty(line)
+              if (optCurrentId.isPresent()) {
+                currentId = optCurrentId.get()
+                successful = currentTable.addId(currentId)
+              }
             }
             if (!successful) {
               throw new ParseException(

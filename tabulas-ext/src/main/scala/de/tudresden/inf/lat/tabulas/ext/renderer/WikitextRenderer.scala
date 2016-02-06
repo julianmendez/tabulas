@@ -6,6 +6,7 @@ import java.io.Writer
 import java.util.List
 import java.util.Map
 import java.util.Objects
+import java.util.Optional
 
 import scala.collection.JavaConversions.asScalaBuffer
 import scala.collection.JavaConversions.asScalaSet
@@ -84,11 +85,10 @@ class WikitextRenderer extends Renderer {
   def render(output: UncheckedWriter, record: Record, fields: List[String]): Unit = {
 
     fields.foreach(field => {
-      val value: PrimitiveTypeValue = record.get(field)
+      val optValue: Optional[PrimitiveTypeValue] = record.get(field)
       output.write("|")
-      if (value == null) {
-        output.write("\n")
-      } else {
+      if (optValue.isPresent()) {
+        val value: PrimitiveTypeValue = optValue.get();
         val prefix = field + ParserConstant.EqualsSign
         if (value.isInstanceOf[StringValue]) {
           val strVal: StringValue = value.asInstanceOf[StringValue]
@@ -106,6 +106,8 @@ class WikitextRenderer extends Renderer {
           throw new IllegalStateException("Invalid value '" + value.toString() + "'.")
         }
 
+      } else {
+        output.write("\n")
       }
     })
   }

@@ -49,7 +49,7 @@ class RecordComparator extends Comparator[Record] {
         val it: Iterator[String] = this.sortingOrder.iterator()
         while (it.hasNext() && (ret == 0)) {
           val token: String = it.next()
-          ret = compareValues(record0.get(token), record1.get(token), this.fieldsWithReverseOrder.contains(token))
+          ret = compareValues(record0.get(token).get(), record1.get(token).get(), this.fieldsWithReverseOrder.contains(token))
         }
         ret
       }

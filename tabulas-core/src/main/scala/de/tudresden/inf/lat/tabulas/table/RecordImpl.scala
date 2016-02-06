@@ -4,6 +4,8 @@ package de.tudresden.inf.lat.tabulas.table
 import java.util.ArrayList
 import java.util.List
 import java.util.Map
+import java.util.Objects
+import java.util.Optional
 import java.util.TreeMap
 
 import scala.collection.JavaConversions.asScalaBuffer
@@ -27,15 +29,24 @@ class RecordImpl extends Record {
    */
   def this(otherRecord: Record) = {
     this()
-    otherRecord.getProperties().foreach(property => set(property, otherRecord.get(property)))
+    otherRecord.getProperties().foreach(property => set(property, otherRecord.get(property).get()))
   }
 
-  override def get(key: String): PrimitiveTypeValue = {
-    if (key == null) { null } else { this.map.get(key) }
+  override def get(key: String): Optional[PrimitiveTypeValue] = {
+    if (Objects.isNull(key)) {
+      Optional.empty()
+    } else {
+      val value: PrimitiveTypeValue = this.map.get(key);
+      if (Objects.isNull(value)) {
+        Optional.empty()
+      } else {
+        Optional.of(value)
+      }
+    }
   }
 
   override def set(key: String, value: PrimitiveTypeValue): Unit = {
-    if (key != null) {
+    if (Objects.nonNull(key)) {
       this.map.put(key, value)
     }
   }

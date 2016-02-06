@@ -2,6 +2,7 @@
 package de.tudresden.inf.lat.tabulas.datatype
 
 import java.util.List
+import java.util.Optional
 
 /**
  * This models a record.
@@ -10,13 +11,15 @@ import java.util.List
 trait Record {
 
   /**
-   * Returns the value of a given property.
+   * Returns an optional containing the value of a given property, if this
+   * value is present, or an empty optional otherwise.
    *
    * @param key
    *            property name
-   * @return the value of a given property
+   * @return an optional containing the value of a given property, if this
+   * 	          value is present, or an empty optional otherwise
    */
-  def get(key: String): PrimitiveTypeValue
+  def get(key: String): Optional[PrimitiveTypeValue]
 
   /**
    * Sets the value of a given property.

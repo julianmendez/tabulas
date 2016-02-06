@@ -107,32 +107,32 @@ class CalendarParser extends Parser {
     this.input = input
   }
 
-  def getKey(line: String): String = {
+  def getKey(line: String): Optional[String] = {
     if (Objects.isNull(line)) {
-      return null
+      return Optional.empty()
     } else {
       var pos: Int = line.indexOf(ColonChar)
       if (pos == -1) {
-        return line
+        return Optional.of(line)
       } else {
         var pos2: Int = line.indexOf(SemicolonChar)
         if (pos2 >= 0 && pos2 < pos) {
           pos = pos2
         }
-        return line.substring(0, pos).trim()
+        return Optional.of(line.substring(0, pos).trim())
       }
     }
   }
 
-  def getValue(line: String): String = {
+  def getValue(line: String): Optional[String] = {
     if (Objects.isNull(line)) {
-      return null
+      return Optional.empty()
     } else {
       var pos: Int = line.indexOf(ColonChar)
       if (pos == -1) {
-        return ""
+        return Optional.of("")
       } else {
-        return line.substring(pos + 1, line.length()).trim()
+        return Optional.of(line.substring(pos + 1, line.length()).trim())
       }
     }
   }
@@ -194,20 +194,24 @@ class CalendarParser extends Parser {
         + lineCounter + ")")
     }
 
-    val key: String = getKey(line)
-    val valueStr: String = getValue(line)
-    val value: PrimitiveTypeValue = getTypedValue(key, valueStr,
-      currentTable.getType(), lineCounter)
-    if (key.equals(ParserConstant.IdKeyword)) {
-      if (currentTable.getIdentifiers().contains(valueStr)) {
-        throw new ParseException("Identifier '"
-          + ParserConstant.IdKeyword + ParserConstant.Space
-          + ParserConstant.EqualsSign + ParserConstant.Space
-          + valueStr + "' is duplicated (line " + lineCounter
-          + ").")
+    val optKey: Optional[String] = getKey(line)
+    val optValueStr: Optional[String] = getValue(line)
+    if (optKey.isPresent() && optValueStr.isPresent()) {
+      val key: String = optKey.get()
+      val valueStr: String = optValueStr.get()
+      val value: PrimitiveTypeValue = getTypedValue(key, valueStr,
+        currentTable.getType(), lineCounter)
+      if (key.equals(ParserConstant.IdKeyword)) {
+        if (currentTable.getIdentifiers().contains(valueStr)) {
+          throw new ParseException("Identifier '"
+            + ParserConstant.IdKeyword + ParserConstant.Space
+            + ParserConstant.EqualsSign + ParserConstant.Space
+            + valueStr + "' is duplicated (line " + lineCounter
+            + ").")
+        }
       }
+      record.set(key, value)
     }
-    record.set(key, value)
   }
 
   def getGeneratedId(generatedIds: List[Int], level: Int): String = {
@@ -265,7 +269,7 @@ class CalendarParser extends Parser {
       lineCounter = pair.getLineCounter()
       if (Objects.nonNull(line) && !line.trim().isEmpty()) {
         if (isBeginLine(line)) {
-          val value: String = getValue(line)
+          val value: String = getValue(line).get()
           if (firstTime) {
             firstTime = false
           } else {
@@ -286,9 +290,9 @@ class CalendarParser extends Parser {
 
         } else if (isEndLine(line)) {
           val foreignKey: String = currentRecord.get(GeneratedIdFieldName)
-            .render()
+            .get().render()
           currentTable.add(currentRecord)
-          val value: String = getValue(line)
+          val value: String = getValue(line).get()
           val refTable: TableImpl = map.get(value)
           if (Objects.isNull(refTable)) {
             throw new ParseException("Unknown type '" + value
@@ -305,15 +309,14 @@ class CalendarParser extends Parser {
           currentTableId = tableIdStack.pop()
           currentTable = tableStack.pop()
           currentRecord = recordStack.pop()
-          var subItems: PrimitiveTypeValue = currentRecord
-            .get(SubItemsFieldName)
-          if (subItems == null) {
-            subItems = new StringValue(foreignKey)
+          var optSubItems: Optional[PrimitiveTypeValue] = currentRecord.get(SubItemsFieldName)
+          if (optSubItems.isPresent()) {
+            currentRecord.set(SubItemsFieldName, new StringValue(optSubItems.get().render() + SpaceChar + foreignKey))
+
           } else {
-            subItems = new StringValue(subItems.render()
-              + SpaceChar + foreignKey)
+            currentRecord.set(SubItemsFieldName, new StringValue(foreignKey))
+
           }
-          currentRecord.set(SubItemsFieldName, subItems)
 
         } else {
           parseProperty(line, currentTable, currentRecord,
