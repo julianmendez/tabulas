@@ -30,8 +30,7 @@ class SimpleFormatRenderer extends Renderer {
     this.output = output
   }
 
-  def writeIfNotEmpty(output: UncheckedWriter, field: String,
-    value: PrimitiveTypeValue): Boolean = {
+  def writeIfNotEmpty(output: UncheckedWriter, field: String, value: PrimitiveTypeValue): Boolean = {
     if (Objects.nonNull(field) && !field.trim().isEmpty() && Objects.nonNull(value) && !value.isEmpty()) {
       output.write(ParserConstant.NewLine)
       output.write(field)
@@ -39,8 +38,7 @@ class SimpleFormatRenderer extends Renderer {
       if (value.getType().isList()) {
         val list: List[String] = value.renderAsList()
         list.foreach(link => {
-          output.write(ParserConstant.Space
-            + ParserConstant.LineContinuationSymbol)
+          output.write(ParserConstant.Space + ParserConstant.LineContinuationSymbol)
           output.write(ParserConstant.NewLine)
           output.write(ParserConstant.Space)
           output.write(link.toString())
@@ -95,8 +93,7 @@ class SimpleFormatRenderer extends Renderer {
     output.write(ParserConstant.EqualsSign)
 
     table.getType().getFields().foreach(field => {
-      output.write(ParserConstant.Space
-        + ParserConstant.LineContinuationSymbol)
+      output.write(ParserConstant.Space + ParserConstant.LineContinuationSymbol)
       output.write(ParserConstant.NewLine)
       output.write(ParserConstant.Space)
       output.write(field)

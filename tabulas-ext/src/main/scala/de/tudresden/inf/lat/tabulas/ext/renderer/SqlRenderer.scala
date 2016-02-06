@@ -214,12 +214,10 @@ class SqlRenderer extends Renderer {
 
   def renderPrefix(output: UncheckedWriter): Unit = {
     output.write(ParserConstant.NewLine)
-    output.write(CreateDatabase + ParserConstant.Space
-      + DefaultDatabaseName + Semicolon)
+    output.write(CreateDatabase + ParserConstant.Space + DefaultDatabaseName + Semicolon)
     output.write(ParserConstant.NewLine)
     output.write(ParserConstant.NewLine)
-    output.write(Use + ParserConstant.Space + DefaultDatabaseName
-      + Semicolon)
+    output.write(Use + ParserConstant.Space + DefaultDatabaseName + Semicolon)
     output.write(ParserConstant.NewLine)
     output.write(ParserConstant.NewLine)
   }
