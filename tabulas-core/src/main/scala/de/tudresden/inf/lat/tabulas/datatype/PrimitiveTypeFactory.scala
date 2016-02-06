@@ -2,6 +2,7 @@ package de.tudresden.inf.lat.tabulas.datatype;
 
 import java.util.TreeMap
 import java.util.Map
+import java.util.Objects
 
 /**
  * This models a factory of primitive types.
@@ -48,7 +49,7 @@ class PrimitiveTypeFactory {
    */
   def newInstance(typeName: String, value: String): PrimitiveTypeValue = {
     val primType: PrimitiveType = this.map.get(typeName)
-    if (primType == null) {
+    if (Objects.isNull(primType)) {
       throw new ParseException("Type '" + typeName + "' is undefined.")
     } else {
       primType.parse(value)

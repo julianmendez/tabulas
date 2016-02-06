@@ -4,6 +4,7 @@ package de.tudresden.inf.lat.tabulas.datatype
 import java.util.ArrayList
 import java.util.Collections
 import java.util.List
+import java.util.Objects
 
 /**
  * This models a string value.
@@ -21,7 +22,7 @@ class StringValue extends PrimitiveTypeValue {
    */
   def this(str: String) = {
     this()
-    this.str = if (str == null) { "" } else { str }
+    this.str = if (Objects.isNull(str)) { "" } else { str }
   }
 
   /**

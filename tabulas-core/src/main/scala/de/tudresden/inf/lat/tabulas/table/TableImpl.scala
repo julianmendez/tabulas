@@ -6,10 +6,10 @@ import java.util.Collections
 import java.util.List
 import java.util.Set
 import java.util.TreeSet
-
 import de.tudresden.inf.lat.tabulas.datatype.CompositeType
 import de.tudresden.inf.lat.tabulas.datatype.CompositeTypeImpl
 import de.tudresden.inf.lat.tabulas.datatype.Record
+import java.util.Objects
 
 /**
  * This is the default implementation of a sorted table.
@@ -42,7 +42,7 @@ class TableImpl extends Table {
   }
 
   def add(record: Record): Boolean = {
-    if (record == null) {
+    if (Objects.isNull(record)) {
       false
     } else {
       this.list.add(record)
@@ -59,7 +59,7 @@ class TableImpl extends Table {
 
   def setSortingOrder(sortingOrder: List[String]): Unit = {
     this.sortingOrder.clear()
-    if (sortingOrder != null) {
+    if (Objects.nonNull(sortingOrder)) {
       this.sortingOrder.addAll(sortingOrder)
     }
   }
@@ -70,7 +70,7 @@ class TableImpl extends Table {
 
   def setFieldsWithReverseOrder(fieldsWithReverseOrder: Set[String]): Unit = {
     this.fieldsWithReverseOrder.clear()
-    if (fieldsWithReverseOrder != null) {
+    if (Objects.nonNull(fieldsWithReverseOrder)) {
       this.fieldsWithReverseOrder.addAll(fieldsWithReverseOrder)
     }
   }

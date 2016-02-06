@@ -8,6 +8,7 @@ import java.io.Reader
 import java.util.ArrayList
 import java.util.List
 import java.util.Map
+import java.util.Objects
 import java.util.Optional
 import java.util.Set
 import java.util.StringTokenizer
@@ -57,7 +58,7 @@ class SimpleFormatParser extends Parser {
   }
 
   def getKey(line: String): String = {
-    if (line == null) {
+    if (Objects.isNull(line)) {
       null
     } else {
       val pos: Int = line.indexOf(ParserConstant.EqualsSign)
@@ -70,7 +71,7 @@ class SimpleFormatParser extends Parser {
   }
 
   def getValue(line: String): String = {
-    if (line == null) {
+    if (Objects.isNull(line)) {
       null
     } else {
       val pos: Int = line.indexOf(ParserConstant.EqualsSign)
@@ -125,23 +126,23 @@ class SimpleFormatParser extends Parser {
   }
 
   def isTypeSelection(line: String): Boolean = {
-    (line != null) && line.trim().startsWith(ParserConstant.TypeSelectionToken)
+    Objects.nonNull(line) && line.trim().startsWith(ParserConstant.TypeSelectionToken)
   }
 
   def isTypeDefinition(line: String): Boolean = {
-    (line != null) && line.trim().startsWith(ParserConstant.TypeDefinitionToken)
+    Objects.nonNull(line) && line.trim().startsWith(ParserConstant.TypeDefinitionToken)
   }
 
   def isSortingOrderDeclaration(line: String): Boolean = {
-    (line != null) && line.trim().startsWith(ParserConstant.SortingOrderDeclarationToken)
+    Objects.nonNull(line) && line.trim().startsWith(ParserConstant.SortingOrderDeclarationToken)
   }
 
   def isNewRecord(line: String): Boolean = {
-    (line != null) && line.trim().startsWith(ParserConstant.NewRecordToken)
+    Objects.nonNull(line) && line.trim().startsWith(ParserConstant.NewRecordToken)
   }
 
   def getTypedValue(key: String, value: String, type0: CompositeType, lineCounter: Int): PrimitiveTypeValue = {
-    if (key == null) {
+    if (Objects.isNull(key)) {
       new StringValue()
     } else {
       try {
@@ -164,7 +165,7 @@ class SimpleFormatParser extends Parser {
   def readMultiLine(input: BufferedReader, lineCounter0: Int): Pair = {
     var lineCounter: Int = lineCounter0
     var line: String = input.readLine()
-    if (line == null) {
+    if (Objects.isNull(line)) {
       new Pair(lineCounter, null)
     } else {
       lineCounter += 1
@@ -175,7 +176,7 @@ class SimpleFormatParser extends Parser {
         while (multiLine.endsWith(ParserConstant.LineContinuationSymbol)) {
           multiLine = multiLine.substring(0, multiLine.length() - ParserConstant.LineContinuationSymbol.length()) + ParserConstant.Space
           line = input.readLine()
-          if (line != null) {
+          if (Objects.nonNull(line)) {
             line = line.trim()
             lineCounter += 1
             multiLine += line
@@ -203,7 +204,7 @@ class SimpleFormatParser extends Parser {
 
   private def parseProperty(line: String, currentTable: TableImpl,
     record: Record, lineCounter: Int): Unit = {
-    if (currentTable == null) {
+    if (Objects.isNull(currentTable)) {
       throw new ParseException("New record was not declared (line "
         + lineCounter + ")")
     }
@@ -231,11 +232,11 @@ class SimpleFormatParser extends Parser {
     var currentId: String = null
     var record: Record = null
     var lineCounter: Int = 0
-    while (line != null) {
+    while (Objects.nonNull(line)) {
       var pair: Pair = readMultiLine(input, lineCounter)
       line = pair.getLine()
       lineCounter = pair.getLineCounter()
-      if (line != null && !line.trim().isEmpty()) {
+      if (Objects.nonNull(line) && !line.trim().isEmpty()) {
         if (isTypeSelection(line)) {
           val tableName: String = getValue(line)
           if (!map.containsKey(tableName)) {
@@ -259,7 +260,7 @@ class SimpleFormatParser extends Parser {
           parseProperty(line, currentTable, record, lineCounter)
           if (isIdProperty(line)) {
             var successful: Boolean = false
-            if (currentId == null) {
+            if (Objects.isNull(currentId)) {
               currentId = getIdProperty(line)
               successful = currentTable.addId(currentId)
             }

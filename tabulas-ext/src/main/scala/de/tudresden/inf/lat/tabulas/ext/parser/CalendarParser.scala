@@ -7,6 +7,7 @@ import java.io.Reader
 import java.util.ArrayList
 import java.util.List
 import java.util.Map
+import java.util.Objects
 import java.util.Optional
 import java.util.Stack
 import java.util.TreeMap
@@ -107,7 +108,7 @@ class CalendarParser extends Parser {
   }
 
   def getKey(line: String): String = {
-    if (line == null) {
+    if (Objects.isNull(line)) {
       return null
     } else {
       var pos: Int = line.indexOf(ColonChar)
@@ -124,7 +125,7 @@ class CalendarParser extends Parser {
   }
 
   def getValue(line: String): String = {
-    if (line == null) {
+    if (Objects.isNull(line)) {
       return null
     } else {
       var pos: Int = line.indexOf(ColonChar)
@@ -137,16 +138,16 @@ class CalendarParser extends Parser {
   }
 
   def isBeginLine(line: String): Boolean = {
-    return (line != null) && line.trim().startsWith(BeginKeyword)
+    return Objects.nonNull(line) && line.trim().startsWith(BeginKeyword)
   }
 
   def isEndLine(line: String): Boolean = {
-    return (line != null) && line.trim().startsWith(EndKeyword)
+    return Objects.nonNull(line) && line.trim().startsWith(EndKeyword)
   }
 
   private def getTypedValue(key: String, value: String,
     type0: CompositeType, lineCounter: Int): PrimitiveTypeValue = {
-    if (key == null) {
+    if (Objects.isNull(key)) {
       return new StringValue()
     } else {
       try {
@@ -172,7 +173,7 @@ class CalendarParser extends Parser {
     var lineCounter: Int = 0
     while (!finish) {
       var line: String = input.readLine()
-      if (line == null) {
+      if (Objects.isNull(line)) {
         finish = true
       } else if (line.startsWith("" + SpaceChar)) {
         sbuf.append(line)
@@ -188,7 +189,7 @@ class CalendarParser extends Parser {
 
   private def parseProperty(line: String, currentTable: TableImpl,
     record: Record, lineCounter: Int): Unit = {
-    if (currentTable == null) {
+    if (Objects.isNull(currentTable)) {
       throw new ParseException("New record was not declared (line "
         + lineCounter + ")")
     }
@@ -262,7 +263,7 @@ class CalendarParser extends Parser {
     for (pair: Pair <- lines) {
       val line: String = pair.getLine()
       lineCounter = pair.getLineCounter()
-      if (line != null && !line.trim().isEmpty()) {
+      if (Objects.nonNull(line) && !line.trim().isEmpty()) {
         if (isBeginLine(line)) {
           val value: String = getValue(line)
           if (firstTime) {
@@ -276,7 +277,7 @@ class CalendarParser extends Parser {
           currentRecord.set(GeneratedIdFieldName, new StringValue(
             getGeneratedId(generatedIds, tableIdStack.size())))
           val refTable: TableImpl = map.get(value)
-          if (refTable == null) {
+          if (Objects.isNull(refTable)) {
             throw new ParseException("Unknown type '" + value
               + "' (line " + lineCounter + ").")
           }
@@ -289,7 +290,7 @@ class CalendarParser extends Parser {
           currentTable.add(currentRecord)
           val value: String = getValue(line)
           val refTable: TableImpl = map.get(value)
-          if (refTable == null) {
+          if (Objects.isNull(refTable)) {
             throw new ParseException("Unknown type '" + value
               + "' (line " + lineCounter + ").")
           }
@@ -322,7 +323,7 @@ class CalendarParser extends Parser {
       }
     }
 
-    if (currentTable != null && currentRecord != null) {
+    if (Objects.nonNull(currentTable) && Objects.nonNull(currentRecord)) {
       currentTable.add(currentRecord)
     }
 

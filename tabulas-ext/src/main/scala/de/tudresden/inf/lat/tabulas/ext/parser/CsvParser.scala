@@ -7,6 +7,7 @@ import java.io.InputStreamReader
 import java.io.Reader
 import java.util.ArrayList
 import java.util.List
+import java.util.Objects
 
 import scala.Range
 import scala.collection.JavaConversions.asScalaBuffer
@@ -50,7 +51,7 @@ class CsvParser extends Parser {
 
   def getColumns(line0: String): List[String] = {
     val ret: List[String] = new ArrayList[String]()
-    val line: String = if (line0 == null) { "" } else { line0.trim() }
+    val line: String = if (Objects.isNull(line0)) { "" } else { line0.trim() }
     var current: StringBuffer = new StringBuffer()
     var betweenQuotes: Boolean = false
     for (index <- 0 to (line.length() - 1)) {
@@ -80,7 +81,7 @@ class CsvParser extends Parser {
   }
 
   def normalize(fieldName: String): String = {
-    var auxName: String = if (fieldName == null) { Underscore } else { fieldName.trim() }
+    var auxName: String = if (Objects.isNull(fieldName)) { Underscore } else { fieldName.trim() }
     val name = if (auxName.isEmpty()) { Underscore } else { auxName }
 
     val ret: StringBuffer = new StringBuffer()
@@ -122,10 +123,10 @@ class CsvParser extends Parser {
     val fieldNames: List[String] = normalizeHeaders(headers, lineCounter)
     val currentTable: TableImpl = createSortedTable(fieldNames)
 
-    while (line != null) {
+    while (Objects.nonNull(line)) {
       line = input.readLine()
       lineCounter += 1
-      if ((line != null) && !line.trim().isEmpty()) {
+      if ((Objects.nonNull(line)) && !line.trim().isEmpty()) {
         val columns: List[String] = getColumns(line)
         if (columns.size() > fieldNames.size()) {
           throw new ParseException("Too many fields in line: "
@@ -148,7 +149,7 @@ class CsvParser extends Parser {
         }
 
         currentTable.add(record)
-        if (currentId != null) {
+        if (Objects.nonNull(currentId)) {
           currentTable.addId(currentId)
         }
       }

@@ -1,11 +1,14 @@
 
 package de.tudresden.inf.lat.tabulas.ext.renderer
 
-import java.io.IOException
 import java.io.OutputStreamWriter
 import java.io.Writer
 import java.util.List
+import java.util.Objects
+
+import scala.Range
 import scala.collection.JavaConversions.asScalaBuffer
+
 import de.tudresden.inf.lat.tabulas.datatype.ParameterizedListValue
 import de.tudresden.inf.lat.tabulas.datatype.PrimitiveTypeValue
 import de.tudresden.inf.lat.tabulas.datatype.Record
@@ -13,10 +16,10 @@ import de.tudresden.inf.lat.tabulas.datatype.StringValue
 import de.tudresden.inf.lat.tabulas.datatype.URIValue
 import de.tudresden.inf.lat.tabulas.parser.ParserConstant
 import de.tudresden.inf.lat.tabulas.renderer.Renderer
-import de.tudresden.inf.lat.tabulas.table.Table
-import de.tudresden.inf.lat.tabulas.table.TableMap
 import de.tudresden.inf.lat.tabulas.renderer.UncheckedWriter
 import de.tudresden.inf.lat.tabulas.renderer.UncheckedWriterImpl
+import de.tudresden.inf.lat.tabulas.table.Table
+import de.tudresden.inf.lat.tabulas.table.TableMap
 
 /**
  * Renderer of tables in comma-separated values format.
@@ -40,7 +43,7 @@ class CsvRenderer extends Renderer {
   }
 
   def writeStringIfNotEmpty(output: UncheckedWriter, field: String, value: StringValue): Boolean = {
-    if (field != null && !field.trim().isEmpty() && value != null
+    if (Objects.nonNull(field) && !field.trim().isEmpty() && Objects.nonNull(value)
       && !value.toString().trim().isEmpty()) {
       output.write(Quotes)
       output.write(sanitize(value.toString()))
@@ -53,7 +56,7 @@ class CsvRenderer extends Renderer {
   }
 
   def writeParameterizedListIfNotEmpty(output: UncheckedWriter, field: String, list: ParameterizedListValue): Boolean = {
-    if (list != null && !list.isEmpty()) {
+    if (Objects.nonNull(list) && !list.isEmpty()) {
       output.write(Quotes)
       list.foreach(value => {
         output.write(sanitize(value.toString()))
@@ -68,7 +71,7 @@ class CsvRenderer extends Renderer {
   }
 
   def writeLinkIfNotEmpty(output: UncheckedWriter, field: String, link: URIValue): Boolean = {
-    if (link != null && !link.isEmpty()) {
+    if (Objects.nonNull(link) && !link.isEmpty()) {
       output.write(Quotes)
       output.write(sanitize(link.toString()))
       output.write(Quotes)

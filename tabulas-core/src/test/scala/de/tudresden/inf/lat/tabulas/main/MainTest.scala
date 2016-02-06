@@ -3,6 +3,7 @@ package de.tudresden.inf.lat.tabulas.main
 import java.io.BufferedReader
 import java.io.FileReader
 import java.io.StringWriter
+import java.util.Objects
 
 import scala.collection.JavaConversions.asScalaBuffer
 
@@ -44,7 +45,7 @@ class MainTest {
    */
   def computeFieldValue(record: Record): StringValue = {
     val value: PrimitiveTypeValue = record.get(FieldNameAuthors)
-    val size: Int = if (value == null) { 0 } else { value.renderAsList().size() }
+    val size: Int = if (Objects.isNull(value)) { 0 } else { value.renderAsList().size() }
     new StringValue("" + size)
   }
 
@@ -99,7 +100,7 @@ class MainTest {
     val sbuf: StringBuffer = new StringBuffer()
     val reader: BufferedReader = new BufferedReader(new FileReader(ExpectedOutputFileName))
     var line = reader.readLine()
-    while (line != null) {
+    while (Objects.nonNull(line)) {
       sbuf.append(line + NewLine)
       line = reader.readLine()
     }

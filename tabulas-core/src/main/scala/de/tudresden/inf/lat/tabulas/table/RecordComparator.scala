@@ -5,6 +5,7 @@ import java.util.ArrayList
 import java.util.Comparator
 import java.util.Iterator
 import java.util.List
+import java.util.Objects
 import java.util.Set
 import java.util.TreeSet
 
@@ -40,10 +41,10 @@ class RecordComparator extends Comparator[Record] {
   }
 
   override def compare(record0: Record, record1: Record): Int = {
-    if (record0 == null) {
-      if (record1 == null) { 0 } else { -1 }
+    if (Objects.isNull(record0)) {
+      if (Objects.isNull(record1)) { 0 } else { -1 }
     } else {
-      if (record1 == null) { 1 } else {
+      if (Objects.isNull(record1)) { 1 } else {
         var ret: Int = 0
         val it: Iterator[String] = this.sortingOrder.iterator()
         while (it.hasNext() && (ret == 0)) {
@@ -59,10 +60,10 @@ class RecordComparator extends Comparator[Record] {
     if (hasReverseOrder) {
       compareValues(value1, value0, false)
     } else {
-      if (value0 == null) {
-        if (value1 == null) { 0 } else { -1 }
+      if (Objects.isNull(value0)) {
+        if (Objects.isNull(value1)) { 0 } else { -1 }
       } else {
-        if (value1 == null) { 1 } else { value0.compareTo(value1) }
+        if (Objects.isNull(value1)) { 1 } else { value0.compareTo(value1) }
       }
     }
   }

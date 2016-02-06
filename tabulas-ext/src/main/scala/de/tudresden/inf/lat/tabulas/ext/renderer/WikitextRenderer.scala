@@ -1,11 +1,11 @@
 
 package de.tudresden.inf.lat.tabulas.ext.renderer
 
-import java.io.IOException
 import java.io.OutputStreamWriter
 import java.io.Writer
 import java.util.List
 import java.util.Map
+import java.util.Objects
 
 import scala.collection.JavaConversions.asScalaBuffer
 import scala.collection.JavaConversions.asScalaSet
@@ -38,7 +38,7 @@ class WikitextRenderer extends Renderer {
   }
 
   def writeStringIfNotEmpty(output: UncheckedWriter, prefix: String, str: StringValue): Boolean = {
-    if (str != null && !str.toString().trim().isEmpty()) {
+    if (Objects.nonNull(str) && !str.toString().trim().isEmpty()) {
       output.write(prefix)
       output.write(str.toString())
       output.write("\n")
@@ -49,7 +49,7 @@ class WikitextRenderer extends Renderer {
   }
 
   def writeParameterizedListIfNotEmpty(output: UncheckedWriter, prefix: String, list: ParameterizedListValue): Boolean = {
-    if (list != null) {
+    if (Objects.nonNull(list)) {
       output.write(prefix);
       list.foreach(value => {
         if (value.getType().equals(new URIType())) {
@@ -67,7 +67,7 @@ class WikitextRenderer extends Renderer {
   }
 
   def writeLinkIfNotEmpty(output: UncheckedWriter, prefix: String, link: URIValue): Boolean = {
-    if (link != null && !link.isEmpty()) {
+    if (Objects.nonNull(link) && !link.isEmpty()) {
       output.write(prefix);
       output.write("[")
       output.write(link.getUriNoLabel().toASCIIString())

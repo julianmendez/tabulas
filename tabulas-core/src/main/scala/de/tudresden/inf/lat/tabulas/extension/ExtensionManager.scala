@@ -3,6 +3,7 @@ package de.tudresden.inf.lat.tabulas.extension
 import java.util.ArrayList
 import java.util.List
 import java.util.Map
+import java.util.Objects
 import java.util.TreeMap
 
 import scala.collection.JavaConversions.asScalaBuffer
@@ -30,7 +31,7 @@ class ExtensionManager extends Extension {
    */
   def this(extensions: List[Extension]) = {
     this()
-    if (extensions != null) {
+    if (Objects.nonNull(extensions)) {
       this.extensions.addAll(extensions)
       extensions.foreach(extension => {
         val key: String = extension.getExtensionName()
@@ -45,7 +46,7 @@ class ExtensionManager extends Extension {
   }
 
   override def process(arguments: List[String]): Boolean = {
-    if (arguments == null || arguments.size() < RequiredArguments) {
+    if (Objects.isNull(arguments) || arguments.size() < RequiredArguments) {
       false
     } else {
       val command: String = arguments.get(0)
@@ -53,7 +54,7 @@ class ExtensionManager extends Extension {
       newArguments.addAll(arguments)
       newArguments.remove(0)
       val extension: Extension = this.extensionMap.get(command)
-      if (extension == null) {
+      if (Objects.isNull(extension)) {
         throw new ExtensionException("Extension '" + command
           + "' was not found.")
       } else {

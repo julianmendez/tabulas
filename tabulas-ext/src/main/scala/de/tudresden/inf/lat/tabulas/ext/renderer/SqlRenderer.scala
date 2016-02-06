@@ -1,10 +1,10 @@
 
 package de.tudresden.inf.lat.tabulas.ext.renderer
 
-import java.io.IOException
 import java.io.OutputStreamWriter
 import java.io.Writer
 import java.util.List
+import java.util.Objects
 
 import scala.collection.JavaConversions.asScalaBuffer
 
@@ -58,7 +58,7 @@ class SqlRenderer extends Renderer {
   }
 
   def writeStringIfNotEmpty(output: UncheckedWriter, field: String, value: StringValue): Boolean = {
-    if (field != null && !field.trim().isEmpty() && value != null
+    if (Objects.nonNull(field) && !field.trim().isEmpty() && Objects.nonNull(value)
       && !value.toString().trim().isEmpty()) {
       output.write(Apostrophe)
       output.write(sanitize(value.toString()))
@@ -71,7 +71,7 @@ class SqlRenderer extends Renderer {
   }
 
   def writeParameterizedListIfNotEmpty(output: UncheckedWriter, field: String, list: ParameterizedListValue): Boolean = {
-    if (list != null && !list.isEmpty()) {
+    if (Objects.nonNull(list) && !list.isEmpty()) {
       output.write(Apostrophe)
       list.foreach(value => {
         output.write(sanitize(value.toString()))
@@ -86,7 +86,7 @@ class SqlRenderer extends Renderer {
   }
 
   def writeLinkIfNotEmpty(output: UncheckedWriter, prefix: String, link: URIValue): Boolean = {
-    if (link != null && !link.isEmpty()) {
+    if (Objects.nonNull(link) && !link.isEmpty()) {
       output.write(prefix)
       output.write(Apostrophe)
       output.write(sanitize(link.toString()))

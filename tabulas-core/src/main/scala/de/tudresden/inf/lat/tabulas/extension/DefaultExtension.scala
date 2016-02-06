@@ -5,10 +5,10 @@ import java.io.FileReader
 import java.io.FileWriter
 import java.io.IOException
 import java.util.List
-
 import de.tudresden.inf.lat.tabulas.table.TableMap
 import de.tudresden.inf.lat.tabulas.parser.SimpleFormatParser
 import de.tudresden.inf.lat.tabulas.renderer.SimpleFormatRenderer
+import java.util.Objects
 
 /**
  * Default extension. It reads and writes using the default format.
@@ -21,7 +21,7 @@ class DefaultExtension extends Extension {
   val RequiredArguments: Int = 2
 
   override def process(arguments: List[String]): Boolean = {
-    if (arguments == null || arguments.size() != RequiredArguments) {
+    if (Objects.isNull(arguments) || arguments.size() != RequiredArguments) {
       false
     } else {
       try {

@@ -20,6 +20,7 @@ import de.tudresden.inf.lat.tabulas.table.Table
 import de.tudresden.inf.lat.tabulas.table.TableMap
 import de.tudresden.inf.lat.tabulas.renderer.UncheckedWriter
 import de.tudresden.inf.lat.tabulas.renderer.UncheckedWriterImpl
+import java.util.Objects
 
 /**
  * Renderer of a table that creates an HTML document.
@@ -56,7 +57,7 @@ class HtmlRenderer extends Renderer {
   }
 
   def writeStringIfNotEmpty(output: UncheckedWriter, str: StringValue): Boolean = {
-    if (str != null && !str.toString().trim().isEmpty()) {
+    if (Objects.nonNull(str) && !str.toString().trim().isEmpty()) {
       output.write(str.toString())
       output.write("\n")
       true
@@ -66,7 +67,7 @@ class HtmlRenderer extends Renderer {
   }
 
   def writeParameterizedListIfNotEmpty(output: UncheckedWriter, list: ParameterizedListValue): Boolean = {
-    if (list != null) {
+    if (Objects.nonNull(list)) {
       list.foreach(value => {
         if (value.getType().equals(new URIType())) {
           val link: URIValue = (new URIType()).castInstance(value)
@@ -83,7 +84,7 @@ class HtmlRenderer extends Renderer {
   }
 
   def writeLinkIfNotEmpty(output: UncheckedWriter, link: URIValue): Boolean = {
-    if (link != null && !link.isEmpty()) {
+    if (Objects.nonNull(link) && !link.isEmpty()) {
       output.write("<a href=\"")
       output.write(link.getUriNoLabel().toASCIIString())
       output.write("\">(")

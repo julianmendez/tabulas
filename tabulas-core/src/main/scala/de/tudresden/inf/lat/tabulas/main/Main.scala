@@ -2,6 +2,7 @@ package de.tudresden.inf.lat.tabulas.main
 
 import java.util.ArrayList
 import java.util.List
+import java.util.Objects
 
 import scala.Range
 
@@ -31,7 +32,7 @@ object Main {
   }
 
   def run(args: Array[String]): Unit = {
-    if ((args != null) && ((args.length == 2) || (args.length == 3))) {
+    if (Objects.nonNull(args) && ((args.length == 2) || (args.length == 3))) {
       val arguments: List[String] = new ArrayList[String]();
       Range(0, args.length).foreach(index => arguments.add(args(index)))
       this.manager.process(arguments)

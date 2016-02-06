@@ -5,6 +5,7 @@ import java.io.FileReader
 import java.io.FileWriter
 import java.io.IOException
 import java.util.List
+import java.util.Objects
 
 import de.tudresden.inf.lat.tabulas.extension.Extension
 import de.tudresden.inf.lat.tabulas.parser.SimpleFormatParser
@@ -21,7 +22,7 @@ class SqlExtension extends Extension {
   val RequiredArguments: Int = 2
 
   override def process(arguments: List[String]): Boolean = {
-    if (arguments == null || arguments.size() != RequiredArguments) {
+    if (Objects.isNull(arguments) || arguments.size() != RequiredArguments) {
       false
     } else {
       try {

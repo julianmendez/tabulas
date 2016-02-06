@@ -4,6 +4,7 @@ package de.tudresden.inf.lat.tabulas.renderer
 import java.io.OutputStreamWriter
 import java.io.Writer
 import java.util.List
+import java.util.Objects
 
 import scala.collection.JavaConversions.asScalaBuffer
 
@@ -30,7 +31,7 @@ class SimpleFormatRenderer extends Renderer {
 
   def writeIfNotEmpty(output: UncheckedWriter, field: String,
     value: PrimitiveTypeValue): Boolean = {
-    if (field != null && !field.trim().isEmpty() && value != null
+    if (Objects.nonNull(field) && !field.trim().isEmpty() && Objects.nonNull(value)
       && !value.isEmpty()) {
       output.write(ParserConstant.NewLine)
       output.write(field)
@@ -64,7 +65,7 @@ class SimpleFormatRenderer extends Renderer {
 
     fields.foreach(field => {
       val value: PrimitiveTypeValue = record.get(field)
-      if (value != null) {
+      if (Objects.nonNull(value)) {
         writeIfNotEmpty(output, field, value);
       }
     })
