@@ -32,8 +32,7 @@ class SimpleFormatRenderer extends Renderer {
 
   def writeIfNotEmpty(output: UncheckedWriter, field: String,
     value: PrimitiveTypeValue): Boolean = {
-    if (Objects.nonNull(field) && !field.trim().isEmpty() && Objects.nonNull(value)
-      && !value.isEmpty()) {
+    if (Objects.nonNull(field) && !field.trim().isEmpty() && Objects.nonNull(value) && !value.isEmpty()) {
       output.write(ParserConstant.NewLine)
       output.write(field)
       output.write(ParserConstant.Space + ParserConstant.EqualsSign)
@@ -67,7 +66,7 @@ class SimpleFormatRenderer extends Renderer {
     fields.foreach(field => {
       val optValue: Optional[PrimitiveTypeValue] = record.get(field)
       if (optValue.isPresent()) {
-        writeIfNotEmpty(output, field, optValue.get);
+        writeIfNotEmpty(output, field, optValue.get());
       }
     })
   }
