@@ -6,6 +6,7 @@ import java.util.Comparator
 import java.util.Iterator
 import java.util.List
 import java.util.Objects
+import java.util.Optional
 import java.util.Set
 import java.util.TreeSet
 
@@ -49,21 +50,21 @@ class RecordComparator extends Comparator[Record] {
         val it: Iterator[String] = this.sortingOrder.iterator()
         while (it.hasNext() && (ret == 0)) {
           val token: String = it.next()
-          ret = compareValues(record0.get(token).get(), record1.get(token).get(), this.fieldsWithReverseOrder.contains(token))
+          ret = compareValues(record0.get(token), record1.get(token), this.fieldsWithReverseOrder.contains(token))
         }
         ret
       }
     }
   }
 
-  def compareValues(value0: PrimitiveTypeValue, value1: PrimitiveTypeValue, hasReverseOrder: Boolean): Int = {
+  def compareValues(optValue0: Optional[PrimitiveTypeValue], optValue1: Optional[PrimitiveTypeValue], hasReverseOrder: Boolean): Int = {
     if (hasReverseOrder) {
-      compareValues(value1, value0, false)
+      compareValues(optValue1, optValue0, false)
     } else {
-      if (Objects.isNull(value0)) {
-        if (Objects.isNull(value1)) { 0 } else { -1 }
+      if (optValue0.isPresent()) {
+        if (optValue1.isPresent()) { optValue0.get().compareTo(optValue1.get()) } else { 1 }
       } else {
-        if (Objects.isNull(value1)) { 1 } else { value0.compareTo(value1) }
+        if (optValue1.isPresent()) { -1 } else { 0 }
       }
     }
   }
