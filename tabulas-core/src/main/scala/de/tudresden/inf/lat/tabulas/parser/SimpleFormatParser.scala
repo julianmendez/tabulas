@@ -8,6 +8,7 @@ import java.io.Reader
 import java.util.ArrayList
 import java.util.List
 import java.util.Map
+import java.util.Optional
 import java.util.Set
 import java.util.StringTokenizer
 import java.util.TreeMap
@@ -144,13 +145,12 @@ class SimpleFormatParser extends Parser {
       new StringValue()
     } else {
       try {
-        var typeStr: String = type0.getFieldType(key)
-        if (typeStr == null) {
-          throw new ParseException("Key '" + key + "' has an undefined type.")
+        var optTypeStr: Optional[String] = type0.getFieldType(key)
+        if (optTypeStr.isPresent()) {
+          (new PrimitiveTypeFactory()).newInstance(optTypeStr.get(), value)
+
         } else {
-          val ret: PrimitiveTypeValue = (new PrimitiveTypeFactory())
-            .newInstance(typeStr, value);
-          ret
+          throw new ParseException("Key '" + key + "' has an undefined type.")
         }
       } catch {
         case e: ParseException => {

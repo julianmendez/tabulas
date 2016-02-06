@@ -6,6 +6,7 @@ import java.net.URISyntaxException
 import java.util.ArrayList
 import java.util.Collections
 import java.util.List
+import java.util.Objects
 
 /**
  * This models a URI.
@@ -20,12 +21,13 @@ class URIValue extends PrimitiveTypeValue {
   /**
    * Constructs a new URI value using a string.
    *
-   * @param link
+   * @param uriStr
    *            URI
    */
-  def this(link: String) = {
+  def this(uriStr: String) = {
     this()
-    this.uri = createURI(link)
+    Objects.requireNonNull(uriStr)
+    this.uri = createURI(uriStr)
   }
 
   /**
@@ -43,12 +45,12 @@ class URIValue extends PrimitiveTypeValue {
     new URIType()
   }
 
-  def createURI(uri0: String): URI = {
+  def createURI(uriStr: String): URI = {
     try {
-      new URI(uri0)
+      new URI(uriStr)
     } catch {
       case e: URISyntaxException => {
-        throw new ParseException("Invalid URI '" + uri0 + "'.", e)
+        throw new ParseException("Invalid URI '" + uriStr + "'.", e)
       }
     }
   }
@@ -78,7 +80,7 @@ class URIValue extends PrimitiveTypeValue {
   }
 
   override def isEmpty(): Boolean = {
-    (getUri() == null) || (getUri().toASCIIString().trim().isEmpty())
+    (getUri().toASCIIString().trim().isEmpty())
   }
 
   override def render(): String = {

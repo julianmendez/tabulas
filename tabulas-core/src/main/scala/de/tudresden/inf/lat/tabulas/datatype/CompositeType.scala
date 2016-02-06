@@ -2,6 +2,7 @@
 package de.tudresden.inf.lat.tabulas.datatype
 
 import java.util.List
+import java.util.Optional
 
 /**
  * This models a composite type.
@@ -17,13 +18,15 @@ trait CompositeType extends DataType {
   def getFields(): List[String]
 
   /**
-   * Returns the type of the given field.
+   * Returns an optional containing the type of the given field, if the field
+   * is present, or an empty optional otherwise.
    *
    * @param field
    *            field
-   * @return the type of the given field
+   * @return an optional containing the type of the given field, if the field
+   * is present, or an empty optional otherwise
    */
-  def getFieldType(field: String): String
+  def getFieldType(field: String): Optional[String]
 
 }
 

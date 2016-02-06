@@ -5,6 +5,8 @@ import java.util.ArrayList
 import java.util.Collections
 import java.util.List
 import java.util.Map
+import java.util.Objects
+import java.util.Optional
 import java.util.TreeMap
 
 import scala.collection.JavaConversions.asScalaBuffer
@@ -26,18 +28,21 @@ class CompositeTypeImpl extends CompositeType {
    */
   def this(otherType: CompositeType) = {
     this()
-    otherType.getFields().foreach(field => declareField(field, otherType.getFieldType(field)))
+    Objects.requireNonNull(otherType)
+    otherType.getFields().foreach(field => declareField(field, otherType.getFieldType(field).get))
   }
 
   override def getFields(): List[String] = {
     Collections.unmodifiableList(this.fields)
   }
 
-  override def getFieldType(field: String): String = {
-    if (field == null) {
-      null
+  override def getFieldType(field: String): Optional[String] = {
+    Objects.requireNonNull(field)
+    val value: String = this.fieldType.get(field)
+    if (Objects.isNull(value)) {
+      Optional.empty()
     } else {
-      this.fieldType.get(field)
+      Optional.of(value)
     }
   }
 

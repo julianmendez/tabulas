@@ -3,6 +3,7 @@ package de.tudresden.inf.lat.tabulas.datatype
 
 import java.util.List
 import java.util.Objects
+import java.util.Optional
 
 /**
  * This models a simplified composite type where the fields have the same type.
@@ -23,7 +24,7 @@ class SimplifiedCompositeType extends CompositeType {
     this.dataType.getFields()
   }
 
-  override def getFieldType(field: String): String = {
+  override def getFieldType(field: String): Optional[String] = {
     this.dataType.getFieldType(field)
   }
 

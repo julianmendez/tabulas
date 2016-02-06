@@ -77,7 +77,7 @@ class MainTest {
     // Make a copy of type
     // val newType: CompositeTypeImpl = new CompositeTypeImpl(oldType)
     val newType: CompositeTypeImpl = new CompositeTypeImpl()
-    oldType.getFields().foreach(field => newType.declareField(field, oldType.getFieldType(field)))
+    oldType.getFields().foreach(field => newType.declareField(field, oldType.getFieldType(field).get()))
 
     // Add new declaration with number of authors
     if (!newType.getFields().contains(FieldNameNumberOfAuthors)) {

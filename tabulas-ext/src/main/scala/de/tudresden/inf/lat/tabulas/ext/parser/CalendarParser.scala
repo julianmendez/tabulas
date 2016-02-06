@@ -7,6 +7,7 @@ import java.io.Reader
 import java.util.ArrayList
 import java.util.List
 import java.util.Map
+import java.util.Optional
 import java.util.Stack
 import java.util.TreeMap
 
@@ -149,14 +150,11 @@ class CalendarParser extends Parser {
       return new StringValue()
     } else {
       try {
-        val typeStr: String = type0.getFieldType(key)
-        if (typeStr == null) {
-          throw new ParseException("Key '" + key
-            + "' has an undefined type.")
+        val optTypeStr: Optional[String] = type0.getFieldType(key)
+        if (optTypeStr.isPresent()) {
+          return (new PrimitiveTypeFactory()).newInstance(optTypeStr.get(), value)
         } else {
-          val ret: PrimitiveTypeValue = (new PrimitiveTypeFactory())
-            .newInstance(typeStr, value)
-          return ret
+          throw new ParseException("Key '" + key + "' has an undefined type.")
         }
       } catch {
         case e: IOException => {

@@ -24,6 +24,7 @@ class URIType extends PrimitiveType {
   }
 
   def castInstance(value: PrimitiveTypeValue): URIValue = {
+    Objects.requireNonNull(value)
     parse(value.render())
   }
 
