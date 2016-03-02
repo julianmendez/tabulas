@@ -162,6 +162,19 @@ class SimpleFormatParser extends Parser {
     }
   }
 
+  def isMultiLine(line: String): Boolean = {
+    line.trim().endsWith(ParserConstant.LineContinuationSymbol)
+  }
+
+  def getCleanLine(line: String): String = {
+    val trimmedLine: String = line.trim()
+    if (isMultiLine(line)) {
+      trimmedLine.substring(0, trimmedLine.length() - ParserConstant.LineContinuationSymbol.length())
+    } else {
+      trimmedLine
+    }
+  }
+
   def readMultiLine(input: BufferedReader, lineCounter0: Int): Pair = {
     var lineCounter: Int = lineCounter0
     var line: String = input.readLine()
@@ -172,17 +185,18 @@ class SimpleFormatParser extends Parser {
       if (line.startsWith(ParserConstant.CommentSymbol)) {
         new Pair(lineCounter, "")
       } else {
-        var multiLine: String = line.trim()
-        while (multiLine.endsWith(ParserConstant.LineContinuationSymbol)) {
-          multiLine = multiLine.substring(0, multiLine.length() - ParserConstant.LineContinuationSymbol.length()) + ParserConstant.Space
+        val sb: StringBuilder = new StringBuilder()
+        while (isMultiLine(line)) {
+          sb.append(getCleanLine(line))
+          sb.append(ParserConstant.Space)
           line = input.readLine()
           if (Objects.nonNull(line)) {
-            line = line.trim()
             lineCounter += 1
-            multiLine += line
           }
         }
-        new Pair(lineCounter, multiLine)
+        sb.append(getCleanLine(line));
+
+        new Pair(lineCounter, sb.toString());
       }
     }
   }
