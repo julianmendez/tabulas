@@ -7,6 +7,7 @@ import de.tudresden.inf.lat.tabulas.table.TableMap
 
 /**
  * Renderer.
+ * 
  */
 trait Renderer {
 
