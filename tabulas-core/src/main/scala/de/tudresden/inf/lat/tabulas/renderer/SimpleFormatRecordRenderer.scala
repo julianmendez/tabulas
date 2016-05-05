@@ -18,18 +18,17 @@ import de.tudresden.inf.lat.tabulas.parser.ParserConstant
  */
 class SimpleFormatRecordRenderer extends RecordRenderer {
 
-  val Prefix: String = "" +
-    ParserConstant.CommentSymbol + " simple format 1.0.0" + ParserConstant.NewLine
-
   private var output: Writer = new OutputStreamWriter(System.out)
 
   def this(output: Writer) = {
     this()
+    Objects.requireNonNull(output)
     this.output = output
   }
 
   def this(output: UncheckedWriter) = {
     this()
+    Objects.requireNonNull(output)
     this.output = output.asWriter()
   }
 
