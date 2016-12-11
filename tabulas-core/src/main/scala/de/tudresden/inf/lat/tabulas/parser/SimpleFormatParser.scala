@@ -169,7 +169,7 @@ class SimpleFormatParser extends Parser {
   def getCleanLine(line: String): String = {
     val trimmedLine: String = line.trim()
     if (isMultiLine(line)) {
-      trimmedLine.substring(0, trimmedLine.length() - ParserConstant.LineContinuationSymbol.length())
+      trimmedLine.substring(0, trimmedLine.length() - ParserConstant.LineContinuationSymbol.length()).trim()
     } else {
       trimmedLine
     }
