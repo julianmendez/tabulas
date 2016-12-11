@@ -28,7 +28,8 @@ import de.tudresden.inf.lat.tabulas.table.TableMapImpl
 class MainTest {
 
   val InputFileName: String = "src/test/resources/example.properties"
-  val ExpectedOutputFileName: String = "src/test/resources/example-modified.properties"
+  val ExpectedOutputFileName: String = "src/test/resources/example-expected.properties"
+  val ModifiedOutputFileName: String = "src/test/resources/example-modified.properties"
 
   val TypeNameRecord: String = "record"
   val FieldNameAuthors: String = "authors"
@@ -49,6 +50,26 @@ class MainTest {
     new StringValue("" + size)
   }
 
+  def assertContent(tableMap: TableMap, fileName: String): Unit = {
+    // Store the table map
+    val writer: StringWriter = new StringWriter()
+    val renderer: SimpleFormatRenderer = new SimpleFormatRenderer(writer)
+    renderer.render(tableMap)
+
+    // Read the expected output
+    val sbuf: StringBuffer = new StringBuffer()
+    val reader: BufferedReader = new BufferedReader(new FileReader(fileName))
+    var line = reader.readLine()
+    while (Objects.nonNull(line)) {
+      sbuf.append(line + NewLine)
+      line = reader.readLine()
+    }
+    reader.close()
+
+    // Compare the expected output with the actual output
+    Assert.assertEquals(sbuf.toString(), writer.toString())
+  }
+
   @Test
   def addNewFieldOldTest(): Unit = {
 
@@ -62,6 +83,8 @@ class MainTest {
     // val newTableMap: TableMapImpl = new TableMapImpl(oldTableMap)
     val newTableMap: TableMapImpl = new TableMapImpl()
     oldTableMap.getTableIds().foreach(tableId => newTableMap.put(tableId, oldTableMap.getTable(tableId)))
+
+    assertContent(newTableMap, ExpectedOutputFileName)
 
     // Get the main table
     val table: Table = newTableMap.getTable(TypeNameRecord)
@@ -91,23 +114,7 @@ class MainTest {
     // Compute the number of authors for each record
     table.getRecords().foreach(record => record.set(FieldNameNumberOfAuthors, computeFieldValue(record)))
 
-    // Store the new table map
-    val writer: StringWriter = new StringWriter()
-    val renderer: SimpleFormatRenderer = new SimpleFormatRenderer(writer)
-    renderer.render(newTableMap)
-
-    // Read the expected output
-    val sbuf: StringBuffer = new StringBuffer()
-    val reader: BufferedReader = new BufferedReader(new FileReader(ExpectedOutputFileName))
-    var line = reader.readLine()
-    while (Objects.nonNull(line)) {
-      sbuf.append(line + NewLine)
-      line = reader.readLine()
-    }
-    reader.close()
-
-    // Compare the expected output with the actual output
-    Assert.assertEquals(sbuf.toString(), writer.toString())
+    assertContent(newTableMap, ModifiedOutputFileName)
   }
 
 }
