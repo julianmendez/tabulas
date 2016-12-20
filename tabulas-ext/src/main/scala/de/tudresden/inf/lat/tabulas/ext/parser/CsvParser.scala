@@ -75,7 +75,7 @@ class CsvParser extends Parser {
     var tableType: CompositeTypeImpl = new CompositeTypeImpl()
     fields.foreach(fieldName => tableType.declareField(fieldName, DefaultFieldType))
 
-    val ret = new TableImpl()
+    val ret: TableImpl = new TableImpl()
     ret.setType(tableType)
     return ret
   }

@@ -40,12 +40,12 @@ class StringValue extends PrimitiveTypeValue {
     return new StringType();
   }
 
-  override def render(): String = {
-    return str
-  }
-
   override def isEmpty(): Boolean = {
     return str.trim().isEmpty()
+  }
+
+  override def render(): String = {
+    return str
   }
 
   override def renderAsList(): List[String] = {
