@@ -62,9 +62,9 @@ class HtmlRenderer extends Renderer {
     if (Objects.nonNull(str) && !str.toString().trim().isEmpty()) {
       output.write(str.toString())
       output.write("\n")
-      true
+      return true
     } else {
-      false
+      return false
     }
   }
 
@@ -79,9 +79,9 @@ class HtmlRenderer extends Renderer {
           writeStringIfNotEmpty(output, strVal)
         }
       })
-      true
+      return true
     } else {
-      false
+      return false
     }
   }
 
@@ -93,9 +93,9 @@ class HtmlRenderer extends Renderer {
       output.write(link.getLabel())
       output.write(")</a>")
       output.write("\n")
-      true
+      return true
     } else {
-      false
+      return false
     }
   }
 

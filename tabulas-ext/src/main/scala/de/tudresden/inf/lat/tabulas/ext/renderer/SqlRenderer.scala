@@ -55,7 +55,7 @@ class SqlRenderer extends Renderer {
   }
 
   def sanitize(str: String): String = {
-    str.replace(Apostrophe, ApostropheReplacement)
+    return str.replace(Apostrophe, ApostropheReplacement)
   }
 
   def writeStringIfNotEmpty(output: UncheckedWriter, field: String, value: StringValue): Boolean = {
@@ -64,10 +64,10 @@ class SqlRenderer extends Renderer {
       output.write(Apostrophe)
       output.write(sanitize(value.toString()))
       output.write(Apostrophe)
-      true
+      return true
     } else {
       output.write(Null)
-      false
+      return false
     }
   }
 
@@ -79,10 +79,10 @@ class SqlRenderer extends Renderer {
         output.write(ParserConstant.Space)
       })
       output.write(Apostrophe)
-      true
+      return true
     } else {
       output.write(Null)
-      false
+      return false
     }
   }
 
@@ -92,10 +92,10 @@ class SqlRenderer extends Renderer {
       output.write(Apostrophe)
       output.write(sanitize(link.toString()))
       output.write(Apostrophe)
-      true
+      return true
     } else {
       output.write(Null)
-      false
+      return false
     }
   }
 

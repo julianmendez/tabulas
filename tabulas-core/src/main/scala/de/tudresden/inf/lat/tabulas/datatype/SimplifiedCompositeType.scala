@@ -21,30 +21,30 @@ class SimplifiedCompositeType extends CompositeType {
   }
 
   override def getFields(): List[String] = {
-    this.dataType.getFields()
+    return this.dataType.getFields()
   }
 
   override def getFieldType(field: String): Optional[String] = {
-    this.dataType.getFieldType(field)
+    return this.dataType.getFieldType(field)
   }
 
   override def hashCode(): Int = {
-    this.dataType.hashCode()
+    return this.dataType.hashCode()
   }
 
   override def equals(obj: Any): Boolean = {
     if (Objects.isNull(obj)) {
-      false
+      return false
     } else if (obj.isInstanceOf[SimplifiedCompositeType]) {
       val other: SimplifiedCompositeType = obj.asInstanceOf[SimplifiedCompositeType]
-      (this.dataType.equals(other.dataType))
+      return (this.dataType.equals(other.dataType))
     } else {
-      false
+      return false
     }
   }
 
   override def toString(): String = {
-    this.dataType.toString()
+    return this.dataType.toString()
   }
 
 }

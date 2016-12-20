@@ -68,7 +68,7 @@ class CsvParser extends Parser {
     if (!current.toString().isEmpty()) {
       ret.add(current.toString())
     }
-    ret
+    return ret
   }
 
   private def createSortedTable(fields: List[String]): TableImpl = {
@@ -77,7 +77,7 @@ class CsvParser extends Parser {
 
     val ret = new TableImpl()
     ret.setType(tableType)
-    ret
+    return ret
   }
 
   def normalize(fieldName: String): String = {
@@ -92,7 +92,7 @@ class CsvParser extends Parser {
       }
       ret.append(ch)
     })
-    ret.toString()
+    return ret.toString()
   }
 
   def normalizeHeaders(headers: List[String], lineCounter: Int): List[String] = {
@@ -112,7 +112,7 @@ class CsvParser extends Parser {
         ret.add(fieldName)
       }
     }
-    ret
+    return ret
   }
 
   def parseMap(input: BufferedReader): TableMap = {
@@ -157,12 +157,12 @@ class CsvParser extends Parser {
 
     val ret: TableMapImpl = new TableMapImpl()
     ret.put(DefaultTableName, currentTable)
-    ret
+    return ret
   }
 
   override def parse(): TableMap = {
     try {
-      parseMap(new BufferedReader(this.input))
+      return parseMap(new BufferedReader(this.input))
 
     } catch {
       case e: IOException => {

@@ -35,7 +35,7 @@ class TableMapImpl extends TableMap {
   def getTableIds(): List[String] = {
     val ret: List[String] = new ArrayList[String]()
     ret.addAll(this.map.keySet())
-    ret
+    return ret
   }
 
   /**
@@ -58,11 +58,11 @@ class TableMapImpl extends TableMap {
    * @return the table associated to the given identifier
    */
   def getTable(id: String): Table = {
-    this.map.get(id)
+    return this.map.get(id)
   }
 
   override def hashCode(): Int = {
-    this.map.hashCode()
+    return this.map.hashCode()
   }
 
   override def equals(obj: Any): Boolean = {
@@ -71,9 +71,9 @@ class TableMapImpl extends TableMap {
       var ret: Boolean = getTableIds().equals(other.getTableIds())
       val tableIds: List[String] = getTableIds()
       ret = ret && tableIds.forall(tableId => getTable(tableId).equals(other.getTable(tableId)))
-      ret
+      return ret
     } else {
-      false
+      return false
     }
   }
 
@@ -86,7 +86,7 @@ class TableMapImpl extends TableMap {
       sbuf.append(getTable(tableId))
       sbuf.append("\n")
     })
-    sbuf.toString()
+    return sbuf.toString()
   }
 
 }

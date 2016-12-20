@@ -34,13 +34,13 @@ class RecordImpl extends Record {
 
   override def get(key: String): Optional[PrimitiveTypeValue] = {
     if (Objects.isNull(key)) {
-      Optional.empty()
+      return Optional.empty()
     } else {
       val value: PrimitiveTypeValue = this.map.get(key);
       if (Objects.isNull(value)) {
-        Optional.empty()
+        return Optional.empty()
       } else {
-        Optional.of(value)
+        return Optional.of(value)
       }
     }
   }
@@ -54,28 +54,28 @@ class RecordImpl extends Record {
   override def getProperties(): List[String] = {
     val ret: List[String] = new ArrayList[String]
     ret.addAll(map.keySet())
-    ret
+    return ret
   }
 
   override def equals(o: Any): Boolean = {
     if (this == o) {
-      true
+      return true
     } else if (o.isInstanceOf[Record]) {
       val other: Record = o.asInstanceOf[Record]
       var ret: Boolean = getProperties().equals(other.getProperties())
       ret = ret && getProperties().forall(property => get(property).equals(other.get(property)))
-      ret
+      return ret
     } else {
-      false
+      return false
     }
   }
 
   override def hashCode(): Int = {
-    this.map.hashCode()
+    return this.map.hashCode()
   }
 
   override def toString(): String = {
-    this.map.toString()
+    return this.map.toString()
   }
 
 }

@@ -45,7 +45,7 @@ class ParameterizedListValue extends ArrayList[PrimitiveTypeValue] with Primitiv
   }
 
   override def getType(): PrimitiveType = {
-    new ParameterizedListType(this.parameter)
+    return new ParameterizedListType(this.parameter)
   }
 
   def add(str: String): Unit = {
@@ -64,13 +64,13 @@ class ParameterizedListValue extends ArrayList[PrimitiveTypeValue] with Primitiv
       }
       sbuf.append(str)
     }
-    sbuf.toString()
+    return sbuf.toString()
   }
 
   override def renderAsList(): List[String] = {
     val ret: List[String] = new ArrayList[String]()
     this.foreach(elem => ret.add(elem.render()))
-    Collections.unmodifiableList(ret)
+    return Collections.unmodifiableList(ret)
   }
 
   override def compareTo(obj: PrimitiveTypeValue): Int = {
@@ -80,14 +80,14 @@ class ParameterizedListValue extends ArrayList[PrimitiveTypeValue] with Primitiv
       if (ret == 0) {
         ret = toString().compareTo(other.toString())
       }
-      ret
+      return ret
     } else {
-      toString().compareTo(obj.toString())
+      return toString().compareTo(obj.toString())
     }
   }
 
   def getParameter(): PrimitiveType = {
-    this.parameter
+    return this.parameter
   }
 
 }

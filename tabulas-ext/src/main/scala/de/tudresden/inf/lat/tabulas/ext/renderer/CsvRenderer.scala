@@ -40,7 +40,7 @@ class CsvRenderer extends Renderer {
   }
 
   def sanitize(str: String): String = {
-    str.replace(Quotes, QuotesReplacement)
+    return str.replace(Quotes, QuotesReplacement)
   }
 
   def writeStringIfNotEmpty(output: UncheckedWriter, field: String, value: StringValue): Boolean = {
@@ -49,10 +49,10 @@ class CsvRenderer extends Renderer {
       output.write(Quotes)
       output.write(sanitize(value.toString()))
       output.write(Quotes)
-      true
+      return true
     } else {
       output.write(Null)
-      false
+      return false
     }
   }
 
@@ -64,10 +64,10 @@ class CsvRenderer extends Renderer {
         output.write(ParserConstant.Space)
       })
       output.write(Quotes)
-      true
+      return true
     } else {
       output.write(Null)
-      false
+      return false
     }
   }
 
@@ -76,10 +76,10 @@ class CsvRenderer extends Renderer {
       output.write(Quotes)
       output.write(sanitize(link.toString()))
       output.write(Quotes)
-      true
+      return true
     } else {
       output.write(Null)
-      false
+      return false
     }
   }
 

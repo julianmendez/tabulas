@@ -47,7 +47,7 @@ class MainTest {
   def computeFieldValue(record: Record): StringValue = {
     val value: PrimitiveTypeValue = record.get(FieldNameAuthors).get()
     val size: Int = if (Objects.isNull(value)) { 0 } else { value.renderAsList().size() }
-    new StringValue("" + size)
+    return new StringValue("" + size)
   }
 
   def assertContent(tableMap: TableMap, fileName: String): Unit = {

@@ -43,9 +43,9 @@ class WikitextRenderer extends Renderer {
       output.write(prefix)
       output.write(str.toString())
       output.write("\n")
-      true
+      return true
     } else {
-      false
+      return false
     }
   }
 
@@ -61,9 +61,9 @@ class WikitextRenderer extends Renderer {
           writeStringIfNotEmpty(output, "", strVal)
         }
       })
-      true
+      return true
     } else {
-      false
+      return false
     }
   }
 
@@ -76,9 +76,9 @@ class WikitextRenderer extends Renderer {
       output.write(link.getLabel())
       output.write(")]")
       output.write("\n")
-      true
+      return true
     } else {
-      false
+      return false
     }
   }
 

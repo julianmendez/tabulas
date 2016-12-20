@@ -51,9 +51,9 @@ class SimpleFormatRecordRenderer extends RecordRenderer {
         output.write(value.toString())
 
       }
-      true
+      return true
     } else {
-      false
+      return false
     }
   }
 

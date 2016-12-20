@@ -34,7 +34,7 @@ class TableImpl extends Table {
   }
 
   override def getType(): CompositeType = {
-    this.tableType
+    return this.tableType
   }
 
   def setType(newType: CompositeType): Unit = {
@@ -43,18 +43,18 @@ class TableImpl extends Table {
 
   def add(record: Record): Boolean = {
     if (Objects.isNull(record)) {
-      false
+      return false
     } else {
-      this.list.add(record)
+      return this.list.add(record)
     }
   }
 
   def addId(id: String): Boolean = {
-    this.identifiers.add(id)
+    return this.identifiers.add(id)
   }
 
   override def getSortingOrder(): List[String] = {
-    this.sortingOrder
+    return this.sortingOrder
   }
 
   def setSortingOrder(sortingOrder: List[String]): Unit = {
@@ -65,7 +65,7 @@ class TableImpl extends Table {
   }
 
   override def getFieldsWithReverseOrder(): Set[String] = {
-    this.fieldsWithReverseOrder
+    return this.fieldsWithReverseOrder
   }
 
   def setFieldsWithReverseOrder(fieldsWithReverseOrder: Set[String]): Unit = {
@@ -79,32 +79,32 @@ class TableImpl extends Table {
     val ret: List[Record] = new ArrayList[Record]
     ret.addAll(this.list)
     Collections.sort(ret, new RecordComparator(this.sortingOrder))
-    ret
+    return ret
   }
 
   override def getIdentifiers(): Set[String] = {
-    this.identifiers
+    return this.identifiers
   }
 
   override def hashCode(): Int = {
-    this.sortingOrder.hashCode() + 0x1F * (this.fieldsWithReverseOrder.hashCode() + 0x1F * (this.list.hashCode() + 0x1F * this.tableType.hashCode()))
+    return this.sortingOrder.hashCode() + 0x1F * (this.fieldsWithReverseOrder.hashCode() + 0x1F * (this.list.hashCode() + 0x1F * this.tableType.hashCode()))
   }
 
   override def equals(obj: Any): Boolean = {
     if (obj.isInstanceOf[Table]) {
       val other: Table = obj.asInstanceOf[Table]
-      getSortingOrder().equals(other.getSortingOrder()) &&
+      return getSortingOrder().equals(other.getSortingOrder()) &&
         getFieldsWithReverseOrder().equals(other.getFieldsWithReverseOrder()) &&
         getType().equals(other.getType()) &&
         getRecords().equals(other.getRecords()) &&
         getIdentifiers().equals(other.getIdentifiers())
     } else {
-      false
+      return false
     }
   }
 
   override def toString(): String = {
-    this.tableType.toString() + " " + this.sortingOrder + " " + this.fieldsWithReverseOrder.toString() + " " + this.list.toString()
+    return this.tableType.toString() + " " + this.sortingOrder + " " + this.fieldsWithReverseOrder.toString() + " " + this.list.toString()
   }
 
 }

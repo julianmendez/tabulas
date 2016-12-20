@@ -34,58 +34,58 @@ class RecordComparator extends Comparator[Record] {
   }
 
   def getSortingOrder(): List[String] = {
-    this.sortingOrder
+    return this.sortingOrder
   }
 
   def getFieldsWithReverseOrder(): Set[String] = {
-    this.fieldsWithReverseOrder
+    return this.fieldsWithReverseOrder
   }
 
   override def compare(record0: Record, record1: Record): Int = {
     if (Objects.isNull(record0)) {
-      if (Objects.isNull(record1)) { 0 } else { -1 }
+      if (Objects.isNull(record1)) { return 0 } else { return -1 }
     } else {
-      if (Objects.isNull(record1)) { 1 } else {
+      if (Objects.isNull(record1)) { return 1 } else {
         var ret: Int = 0
         val it: Iterator[String] = this.sortingOrder.iterator()
         while (it.hasNext() && (ret == 0)) {
           val token: String = it.next()
           ret = compareValues(record0.get(token), record1.get(token), this.fieldsWithReverseOrder.contains(token))
         }
-        ret
+        return ret
       }
     }
   }
 
   def compareValues(optValue0: Optional[PrimitiveTypeValue], optValue1: Optional[PrimitiveTypeValue], hasReverseOrder: Boolean): Int = {
     if (hasReverseOrder) {
-      compareValues(optValue1, optValue0, false)
+      return compareValues(optValue1, optValue0, false)
     } else {
       if (optValue0.isPresent()) {
-        if (optValue1.isPresent()) { optValue0.get().compareTo(optValue1.get()) } else { 1 }
+        if (optValue1.isPresent()) { return optValue0.get().compareTo(optValue1.get()) } else { return 1 }
       } else {
-        if (optValue1.isPresent()) { -1 } else { 0 }
+        if (optValue1.isPresent()) { return -1 } else { return 0 }
       }
     }
   }
 
   override def equals(o: Any): Boolean = {
     if (this == o) {
-      true
+      return true
     } else if (o.isInstanceOf[RecordComparator]) {
       val other: RecordComparator = o.asInstanceOf[RecordComparator]
-      this.sortingOrder.equals(other.sortingOrder)
+      return this.sortingOrder.equals(other.sortingOrder)
     } else {
-      false
+      return false
     }
   }
 
   override def hashCode(): Int = {
-    this.sortingOrder.hashCode()
+    return this.sortingOrder.hashCode()
   }
 
   override def toString(): String = {
-    this.sortingOrder.toString()
+    return this.sortingOrder.toString()
   }
 
 }

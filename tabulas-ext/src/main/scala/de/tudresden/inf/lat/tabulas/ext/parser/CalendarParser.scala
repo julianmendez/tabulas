@@ -41,11 +41,11 @@ class CalendarParser extends Parser {
     private val lineCounter: Int = lineCounter0;
 
     def getLine(): String = {
-      this.line
+      return this.line
     }
 
     def getLineCounter(): Int = {
-      this.lineCounter
+      return this.lineCounter
     }
 
   }
@@ -342,7 +342,7 @@ class CalendarParser extends Parser {
 
   override def parse(): TableMap = {
     try {
-      parseMap(new BufferedReader(this.input))
+      return parseMap(new BufferedReader(this.input))
 
     } catch {
       case e: IOException => {

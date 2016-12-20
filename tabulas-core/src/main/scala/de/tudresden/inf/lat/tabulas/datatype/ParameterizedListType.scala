@@ -21,11 +21,11 @@ class ParameterizedListType extends PrimitiveType {
   }
 
   override def getTypeName(): String = {
-    TypePrefix + this.parameter.getTypeName()
+    return TypePrefix + this.parameter.getTypeName()
   }
 
   override def isList(): Boolean = {
-    true
+    return true
   }
 
   override def parse(str: String): ParameterizedListValue = {
@@ -34,34 +34,34 @@ class ParameterizedListType extends PrimitiveType {
     while (stok.hasMoreTokens()) {
       ret.add(this.parameter.parse(stok.nextToken()))
     }
-    ret
+    return ret
   }
 
   def getParameter(): PrimitiveType = {
-    this.parameter
+    return this.parameter
   }
 
   def castInstance(value: PrimitiveTypeValue): ParameterizedListValue = {
-    parse(value.render())
+    return parse(value.render())
   }
 
   override def hashCode(): Int = {
-    this.parameter.hashCode()
+    return this.parameter.hashCode()
   }
 
   override def equals(obj: Any): Boolean = {
     if (Objects.isNull(obj)) {
-      false
+      return false
     } else if (obj.isInstanceOf[ParameterizedListType]) {
       val other: ParameterizedListType = obj.asInstanceOf[ParameterizedListType]
-      (this.parameter.equals(other.parameter))
+      return (this.parameter.equals(other.parameter))
     } else {
-      false
+      return false
     }
   }
 
   override def toString(): String = {
-    getTypeName()
+    return getTypeName()
   }
 
 }

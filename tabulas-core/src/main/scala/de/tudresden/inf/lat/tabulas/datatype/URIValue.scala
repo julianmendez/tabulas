@@ -42,12 +42,12 @@ class URIValue extends PrimitiveTypeValue {
   }
 
   override def getType(): PrimitiveType = {
-    new URIType()
+    return new URIType()
   }
 
   def createURI(uriStr: String): URI = {
     try {
-      new URI(uriStr)
+      return new URI(uriStr)
     } catch {
       case e: URISyntaxException => {
         throw new ParseException("Invalid URI '" + uriStr + "'.", e)
@@ -56,16 +56,16 @@ class URIValue extends PrimitiveTypeValue {
   }
 
   def getUri(): URI = {
-    this.uri
+    return this.uri
   }
 
   def getUriNoLabel(): URI = {
     val uriStr: String = this.uri.toASCIIString()
     val pos: Int = uriStr.lastIndexOf(SpecialSymbol)
     if (pos == -1) {
-      this.uri
+      return this.uri
     } else {
-      createURI(uriStr.substring(0, pos))
+      return createURI(uriStr.substring(0, pos))
     }
   }
 
@@ -73,45 +73,45 @@ class URIValue extends PrimitiveTypeValue {
     val uriStr: String = this.uri.toASCIIString()
     val pos: Int = uriStr.lastIndexOf(SpecialSymbol);
     if (pos == -1) {
-      ""
+      return ""
     } else {
-      uriStr.substring(pos + SpecialSymbol.length())
+      return uriStr.substring(pos + SpecialSymbol.length())
     }
   }
 
   override def isEmpty(): Boolean = {
-    (getUri().toASCIIString().trim().isEmpty())
+    return (getUri().toASCIIString().trim().isEmpty())
   }
 
   override def render(): String = {
-    this.uri.toASCIIString()
+    return this.uri.toASCIIString()
   }
 
   override def renderAsList(): List[String] = {
     val ret: List[String] = new ArrayList[String]()
     ret.add(render())
-    Collections.unmodifiableList(ret)
+    return Collections.unmodifiableList(ret)
   }
 
   override def compareTo(other: PrimitiveTypeValue): Int = {
-    toString().compareTo(other.toString())
+    return toString().compareTo(other.toString())
   }
 
   override def hashCode(): Int = {
-    this.uri.hashCode()
+    return this.uri.hashCode()
   }
 
   override def equals(obj: Any): Boolean = {
     if (!(obj.isInstanceOf[URIValue])) {
-      false
+      return false
     } else {
       val other: URIValue = obj.asInstanceOf[URIValue];
-      getUri().equals(other.getUri())
+      return getUri().equals(other.getUri())
     }
   }
 
   override def toString(): String = {
-    render()
+    return render()
   }
 
 }

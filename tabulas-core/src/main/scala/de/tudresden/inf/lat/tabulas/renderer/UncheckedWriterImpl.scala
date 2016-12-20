@@ -105,7 +105,7 @@ class UncheckedWriterImpl extends UncheckedWriter {
         throw new UncheckedIOException(e)
       }
     }
-    this
+    return this
   }
 
   override def append(charSequence: CharSequence): UncheckedWriter = {
@@ -116,7 +116,7 @@ class UncheckedWriterImpl extends UncheckedWriter {
         throw new UncheckedIOException(e)
       }
     }
-    this
+    return this
   }
 
   override def append(charSequence: CharSequence, start: Int, end: Int): UncheckedWriter = {
@@ -127,23 +127,23 @@ class UncheckedWriterImpl extends UncheckedWriter {
         throw new UncheckedIOException(e)
       }
     }
-    this
+    return this
   }
 
   override def asWriter(): Writer = {
-    this.writer
+    return this.writer
   }
 
   override def hashCode(): Int = {
-    this.writer.hashCode()
+    return this.writer.hashCode()
   }
 
   override def equals(obj: Any): Boolean = {
     if (!(obj.isInstanceOf[UncheckedWriter])) {
-      false
+      return false
     } else {
       val other: UncheckedWriter = obj.asInstanceOf[UncheckedWriter];
-      asWriter().equals(other.asWriter())
+      return asWriter().equals(other.asWriter())
     }
   }
 

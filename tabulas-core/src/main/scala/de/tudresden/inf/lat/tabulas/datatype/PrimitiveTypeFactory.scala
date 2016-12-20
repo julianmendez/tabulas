@@ -35,7 +35,7 @@ class PrimitiveTypeFactory {
    *         primitive type
    */
   def contains(primType: String): Boolean = {
-    this.map.containsKey(primType)
+    return this.map.containsKey(primType)
   }
 
   /**
@@ -52,7 +52,7 @@ class PrimitiveTypeFactory {
     if (Objects.isNull(primType)) {
       throw new ParseException("Type '" + typeName + "' is undefined.")
     } else {
-      primType.parse(value)
+      return primType.parse(value)
     }
   }
 

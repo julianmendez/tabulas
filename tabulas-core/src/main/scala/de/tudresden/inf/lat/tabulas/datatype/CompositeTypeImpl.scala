@@ -33,16 +33,16 @@ class CompositeTypeImpl extends CompositeType {
   }
 
   override def getFields(): List[String] = {
-    Collections.unmodifiableList(this.fields)
+    return Collections.unmodifiableList(this.fields)
   }
 
   override def getFieldType(field: String): Optional[String] = {
     Objects.requireNonNull(field)
     val value: String = this.fieldType.get(field)
     if (Objects.isNull(value)) {
-      Optional.empty()
+      return Optional.empty()
     } else {
-      Optional.of(value)
+      return Optional.of(value)
     }
   }
 
@@ -64,7 +64,7 @@ class CompositeTypeImpl extends CompositeType {
   }
 
   override def hashCode(): Int = {
-    this.fields.hashCode() + (0x1F * this.fieldType.hashCode())
+    return this.fields.hashCode() + (0x1F * this.fieldType.hashCode())
   }
 
   override def equals(obj: Any): Boolean = {
@@ -75,15 +75,15 @@ class CompositeTypeImpl extends CompositeType {
         val fields: List[String] = getFields()
         ret = ret && fields.forall(field => getFieldType(field).equals(other.getFieldType(field)))
       }
-      ret
+      return ret
     }
-    false
+    return false
   }
 
   override def toString(): String = {
     val sbuf: StringBuffer = new StringBuffer()
     this.fields.foreach(field => sbuf.append(field + ":" + this.fieldType.get(field) + " "))
-    sbuf.toString()
+    return sbuf.toString()
   }
 
 }

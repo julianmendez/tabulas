@@ -47,7 +47,7 @@ class ExtensionManager extends Extension {
 
   override def process(arguments: List[String]): Boolean = {
     if (Objects.isNull(arguments) || arguments.size() < RequiredArguments) {
-      false
+      return false
     } else {
       val command: String = arguments.get(0)
       val newArguments: List[String] = new ArrayList[String]()
@@ -59,13 +59,13 @@ class ExtensionManager extends Extension {
           + "' was not found.")
       } else {
         extension.process(newArguments)
-        true
+        return true
       }
     }
   }
 
   override def getExtensionName(): String = {
-    Name
+    return Name
   }
 
   override def getHelp(): String = {
@@ -76,11 +76,11 @@ class ExtensionManager extends Extension {
       sbuf.append(extension.getHelp())
       sbuf.append(NewLine)
     })
-    sbuf.toString()
+    return sbuf.toString()
   }
 
   override def getRequiredArguments(): Int = {
-    RequiredArguments
+    return RequiredArguments
   }
 
 }

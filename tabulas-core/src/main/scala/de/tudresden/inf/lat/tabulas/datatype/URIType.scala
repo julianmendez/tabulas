@@ -12,36 +12,36 @@ class URIType extends PrimitiveType {
   val TypeName: String = "URI"
 
   override def getTypeName(): String = {
-    TypeName
+    return TypeName
   }
 
   override def isList(): Boolean = {
-    false
+    return false
   }
 
   override def parse(str: String): URIValue = {
-    new URIValue(str)
+    return new URIValue(str)
   }
 
   def castInstance(value: PrimitiveTypeValue): URIValue = {
     Objects.requireNonNull(value)
-    parse(value.render())
+    return parse(value.render())
   }
 
   override def hashCode(): Int = {
-    getTypeName().hashCode()
+    return getTypeName().hashCode()
   }
 
   override def equals(obj: Any): Boolean = {
     if (Objects.isNull(obj)) {
-      false
+      return false
     } else {
-      (obj.isInstanceOf[URIType])
+      return (obj.isInstanceOf[URIType])
     }
   }
 
   override def toString(): String = {
-    getTypeName()
+    return getTypeName()
   }
 
 }
