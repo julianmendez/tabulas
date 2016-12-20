@@ -70,9 +70,7 @@ class RecordComparator extends Comparator[Record] {
   }
 
   override def equals(o: Any): Boolean = {
-    if (this == o) {
-      return true
-    } else if (o.isInstanceOf[RecordComparator]) {
+    if (o.isInstanceOf[RecordComparator]) {
       val other: RecordComparator = o.asInstanceOf[RecordComparator]
       return this.sortingOrder.equals(other.sortingOrder)
     } else {

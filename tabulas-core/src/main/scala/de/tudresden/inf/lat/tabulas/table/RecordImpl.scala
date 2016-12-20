@@ -58,9 +58,7 @@ class RecordImpl extends Record {
   }
 
   override def equals(o: Any): Boolean = {
-    if (this == o) {
-      return true
-    } else if (o.isInstanceOf[Record]) {
+    if (o.isInstanceOf[Record]) {
       val other: Record = o.asInstanceOf[Record]
       var ret: Boolean = getProperties().equals(other.getProperties())
       ret = ret && getProperties().forall(property => get(property).equals(other.get(property)))
