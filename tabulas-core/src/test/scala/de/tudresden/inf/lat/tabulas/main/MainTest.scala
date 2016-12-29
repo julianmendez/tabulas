@@ -59,11 +59,10 @@ class MainTest {
     // Read the expected output
     val sbuf: StringBuffer = new StringBuffer()
     val reader: BufferedReader = new BufferedReader(new FileReader(fileName))
-    var line = reader.readLine()
-    while (Objects.nonNull(line)) {
+    reader.lines().toArray().foreach(obj => {
+      val line = obj.asInstanceOf[String]
       sbuf.append(line + NewLine)
-      line = reader.readLine()
-    }
+    });
     reader.close()
 
     // Compare the expected output with the actual output

@@ -171,11 +171,9 @@ class CalendarParser extends Parser {
     var sbuf: StringBuffer = new StringBuffer()
     var finish: Boolean = false
     var lineCounter: Int = 0
-    while (!finish) {
-      var line: String = input.readLine()
-      if (Objects.isNull(line)) {
-        finish = true
-      } else if (line.startsWith("" + SpaceChar)) {
+    input.lines().toArray().foreach(obj => {
+      val line = obj.asInstanceOf[String]
+      if (line.startsWith("" + SpaceChar)) {
         sbuf.append(line)
       } else {
         ret.add(new Pair(lineCounter, sbuf.toString()))
@@ -183,7 +181,7 @@ class CalendarParser extends Parser {
         sbuf.append(line)
       }
       lineCounter += 1
-    }
+    });
     return ret
   }
 
