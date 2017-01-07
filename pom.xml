@@ -67,6 +67,7 @@
 					<configuration>
 						<args>
 							<arg>-P:genjavadoc:out=${project.build.directory}/genjavadoc/</arg>
+							<arg>-deprecation</arg>
 						</args>
 						<compilerPlugins>
 							<compilerPlugin>
