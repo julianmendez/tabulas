@@ -25,7 +25,7 @@ trait Table extends CompositeTypeValue {
    * @param sortingOrder
    *            sorting order
    */
-  def setSortingOrder(sortingOrder: List[String])
+  def setSortingOrder(sortingOrder: List[String]): Unit
 
   /**
    * Returns the fields that are supposed to be sorted in reverse order.
