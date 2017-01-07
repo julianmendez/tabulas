@@ -5,7 +5,7 @@ import java.io.FileReader
 import java.io.StringWriter
 import java.util.Objects
 
-import scala.collection.JavaConversions.asScalaBuffer
+import scala.collection.JavaConverters.asScalaBufferConverter
 
 import org.junit.Assert
 import org.junit.Test
@@ -81,7 +81,7 @@ class MainTest {
     // Make a copy of the tableMap
     // val newTableMap: TableMapImpl = new TableMapImpl(oldTableMap)
     val newTableMap: TableMapImpl = new TableMapImpl()
-    oldTableMap.getTableIds().foreach(tableId => newTableMap.put(tableId, oldTableMap.getTable(tableId)))
+    oldTableMap.getTableIds().asScala.foreach(tableId => newTableMap.put(tableId, oldTableMap.getTable(tableId)))
 
     assertContent(newTableMap, ExpectedOutputFileName)
 
@@ -100,7 +100,7 @@ class MainTest {
     // Make a copy of type
     // val newType: CompositeTypeImpl = new CompositeTypeImpl(oldType)
     val newType: CompositeTypeImpl = new CompositeTypeImpl()
-    oldType.getFields().foreach(field => newType.declareField(field, oldType.getFieldType(field).get()))
+    oldType.getFields().asScala.foreach(field => newType.declareField(field, oldType.getFieldType(field).get()))
 
     // Add new declaration with number of authors
     if (!newType.getFields().contains(FieldNameNumberOfAuthors)) {
@@ -111,7 +111,7 @@ class MainTest {
     newTable.setType(newType)
 
     // Compute the number of authors for each record
-    table.getRecords().foreach(record => record.set(FieldNameNumberOfAuthors, computeFieldValue(record)))
+    table.getRecords().asScala.foreach(record => record.set(FieldNameNumberOfAuthors, computeFieldValue(record)))
 
     assertContent(newTableMap, ModifiedOutputFileName)
   }
