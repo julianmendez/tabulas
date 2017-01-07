@@ -8,8 +8,8 @@ import java.util.Map
 import java.util.Objects
 import java.util.Optional
 
-import scala.collection.JavaConversions.asScalaBuffer
-import scala.collection.JavaConversions.asScalaSet
+import scala.collection.JavaConverters.asScalaBufferConverter
+import scala.collection.JavaConverters.asScalaSetConverter
 
 import de.tudresden.inf.lat.tabulas.datatype.CompositeTypeValue
 import de.tudresden.inf.lat.tabulas.datatype.ParameterizedListValue
@@ -52,7 +52,7 @@ class WikitextRenderer extends Renderer {
   def writeParameterizedListIfNotEmpty(output: UncheckedWriter, prefix: String, list: ParameterizedListValue): Boolean = {
     if (Objects.nonNull(list)) {
       output.write(prefix);
-      list.foreach(value => {
+      list.asScala.foreach(value => {
         if (value.getType().equals(new URIType())) {
           val link: URIValue = (new URIType()).castInstance(value)
           writeLinkIfNotEmpty(output, "", link)
@@ -84,7 +84,7 @@ class WikitextRenderer extends Renderer {
 
   def render(output: UncheckedWriter, record: Record, fields: List[String]): Unit = {
 
-    fields.foreach(field => {
+    fields.asScala.foreach(field => {
       val optValue: Optional[PrimitiveTypeValue] = record.get(field)
       output.write("|")
       if (optValue.isPresent()) {
@@ -116,7 +116,7 @@ class WikitextRenderer extends Renderer {
     val list: List[Record] = table.getRecords()
     output.write("{|\n")
     output.write("|-\n")
-    list.foreach(record => {
+    list.asScala.foreach(record => {
       render(output, record, table.getType().getFields())
       output.write("|-\n")
     })
@@ -126,7 +126,7 @@ class WikitextRenderer extends Renderer {
   def renderMap(output: UncheckedWriter, map: Map[String, String]): Unit = {
     output.write("{| border=\"1\"\n")
     output.write("|-\n")
-    map.keySet().foreach(key => {
+    map.keySet().asScala.foreach(key => {
       val value: String = map.get(key)
       output.write("| ")
       output.write(key)
@@ -142,7 +142,7 @@ class WikitextRenderer extends Renderer {
 
   def render(output: UncheckedWriter, tableMap: TableMap): Unit = {
     output.write("\n")
-    tableMap.getTableIds().foreach(tableId => {
+    tableMap.getTableIds().asScala.foreach(tableId => {
       val table: Table = tableMap.getTable(tableId)
       renderAllRecords(output, table)
     })

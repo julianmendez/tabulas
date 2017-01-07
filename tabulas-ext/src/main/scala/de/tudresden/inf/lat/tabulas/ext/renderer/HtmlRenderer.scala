@@ -8,8 +8,8 @@ import java.util.Map
 import java.util.Objects
 import java.util.Optional
 
-import scala.collection.JavaConversions.asScalaBuffer
-import scala.collection.JavaConversions.asScalaSet
+import scala.collection.JavaConverters.asScalaBufferConverter
+import scala.collection.JavaConverters.asScalaSetConverter
 
 import de.tudresden.inf.lat.tabulas.datatype.ParameterizedListValue
 import de.tudresden.inf.lat.tabulas.datatype.PrimitiveTypeValue
@@ -70,7 +70,7 @@ class HtmlRenderer extends Renderer {
 
   def writeParameterizedListIfNotEmpty(output: UncheckedWriter, list: ParameterizedListValue): Boolean = {
     if (Objects.nonNull(list)) {
-      list.foreach(value => {
+      list.asScala.foreach(value => {
         if (value.getType().equals(new URIType())) {
           val link: URIValue = (new URIType()).castInstance(value)
           writeLinkIfNotEmpty(output, link)
@@ -100,7 +100,7 @@ class HtmlRenderer extends Renderer {
   }
 
   def render(output: UncheckedWriter, record: Record, fields: List[String]): Unit = {
-    fields.foreach(field => {
+    fields.asScala.foreach(field => {
       val optValue: Optional[PrimitiveTypeValue] = record.get(field)
       if (optValue.isPresent()) {
         val value: PrimitiveTypeValue = optValue.get()
@@ -136,7 +136,7 @@ class HtmlRenderer extends Renderer {
   def renderAllRecords(output: UncheckedWriter, table: Table): Unit = {
     val list: List[Record] = table.getRecords()
     output.write("<table summary=\"\">\n")
-    list.foreach(record => {
+    list.asScala.foreach(record => {
       output.write("<tr>\n")
       render(output, record, table.getType().getFields())
       output.write("</tr>\n")
@@ -146,7 +146,7 @@ class HtmlRenderer extends Renderer {
 
   def renderMap(output: UncheckedWriter, map: Map[String, String]): Unit = {
     output.write("<table summary=\"\" border=\"1\">\n")
-    map.keySet().foreach(key => {
+    map.keySet().asScala.foreach(key => {
       val value: String = map.get(key)
       output.write("<tr>\n")
       output.write("<td>")
@@ -163,7 +163,7 @@ class HtmlRenderer extends Renderer {
 
   def render(output: UncheckedWriter, tableMap: TableMap): Unit = {
     output.write(Prefix)
-    tableMap.getTableIds().foreach(tableName => {
+    tableMap.getTableIds().asScala.foreach(tableName => {
       val table: Table = tableMap.getTable(tableName)
       renderAllRecords(output, table)
     })

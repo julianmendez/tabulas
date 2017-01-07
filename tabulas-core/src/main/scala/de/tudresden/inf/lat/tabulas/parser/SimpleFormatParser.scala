@@ -15,7 +15,7 @@ import java.util.StringTokenizer
 import java.util.TreeMap
 import java.util.TreeSet
 
-import scala.collection.JavaConversions.asScalaSet
+import scala.collection.JavaConverters.asScalaSetConverter
 
 import de.tudresden.inf.lat.tabulas.datatype.CompositeType
 import de.tudresden.inf.lat.tabulas.datatype.CompositeTypeImpl
@@ -311,7 +311,7 @@ class SimpleFormatParser extends Parser {
     }
 
     val ret: TableMapImpl = new TableMapImpl()
-    mapOfTables.keySet().foreach(key => ret.put(key, mapOfTables.get(key)))
+    mapOfTables.keySet().asScala.foreach(key => ret.put(key, mapOfTables.get(key)))
     ret
   }
 

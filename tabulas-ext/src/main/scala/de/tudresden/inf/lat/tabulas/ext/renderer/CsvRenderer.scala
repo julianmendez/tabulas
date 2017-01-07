@@ -8,7 +8,7 @@ import java.util.Objects
 import java.util.Optional
 
 import scala.Range
-import scala.collection.JavaConversions.asScalaBuffer
+import scala.collection.JavaConverters.asScalaBufferConverter
 
 import de.tudresden.inf.lat.tabulas.datatype.ParameterizedListValue
 import de.tudresden.inf.lat.tabulas.datatype.PrimitiveTypeValue
@@ -59,7 +59,7 @@ class CsvRenderer extends Renderer {
   def writeParameterizedListIfNotEmpty(output: UncheckedWriter, field: String, list: ParameterizedListValue): Boolean = {
     if (Objects.nonNull(list) && !list.isEmpty()) {
       output.write(Quotes)
-      list.foreach(value => {
+      list.asScala.foreach(value => {
         output.write(sanitize(value.toString()))
         output.write(ParserConstant.Space)
       })
@@ -86,7 +86,7 @@ class CsvRenderer extends Renderer {
   def render(output: UncheckedWriter, record: Record, fields: List[String]): Unit = {
 
     var first: Boolean = true
-    for (field: String <- fields) {
+    for (field: String <- fields.asScala) {
       if (first) {
         first = false
       } else {
@@ -121,7 +121,7 @@ class CsvRenderer extends Renderer {
 
   def renderAllRecords(output: UncheckedWriter, table: Table): Unit = {
     val list: List[Record] = table.getRecords()
-    list.foreach(record => {
+    list.asScala.foreach(record => {
       render(output, record, table.getType().getFields())
     })
   }
@@ -140,7 +140,7 @@ class CsvRenderer extends Renderer {
 
   def renderTypeDefinition(output: UncheckedWriter, table: Table): Unit = {
     var first: Boolean = true
-    for (field: String <- table.getType().getFields()) {
+    for (field: String <- table.getType().getFields().asScala) {
       if (first) {
         first = false
       } else {
@@ -154,7 +154,7 @@ class CsvRenderer extends Renderer {
   }
 
   def render(output: UncheckedWriter, tableMap: TableMap): Unit = {
-    tableMap.getTableIds().foreach(tableName => {
+    tableMap.getTableIds().asScala.foreach(tableName => {
       val table: Table = tableMap.getTable(tableName)
       renderTypeSelection(output, tableName, table)
       renderTypeDefinition(output, table)

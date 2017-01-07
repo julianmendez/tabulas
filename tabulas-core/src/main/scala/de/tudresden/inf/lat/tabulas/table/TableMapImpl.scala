@@ -6,7 +6,7 @@ import java.util.List
 import java.util.Map
 import java.util.TreeMap
 
-import scala.collection.JavaConversions.asScalaBuffer
+import scala.collection.JavaConverters.asScalaBufferConverter
 
 /**
  * This is the default implementation of a table map.
@@ -24,7 +24,7 @@ class TableMapImpl extends TableMap {
    */
   def this(otherTableMap: TableMap) = {
     this()
-    otherTableMap.getTableIds().foreach(tableId => put(tableId, otherTableMap.getTable(tableId)))
+    otherTableMap.getTableIds().asScala.foreach(tableId => put(tableId, otherTableMap.getTable(tableId)))
   }
 
   /**
@@ -70,7 +70,7 @@ class TableMapImpl extends TableMap {
       val other: TableMap = obj.asInstanceOf[TableMap]
       var ret: Boolean = getTableIds().equals(other.getTableIds())
       val tableIds: List[String] = getTableIds()
-      ret = ret && tableIds.forall(tableId => getTable(tableId).equals(other.getTable(tableId)))
+      ret = ret && tableIds.asScala.forall(tableId => getTable(tableId).equals(other.getTable(tableId)))
       return ret
     } else {
       return false
@@ -80,7 +80,7 @@ class TableMapImpl extends TableMap {
   override def toString(): String = {
     val sbuf: StringBuffer = new StringBuffer()
     val tableIds: List[String] = getTableIds()
-    tableIds.foreach(tableId => {
+    tableIds.asScala.foreach(tableId => {
       sbuf.append(tableId)
       sbuf.append("=")
       sbuf.append(getTable(tableId))

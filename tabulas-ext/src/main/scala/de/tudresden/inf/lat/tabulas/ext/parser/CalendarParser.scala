@@ -12,8 +12,8 @@ import java.util.Optional
 import java.util.Stack
 import java.util.TreeMap
 
-import scala.collection.JavaConversions.asScalaBuffer
-import scala.collection.JavaConversions.asScalaSet
+import scala.collection.JavaConverters.asScalaBufferConverter
+import scala.collection.JavaConverters.asScalaSetConverter
 
 import de.tudresden.inf.lat.tabulas.datatype.CompositeType
 import de.tudresden.inf.lat.tabulas.datatype.ParseException
@@ -221,7 +221,7 @@ class CalendarParser extends Parser {
     generatedIds.add(newValue)
     val sbuf: StringBuffer = new StringBuffer()
     var firstTime: Boolean = true
-    for (counter: Int <- generatedIds) {
+    for (counter: Int <- generatedIds.asScala) {
       if (firstTime) {
         firstTime = false
       } else {
@@ -260,7 +260,7 @@ class CalendarParser extends Parser {
     val lines: List[Pair] = preload(input)
     var lineCounter: Int = 0
     var firstTime: Boolean = true
-    for (pair: Pair <- lines) {
+    for (pair: Pair <- lines.asScala) {
       val line: String = pair.getLine()
       lineCounter = pair.getLineCounter()
       if (Objects.nonNull(line) && !line.trim().isEmpty()) {
@@ -330,7 +330,7 @@ class CalendarParser extends Parser {
     }
 
     val ret: TableMapImpl = new TableMapImpl()
-    map.keySet().foreach(key => ret.put(key, map.get(key)))
+    map.keySet().asScala.foreach(key => ret.put(key, map.get(key)))
     return ret
   }
 

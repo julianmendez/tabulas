@@ -4,8 +4,9 @@ package de.tudresden.inf.lat.tabulas.datatype
 import java.util.ArrayList
 import java.util.Collections
 import java.util.List
-import scala.collection.JavaConversions.asScalaBuffer
 import java.util.Objects
+
+import scala.collection.JavaConverters.asScalaBufferConverter
 
 /**
  * This models a list of elements with a parameterized type.
@@ -56,7 +57,7 @@ class ParameterizedListValue extends ArrayList[PrimitiveTypeValue] with Primitiv
     val sbuf: StringBuffer = new StringBuffer()
     val list: List[String] = renderAsList()
     var first: Boolean = true
-    for (str: String <- list) {
+    for (str: String <- list.asScala) {
       if (first) {
         first = false
       } else {
@@ -69,7 +70,7 @@ class ParameterizedListValue extends ArrayList[PrimitiveTypeValue] with Primitiv
 
   override def renderAsList(): List[String] = {
     val ret: List[String] = new ArrayList[String]()
-    this.foreach(elem => ret.add(elem.render()))
+    this.asScala.foreach(elem => ret.add(elem.render()))
     return Collections.unmodifiableList(ret)
   }
 

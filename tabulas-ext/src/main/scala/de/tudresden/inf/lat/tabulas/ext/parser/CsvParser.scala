@@ -10,7 +10,7 @@ import java.util.List
 import java.util.Objects
 
 import scala.Range
-import scala.collection.JavaConversions.asScalaBuffer
+import scala.collection.JavaConverters.asScalaBufferConverter
 
 import de.tudresden.inf.lat.tabulas.datatype.CompositeTypeImpl
 import de.tudresden.inf.lat.tabulas.datatype.ParseException
@@ -73,7 +73,7 @@ class CsvParser extends Parser {
 
   private def createSortedTable(fields: List[String]): TableImpl = {
     var tableType: CompositeTypeImpl = new CompositeTypeImpl()
-    fields.foreach(fieldName => tableType.declareField(fieldName, DefaultFieldType))
+    fields.asScala.foreach(fieldName => tableType.declareField(fieldName, DefaultFieldType))
 
     val ret: TableImpl = new TableImpl()
     ret.setType(tableType)
@@ -98,7 +98,7 @@ class CsvParser extends Parser {
   def normalizeHeaders(headers: List[String], lineCounter: Int): List[String] = {
     val ret: List[String] = new ArrayList[String]()
     var idCount: Int = 0
-    for (header: String <- headers) {
+    for (header: String <- headers.asScala) {
       val fieldName: String = normalize(header)
       if (fieldName.equals(ParserConstant.IdKeyword)) {
         idCount += 1
@@ -137,7 +137,7 @@ class CsvParser extends Parser {
 
         val record: RecordImpl = new RecordImpl()
         var index: Int = 0
-        for (column: String <- columns) {
+        for (column: String <- columns.asScala) {
           var field: String = fieldNames.get(index)
           var value: StringValue = new StringValue(column)
           record.set(field, value)

@@ -9,7 +9,7 @@ import java.util.Objects
 import java.util.Optional
 import java.util.TreeMap
 
-import scala.collection.JavaConversions.asScalaBuffer
+import scala.collection.JavaConverters.asScalaBufferConverter
 
 /**
  * Default implementation of a composite type.
@@ -29,7 +29,7 @@ class CompositeTypeImpl extends CompositeType {
   def this(otherType: CompositeType) = {
     this()
     Objects.requireNonNull(otherType)
-    otherType.getFields().foreach(field => declareField(field, otherType.getFieldType(field).get))
+    otherType.getFields().asScala.foreach(field => declareField(field, otherType.getFieldType(field).get))
   }
 
   override def getFields(): List[String] = {
@@ -73,7 +73,7 @@ class CompositeTypeImpl extends CompositeType {
       var ret: Boolean = getFields().equals(other.getFields())
       if (ret) {
         val fields: List[String] = getFields()
-        ret = ret && fields.forall(field => getFieldType(field).equals(other.getFieldType(field)))
+        ret = ret && fields.asScala.forall(field => getFieldType(field).equals(other.getFieldType(field)))
       }
       return ret
     }
@@ -82,7 +82,7 @@ class CompositeTypeImpl extends CompositeType {
 
   override def toString(): String = {
     val sbuf: StringBuffer = new StringBuffer()
-    this.fields.foreach(field => sbuf.append(field + ":" + this.fieldType.get(field) + " "))
+    this.fields.asScala.foreach(field => sbuf.append(field + ":" + this.fieldType.get(field) + " "))
     return sbuf.toString()
   }
 

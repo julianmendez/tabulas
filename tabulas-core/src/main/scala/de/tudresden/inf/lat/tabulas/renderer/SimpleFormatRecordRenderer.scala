@@ -7,7 +7,7 @@ import java.util.List
 import java.util.Objects
 import java.util.Optional
 
-import scala.collection.JavaConversions.asScalaBuffer
+import scala.collection.JavaConverters.asScalaBufferConverter
 
 import de.tudresden.inf.lat.tabulas.datatype.PrimitiveTypeValue
 import de.tudresden.inf.lat.tabulas.datatype.Record
@@ -39,7 +39,7 @@ class SimpleFormatRecordRenderer extends RecordRenderer {
       output.write(ParserConstant.Space + ParserConstant.EqualsSign)
       if (value.getType().isList()) {
         val list: List[String] = value.renderAsList()
-        list.foreach(link => {
+        list.asScala.foreach(link => {
           output.write(ParserConstant.Space + ParserConstant.LineContinuationSymbol)
           output.write(ParserConstant.NewLine)
           output.write(ParserConstant.Space)
@@ -62,7 +62,7 @@ class SimpleFormatRecordRenderer extends RecordRenderer {
     output.write(ParserConstant.NewRecordToken + ParserConstant.Space)
     output.write(ParserConstant.EqualsSign + ParserConstant.Space)
 
-    fields.foreach(field => {
+    fields.asScala.foreach(field => {
       val optValue: Optional[PrimitiveTypeValue] = record.get(field)
       if (optValue.isPresent()) {
         writeIfNotEmpty(output, field, optValue.get());

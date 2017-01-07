@@ -5,7 +5,7 @@ import java.io.OutputStreamWriter
 import java.io.Writer
 import java.util.List
 
-import scala.collection.JavaConversions.asScalaBuffer
+import scala.collection.JavaConverters.asScalaBufferConverter
 
 import de.tudresden.inf.lat.tabulas.datatype.Record
 import de.tudresden.inf.lat.tabulas.parser.ParserConstant
@@ -31,7 +31,7 @@ class SimpleFormatRenderer extends Renderer {
     val recordRenderer: SimpleFormatRecordRenderer = new SimpleFormatRecordRenderer(output)
     output.write(ParserConstant.NewLine);
     val list: List[Record] = table.getRecords()
-    list.foreach(record => {
+    list.asScala.foreach(record => {
       recordRenderer.render(output, record, table.getType().getFields())
       output.write(ParserConstant.NewLine)
     })
@@ -52,7 +52,7 @@ class SimpleFormatRenderer extends Renderer {
     output.write(ParserConstant.TypeDefinitionToken + ParserConstant.Space)
     output.write(ParserConstant.EqualsSign)
 
-    table.getType().getFields().foreach(field => {
+    table.getType().getFields().asScala.foreach(field => {
       output.write(ParserConstant.Space + ParserConstant.LineContinuationSymbol)
       output.write(ParserConstant.NewLine)
       output.write(ParserConstant.Space)
@@ -68,7 +68,7 @@ class SimpleFormatRenderer extends Renderer {
     output.write(ParserConstant.SortingOrderDeclarationToken + ParserConstant.Space)
     output.write(ParserConstant.EqualsSign)
 
-    table.getSortingOrder().foreach(field => {
+    table.getSortingOrder().asScala.foreach(field => {
       output.write(ParserConstant.Space + ParserConstant.LineContinuationSymbol)
       output.write(ParserConstant.NewLine)
       output.write(ParserConstant.Space)
@@ -82,7 +82,7 @@ class SimpleFormatRenderer extends Renderer {
 
   def render(output: UncheckedWriter, tableMap: TableMap): Unit = {
     output.write(Prefix)
-    tableMap.getTableIds().foreach(tableName => {
+    tableMap.getTableIds().asScala.foreach(tableName => {
       val table: Table = tableMap.getTable(tableName)
       renderTypeSelection(output, tableName, table)
       renderTypeDefinition(output, table)

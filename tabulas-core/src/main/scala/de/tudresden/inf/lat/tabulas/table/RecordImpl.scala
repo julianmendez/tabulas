@@ -8,7 +8,7 @@ import java.util.Objects
 import java.util.Optional
 import java.util.TreeMap
 
-import scala.collection.JavaConversions.asScalaBuffer
+import scala.collection.JavaConverters.asScalaBufferConverter
 
 import de.tudresden.inf.lat.tabulas.datatype.PrimitiveTypeValue
 import de.tudresden.inf.lat.tabulas.datatype.Record
@@ -29,7 +29,7 @@ class RecordImpl extends Record {
    */
   def this(otherRecord: Record) = {
     this()
-    otherRecord.getProperties().foreach(property => set(property, otherRecord.get(property).get()))
+    otherRecord.getProperties().asScala.foreach(property => set(property, otherRecord.get(property).get()))
   }
 
   override def get(key: String): Optional[PrimitiveTypeValue] = {
@@ -61,7 +61,7 @@ class RecordImpl extends Record {
     if (o.isInstanceOf[Record]) {
       val other: Record = o.asInstanceOf[Record]
       var ret: Boolean = getProperties().equals(other.getProperties())
-      ret = ret && getProperties().forall(property => get(property).equals(other.get(property)))
+      ret = ret && getProperties().asScala.forall(property => get(property).equals(other.get(property)))
       return ret
     } else {
       return false

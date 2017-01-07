@@ -6,7 +6,7 @@ import java.util.Map
 import java.util.Objects
 import java.util.TreeMap
 
-import scala.collection.JavaConversions.asScalaBuffer
+import scala.collection.JavaConverters.asScalaBufferConverter
 
 /**
  * This models an extension that can execute other extensions.
@@ -33,7 +33,7 @@ class ExtensionManager extends Extension {
     this()
     if (Objects.nonNull(extensions)) {
       this.extensions.addAll(extensions)
-      extensions.foreach(extension => {
+      extensions.asScala.foreach(extension => {
         val key: String = extension.getExtensionName()
         if (this.extensionMap.containsKey(key)) {
           throw new ExtensionException(
@@ -70,7 +70,7 @@ class ExtensionManager extends Extension {
 
   override def getHelp(): String = {
     val sbuf: StringBuffer = new StringBuffer()
-    this.extensions.foreach(extension => {
+    this.extensions.asScala.foreach(extension => {
       sbuf.append(extension.getExtensionName())
       sbuf.append(Space)
       sbuf.append(extension.getHelp())

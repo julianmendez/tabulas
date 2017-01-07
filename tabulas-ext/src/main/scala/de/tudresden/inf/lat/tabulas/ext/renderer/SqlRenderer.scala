@@ -7,7 +7,7 @@ import java.util.List
 import java.util.Objects
 import java.util.Optional
 
-import scala.collection.JavaConversions.asScalaBuffer
+import scala.collection.JavaConverters.asScalaBufferConverter
 
 import de.tudresden.inf.lat.tabulas.datatype.CompositeTypeValue
 import de.tudresden.inf.lat.tabulas.datatype.ParameterizedListValue
@@ -74,7 +74,7 @@ class SqlRenderer extends Renderer {
   def writeParameterizedListIfNotEmpty(output: UncheckedWriter, field: String, list: ParameterizedListValue): Boolean = {
     if (Objects.nonNull(list) && !list.isEmpty()) {
       output.write(Apostrophe)
-      list.foreach(value => {
+      list.asScala.foreach(value => {
         output.write(sanitize(value.toString()))
         output.write(ParserConstant.Space)
       })
@@ -112,7 +112,7 @@ class SqlRenderer extends Renderer {
     output.write(ParserConstant.Space)
 
     var first: Boolean = true
-    for (field: String <- fields) {
+    for (field: String <- fields.asScala) {
       if (first) {
         first = false
       } else {
@@ -150,7 +150,7 @@ class SqlRenderer extends Renderer {
   def renderAllRecords(output: UncheckedWriter, tableName: String, table: CompositeTypeValue): Unit = {
     val list: List[Record] = table.getRecords()
     output.write(ParserConstant.NewLine)
-    list.foreach(record => {
+    list.asScala.foreach(record => {
       render(output, tableName, record, table.getType().getFields())
       output.write(ParserConstant.NewLine)
     })
@@ -164,7 +164,7 @@ class SqlRenderer extends Renderer {
     output.write(LeftPar)
     output.write(ParserConstant.NewLine)
     var first: Boolean = true
-    for (field: String <- table.getType().getFields()) {
+    for (field: String <- table.getType().getFields().asScala) {
       if (first) {
         first = false
       } else {
@@ -192,7 +192,7 @@ class SqlRenderer extends Renderer {
     output.write(ParserConstant.Space)
 
     var first: Boolean = true
-    for (field: String <- table.getSortingOrder()) {
+    for (field: String <- table.getSortingOrder().asScala) {
       if (first) {
         first = false
       } else {
@@ -224,7 +224,7 @@ class SqlRenderer extends Renderer {
 
   def render(output: UncheckedWriter, tableMap: TableMap): Unit = {
     renderPrefix(output)
-    tableMap.getTableIds().foreach(tableName => {
+    tableMap.getTableIds().asScala.foreach(tableName => {
       val table: Table = tableMap.getTable(tableName)
       renderTypes(output, tableName, table)
       renderAllRecords(output, tableName, table)
