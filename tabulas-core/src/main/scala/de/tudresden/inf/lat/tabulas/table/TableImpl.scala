@@ -4,12 +4,13 @@ package de.tudresden.inf.lat.tabulas.table
 import java.util.ArrayList
 import java.util.Collections
 import java.util.List
+import java.util.Objects
 import java.util.Set
 import java.util.TreeSet
+
 import de.tudresden.inf.lat.tabulas.datatype.CompositeType
 import de.tudresden.inf.lat.tabulas.datatype.CompositeTypeImpl
 import de.tudresden.inf.lat.tabulas.datatype.Record
-import java.util.Objects
 
 /**
  * This is the default implementation of a sorted table.
@@ -18,7 +19,6 @@ class TableImpl extends Table {
 
   private var tableType: CompositeType = new CompositeTypeImpl()
   private val list: List[Record] = new ArrayList[Record]
-  private val identifiers: Set[String] = new TreeSet[String]()
   private val sortingOrder: List[String] = new ArrayList[String]
   private val fieldsWithReverseOrder: Set[String] = new TreeSet[String]()
 
@@ -37,11 +37,11 @@ class TableImpl extends Table {
     return this.tableType
   }
 
-  def setType(newType: CompositeType): Unit = {
+  override def setType(newType: CompositeType): Unit = {
     this.tableType = newType
   }
 
-  def add(record: Record): Boolean = {
+  override def add(record: Record): Boolean = {
     if (Objects.isNull(record)) {
       return false
     } else {
@@ -49,15 +49,11 @@ class TableImpl extends Table {
     }
   }
 
-  def addId(id: String): Boolean = {
-    return this.identifiers.add(id)
-  }
-
   override def getSortingOrder(): List[String] = {
     return this.sortingOrder
   }
 
-  def setSortingOrder(sortingOrder: List[String]): Unit = {
+  override def setSortingOrder(sortingOrder: List[String]): Unit = {
     this.sortingOrder.clear()
     if (Objects.nonNull(sortingOrder)) {
       this.sortingOrder.addAll(sortingOrder)
@@ -68,7 +64,7 @@ class TableImpl extends Table {
     return this.fieldsWithReverseOrder
   }
 
-  def setFieldsWithReverseOrder(fieldsWithReverseOrder: Set[String]): Unit = {
+  override def setFieldsWithReverseOrder(fieldsWithReverseOrder: Set[String]): Unit = {
     this.fieldsWithReverseOrder.clear()
     if (Objects.nonNull(fieldsWithReverseOrder)) {
       this.fieldsWithReverseOrder.addAll(fieldsWithReverseOrder)
@@ -82,10 +78,6 @@ class TableImpl extends Table {
     return ret
   }
 
-  override def getIdentifiers(): Set[String] = {
-    return this.identifiers
-  }
-
   override def hashCode(): Int = {
     return this.sortingOrder.hashCode() + 0x1F * (this.fieldsWithReverseOrder.hashCode() + 0x1F * (this.list.hashCode() + 0x1F * this.tableType.hashCode()))
   }
@@ -96,8 +88,7 @@ class TableImpl extends Table {
       return getSortingOrder().equals(other.getSortingOrder()) &&
         getFieldsWithReverseOrder().equals(other.getFieldsWithReverseOrder()) &&
         getType().equals(other.getType()) &&
-        getRecords().equals(other.getRecords()) &&
-        getIdentifiers().equals(other.getIdentifiers())
+        getRecords().equals(other.getRecords())
     } else {
       return false
     }

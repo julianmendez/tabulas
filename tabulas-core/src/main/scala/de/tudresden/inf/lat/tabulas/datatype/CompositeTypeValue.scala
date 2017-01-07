@@ -10,11 +10,19 @@ import java.util.List
 trait CompositeTypeValue {
 
   /**
-   * Returns the type of this table.
+   * Returns the type of this composite type value.
    *
-   * @return the type of this table
+   * @return the type of this composite type value
    */
   def getType(): CompositeType
+
+  /**
+   * Sets the type of this composite type value.
+   *
+   * @param newType
+   *            type
+   */
+  def setType(newType: CompositeType): Unit
 
   /**
    * Returns all the records.
@@ -22,6 +30,17 @@ trait CompositeTypeValue {
    * @return all the records
    */
   def getRecords(): List[Record]
+
+  /**
+   * Adds a record. Returns <code>true</code> if and only if this composite
+   * type value changed as a result of the call.
+   *
+   * @param record
+   *            record
+   * @return <code>true</code> if and only if this composite type value
+   *         changed as a result of the call
+   */
+  def add(record: Record): Boolean
 
 }
 

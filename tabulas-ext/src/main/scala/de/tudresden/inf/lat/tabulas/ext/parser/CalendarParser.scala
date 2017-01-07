@@ -23,11 +23,18 @@ import de.tudresden.inf.lat.tabulas.datatype.Record
 import de.tudresden.inf.lat.tabulas.datatype.SimplifiedCompositeType
 import de.tudresden.inf.lat.tabulas.datatype.StringValue
 import de.tudresden.inf.lat.tabulas.parser.Parser
-import de.tudresden.inf.lat.tabulas.parser.ParserConstant
 import de.tudresden.inf.lat.tabulas.table.RecordImpl
 import de.tudresden.inf.lat.tabulas.table.TableImpl
 import de.tudresden.inf.lat.tabulas.table.TableMap
 import de.tudresden.inf.lat.tabulas.table.TableMapImpl
+import de.tudresden.inf.lat.tabulas.table.TableImpl
+import de.tudresden.inf.lat.tabulas.table.RecordImpl
+import de.tudresden.inf.lat.tabulas.table.TableMapImpl
+import de.tudresden.inf.lat.tabulas.datatype.PrimitiveTypeValue
+import de.tudresden.inf.lat.tabulas.datatype.SimplifiedCompositeType
+import de.tudresden.inf.lat.tabulas.datatype.PrimitiveTypeFactory
+import de.tudresden.inf.lat.tabulas.datatype.Record
+import de.tudresden.inf.lat.tabulas.table.TableMap
 
 /**
  * Parser of a calendar.
@@ -199,15 +206,6 @@ class CalendarParser extends Parser {
       val valueStr: String = optValueStr.get()
       val value: PrimitiveTypeValue = getTypedValue(key, valueStr,
         currentTable.getType(), lineCounter)
-      if (key.equals(ParserConstant.IdKeyword)) {
-        if (currentTable.getIdentifiers().contains(valueStr)) {
-          throw new ParseException("Identifier '"
-            + ParserConstant.IdKeyword + ParserConstant.Space
-            + ParserConstant.EqualsSign + ParserConstant.Space
-            + valueStr + "' is duplicated (line " + lineCounter
-            + ").")
-        }
-      }
       record.set(key, value)
     }
   }
@@ -278,21 +276,19 @@ class CalendarParser extends Parser {
           currentRecord = new RecordImpl()
           currentRecord.set(GeneratedIdFieldName, new StringValue(
             getGeneratedId(generatedIds, tableIdStack.size())))
-          val refTable: TableImpl = map.get(value)
-          if (Objects.isNull(refTable)) {
+          currentTableId = value
+          currentTable = map.get(value)
+          if (Objects.isNull(currentTable)) {
             throw new ParseException("Unknown type '" + value
               + "' (line " + lineCounter + ").")
           }
-          currentTableId = value
-          currentTable = refTable
 
         } else if (isEndLine(line)) {
           val foreignKey: String = currentRecord.get(GeneratedIdFieldName)
             .get().render()
           currentTable.add(currentRecord)
           val value: String = getValue(line).get()
-          val refTable: TableImpl = map.get(value)
-          if (Objects.isNull(refTable)) {
+          if (Objects.isNull(map.get(value))) {
             throw new ParseException("Unknown type '" + value
               + "' (line " + lineCounter + ").")
           }

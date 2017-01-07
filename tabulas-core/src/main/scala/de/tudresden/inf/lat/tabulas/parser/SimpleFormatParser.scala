@@ -221,7 +221,7 @@ class SimpleFormatParser extends Parser {
   }
 
   private def parseProperty(line: String, currentTable: TableImpl,
-    record: Record, lineCounter: Int): Unit = {
+    recordIdsOfCurrentTable: Set[String], record: Record, lineCounter: Int): Unit = {
     if (Objects.isNull(currentTable)) {
       throw new ParseException("New record was not declared (line "
         + lineCounter + ")")
@@ -234,7 +234,7 @@ class SimpleFormatParser extends Parser {
       val valueStr: String = optValueStr.get()
       val value: PrimitiveTypeValue = getTypedValue(key, valueStr, currentTable.getType(), lineCounter)
       if (key.equals(ParserConstant.IdKeyword)) {
-        if (currentTable.getIdentifiers().contains(valueStr)) {
+        if (recordIdsOfCurrentTable.contains(valueStr)) {
           throw new ParseException("Identifier '"
             + ParserConstant.IdKeyword + ParserConstant.Space
             + ParserConstant.EqualsSign + ParserConstant.Space
@@ -247,13 +247,16 @@ class SimpleFormatParser extends Parser {
   }
 
   def parseMap(input: BufferedReader): TableMap = {
-    val map: Map[String, TableImpl] = new TreeMap[String, TableImpl]()
+    val mapOfTables: Map[String, TableImpl] = new TreeMap[String, TableImpl]()
+    val mapOfRecordIdsOfTables: Map[String, Set[String]] = new TreeMap[String, Set[String]]()
 
     var line: String = ""
     var currentTable: TableImpl = null
+    var recordIdsOfCurrentTable: Set[String] = null
     var currentId: String = null
     var record: Record = null
     var lineCounter: Int = 0
+
     while (Objects.nonNull(line)) {
       var pair: Pair = readMultiLine(input, lineCounter)
       line = pair.getLine()
@@ -263,11 +266,13 @@ class SimpleFormatParser extends Parser {
           val optTableName: Optional[String] = getValue(line)
           if (optTableName.isPresent()) {
             val tableName: String = optTableName.get()
-            if (!map.containsKey(tableName)) {
-              map.put(tableName, new TableImpl(
+            if (!mapOfTables.containsKey(tableName)) {
+              mapOfTables.put(tableName, new TableImpl(
                 new TableImpl()))
+              mapOfRecordIdsOfTables.put(tableName, new TreeSet[String]())
             }
-            currentTable = map.get(tableName)
+            currentTable = mapOfTables.get(tableName)
+            recordIdsOfCurrentTable = mapOfRecordIdsOfTables.get(tableName)
           }
 
         } else if (isTypeDefinition(line)) {
@@ -282,14 +287,14 @@ class SimpleFormatParser extends Parser {
           currentId = null
 
         } else {
-          parseProperty(line, currentTable, record, lineCounter)
+          parseProperty(line, currentTable, recordIdsOfCurrentTable, record, lineCounter)
           if (isIdProperty(line)) {
             var successful: Boolean = false
             if (Objects.isNull(currentId)) {
               val optCurrentId: Optional[String] = getIdProperty(line)
               if (optCurrentId.isPresent()) {
                 currentId = optCurrentId.get()
-                successful = currentTable.addId(currentId)
+                successful = recordIdsOfCurrentTable.add(currentId)
               }
             }
             if (!successful) {
@@ -306,7 +311,7 @@ class SimpleFormatParser extends Parser {
     }
 
     val ret: TableMapImpl = new TableMapImpl()
-    map.keySet().foreach(key => ret.put(key, map.get(key)))
+    mapOfTables.keySet().foreach(key => ret.put(key, mapOfTables.get(key)))
     ret
   }
 

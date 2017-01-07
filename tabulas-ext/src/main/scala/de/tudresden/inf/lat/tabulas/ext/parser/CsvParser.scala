@@ -136,22 +136,15 @@ class CsvParser extends Parser {
         }
 
         val record: RecordImpl = new RecordImpl()
-        var currentId: String = null
         var index: Int = 0
         for (column: String <- columns) {
           var field: String = fieldNames.get(index)
-          if (field.equals(ParserConstant.IdKeyword)) {
-            currentId = column
-          }
           var value: StringValue = new StringValue(column)
           record.set(field, value)
           index += 1
         }
 
         currentTable.add(record)
-        if (Objects.nonNull(currentId)) {
-          currentTable.addId(currentId)
-        }
       }
     }
 

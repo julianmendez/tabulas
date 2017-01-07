@@ -4,7 +4,7 @@ package de.tudresden.inf.lat.tabulas.table
 import java.util.List
 import java.util.Set
 
-import de.tudresden.inf.lat.tabulas.datatype._
+import de.tudresden.inf.lat.tabulas.datatype.CompositeTypeValue
 
 /**
  * This models a sorted table.
@@ -13,11 +13,19 @@ import de.tudresden.inf.lat.tabulas.datatype._
 trait Table extends CompositeTypeValue {
 
   /**
-   * Returns the sorting order of the fields.
+   * Returns the sorting order for the fields.
    *
-   * @return the sorting order of the fields
+   * @return the sorting order for the fields
    */
   def getSortingOrder(): List[String]
+
+  /**
+   * Sets the sorting order for the fields.
+   *
+   * @param sortingOrder
+   *            sorting order
+   */
+  def setSortingOrder(sortingOrder: List[String])
 
   /**
    * Returns the fields that are supposed to be sorted in reverse order.
@@ -27,11 +35,12 @@ trait Table extends CompositeTypeValue {
   def getFieldsWithReverseOrder(): Set[String]
 
   /**
-   * Returns the identifiers of all added records.
+   *  Sets the fields that are supposed to be sorted in reverse order.
    *
-   * @return the identifiers of all added records
+   * @param fieldsWithReverseOrder
+   *            fields with reverse order
    */
-  def getIdentifiers(): Set[String]
+  def setFieldsWithReverseOrder(fieldsWithReverseOrder: Set[String]): Unit
 
 }
 
