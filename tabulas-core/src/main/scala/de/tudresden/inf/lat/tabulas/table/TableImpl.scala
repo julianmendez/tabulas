@@ -79,7 +79,7 @@ class TableImpl extends Table {
   override def getRecords(): List[Record] = {
     val ret: List[Record] = new ArrayList[Record]
     ret.addAll(this.list)
-    Collections.sort(ret, new RecordComparator(this.sortingOrder))
+    Collections.sort(ret, new RecordComparator(this.sortingOrder, this.fieldsWithReverseOrder))
     return ret
   }
 
