@@ -1,8 +1,8 @@
 package de.tudresden.inf.lat.tabulas.datatype;
 
-import java.util.TreeMap
 import java.util.Map
 import java.util.Objects
+import java.util.TreeMap
 
 /**
  * This models a factory of primitive types.
@@ -24,6 +24,8 @@ class PrimitiveTypeFactory {
     add(new ParameterizedListType(new StringType()))
     add(new URIType())
     add(new ParameterizedListType(new URIType()))
+    add(new IntegerType())
+    add(new ParameterizedListType(new IntegerType()))
   }
 
   /**

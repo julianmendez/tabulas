@@ -50,6 +50,17 @@ class MainTest {
     return new StringValue("" + size)
   }
 
+  def readFile(fileName: String): String = {
+    val sb: StringBuilder = new StringBuilder()
+    val reader: BufferedReader = new BufferedReader(new FileReader(fileName))
+    reader.lines().toArray().foreach(obj => {
+      val line = obj.asInstanceOf[String]
+      sb.append(line + NewLine)
+    });
+    reader.close()
+    return sb.toString()
+  }
+
   def assertContent(tableMap: TableMap, fileName: String): Unit = {
     // Store the table map
     val writer: StringWriter = new StringWriter()
@@ -57,20 +68,14 @@ class MainTest {
     renderer.render(tableMap)
 
     // Read the expected output
-    val sbuf: StringBuffer = new StringBuffer()
-    val reader: BufferedReader = new BufferedReader(new FileReader(fileName))
-    reader.lines().toArray().foreach(obj => {
-      val line = obj.asInstanceOf[String]
-      sbuf.append(line + NewLine)
-    });
-    reader.close()
+    val expectedOutput: String = readFile(fileName)
 
     // Compare the expected output with the actual output
-    Assert.assertEquals(sbuf.toString(), writer.toString())
+    Assert.assertEquals(expectedOutput, writer.toString())
   }
 
   @Test
-  def addNewFieldOldTest(): Unit = {
+  def testAddNewField(): Unit = {
 
     // This is an example of source code where the number of authors is
     // a computed value

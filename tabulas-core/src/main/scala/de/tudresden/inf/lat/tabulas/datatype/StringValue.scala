@@ -37,7 +37,7 @@ class StringValue extends PrimitiveTypeValue {
   }
 
   override def getType(): PrimitiveType = {
-    return new StringType();
+    return new StringType()
   }
 
   override def isEmpty(): Boolean = {
