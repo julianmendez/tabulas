@@ -42,5 +42,10 @@ trait CompositeTypeValue {
    */
   def add(record: Record): Boolean
 
+  /**
+   * Removes all of the records from this composite type value.
+   */
+  def clear(): Unit
+
 }
 

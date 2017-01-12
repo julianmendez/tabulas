@@ -22,15 +22,20 @@ class TableImpl extends Table {
   private val sortingOrder: List[String] = new ArrayList[String]
   private val fieldsWithReverseOrder: Set[String] = new TreeSet[String]()
 
+  def this(newType: CompositeType) = {
+    this()
+    this.tableType = newType
+  }
+
   def this(other: Table) = {
     this()
     this.tableType = other.getType()
     this.list.addAll(other.getRecords())
-  }
-
-  def this(newType: CompositeType) = {
-    this()
-    this.tableType = newType
+    if (other.isInstanceOf[Table]) {
+      val otherTable: Table = other.asInstanceOf[Table]
+      this.sortingOrder.addAll(otherTable.getSortingOrder())
+      this.fieldsWithReverseOrder.addAll(otherTable.getFieldsWithReverseOrder())
+    }
   }
 
   override def getType(): CompositeType = {
@@ -76,6 +81,10 @@ class TableImpl extends Table {
     ret.addAll(this.list)
     Collections.sort(ret, new RecordComparator(this.sortingOrder))
     return ret
+  }
+
+  override def clear(): Unit = {
+    return this.list.clear()
   }
 
   override def hashCode(): Int = {
