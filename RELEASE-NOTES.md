@@ -3,7 +3,7 @@
 
 | version | release date | Scala  | Tabula |
 |:--------|:-------------|:------:|:------:|
-| v0.3.0  | (unreleased) | 2.12.0 | 0.3.0  |
+| v0.3.0  | (unreleased) | 2.12.1 | 0.3.0  |
 | v0.2.0  | 2016-12-12   | 2.11.0 | 0.2.0  |
 | v0.1.0  | 2015-12-21   | 2.11.0 | 0.1.0  |
 
@@ -12,8 +12,8 @@
 ### v0.3.0
 *(unreleased)*
 * coordinated with [Tabula 0.3.0](https://github.com/julianmendez/tabula)
-* compiled with Scala 2.12.0
-* requires `scala-library-2.12.0.jar`
+* compiled with Scala 2.12.1
+* requires `scala-library-2.12.1.jar`
 * build command:
 
 ```
