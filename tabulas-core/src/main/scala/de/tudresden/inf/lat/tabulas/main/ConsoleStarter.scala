@@ -16,24 +16,35 @@ import de.tudresden.inf.lat.tabulas.extension.NormalizationExtension
  */
 class ConsoleStarter {
 
-  val Usage: String = "\nusage: java -jar (jarname) (extension) (input) (output)\n" + //
+  private val ErrorPrefix: String = "ERROR: "
+
+  private var help: String = "\nusage: java -jar (jarname) (extension) (input) (output)\n" + //
     "\nIf the extension is ommitted, the '" + (new NormalizationExtension()).Name + "' extension is executed." + //
     "\n\nThe available extensions are:" + "\n"
 
-  val ErrorPrefix: String = "ERROR: "
-
   var manager: ExtensionManager = null
 
- 	/**
-	 * Executes the application
+	/**
+	 * Constructs a new console starter.
 	 * 
-	 * @param extensions
-	 *            extensions
-	 * 
-	 * @param args
-	 *            console arguments
+	 * @param help
+	 *            help about usage
 	 */
- def run(extensions: List[Extension], args: Array[String]): Unit = {
+  def this(help: String) = {
+    this()
+    this.help = help
+  }
+
+  /**
+   * Executes the application
+   *
+   * @param extensions
+   *            extensions
+   *
+   * @param args
+   *            console arguments
+   */
+  def run(extensions: List[Extension], args: Array[String]): Unit = {
     Objects.requireNonNull(extensions);
     Objects.requireNonNull(args);
 
@@ -49,7 +60,7 @@ class ConsoleStarter {
     } catch {
       case e: ExtensionException => {
         System.out.println(ErrorPrefix + e.getMessage());
-        System.out.println(Usage + manager.getHelp());
+        System.out.println(help + manager.getHelp());
       }
     }
   }
