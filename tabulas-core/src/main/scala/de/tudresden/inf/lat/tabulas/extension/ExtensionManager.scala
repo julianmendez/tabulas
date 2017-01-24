@@ -1,5 +1,6 @@
 package de.tudresden.inf.lat.tabulas.extension
 
+import java.io.UncheckedIOException
 import java.util.ArrayList
 import java.util.List
 import java.util.Map
@@ -7,6 +8,8 @@ import java.util.Objects
 import java.util.TreeMap
 
 import scala.collection.JavaConverters.asScalaBufferConverter
+
+import de.tudresden.inf.lat.tabulas.datatype.ParseException
 
 /**
  * This models an extension that can execute other extensions.
@@ -46,8 +49,9 @@ class ExtensionManager extends Extension {
   }
 
   override def process(arguments: List[String]): Boolean = {
-    if (Objects.isNull(arguments) || arguments.size() < RequiredArguments) {
-      return false
+    Objects.requireNonNull(arguments)
+    if (arguments.size() < RequiredArguments) {
+      throw new ExtensionException("No extension name was given.")
     } else {
       val command: String = arguments.get(0)
       val newArguments: List[String] = new ArrayList[String]()
@@ -57,9 +61,16 @@ class ExtensionManager extends Extension {
       if (Objects.isNull(extension)) {
         throw new ExtensionException("Extension '" + command
           + "' was not found.")
+      } else if (newArguments.size() < extension.getRequiredArguments()) {
+        throw new ExtensionException("Insufficient number of arguments for extension '" + command + "'.")
       } else {
-        extension.process(newArguments)
-        return true
+        try {
+          return extension.process(newArguments)
+        } catch {
+          case e @ (_: ParseException | _: UncheckedIOException) => {
+            throw new ExtensionException(e.getMessage(), e)
+          }
+        }
       }
     }
   }
