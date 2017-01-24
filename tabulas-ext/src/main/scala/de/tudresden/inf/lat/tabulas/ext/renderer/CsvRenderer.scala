@@ -43,7 +43,7 @@ class CsvRenderer extends Renderer {
     return str.replace(Quotes, QuotesReplacement)
   }
 
-  def writeStringIfNotEmpty(output: UncheckedWriter, field: String, value: StringValue): Boolean = {
+  def writeAsStringIfNotEmpty(output: UncheckedWriter, field: String, value: PrimitiveTypeValue): Boolean = {
     if (Objects.nonNull(field) && !field.trim().isEmpty() && Objects.nonNull(value)
       && !value.toString().trim().isEmpty()) {
       output.write(Quotes)
@@ -95,11 +95,7 @@ class CsvRenderer extends Renderer {
       val optValue: Optional[PrimitiveTypeValue] = record.get(field)
       if (optValue.isPresent()) {
         val value: PrimitiveTypeValue = optValue.get()
-        if (value.isInstanceOf[StringValue]) {
-          val strVal: StringValue = value.asInstanceOf[StringValue]
-          writeStringIfNotEmpty(output, field, strVal)
-
-        } else if (value.isInstanceOf[ParameterizedListValue]) {
+        if (value.isInstanceOf[ParameterizedListValue]) {
           val list: ParameterizedListValue = value.asInstanceOf[ParameterizedListValue]
           writeParameterizedListIfNotEmpty(output, field, list)
 
@@ -108,8 +104,8 @@ class CsvRenderer extends Renderer {
           writeLinkIfNotEmpty(output, field, link)
 
         } else {
-          throw new IllegalStateException("Invalid value '"
-            + value.toString() + "'.")
+          writeAsStringIfNotEmpty(output, field, value)
+
         }
 
       } else {

@@ -58,9 +58,9 @@ class HtmlRenderer extends Renderer {
     this.output = output
   }
 
-  def writeStringIfNotEmpty(output: UncheckedWriter, str: StringValue): Boolean = {
-    if (Objects.nonNull(str) && !str.toString().trim().isEmpty()) {
-      output.write(str.toString())
+  def writeAsStringIfNotEmpty(output: UncheckedWriter, value: PrimitiveTypeValue): Boolean = {
+    if (Objects.nonNull(value) && !value.toString().trim().isEmpty()) {
+      output.write(value.toString())
       output.write("\n")
       return true
     } else {
@@ -76,7 +76,7 @@ class HtmlRenderer extends Renderer {
           writeLinkIfNotEmpty(output, link)
         } else {
           val strVal: StringValue = (new StringType()).castInstance(value)
-          writeStringIfNotEmpty(output, strVal)
+          writeAsStringIfNotEmpty(output, strVal)
         }
       })
       return true
@@ -104,13 +104,7 @@ class HtmlRenderer extends Renderer {
       val optValue: Optional[PrimitiveTypeValue] = record.get(field)
       if (optValue.isPresent()) {
         val value: PrimitiveTypeValue = optValue.get()
-        if (value.isInstanceOf[StringValue]) {
-          output.write("<td> ")
-          val strVal: StringValue = value.asInstanceOf[StringValue]
-          writeStringIfNotEmpty(output, strVal)
-          output.write(" </td>\n")
-
-        } else if (value.isInstanceOf[ParameterizedListValue]) {
+        if (value.isInstanceOf[ParameterizedListValue]) {
           output.write("<td> ")
           val list: ParameterizedListValue = value.asInstanceOf[ParameterizedListValue]
           writeParameterizedListIfNotEmpty(output, list)
@@ -123,7 +117,10 @@ class HtmlRenderer extends Renderer {
           output.write(" </td>\n")
 
         } else {
-          throw new IllegalStateException("Invalid value '" + value.toString() + "'.")
+          output.write("<td> ")
+          writeAsStringIfNotEmpty(output, value)
+          output.write(" </td>\n")
+
         }
 
       } else {
