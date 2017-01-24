@@ -5,6 +5,7 @@ import java.util.List
 
 import scala.Range
 
+import de.tudresden.inf.lat.tabulas.main.ConsoleStarter
 import de.tudresden.inf.lat.tabulas.ext.parser.CalendarParserExtension
 import de.tudresden.inf.lat.tabulas.ext.parser.CsvParserExtension
 import de.tudresden.inf.lat.tabulas.ext.renderer.CsvExtension
@@ -16,19 +17,19 @@ import de.tudresden.inf.lat.tabulas.extension.Extension
 import de.tudresden.inf.lat.tabulas.extension.ExtensionManager
 import de.tudresden.inf.lat.tabulas.extension.NormalizationExtension
 
+
 /**
  * This is the main class.
  */
 object Main {
 
-  val Header: String = "Use: java -jar (jarname) (command) [(field)] (input) (output)\n\n"
-
-  var manager: ExtensionManager = null
-
-  /**
-   * Constructs a new main class.
-   */
-  {
+	/**
+	 * Entry point for the console.
+	 * 
+	 * @param args
+	 *            console arguments
+	 */
+  def main(args: Array[String]): Unit = {
     val extensions: List[Extension] = new ArrayList[Extension]()
     extensions.add(new DefaultExtension())
     extensions.add(new CsvParserExtension())
@@ -39,21 +40,9 @@ object Main {
     extensions.add(new HtmlExtension())
     extensions.add(new NormalizationExtension())
 
-    this.manager = new ExtensionManager(extensions)
-  }
-
-  def run(args: Array[String]): Unit = {
-    if ((args != null) && ((args.length == 2) || (args.length == 3) || (args.length == 4))) {
-      val arguments: List[String] = new ArrayList[String]();
-      Range(0, args.length).foreach(index => arguments.add(args(index)))
-      this.manager.process(arguments)
-    } else {
-      System.out.println(Header + this.manager.getHelp())
-    }
-  }
-
-  def main(args: Array[String]): Unit = {
-    run(args)
+    val instance: ConsoleStarter = new ConsoleStarter()
+    instance.run(extensions, args)
   }
 
 }
+
