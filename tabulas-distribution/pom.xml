@@ -79,21 +79,57 @@
 				<groupId>org.apache.felix</groupId>
 				<artifactId>maven-bundle-plugin</artifactId>
 				<extensions>true</extensions>
-				<configuration>
-					<archive>
-						<manifest>
-							<addClasspath>true</addClasspath>
-						</manifest>
-					</archive>
-					<instructions>
-						<Main-Class>${mainClass}</Main-Class>
-						<Include-Resource>
-							{maven-resources}, {maven-dependencies},
-							@tabulas-core-${project.version}.jar,
-							@tabulas-ext-${project.version}.jar
-						</Include-Resource>
-					</instructions>
-				</configuration>
+				<executions>
+
+					<execution>
+						<id>create-library-jar</id>
+						<phase>package</phase>
+						<goals>
+							<goal>bundle</goal>
+						</goals>
+						<configuration>
+							<finalName>tabulas-${project.version}-library</finalName>
+							<archive>
+								<manifest>
+									<addClasspath>true</addClasspath>
+								</manifest>
+							</archive>
+							<instructions>
+								<Main-Class>${mainClass}</Main-Class>
+								<Include-Resource>
+									{maven-resources}, {maven-dependencies},
+									@tabulas-core-${project.version}.jar,
+									@tabulas-ext-${project.version}.jar
+								</Include-Resource>
+							</instructions>
+						</configuration>
+					</execution>
+
+					<execution>
+						<id>create-executable-jar</id>
+						<phase>package</phase>
+						<goals>
+							<goal>bundle</goal>
+						</goals>
+						<configuration>
+							<archive>
+								<manifest>
+									<addClasspath>true</addClasspath>
+								</manifest>
+							</archive>
+							<instructions>
+								<Main-Class>${mainClass}</Main-Class>
+								<Include-Resource>
+									{maven-resources}, {maven-dependencies},
+									@tabulas-core-${project.version}.jar,
+									@tabulas-ext-${project.version}.jar,
+									@scala-library-${scala.version}.jar
+								</Include-Resource>
+							</instructions>
+						</configuration>
+					</execution>
+
+				</executions>
 			</plugin>
 
 		</plugins>
