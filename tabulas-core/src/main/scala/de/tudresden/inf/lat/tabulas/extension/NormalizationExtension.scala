@@ -39,7 +39,7 @@ class NormalizationExtension extends Extension {
 
       } catch {
         case e: IOException => {
-          throw new RuntimeException(e)
+          throw new ExtensionException(e.toString(), e)
         }
       }
     }

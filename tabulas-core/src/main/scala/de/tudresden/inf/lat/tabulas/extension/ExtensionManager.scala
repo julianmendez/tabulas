@@ -10,6 +10,7 @@ import java.util.TreeMap
 import scala.collection.JavaConverters.asScalaBufferConverter
 
 import de.tudresden.inf.lat.tabulas.datatype.ParseException
+import java.io.IOException
 
 /**
  * This models an extension that can execute other extensions.
@@ -67,8 +68,8 @@ class ExtensionManager extends Extension {
         try {
           return extension.process(newArguments)
         } catch {
-          case e @ (_: ParseException | _: UncheckedIOException) => {
-            throw new ExtensionException(e.getMessage(), e)
+          case e @ (_: ParseException | _: UncheckedIOException | _: IOException) => {
+            throw new ExtensionException(e.toString(), e)
           }
         }
       }
