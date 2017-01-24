@@ -169,6 +169,8 @@ For example, the [MainTest](https://github.com/julianmendez/tabulas/blob/master/
 * add to each record the number of authors 
 * compare the [expected result](https://github.com/julianmendez/tabulas/blob/master/tabulas-core/src/test/resources/example-modified.properties)
 
+This [Bash script](https://github.com/julianmendez/tabulas/blob/master/docs/examples/tabulas.sh.txt) shows how to start Tabulas from the command line.
+
 
 ## Source code
 
