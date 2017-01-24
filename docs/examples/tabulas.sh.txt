@@ -1,0 +1,12 @@
+#!/bin/bash
+
+#
+# This is an example of how to execute Tabulas from the command line.
+#
+
+
+directory=`dirname $0`
+
+java -jar ${directory}/tabulas.jar "$@"
+
+
