@@ -13,7 +13,6 @@ import de.tudresden.inf.lat.tabulas.datatype.CompositeTypeValue
 import de.tudresden.inf.lat.tabulas.datatype.ParameterizedListValue
 import de.tudresden.inf.lat.tabulas.datatype.PrimitiveTypeValue
 import de.tudresden.inf.lat.tabulas.datatype.Record
-import de.tudresden.inf.lat.tabulas.datatype.StringValue
 import de.tudresden.inf.lat.tabulas.datatype.URIValue
 import de.tudresden.inf.lat.tabulas.parser.ParserConstant
 import de.tudresden.inf.lat.tabulas.renderer.Renderer
