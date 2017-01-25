@@ -14,6 +14,12 @@
 * coordinated with [Tabula 0.3.0](https://github.com/julianmendez/tabula)
 * compiled with Scala 2.12.1
 * requires `scala-library-2.12.1.jar`
+* includes more primitive types:
+  * Integer
+  * List_Integer
+  * Decimal
+  * List_Decimal
+* executes `normalize` extension, if no extension is given 
 * build command:
 
 ```
@@ -44,19 +50,19 @@ $ mvn clean install
 * requires `scala-library-2.11.0.jar`
 * primitive types:
   * String
-  * URI
   * List_String
+  * URI
   * List_URI
-* readers:
-  * tabula format
-  * comma-separated values
-  * calendar
-* writers:
-  * tabula format
-  * comma-separated values
-  * HTML
-  * WikiText
-  * SQL
+* readers (extension names between parentheses):
+  * (`simple` / `normalize`) tabula format
+  * (`parsecsv`) comma-separated values
+  * (`parsecalendar`) calendar
+* writers (extension names between parentheses):
+  * (`simple` / `normalize`) tabula format
+  * (`csv`) comma-separated values
+  * (`html`) HTML
+  * (`wikitext`) WikiText
+  * (`sql`) SQL
 * build command:
 
 ```
