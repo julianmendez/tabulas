@@ -20,14 +20,20 @@ class IntegerValue extends PrimitiveTypeValue {
    *
    * @param str
    *            string
-   * @throws NumberFormatException
-   * +	 *             <code>str</code> is not a valid representation of an integer
-   * +	 *             value.
+   * @throws ParseException
+   *              <code>str</code> is not a valid representation of an integer
+   *              value.
    */
   def this(str: String) = {
     this()
     Objects.requireNonNull(str)
-    this.number = new BigInteger(str)
+    try {
+      this.number = new BigInteger(str)
+    } catch {
+      case e: NumberFormatException => {
+        throw new ParseException(e.getMessage(), e)
+      }
+    }
   }
 
   /**
