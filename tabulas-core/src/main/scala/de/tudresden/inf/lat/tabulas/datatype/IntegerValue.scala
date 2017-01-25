@@ -40,7 +40,7 @@ class IntegerValue extends PrimitiveTypeValue {
    * Constructs a new integer value using another integer value.
    *
    * @param other
-   *            a integer value
+   *            an integer value
    */
   def this(other: IntegerValue) = {
     this()
