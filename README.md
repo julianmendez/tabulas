@@ -31,8 +31,10 @@ The Tabula format has *primitive types* and *composite types*. Unless something 
 
 * `String`: any string without any newline (`'\n'` 0x0A, `'\r'` 0x0D), and not ending in backslash (`'\'` 0x5C), neither in blanks (`'\t'` 0x08, `' '` 0x20)  
 * `URI`: any valid Uniform Resource Identifier
-* `List_String`: list of space-separated words
-* `List_URI`: list of space-separated URIs
+* `Integer`: an integer number (`BigInteger`)
+* `Decimal`: a decimal number (`BigDecimal`)
+* `List_`... (e.g. `List_String`): list of space-separated values, for the types above
+* `Empty`: type that ignores any given value
 
 With this format it is possible to define one or many composite *types*. Each type is defined by its *fields*. The *instances* of each type are listed just after the type definition.
 The name of a type or field can be any *identifier*. A identifier is a word that is not any of the reserved words: `type`, `def`, `new`, `id`.
