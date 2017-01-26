@@ -20,6 +20,7 @@ class PrimitiveTypeFactory {
    * Constructs a new primitive type factory.
    */
   {
+    add(new EmptyType())
     add(new StringType())
     add(new ParameterizedListType(new StringType()))
     add(new URIType())
