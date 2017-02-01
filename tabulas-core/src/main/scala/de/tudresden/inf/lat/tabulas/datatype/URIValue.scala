@@ -31,6 +31,18 @@ class URIValue extends PrimitiveTypeValue {
   }
 
   /**
+   * Constructs a new URI value using a URI.
+   *
+   * @param uri
+   *            URI
+   */
+  def this(uri: URI) = {
+    this()
+    Objects.requireNonNull(uri)
+    this.uri = uri
+  }
+
+  /**
    * Constructs a new URI value using another URI value.
    *
    * @param other
