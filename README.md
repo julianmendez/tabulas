@@ -3,10 +3,10 @@
 
 
 [![Build Status](https://travis-ci.org/julianmendez/tabulas.png?branch=master)](https://travis-ci.org/julianmendez/tabulas)
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/de.tu-dresden.inf.lat.tabulas/tabulas-parent/badge.svg)](http://search.maven.org/#search|ga|1|g%3A%22de.tu-dresden.inf.lat.tabulas%22)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/de.tu-dresden.inf.lat.tabulas/tabulas-parent/badge.svg)](https://search.maven.org/#search|ga|1|g%3A%22de.tu-dresden.inf.lat.tabulas%22)
 
 
-Tabulas is a system to manage human-readable tables using files. Tabulas is an experimental semi-automatic [Scala](http://www.scala-lang.org/) reimplementation of [Tabula](https://github.com/julianmendez/tabula), which is implemented in Java.
+Tabulas is a system to manage human-readable tables using files. Tabulas is an experimental semi-automatic [Scala](https://www.scala-lang.org/) reimplementation of [Tabula](https://github.com/julianmendez/tabula), which is implemented in Java.
 It uses a specific type of file format that is similar to a [Java Properties](https://docs.oracle.com/javase/8/docs/api/java/util/Properties.html#load-java.io.Reader-) file, but allows defining the same property for different objects.
 
 
@@ -141,11 +141,11 @@ title = A topological approach to non-Archimedean Mathematics
 authors = \
  Vieri_Benci \
  Lorenzo_Luperi_Baglini
-web = http://arxiv.org/abs/1412.2223
+web = https://arxiv.org/abs/1412.2223
 documents = \
- http://arxiv.org/pdf/1412.2223#pdf \
- http://arxiv.org/ps/1412.2223#ps \
- http://arxiv.org/format/1412.2223#other
+ https://arxiv.org/pdf/1412.2223#pdf \
+ https://arxiv.org/ps/1412.2223#ps \
+ https://arxiv.org/format/1412.2223#other
 
 
 new = 
@@ -153,11 +153,11 @@ id = arXiv:1412.3313
 title = Infinitary stability theory
 authors = \
  Sebastien_Vasey
-web = http://arxiv.org/abs/1412.3313
+web = https://arxiv.org/abs/1412.3313
 documents = \
- http://arxiv.org/pdf/1412.3313#pdf \
- http://arxiv.org/ps/1412.3313#ps \
- http://arxiv.org/format/1412.3313#other
+ https://arxiv.org/pdf/1412.3313#pdf \
+ https://arxiv.org/ps/1412.3313#ps \
+ https://arxiv.org/format/1412.3313#other
 
 
 ```
@@ -185,7 +185,7 @@ $ mvn clean install
 ```
 
 The created executable library, its sources, and its Javadoc will be in `tabulas-distribution/target`.
-This executable JAR file requires the [Scala library](http://search.maven.org/#search|gav|1|g%3A%22org.scala-lang%22%20AND%20a%3A%22scala-library%22) in the same directory. The required version is shown in the [release notes](https://github.com/julianmendez/tabulas/blob/master/RELEASE-NOTES.md).
+This executable JAR file requires the [Scala library](https://search.maven.org/#search|gav|1|g%3A%22org.scala-lang%22%20AND%20a%3A%22scala-library%22) in the same directory. The required version is shown in the [release notes](https://github.com/julianmendez/tabulas/blob/master/RELEASE-NOTES.md).
 
 To compile the project offline, first download the dependencies:
 
@@ -230,7 +230,7 @@ where *NEW_VERSION* is the new version.
 
 ## Author
 
-[Julian Mendez](http://lat.inf.tu-dresden.de/~mendez/)
+[Julian Mendez](https://lat.inf.tu-dresden.de/~mendez/)
 
 
 ## License

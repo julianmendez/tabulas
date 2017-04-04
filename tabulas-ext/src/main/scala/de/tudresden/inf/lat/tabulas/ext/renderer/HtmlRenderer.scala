@@ -30,9 +30,9 @@ import de.tudresden.inf.lat.tabulas.table.TableMap
 class HtmlRenderer extends Renderer {
 
   val Prefix: String = "<?xml version=\"1.0\" encoding=\"utf-8\"?>" +
-    "\n<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.1//EN\" \"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd\">" +
+    "\n<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.1//EN\" \"https://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd\">" +
     "\n" +
-    "\n<html xmlns=\"http://www.w3.org/1999/xhtml\" lang=\"en\">" +
+    "\n<html xmlns=\"https://www.w3.org/1999/xhtml\" lang=\"en\">" +
     "\n<head>" +
     "\n  <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />" +
     "\n  <title></title>" +
