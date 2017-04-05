@@ -15,16 +15,20 @@ import de.tudresden.inf.lat.tabulas.table.TableMap
  */
 class NormalizationTest {
 
-  val InputFileName0: String = "src/test/resources/example.properties"
-  val ExpectedOutputFileName0: String = "src/test/resources/example-expected.properties"
+  val InputFileName0: String = "example.properties"
+  val ExpectedOutputFileName0: String = "example-expected.properties"
 
-  val InputFileName1: String = "src/test/resources/multiple_tables.properties"
-  val ExpectedOutputFileName1: String = "src/test/resources/multiple_tables-expected.properties"
+  val InputFileName1: String = "multiple_tables.properties"
+  val ExpectedOutputFileName1: String = "multiple_tables-expected.properties"
 
   val NewLine: String = "\n"
 
+  def getPath(fileName: String): String = {
+    return getClass().getClassLoader().getResource(fileName).getFile()
+  }
+
   def testNormalizationOfFile(inputFileName: String, expectedFileName: String): Unit = {
-    val tableMap: TableMap = new SimpleFormatParser(new FileReader(inputFileName)).parse()
+    val tableMap: TableMap = new SimpleFormatParser(new FileReader(getPath(inputFileName))).parse()
     val expectedResult: String = (new MainTest()).readFile(expectedFileName)
     val writer: StringWriter = new StringWriter()
     val renderer: SimpleFormatRenderer = new SimpleFormatRenderer(writer)

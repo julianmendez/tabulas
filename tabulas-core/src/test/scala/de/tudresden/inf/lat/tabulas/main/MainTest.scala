@@ -27,15 +27,19 @@ import de.tudresden.inf.lat.tabulas.table.TableMapImpl
  */
 class MainTest {
 
-  val InputFileName: String = "src/test/resources/example.properties"
-  val ExpectedOutputFileName: String = "src/test/resources/example-expected.properties"
-  val ModifiedOutputFileName: String = "src/test/resources/example-modified.properties"
+  val InputFileName: String = "example.properties"
+  val ExpectedOutputFileName: String = "example-expected.properties"
+  val ModifiedOutputFileName: String = "example-modified.properties"
 
   val TypeNameRecord: String = "record"
   val FieldNameAuthors: String = "authors"
   val FieldNameNumberOfAuthors: String = "numberOfAuthors"
   val TypeOfNumberOfAuthors: String = "String"
   val NewLine: String = "\n"
+
+  def getPath(fileName: String): String = {
+    return getClass().getClassLoader().getResource(fileName).getFile()
+  }
 
   /**
    * Returns the number of authors for a given record.
@@ -52,7 +56,7 @@ class MainTest {
 
   def readFile(fileName: String): String = {
     val sb: StringBuilder = new StringBuilder()
-    val reader: BufferedReader = new BufferedReader(new FileReader(fileName))
+    val reader: BufferedReader = new BufferedReader(new FileReader(getPath(fileName)))
     reader.lines().toArray().foreach(obj => {
       val line = obj.asInstanceOf[String]
       sb.append(line + NewLine)
@@ -81,7 +85,7 @@ class MainTest {
     // a computed value
 
     // Read the table map
-    val oldTableMap: TableMap = new SimpleFormatParser(new FileReader(InputFileName)).parse()
+    val oldTableMap: TableMap = new SimpleFormatParser(new FileReader(getPath(InputFileName))).parse()
 
     // Make a copy of the tableMap
     // val newTableMap: TableMapImpl = new TableMapImpl(oldTableMap)
