@@ -29,7 +29,7 @@ lazy val root = project
   .aggregate(core, ext)
   .dependsOn(core, ext)
   .settings(
-    name := "tabulas",
+    name := "tabulas-parent",
     commonSettings,
     mainClass in (Compile,run) := Some("de.tudresden.inf.lat.tabulas.ext.main.Main")
   )
