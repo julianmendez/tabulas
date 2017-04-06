@@ -44,7 +44,8 @@
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 
-		<scala.version>2.12.1</scala.version>
+		<scala.version.binary>2.12</scala.version.binary>
+		<scala.version>${scala.version.binary}.1</scala.version>
 	</properties>
 
 	<build>
