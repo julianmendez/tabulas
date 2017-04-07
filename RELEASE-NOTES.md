@@ -14,6 +14,7 @@
 * coordinated with [Tabula 0.3.0](https://github.com/julianmendez/tabula)
 * compiled with Scala 2.12.1
 * requires `scala-library-2.12.1.jar`
+* its artifact identifiers include the Scala version as suffix (_2.12)
 * includes more primitive types:
   * Integer
   * List_Integer
