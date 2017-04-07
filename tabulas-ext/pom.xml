@@ -3,14 +3,14 @@
 
 	<modelVersion>4.0.0</modelVersion>
 
-	<artifactId>tabulas-ext</artifactId>
+	<artifactId>tabulas-ext_2.12</artifactId>
 	<packaging>jar</packaging>
 
 	<dependencies>
 
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>tabulas-core</artifactId>
+			<artifactId>tabulas-core_${scala.version.binary}</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 
@@ -23,7 +23,7 @@
 
 	<parent>
 		<groupId>de.tu-dresden.inf.lat.tabulas</groupId>
-		<artifactId>tabulas-parent</artifactId>
+		<artifactId>tabulas-parent_2.12</artifactId>
 		<version>0.3.0-SNAPSHOT</version>
 	</parent>
 

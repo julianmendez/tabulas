@@ -3,14 +3,14 @@
 
 	<modelVersion>4.0.0</modelVersion>
 
-	<artifactId>tabulas-distribution</artifactId>
+	<artifactId>tabulas-distribution_2.12</artifactId>
 	<packaging>bundle</packaging>
 
 	<dependencies>
 
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>tabulas-ext</artifactId>
+			<artifactId>tabulas-ext_${scala.version.binary}</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 
@@ -18,7 +18,7 @@
 
 	<parent>
 		<groupId>de.tu-dresden.inf.lat.tabulas</groupId>
-		<artifactId>tabulas-parent</artifactId>
+		<artifactId>tabulas-parent_2.12</artifactId>
 		<version>0.3.0-SNAPSHOT</version>
 	</parent>
 
@@ -32,7 +32,7 @@
 
 	<build>
 
-		<finalName>tabulas-${project.version}</finalName>
+		<finalName>tabulas_${scala.version.binary}-${project.version}</finalName>
 
 		<plugins>
 
@@ -48,7 +48,7 @@
 							<goal>single</goal>
 						</goals>
 						<configuration>
-							<finalName>tabulas-${project.version}</finalName>
+							<finalName>tabulas_${scala.version.binary}-${project.version}</finalName>
 							<formats>
 								<format>jar</format>
 							</formats>
@@ -65,7 +65,7 @@
 							<goal>single</goal>
 						</goals>
 						<configuration>
-							<finalName>tabulas-${project.version}</finalName>
+							<finalName>tabulas_${scala.version.binary}-${project.version}</finalName>
 							<descriptors>
 								<descriptor>${basedir}/src/assembly/javadoc.xml</descriptor>
 							</descriptors>
@@ -88,7 +88,7 @@
 							<goal>bundle</goal>
 						</goals>
 						<configuration>
-							<finalName>tabulas-${project.version}-library</finalName>
+							<finalName>tabulas_${scala.version.binary}-${project.version}-library</finalName>
 							<archive>
 								<manifest>
 									<addClasspath>true</addClasspath>
@@ -98,8 +98,8 @@
 								<Main-Class>${mainClass}</Main-Class>
 								<Include-Resource>
 									{maven-resources}, {maven-dependencies},
-									@tabulas-core-${project.version}.jar,
-									@tabulas-ext-${project.version}.jar
+									@tabulas-core_${scala.version.binary}-${project.version}.jar,
+									@tabulas-ext_${scala.version.binary}-${project.version}.jar
 								</Include-Resource>
 							</instructions>
 						</configuration>
@@ -121,8 +121,8 @@
 								<Main-Class>${mainClass}</Main-Class>
 								<Include-Resource>
 									{maven-resources}, {maven-dependencies},
-									@tabulas-core-${project.version}.jar,
-									@tabulas-ext-${project.version}.jar,
+									@tabulas-core_${scala.version.binary}-${project.version}.jar,
+									@tabulas-ext_${scala.version.binary}-${project.version}.jar,
 									@scala-library-${scala.version}.jar
 								</Include-Resource>
 							</instructions>
