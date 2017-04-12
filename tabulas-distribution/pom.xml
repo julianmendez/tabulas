@@ -112,6 +112,7 @@
 							<goal>bundle</goal>
 						</goals>
 						<configuration>
+							<finalName>tabulas-${project.version}</finalName>
 							<archive>
 								<manifest>
 									<addClasspath>true</addClasspath>
