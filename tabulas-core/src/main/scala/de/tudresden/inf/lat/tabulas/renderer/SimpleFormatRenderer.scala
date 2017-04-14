@@ -43,7 +43,7 @@ class SimpleFormatRenderer extends Renderer {
     output.write(ParserConstant.TypeSelectionToken + ParserConstant.Space)
     output.write(ParserConstant.EqualsSign)
     output.write(ParserConstant.Space)
-    output.write(tableName + ParserConstant.Space)
+    output.write(tableName)
     output.write(ParserConstant.NewLine)
   }
 
