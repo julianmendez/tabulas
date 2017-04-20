@@ -88,7 +88,7 @@
 							<goal>bundle</goal>
 						</goals>
 						<configuration>
-							<finalName>tabulas_${scala.version.binary}-${project.version}-library</finalName>
+							<finalName>tabulas_${scala.version.binary}-${project.version}</finalName>
 							<archive>
 								<manifest>
 									<addClasspath>true</addClasspath>
