@@ -24,10 +24,21 @@ lazy val ext = project
     commonSettings
   )
 
-lazy val root = project
-  .in(file("."))
+lazy val dist = project
+  .in(file("tabulas-distribution"))
   .aggregate(core, ext)
   .dependsOn(core, ext)
+  .settings(
+    name := "tabulas-distribution",
+    mainClass in assembly := Some("de.tudresden.inf.lat.tabulas.ext.main.Main"),
+    assemblyJarName in assembly := "tabulas-" + version.value + ".jar",
+    commonSettings
+  )
+
+lazy val root = project
+  .in(file("."))
+  .aggregate(dist)
+  .dependsOn(dist)
   .settings(
     name := "tabulas-parent",
     commonSettings,
