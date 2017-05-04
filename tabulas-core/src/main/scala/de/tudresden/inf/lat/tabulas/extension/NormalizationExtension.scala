@@ -4,7 +4,7 @@ import java.io.BufferedWriter
 import java.io.FileReader
 import java.io.FileWriter
 import java.io.IOException
-import java.util.List
+import scala.collection.mutable.Buffer
 import java.util.Objects
 
 import de.tudresden.inf.lat.tabulas.parser.SimpleFormatParser
@@ -21,13 +21,13 @@ class NormalizationExtension extends Extension {
   val Help: String = "(input) : normalize a file with a simple text format"
   val RequiredArguments: Int = 1
 
-  override def process(arguments: List[String]): Boolean = {
-    if (Objects.isNull(arguments) || arguments.size() != RequiredArguments) {
+  override def process(arguments: Buffer[String]): Boolean = {
+    if (Objects.isNull(arguments) || arguments.size != RequiredArguments) {
       return false
     } else {
       try {
 
-        val inputFileName: String = arguments.get(0)
+        val inputFileName: String = arguments(0)
         val outputFileName: String = inputFileName
         val tableMap: TableMap = new SimpleFormatParser(new FileReader(
           inputFileName)).parse()

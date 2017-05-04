@@ -1,9 +1,9 @@
 
 package de.tudresden.inf.lat.tabulas.datatype
 
-import java.util.ArrayList
+import scala.collection.mutable.ArrayBuffer
 import java.util.Collections
-import java.util.List
+import scala.collection.mutable.Buffer
 import java.util.Objects
 
 import scala.collection.JavaConverters.asScalaBufferConverter
@@ -12,7 +12,7 @@ import scala.collection.JavaConverters.asScalaBufferConverter
  * This models a list of elements with a parameterized type.
  *
  */
-class ParameterizedListValue extends ArrayList[PrimitiveTypeValue] with PrimitiveTypeValue {
+class ParameterizedListValue extends ArrayBuffer[PrimitiveTypeValue] with PrimitiveTypeValue {
 
   val serialVersionUID: Long = -8983139857000842808L
 
@@ -50,14 +50,14 @@ class ParameterizedListValue extends ArrayList[PrimitiveTypeValue] with Primitiv
   }
 
   def add(str: String): Unit = {
-    super.add(this.parameter.parse(str))
+    this += this.parameter.parse(str)
   }
 
   override def render(): String = {
     val sbuf: StringBuffer = new StringBuffer()
-    val list: List[String] = renderAsList()
+    val list: Buffer[String] = renderAsList()
     var first: Boolean = true
-    for (str: String <- list.asScala) {
+    for (str: String <- list) {
       if (first) {
         first = false
       } else {
@@ -68,16 +68,16 @@ class ParameterizedListValue extends ArrayList[PrimitiveTypeValue] with Primitiv
     return sbuf.toString()
   }
 
-  override def renderAsList(): List[String] = {
-    val ret: List[String] = new ArrayList[String]()
-    this.asScala.foreach(elem => ret.add(elem.render()))
-    return Collections.unmodifiableList(ret)
+  override def renderAsList(): Buffer[String] = {
+    val ret: Buffer[String] = new ArrayBuffer[String]()
+    this.foreach(elem => ret += elem.render())
+    return ret // @FIXME this should be immutable
   }
 
   override def compareTo(obj: PrimitiveTypeValue): Int = {
     if (obj.isInstanceOf[ParameterizedListValue]) {
       val other: ParameterizedListValue = obj.asInstanceOf[ParameterizedListValue]
-      var ret: Int = size() - other.size()
+      var ret: Int = size - other.size
       if (ret == 0) {
         ret = toString().compareTo(other.toString())
       }

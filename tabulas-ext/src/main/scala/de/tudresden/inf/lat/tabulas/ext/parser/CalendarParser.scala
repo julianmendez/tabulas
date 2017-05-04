@@ -4,8 +4,8 @@ import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
 import java.io.Reader
-import java.util.ArrayList
-import java.util.List
+import scala.collection.mutable.ArrayBuffer
+import scala.collection.mutable.Buffer
 import java.util.Map
 import java.util.Objects
 import java.util.Optional
@@ -173,8 +173,8 @@ class CalendarParser extends Parser {
     }
   }
 
-  private def preload(input: BufferedReader): List[Pair] = {
-    val ret: List[Pair] = new ArrayList[Pair]()
+  private def preload(input: BufferedReader): Buffer[Pair] = {
+    val ret: Buffer[Pair] = new ArrayBuffer[Pair]()
     var sbuf: StringBuffer = new StringBuffer()
     var finish: Boolean = false
     var lineCounter: Int = 0
@@ -183,7 +183,7 @@ class CalendarParser extends Parser {
       if (line.startsWith("" + SpaceChar)) {
         sbuf.append(line)
       } else {
-        ret.add(new Pair(lineCounter, sbuf.toString()))
+        ret += new Pair(lineCounter, sbuf.toString())
         sbuf = new StringBuffer()
         sbuf.append(line)
       }
@@ -210,18 +210,18 @@ class CalendarParser extends Parser {
     }
   }
 
-  def getGeneratedId(generatedIds: List[Int], level: Int): String = {
-    while (level >= generatedIds.size()) {
-      generatedIds.add(FirstGeneratedIndex)
+  def getGeneratedId(generatedIds: Buffer[Int], level: Int): String = {
+    while (level >= generatedIds.size ) {
+      generatedIds += FirstGeneratedIndex
     }
-    val newValue: Int = generatedIds.get(level) + 1
-    while (level < generatedIds.size()) {
-      generatedIds.remove(generatedIds.size() - 1)
+    val newValue: Int = generatedIds(level) + 1
+    while (level < generatedIds.size ) {
+      generatedIds.remove(generatedIds.size - 1)
     }
-    generatedIds.add(newValue)
+    generatedIds += newValue
     val sbuf: StringBuffer = new StringBuffer()
     var firstTime: Boolean = true
-    for (counter: Int <- generatedIds.asScala) {
+    for (counter: Int <- generatedIds) {
       if (firstTime) {
         firstTime = false
       } else {
@@ -255,12 +255,12 @@ class CalendarParser extends Parser {
     val tableIdStack: Stack[String] = new Stack[String]()
     val recordStack: Stack[Record] = new Stack[Record]()
     val tableStack: Stack[TableImpl] = new Stack[TableImpl]()
-    val generatedIds: List[Int] = new ArrayList[Int]()
+    val generatedIds: Buffer[Int] = new ArrayBuffer[Int]()
 
-    val lines: List[Pair] = preload(input)
+    val lines: Buffer[Pair] = preload(input)
     var lineCounter: Int = 0
     var firstTime: Boolean = true
-    for (pair: Pair <- lines.asScala) {
+    for (pair: Pair <- lines) {
       val line: String = pair.getLine()
       lineCounter = pair.getLineCounter()
       if (Objects.nonNull(line) && !line.trim().isEmpty()) {

@@ -5,8 +5,8 @@ import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
 import java.io.Reader
-import java.util.ArrayList
-import java.util.List
+import scala.collection.mutable.ArrayBuffer
+import scala.collection.mutable.Buffer
 import java.util.Objects
 
 import scala.Range
@@ -49,8 +49,8 @@ class CsvParser extends Parser {
     this.input = input
   }
 
-  def getColumns(line0: String): List[String] = {
-    val ret: List[String] = new ArrayList[String]()
+  def getColumns(line0: String): Buffer[String] = {
+    val ret: Buffer[String] = new ArrayBuffer[String]()
     val line: String = if (Objects.isNull(line0)) { "" } else { line0.trim() }
     var current: StringBuffer = new StringBuffer()
     var betweenQuotes: Boolean = false
@@ -59,21 +59,21 @@ class CsvParser extends Parser {
       if (ch == QuotesChar) {
         betweenQuotes = !betweenQuotes
       } else if ((ch == CommaChar) && !betweenQuotes) {
-        ret.add(current.toString())
+        ret += current.toString()
         current = new StringBuffer()
       } else {
         current.append(ch)
       }
     }
     if (!current.toString().isEmpty()) {
-      ret.add(current.toString())
+      ret += current.toString()
     }
     return ret
   }
 
-  private def createSortedTable(fields: List[String]): TableImpl = {
+  private def createSortedTable(fields: Buffer[String]): TableImpl = {
     var tableType: CompositeTypeImpl = new CompositeTypeImpl()
-    fields.asScala.foreach(fieldName => tableType.declareField(fieldName, DefaultFieldType))
+    fields.foreach(fieldName => tableType.declareField(fieldName, DefaultFieldType))
 
     val ret: TableImpl = new TableImpl()
     ret.setType(tableType)
@@ -95,10 +95,10 @@ class CsvParser extends Parser {
     return ret.toString()
   }
 
-  def normalizeHeaders(headers: List[String], lineCounter: Int): List[String] = {
-    val ret: List[String] = new ArrayList[String]()
+  def normalizeHeaders(headers: Buffer[String], lineCounter: Int): Buffer[String] = {
+    val ret: Buffer[String] = new ArrayBuffer[String]()
     var idCount: Int = 0
-    for (header: String <- headers.asScala) {
+    for (header: String <- headers) {
       val fieldName: String = normalize(header)
       if (fieldName.equals(ParserConstant.IdKeyword)) {
         idCount += 1
@@ -109,7 +109,7 @@ class CsvParser extends Parser {
             + ParserConstant.IdKeyword + "') (line "
             + lineCounter + ")")
       } else {
-        ret.add(fieldName)
+        ret += fieldName
       }
     }
     return ret
@@ -119,26 +119,26 @@ class CsvParser extends Parser {
     var lineCounter: Int = 0
     var line: String = input.readLine()
     lineCounter += 1
-    val headers: List[String] = getColumns(line)
-    val fieldNames: List[String] = normalizeHeaders(headers, lineCounter)
+    val headers: Buffer[String] = getColumns(line)
+    val fieldNames: Buffer[String] = normalizeHeaders(headers, lineCounter)
     val currentTable: TableImpl = createSortedTable(fieldNames)
 
     while (Objects.nonNull(line)) {
       line = input.readLine()
       lineCounter += 1
       if ((Objects.nonNull(line)) && !line.trim().isEmpty()) {
-        val columns: List[String] = getColumns(line)
-        if (columns.size() > fieldNames.size()) {
+        val columns: Buffer[String] = getColumns(line)
+        if (columns.size > fieldNames.size) {
           throw new ParseException("Too many fields in line: "
-            + columns.size() + " instead of "
-            + fieldNames.size() + " (line " + lineCounter
+            + columns.size + " instead of "
+            + fieldNames.size + " (line " + lineCounter
             + ")");
         }
 
         val record: RecordImpl = new RecordImpl()
         var index: Int = 0
-        for (column: String <- columns.asScala) {
-          var field: String = fieldNames.get(index)
+        for (column: String <- columns) {
+          var field: String = fieldNames(index)
           var value: StringValue = new StringValue(column)
           record.set(field, value)
           index += 1

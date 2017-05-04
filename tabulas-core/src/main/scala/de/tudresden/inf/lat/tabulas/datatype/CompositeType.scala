@@ -1,7 +1,7 @@
 
 package de.tudresden.inf.lat.tabulas.datatype
 
-import java.util.List
+import scala.collection.mutable.Buffer
 import java.util.Optional
 
 /**
@@ -15,7 +15,7 @@ trait CompositeType extends DataType {
    *
    * @return all the fields
    */
-  def getFields(): List[String]
+  def getFields(): Buffer[String]
 
   /**
    * Returns an optional containing the type of the given field, if the field

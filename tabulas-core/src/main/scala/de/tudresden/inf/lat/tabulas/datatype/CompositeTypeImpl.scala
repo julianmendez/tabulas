@@ -1,9 +1,9 @@
 
 package de.tudresden.inf.lat.tabulas.datatype
 
-import java.util.ArrayList
+import scala.collection.mutable.ArrayBuffer
 import java.util.Collections
-import java.util.List
+import scala.collection.mutable.Buffer
 import java.util.Map
 import java.util.Objects
 import java.util.Optional
@@ -17,7 +17,7 @@ import scala.collection.JavaConverters.asScalaBufferConverter
  */
 class CompositeTypeImpl extends CompositeType {
 
-  private val fields: List[String] = new ArrayList[String]
+  private val fields: Buffer[String] = new ArrayBuffer[String]
   private val fieldType: Map[String, String] = new TreeMap[String, String]
 
   /**
@@ -29,11 +29,11 @@ class CompositeTypeImpl extends CompositeType {
   def this(otherType: CompositeType) = {
     this()
     Objects.requireNonNull(otherType)
-    otherType.getFields().asScala.foreach(field => declareField(field, otherType.getFieldType(field).get))
+    otherType.getFields().foreach(field => declareField(field, otherType.getFieldType(field).get))
   }
 
-  override def getFields(): List[String] = {
-    return Collections.unmodifiableList(this.fields)
+  override def getFields(): Buffer[String] = {
+    return this.fields // @FIXME this should be immutable
   }
 
   override def getFieldType(field: String): Optional[String] = {
@@ -58,7 +58,7 @@ class CompositeTypeImpl extends CompositeType {
     if (this.fields.contains(field)) {
       throw new ParseException("Field '" + field + "' has been already defined.")
     } else {
-      this.fields.add(field)
+      this.fields += field
       this.fieldType.put(field, typeStr)
     }
   }
@@ -72,8 +72,8 @@ class CompositeTypeImpl extends CompositeType {
       val other: CompositeType = obj.asInstanceOf[CompositeType]
       var ret: Boolean = getFields().equals(other.getFields())
       if (ret) {
-        val fields: List[String] = getFields()
-        ret = ret && fields.asScala.forall(field => getFieldType(field).equals(other.getFieldType(field)))
+        val fields: Buffer[String] = getFields()
+        ret = ret && fields.forall(field => getFieldType(field).equals(other.getFieldType(field)))
       }
       return ret
     }
@@ -82,7 +82,7 @@ class CompositeTypeImpl extends CompositeType {
 
   override def toString(): String = {
     val sbuf: StringBuffer = new StringBuffer()
-    this.fields.asScala.foreach(field => sbuf.append(field + ":" + this.fieldType.get(field) + " "))
+    this.fields.foreach(field => sbuf.append(field + ":" + this.fieldType.get(field) + " "))
     return sbuf.toString()
   }
 

@@ -1,10 +1,9 @@
 
 package de.tudresden.inf.lat.tabulas.table
 
-import java.util.ArrayList
+import scala.collection.mutable.ArrayBuffer
 import java.util.Comparator
-import java.util.Iterator
-import java.util.List
+import scala.collection.mutable.Buffer
 import java.util.Objects
 import java.util.Optional
 import java.util.Set
@@ -19,21 +18,21 @@ import de.tudresden.inf.lat.tabulas.datatype.Record
  */
 class RecordComparator extends Comparator[Record] {
 
-  private val sortingOrder: List[String] = new ArrayList[String]
+  private val sortingOrder: Buffer[String] = new ArrayBuffer[String]
   private val fieldsWithReverseOrder: Set[String] = new TreeSet[String]()
 
-  def this(sortingOrder: List[String]) = {
+  def this(sortingOrder: Buffer[String]) = {
     this()
-    this.sortingOrder.addAll(sortingOrder)
+    this.sortingOrder ++= sortingOrder
   }
 
-  def this(sortingOrder: List[String], fieldsWithReverseOrder: Set[String]) = {
+  def this(sortingOrder: Buffer[String], fieldsWithReverseOrder: Set[String]) = {
     this()
-    this.sortingOrder.addAll(sortingOrder)
+    this.sortingOrder ++= sortingOrder
     this.fieldsWithReverseOrder.addAll(fieldsWithReverseOrder)
   }
 
-  def getSortingOrder(): List[String] = {
+  def getSortingOrder(): Buffer[String] = {
     return this.sortingOrder
   }
 
@@ -47,8 +46,8 @@ class RecordComparator extends Comparator[Record] {
     } else {
       if (Objects.isNull(record1)) { return 1 } else {
         var ret: Int = 0
-        val it: Iterator[String] = this.sortingOrder.iterator()
-        while (it.hasNext() && (ret == 0)) {
+        val it: Iterator[String] = this.sortingOrder.iterator
+        while (it.hasNext && (ret == 0)) {
           val token: String = it.next()
           ret = compareValues(record0.get(token), record1.get(token), this.fieldsWithReverseOrder.contains(token))
         }

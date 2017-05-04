@@ -1,13 +1,14 @@
 
 package de.tudresden.inf.lat.tabulas.table
 
-import java.util.ArrayList
-import java.util.List
+import scala.collection.mutable.ArrayBuffer
+import scala.collection.mutable.Buffer
 import java.util.Map
 import java.util.Objects
 import java.util.Optional
 import java.util.TreeMap
 
+import scala.collection.JavaConverters._
 import scala.collection.JavaConverters.asScalaBufferConverter
 
 import de.tudresden.inf.lat.tabulas.datatype.PrimitiveTypeValue
@@ -29,7 +30,7 @@ class RecordImpl extends Record {
    */
   def this(otherRecord: Record) = {
     this()
-    otherRecord.getProperties().asScala.foreach(property => set(property, otherRecord.get(property).get()))
+    otherRecord.getProperties().foreach(property => set(property, otherRecord.get(property).get()))
   }
 
   override def get(key: String): Optional[PrimitiveTypeValue] = {
@@ -51,9 +52,9 @@ class RecordImpl extends Record {
     }
   }
 
-  override def getProperties(): List[String] = {
-    val ret: List[String] = new ArrayList[String]
-    ret.addAll(map.keySet())
+  override def getProperties(): Buffer[String] = {
+    val ret: Buffer[String] = new ArrayBuffer[String]
+    ret ++= map.keySet().asScala
     return ret
   }
 
@@ -61,7 +62,7 @@ class RecordImpl extends Record {
     if (o.isInstanceOf[Record]) {
       val other: Record = o.asInstanceOf[Record]
       var ret: Boolean = getProperties().equals(other.getProperties())
-      ret = ret && getProperties().asScala.forall(property => get(property).equals(other.get(property)))
+      ret = ret && getProperties().forall(property => get(property).equals(other.get(property)))
       return ret
     } else {
       return false

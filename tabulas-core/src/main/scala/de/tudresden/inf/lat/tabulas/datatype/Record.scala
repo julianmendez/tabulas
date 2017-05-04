@@ -1,7 +1,7 @@
 
 package de.tudresden.inf.lat.tabulas.datatype
 
-import java.util.List
+import scala.collection.mutable.Buffer
 import java.util.Optional
 
 /**
@@ -36,7 +36,7 @@ trait Record {
    *
    * @return the property names
    */
-  def getProperties(): List[String]
+  def getProperties(): Buffer[String]
 
 }
 

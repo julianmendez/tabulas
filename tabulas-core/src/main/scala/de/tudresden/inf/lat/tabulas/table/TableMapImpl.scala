@@ -1,11 +1,12 @@
 
 package de.tudresden.inf.lat.tabulas.table
 
-import java.util.ArrayList
-import java.util.List
+import scala.collection.mutable.ArrayBuffer
+import scala.collection.mutable.Buffer
 import java.util.Map
 import java.util.TreeMap
 
+import scala.collection.JavaConverters._
 import scala.collection.JavaConverters.asScalaBufferConverter
 
 /**
@@ -24,7 +25,7 @@ class TableMapImpl extends TableMap {
    */
   def this(otherTableMap: TableMap) = {
     this()
-    otherTableMap.getTableIds().asScala.foreach(tableId => put(tableId, otherTableMap.getTable(tableId)))
+    otherTableMap.getTableIds().foreach(tableId => put(tableId, otherTableMap.getTable(tableId)))
   }
 
   /**
@@ -32,9 +33,9 @@ class TableMapImpl extends TableMap {
    *
    * @return the identifiers of the stored tables
    */
-  def getTableIds(): List[String] = {
-    val ret: List[String] = new ArrayList[String]()
-    ret.addAll(this.map.keySet())
+  def getTableIds(): Buffer[String] = {
+    val ret: Buffer[String] = new ArrayBuffer[String]()
+    ret ++= this.map.keySet().asScala
     return ret
   }
 
@@ -69,8 +70,8 @@ class TableMapImpl extends TableMap {
     if (obj.isInstanceOf[TableMap]) {
       val other: TableMap = obj.asInstanceOf[TableMap]
       var ret: Boolean = getTableIds().equals(other.getTableIds())
-      val tableIds: List[String] = getTableIds()
-      ret = ret && tableIds.asScala.forall(tableId => getTable(tableId).equals(other.getTable(tableId)))
+      val tableIds: Buffer[String] = getTableIds()
+      ret = ret && tableIds.forall(tableId => getTable(tableId).equals(other.getTable(tableId)))
       return ret
     } else {
       return false
@@ -79,8 +80,8 @@ class TableMapImpl extends TableMap {
 
   override def toString(): String = {
     val sbuf: StringBuffer = new StringBuffer()
-    val tableIds: List[String] = getTableIds()
-    tableIds.asScala.foreach(tableId => {
+    val tableIds: Buffer[String] = getTableIds()
+    tableIds.foreach(tableId => {
       sbuf.append(tableId)
       sbuf.append("=")
       sbuf.append(getTable(tableId))

@@ -5,7 +5,7 @@ import java.io.BufferedWriter
 import java.io.FileReader
 import java.io.FileWriter
 import java.io.IOException
-import java.util.List
+import scala.collection.mutable.Buffer
 import java.util.Objects
 
 import de.tudresden.inf.lat.tabulas.extension.Extension
@@ -23,14 +23,14 @@ class CalendarParserExtension extends Extension {
   def Help: String = "(input) (output) : create output file with a simple text format parsing a calendar file"
   def RequiredArguments: Int = 2
 
-  override def process(arguments: List[String]): Boolean = {
-    if (Objects.isNull(arguments) || arguments.size() != RequiredArguments) {
+  override def process(arguments: Buffer[String]): Boolean = {
+    if (Objects.isNull(arguments) || arguments.size != RequiredArguments) {
       return false
     } else {
       try {
 
-        val inputFileName: String = arguments.get(0)
-        val outputFileName: String = arguments.get(1)
+        val inputFileName: String = arguments(0)
+        val outputFileName: String = arguments(1)
         val tableMap: TableMap = new CalendarParser(new FileReader(
           inputFileName)).parse()
         val output: BufferedWriter = new BufferedWriter(new FileWriter(

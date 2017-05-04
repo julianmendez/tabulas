@@ -5,8 +5,8 @@ import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
 import java.io.Reader
-import java.util.ArrayList
-import java.util.List
+import scala.collection.mutable.ArrayBuffer
+import scala.collection.mutable.Buffer
 import java.util.Map
 import java.util.Objects
 import java.util.Optional
@@ -107,7 +107,7 @@ class SimpleFormatParser extends Parser {
 
   private def setSortingOrder(line: String, table: TableImpl): Unit = {
     val fieldsWithReverseOrder: Set[String] = new TreeSet[String]()
-    val list: List[String] = new ArrayList[String]
+    val list: Buffer[String] = new ArrayBuffer[String]
     val stok: StringTokenizer = new StringTokenizer(getValue(line).get())
     while (stok.hasMoreTokens()) {
       var token: String = stok.nextToken()
@@ -119,7 +119,7 @@ class SimpleFormatParser extends Parser {
           .length())
         fieldsWithReverseOrder.add(token)
       }
-      list.add(token)
+      list += token
     }
     table.setSortingOrder(list)
     table.setFieldsWithReverseOrder(fieldsWithReverseOrder)

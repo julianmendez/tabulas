@@ -50,7 +50,7 @@ class MainTest {
    */
   def computeFieldValue(record: Record): StringValue = {
     val value: PrimitiveTypeValue = record.get(FieldNameAuthors).get()
-    val size: Int = if (Objects.isNull(value)) { 0 } else { value.renderAsList().size() }
+    val size: Int = if (Objects.isNull(value)) { 0 } else { value.renderAsList().size }
     return new StringValue("" + size)
   }
 
@@ -90,7 +90,7 @@ class MainTest {
     // Make a copy of the tableMap
     // val newTableMap: TableMapImpl = new TableMapImpl(oldTableMap)
     val newTableMap: TableMapImpl = new TableMapImpl()
-    oldTableMap.getTableIds().asScala.foreach(tableId => newTableMap.put(tableId, oldTableMap.getTable(tableId)))
+    oldTableMap.getTableIds().foreach(tableId => newTableMap.put(tableId, oldTableMap.getTable(tableId)))
 
     assertContent(newTableMap, ExpectedOutputFileName)
 
@@ -109,7 +109,7 @@ class MainTest {
     // Make a copy of type
     // val newType: CompositeTypeImpl = new CompositeTypeImpl(oldType)
     val newType: CompositeTypeImpl = new CompositeTypeImpl()
-    oldType.getFields().asScala.foreach(field => newType.declareField(field, oldType.getFieldType(field).get()))
+    oldType.getFields().foreach(field => newType.declareField(field, oldType.getFieldType(field).get()))
 
     // Add new declaration with number of authors
     if (!newType.getFields().contains(FieldNameNumberOfAuthors)) {
@@ -120,7 +120,7 @@ class MainTest {
     newTable.setType(newType)
 
     // Compute the number of authors for each record
-    table.getRecords().asScala.foreach(record => record.set(FieldNameNumberOfAuthors, computeFieldValue(record)))
+    table.getRecords().foreach(record => record.set(FieldNameNumberOfAuthors, computeFieldValue(record)))
 
     assertContent(newTableMap, ModifiedOutputFileName)
   }
