@@ -57,6 +57,19 @@ class CalendarParser extends Parser {
 
   }
 
+  class MyStack[A] extends ArrayBuffer[A] {
+
+    def push(elem: A): MyStack[A] = {
+      insert(0, elem)
+      return this
+    }
+
+    def pop(): A = {
+      return remove(0)
+    }
+
+  }
+
   val GeneratedIdFieldName: String = "generatedId"
   val SubItemsFieldName: String = "subItems"
   val CalendarTypeLabel: String = "VCALENDAR"
@@ -252,9 +265,9 @@ class CalendarParser extends Parser {
     var currentRecord: Record = null
     var currentTableId: String = null
 
-    val tableIdStack: Stack[String] = new Stack[String]()
-    val recordStack: Stack[Record] = new Stack[Record]()
-    val tableStack: Stack[TableImpl] = new Stack[TableImpl]()
+    val tableIdStack: MyStack[String] = new MyStack[String]()
+    val recordStack: MyStack[Record] = new MyStack[Record]()
+    val tableStack: MyStack[TableImpl] = new MyStack[TableImpl]()
     val generatedIds: Buffer[Int] = new ArrayBuffer[Int]()
 
     val lines: Buffer[Pair] = preload(input)
