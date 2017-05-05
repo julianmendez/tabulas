@@ -65,6 +65,7 @@ class CalendarParser extends Parser {
     }
 
     def pop(): A = {
+      iterator.next() // this throws an NoSuchElementException in an empty stack
       return remove(0)
     }
 
