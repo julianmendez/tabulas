@@ -9,7 +9,7 @@ import scala.collection.mutable.Buffer
 import scala.collection.mutable.Map
 import java.util.Objects
 import java.util.Optional
-import java.util.Stack
+import scala.collection.mutable.Stack
 import scala.collection.mutable.TreeMap
 
 import scala.collection.JavaConverters.asScalaBufferConverter
@@ -275,7 +275,7 @@ class CalendarParser extends Parser {
           }
           currentRecord = new RecordImpl()
           currentRecord.set(GeneratedIdFieldName, new StringValue(
-            getGeneratedId(generatedIds, tableIdStack.size())))
+            getGeneratedId(generatedIds, tableIdStack.size)))
           currentTableId = value
           val optCurrentTable: Option[TableImpl] = map.get(value)
           if (optCurrentTable.isEmpty) {
@@ -297,7 +297,7 @@ class CalendarParser extends Parser {
             throw new ParseException("Closing wrong type '" + value
               + "' (line " + lineCounter + ").")
           }
-          if (tableStack.isEmpty()) {
+          if (tableStack.isEmpty) {
             throw new ParseException("Too many " + EndKeyword
               + " keywords  (line " + lineCounter + ").")
           }
@@ -325,7 +325,7 @@ class CalendarParser extends Parser {
       currentTable.add(currentRecord)
     }
 
-    if (!tableStack.isEmpty()) {
+    if (!tableStack.isEmpty) {
       throw new ParseException("Too few " + EndKeyword
         + " keywords  (line " + lineCounter + ").")
     }
