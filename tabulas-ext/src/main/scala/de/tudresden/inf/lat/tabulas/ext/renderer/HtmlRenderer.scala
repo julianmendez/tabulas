@@ -6,7 +6,6 @@ import java.io.Writer
 import scala.collection.mutable.Buffer
 import scala.collection.mutable.Map
 import java.util.Objects
-import java.util.Optional
 
 import scala.collection.JavaConverters.asScalaBufferConverter
 import scala.collection.JavaConverters.asScalaSetConverter
@@ -101,9 +100,9 @@ class HtmlRenderer extends Renderer {
 
   def render(output: UncheckedWriter, record: Record, fields: Buffer[String]): Unit = {
     fields.foreach(field => {
-      val optValue: Optional[PrimitiveTypeValue] = record.get(field)
-      if (optValue.isPresent()) {
-        val value: PrimitiveTypeValue = optValue.get()
+      val optValue: Option[PrimitiveTypeValue] = record.get(field)
+      if (optValue.isDefined) {
+        val value: PrimitiveTypeValue = optValue.get
         if (value.isInstanceOf[ParameterizedListValue]) {
           output.write("<td> ")
           val list: ParameterizedListValue = value.asInstanceOf[ParameterizedListValue]

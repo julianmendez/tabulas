@@ -8,7 +8,6 @@ import scala.collection.mutable.ArrayBuffer
 import scala.collection.mutable.Buffer
 import scala.collection.mutable.Map
 import java.util.Objects
-import java.util.Optional
 import scala.collection.mutable.Stack
 import scala.collection.mutable.TreeMap
 
@@ -128,32 +127,32 @@ class CalendarParser extends Parser {
     this.input = input
   }
 
-  def getKey(line: String): Optional[String] = {
+  def getKey(line: String): Option[String] = {
     if (Objects.isNull(line)) {
-      return Optional.empty()
+      return Option.empty
     } else {
       var pos: Int = line.indexOf(ColonChar)
       if (pos == -1) {
-        return Optional.of(line)
+        return Option.apply(line)
       } else {
         var pos2: Int = line.indexOf(SemicolonChar)
         if (pos2 >= 0 && pos2 < pos) {
           pos = pos2
         }
-        return Optional.of(line.substring(0, pos).trim())
+        return Option.apply(line.substring(0, pos).trim())
       }
     }
   }
 
-  def getValue(line: String): Optional[String] = {
+  def getValue(line: String): Option[String] = {
     if (Objects.isNull(line)) {
-      return Optional.empty()
+      return Option.empty
     } else {
       var pos: Int = line.indexOf(ColonChar)
       if (pos == -1) {
-        return Optional.of("")
+        return Option.apply("")
       } else {
-        return Optional.of(line.substring(pos + 1, line.length()).trim())
+        return Option.apply(line.substring(pos + 1, line.length()).trim())
       }
     }
   }
@@ -172,9 +171,9 @@ class CalendarParser extends Parser {
       return new StringValue()
     } else {
       try {
-        val optTypeStr: Optional[String] = type0.getFieldType(key)
-        if (optTypeStr.isPresent()) {
-          return (new PrimitiveTypeFactory()).newInstance(optTypeStr.get(), value)
+        val optTypeStr: Option[String] = type0.getFieldType(key)
+        if (optTypeStr.isDefined) {
+          return (new PrimitiveTypeFactory()).newInstance(optTypeStr.get, value)
         } else {
           throw new ParseException("Key '" + key + "' has an undefined type.")
         }
@@ -213,11 +212,11 @@ class CalendarParser extends Parser {
         + lineCounter + ")")
     }
 
-    val optKey: Optional[String] = getKey(line)
-    val optValueStr: Optional[String] = getValue(line)
-    if (optKey.isPresent() && optValueStr.isPresent()) {
-      val key: String = optKey.get()
-      val valueStr: String = optValueStr.get()
+    val optKey: Option[String] = getKey(line)
+    val optValueStr: Option[String] = getValue(line)
+    if (optKey.isDefined && optValueStr.isDefined) {
+      val key: String = optKey.get
+      val valueStr: String = optValueStr.get
       val value: PrimitiveTypeValue = getTypedValue(key, valueStr,
         currentTable.getType(), lineCounter)
       record.set(key, value)
@@ -279,7 +278,7 @@ class CalendarParser extends Parser {
       lineCounter = pair.getLineCounter()
       if (Objects.nonNull(line) && !line.trim().isEmpty()) {
         if (isBeginLine(line)) {
-          val value: String = getValue(line).get()
+          val value: String = getValue(line).get
           if (firstTime) {
             firstTime = false
           } else {
@@ -300,9 +299,9 @@ class CalendarParser extends Parser {
 
         } else if (isEndLine(line)) {
           val foreignKey: String = currentRecord.get(GeneratedIdFieldName)
-            .get().render()
+            .get.render()
           currentTable.add(currentRecord)
-          val value: String = getValue(line).get()
+          val value: String = getValue(line).get
           if (Objects.isNull(map.get(value))) {
             throw new ParseException("Unknown type '" + value
               + "' (line " + lineCounter + ").")
@@ -318,9 +317,9 @@ class CalendarParser extends Parser {
           currentTableId = tableIdStack.pop()
           currentTable = tableStack.pop()
           currentRecord = recordStack.pop()
-          var optSubItems: Optional[PrimitiveTypeValue] = currentRecord.get(SubItemsFieldName)
-          if (optSubItems.isPresent()) {
-            currentRecord.set(SubItemsFieldName, new StringValue(optSubItems.get().render() + SpaceChar + foreignKey))
+          var optSubItems: Option[PrimitiveTypeValue] = currentRecord.get(SubItemsFieldName)
+          if (optSubItems.isDefined) {
+            currentRecord.set(SubItemsFieldName, new StringValue(optSubItems.get.render() + SpaceChar + foreignKey))
 
           } else {
             currentRecord.set(SubItemsFieldName, new StringValue(foreignKey))

@@ -5,7 +5,6 @@ import scala.collection.mutable.ArrayBuffer
 import scala.collection.mutable.Buffer
 import scala.collection.mutable.Map
 import java.util.Objects
-import java.util.Optional
 import scala.collection.mutable.TreeMap
 
 import scala.collection.JavaConverters._
@@ -30,18 +29,18 @@ class RecordImpl extends Record {
    */
   def this(otherRecord: Record) = {
     this()
-    otherRecord.getProperties().foreach(property => set(property, otherRecord.get(property).get()))
+    otherRecord.getProperties().foreach(property => set(property, otherRecord.get(property).get))
   }
 
-  override def get(key: String): Optional[PrimitiveTypeValue] = {
+  override def get(key: String): Option[PrimitiveTypeValue] = {
     if (Objects.isNull(key)) {
-      return Optional.empty()
+      return Option.empty
     } else {
       val optValue: Option[PrimitiveTypeValue] = this.map.get(key)
       if (optValue.isEmpty) {
-        return Optional.empty()
+        return Option.empty
       } else {
-        return Optional.of(optValue.get)
+        return Option.apply(optValue.get)
       }
     }
   }

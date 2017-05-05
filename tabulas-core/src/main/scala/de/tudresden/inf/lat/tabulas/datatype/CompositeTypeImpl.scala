@@ -5,7 +5,6 @@ import scala.collection.mutable.ArrayBuffer
 import scala.collection.mutable.Buffer
 import scala.collection.mutable.Map
 import java.util.Objects
-import java.util.Optional
 import scala.collection.mutable.TreeMap
 
 import scala.collection.JavaConverters.asScalaBufferConverter
@@ -35,13 +34,13 @@ class CompositeTypeImpl extends CompositeType {
     return this.fields // @FIXME this should be immutable
   }
 
-  override def getFieldType(field: String): Optional[String] = {
+  override def getFieldType(field: String): Option[String] = {
     Objects.requireNonNull(field)
     val optValue: Option[String] = this.fieldType.get(field)
     if (optValue.isEmpty) {
-      return Optional.empty()
+      return Option.empty
     } else {
-      return Optional.of(optValue.get)
+      return Option.apply(optValue.get)
     }
   }
 

@@ -49,7 +49,7 @@ class MainTest {
    * @return the number of authors for a given record
    */
   def computeFieldValue(record: Record): StringValue = {
-    val value: PrimitiveTypeValue = record.get(FieldNameAuthors).get()
+    val value: PrimitiveTypeValue = record.get(FieldNameAuthors).get
     val size: Int = if (Objects.isNull(value)) { 0 } else { value.renderAsList().size }
     return new StringValue("" + size)
   }
@@ -109,7 +109,7 @@ class MainTest {
     // Make a copy of type
     // val newType: CompositeTypeImpl = new CompositeTypeImpl(oldType)
     val newType: CompositeTypeImpl = new CompositeTypeImpl()
-    oldType.getFields().foreach(field => newType.declareField(field, oldType.getFieldType(field).get()))
+    oldType.getFields().foreach(field => newType.declareField(field, oldType.getFieldType(field).get))
 
     // Add new declaration with number of authors
     if (!newType.getFields().contains(FieldNameNumberOfAuthors)) {

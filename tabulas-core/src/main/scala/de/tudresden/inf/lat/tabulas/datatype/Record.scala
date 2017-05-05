@@ -2,7 +2,6 @@
 package de.tudresden.inf.lat.tabulas.datatype
 
 import scala.collection.mutable.Buffer
-import java.util.Optional
 
 /**
  * This models a record.
@@ -17,9 +16,9 @@ trait Record {
    * @param key
    *            property name
    * @return an optional containing the value of a given property, if this
-   * 	          value is present, or an empty optional otherwise
+   *            value is present, or an empty optional otherwise
    */
-  def get(key: String): Optional[PrimitiveTypeValue]
+  def get(key: String): Option[PrimitiveTypeValue]
 
   /**
    * Sets the value of a given property.

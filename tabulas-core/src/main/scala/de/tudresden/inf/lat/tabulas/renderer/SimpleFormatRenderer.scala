@@ -58,7 +58,7 @@ class SimpleFormatRenderer extends Renderer {
       output.write(ParserConstant.Space)
       output.write(field)
       output.write(ParserConstant.TypeSign)
-      output.write(table.getType().getFieldType(field).get())
+      output.write(table.getType().getFieldType(field).get)
     })
     output.write(ParserConstant.NewLine)
   }

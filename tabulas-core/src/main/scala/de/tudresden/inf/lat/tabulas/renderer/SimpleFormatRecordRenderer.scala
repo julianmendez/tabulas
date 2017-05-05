@@ -5,7 +5,6 @@ import java.io.OutputStreamWriter
 import java.io.Writer
 import scala.collection.mutable.Buffer
 import java.util.Objects
-import java.util.Optional
 
 import scala.collection.JavaConverters.asScalaBufferConverter
 
@@ -63,9 +62,9 @@ class SimpleFormatRecordRenderer extends RecordRenderer {
     output.write(ParserConstant.EqualsSign + ParserConstant.Space)
 
     fields.foreach(field => {
-      val optValue: Optional[PrimitiveTypeValue] = record.get(field)
-      if (optValue.isPresent()) {
-        writeIfNotEmpty(output, field, optValue.get());
+      val optValue: Option[PrimitiveTypeValue] = record.get(field)
+      if (optValue.isDefined) {
+        writeIfNotEmpty(output, field, optValue.get);
       }
     })
 

@@ -9,7 +9,6 @@ import scala.collection.mutable.ArrayBuffer
 import scala.collection.mutable.Buffer
 import scala.collection.mutable.Map
 import java.util.Objects
-import java.util.Optional
 import scala.collection.mutable.Set
 import java.util.StringTokenizer
 import scala.collection.mutable.TreeMap
@@ -57,35 +56,35 @@ class SimpleFormatParser extends Parser {
     this.input = input
   }
 
-  def getKey(line: String): Optional[String] = {
+  def getKey(line: String): Option[String] = {
     if (Objects.isNull(line)) {
-      Optional.empty()
+      Option.empty
     } else {
       val pos: Int = line.indexOf(ParserConstant.EqualsSign)
       if (pos == -1) {
-        Optional.of(line)
+        Option.apply(line)
       } else {
-        Optional.of(line.substring(0, pos).trim())
+        Option.apply(line.substring(0, pos).trim())
       }
     }
   }
 
-  def getValue(line: String): Optional[String] = {
+  def getValue(line: String): Option[String] = {
     if (Objects.isNull(line)) {
-      Optional.empty()
+      Option.empty
     } else {
       val pos: Int = line.indexOf(ParserConstant.EqualsSign)
       if (pos == -1) {
-        Optional.of("")
+        Option.apply("")
       } else {
-        Optional.of(line.substring(pos + ParserConstant.EqualsSign.length(), line.length()).trim())
+        Option.apply(line.substring(pos + ParserConstant.EqualsSign.length(), line.length()).trim())
       }
     }
   }
 
   def parseTypes(line: String, lineCounter: Int): CompositeTypeImpl = {
     val ret = new CompositeTypeImpl()
-    val stok: StringTokenizer = new StringTokenizer(getValue(line).get())
+    val stok: StringTokenizer = new StringTokenizer(getValue(line).get)
     val factory: PrimitiveTypeFactory = new PrimitiveTypeFactory()
     while (stok.hasMoreTokens()) {
       val token: String = stok.nextToken()
@@ -108,7 +107,7 @@ class SimpleFormatParser extends Parser {
   private def setSortingOrder(line: String, table: TableImpl): Unit = {
     val fieldsWithReverseOrder: Set[String] = new TreeSet[String]()
     val list: Buffer[String] = new ArrayBuffer[String]
-    val stok: StringTokenizer = new StringTokenizer(getValue(line).get())
+    val stok: StringTokenizer = new StringTokenizer(getValue(line).get)
     while (stok.hasMoreTokens()) {
       var token: String = stok.nextToken()
       if (token.startsWith(ParserConstant.StandardOrderSign)) {
@@ -146,9 +145,9 @@ class SimpleFormatParser extends Parser {
       new StringValue()
     } else {
       try {
-        var optTypeStr: Optional[String] = type0.getFieldType(key)
-        if (optTypeStr.isPresent()) {
-          (new PrimitiveTypeFactory()).newInstance(optTypeStr.get(), value)
+        var optTypeStr: Option[String] = type0.getFieldType(key)
+        if (optTypeStr.isDefined) {
+          (new PrimitiveTypeFactory()).newInstance(optTypeStr.get, value)
 
         } else {
           throw new ParseException("Key '" + key + "' has an undefined type.")
@@ -202,21 +201,21 @@ class SimpleFormatParser extends Parser {
   }
 
   private def isIdProperty(line: String): Boolean = {
-    val optKey: Optional[String] = getKey(line)
-    if (optKey.isPresent()) {
-      optKey.get().equals(ParserConstant.IdKeyword)
+    val optKey: Option[String] = getKey(line)
+    if (optKey.isDefined) {
+      optKey.get.equals(ParserConstant.IdKeyword)
     } else {
       false
     }
   }
 
-  private def getIdProperty(line: String): Optional[String] = {
-    val optKey: Optional[String] = getKey(line)
-    val optValueStr: Optional[String] = getValue(line)
-    if (optKey.isPresent() && optValueStr.isPresent() && optKey.get().equals(ParserConstant.IdKeyword)) {
-      Optional.of(optValueStr.get())
+  private def getIdProperty(line: String): Option[String] = {
+    val optKey: Option[String] = getKey(line)
+    val optValueStr: Option[String] = getValue(line)
+    if (optKey.isDefined && optValueStr.isDefined && optKey.get.equals(ParserConstant.IdKeyword)) {
+      Option.apply(optValueStr.get)
     } else {
-      Optional.empty()
+      Option.empty
     }
   }
 
@@ -227,11 +226,11 @@ class SimpleFormatParser extends Parser {
         + lineCounter + ")")
     }
 
-    val optKey: Optional[String] = getKey(line)
-    val optValueStr: Optional[String] = getValue(line)
-    if (optKey.isPresent() && optValueStr.isPresent()) {
-      val key: String = optKey.get()
-      val valueStr: String = optValueStr.get()
+    val optKey: Option[String] = getKey(line)
+    val optValueStr: Option[String] = getValue(line)
+    if (optKey.isDefined && optValueStr.isDefined) {
+      val key: String = optKey.get
+      val valueStr: String = optValueStr.get
       val value: PrimitiveTypeValue = getTypedValue(key, valueStr, currentTable.getType(), lineCounter)
       if (key.equals(ParserConstant.IdKeyword)) {
         if (recordIdsOfCurrentTable.contains(valueStr)) {
@@ -263,9 +262,9 @@ class SimpleFormatParser extends Parser {
       lineCounter = pair.getLineCounter()
       if (Objects.nonNull(line) && !line.trim().isEmpty()) {
         if (isTypeSelection(line)) {
-          val optTableName: Optional[String] = getValue(line)
-          if (optTableName.isPresent()) {
-            val tableName: String = optTableName.get()
+          val optTableName: Option[String] = getValue(line)
+          if (optTableName.isDefined) {
+            val tableName: String = optTableName.get
             if (!mapOfTables.get(tableName).isDefined) {
               mapOfTables.put(tableName, new TableImpl(
                 new TableImpl()))
@@ -291,9 +290,9 @@ class SimpleFormatParser extends Parser {
           if (isIdProperty(line)) {
             var successful: Boolean = false
             if (Objects.isNull(currentId)) {
-              val optCurrentId: Optional[String] = getIdProperty(line)
-              if (optCurrentId.isPresent()) {
-                currentId = optCurrentId.get()
+              val optCurrentId: Option[String] = getIdProperty(line)
+              if (optCurrentId.isDefined) {
+                currentId = optCurrentId.get
                 successful = recordIdsOfCurrentTable.add(currentId)
               }
             }

@@ -5,7 +5,6 @@ import scala.collection.mutable.ArrayBuffer
 import java.util.Comparator
 import scala.collection.mutable.Buffer
 import java.util.Objects
-import java.util.Optional
 import scala.collection.mutable.Set
 import scala.collection.mutable.TreeSet
 
@@ -56,14 +55,14 @@ class RecordComparator extends Comparator[Record] {
     }
   }
 
-  def compareValues(optValue0: Optional[PrimitiveTypeValue], optValue1: Optional[PrimitiveTypeValue], hasReverseOrder: Boolean): Int = {
+  def compareValues(optValue0: Option[PrimitiveTypeValue], optValue1: Option[PrimitiveTypeValue], hasReverseOrder: Boolean): Int = {
     if (hasReverseOrder) {
       return compareValues(optValue1, optValue0, false)
     } else {
-      if (optValue0.isPresent()) {
-        if (optValue1.isPresent()) { return optValue0.get().compareTo(optValue1.get()) } else { return 1 }
+      if (optValue0.isDefined) {
+        if (optValue1.isDefined) { return optValue0.get.compareTo(optValue1.get) } else { return 1 }
       } else {
-        if (optValue1.isPresent()) { return -1 } else { return 0 }
+        if (optValue1.isDefined) { return -1 } else { return 0 }
       }
     }
   }

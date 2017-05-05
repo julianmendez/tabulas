@@ -5,7 +5,6 @@ import java.io.OutputStreamWriter
 import java.io.Writer
 import scala.collection.mutable.Buffer
 import java.util.Objects
-import java.util.Optional
 
 import scala.Range
 import scala.collection.JavaConverters.asScalaBufferConverter
@@ -91,9 +90,9 @@ class CsvRenderer extends Renderer {
       } else {
         output.write(Comma)
       }
-      val optValue: Optional[PrimitiveTypeValue] = record.get(field)
-      if (optValue.isPresent()) {
-        val value: PrimitiveTypeValue = optValue.get()
+      val optValue: Option[PrimitiveTypeValue] = record.get(field)
+      if (optValue.isDefined) {
+        val value: PrimitiveTypeValue = optValue.get
         if (value.isInstanceOf[ParameterizedListValue]) {
           val list: ParameterizedListValue = value.asInstanceOf[ParameterizedListValue]
           writeParameterizedListIfNotEmpty(output, field, list)
