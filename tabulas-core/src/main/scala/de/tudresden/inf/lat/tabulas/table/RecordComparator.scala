@@ -6,8 +6,8 @@ import java.util.Comparator
 import scala.collection.mutable.Buffer
 import java.util.Objects
 import java.util.Optional
-import java.util.Set
-import java.util.TreeSet
+import scala.collection.mutable.Set
+import scala.collection.mutable.TreeSet
 
 import de.tudresden.inf.lat.tabulas.datatype.PrimitiveTypeValue
 import de.tudresden.inf.lat.tabulas.datatype.Record
@@ -29,7 +29,7 @@ class RecordComparator extends Comparator[Record] {
   def this(sortingOrder: Buffer[String], fieldsWithReverseOrder: Set[String]) = {
     this()
     this.sortingOrder ++= sortingOrder
-    this.fieldsWithReverseOrder.addAll(fieldsWithReverseOrder)
+    this.fieldsWithReverseOrder ++= fieldsWithReverseOrder
   }
 
   def getSortingOrder(): Buffer[String] = {

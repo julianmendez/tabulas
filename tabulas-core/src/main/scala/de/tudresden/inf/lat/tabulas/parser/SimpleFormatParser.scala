@@ -10,10 +10,10 @@ import scala.collection.mutable.Buffer
 import scala.collection.mutable.Map
 import java.util.Objects
 import java.util.Optional
-import java.util.Set
+import scala.collection.mutable.Set
 import java.util.StringTokenizer
 import scala.collection.mutable.TreeMap
-import java.util.TreeSet
+import scala.collection.mutable.TreeSet
 
 import scala.collection.JavaConverters.asScalaSetConverter
 

@@ -2,7 +2,7 @@
 package de.tudresden.inf.lat.tabulas.table
 
 import scala.collection.mutable.Buffer
-import java.util.Set
+import scala.collection.mutable.Set
 
 import de.tudresden.inf.lat.tabulas.datatype.CompositeTypeValue
 

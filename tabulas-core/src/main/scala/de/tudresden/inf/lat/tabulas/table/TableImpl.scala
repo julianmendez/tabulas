@@ -5,8 +5,8 @@ import scala.collection.mutable.ArrayBuffer
 import java.util.Collections
 import scala.collection.mutable.Buffer
 import java.util.Objects
-import java.util.Set
-import java.util.TreeSet
+import scala.collection.mutable.Set
+import scala.collection.mutable.TreeSet
 
 import de.tudresden.inf.lat.tabulas.datatype.CompositeType
 import de.tudresden.inf.lat.tabulas.datatype.CompositeTypeImpl
@@ -34,7 +34,7 @@ class TableImpl extends Table {
     if (other.isInstanceOf[Table]) {
       val otherTable: Table = other.asInstanceOf[Table]
       this.sortingOrder ++= otherTable.getSortingOrder()
-      this.fieldsWithReverseOrder.addAll(otherTable.getFieldsWithReverseOrder())
+      this.fieldsWithReverseOrder ++= otherTable.getFieldsWithReverseOrder()
     }
   }
 
@@ -73,7 +73,7 @@ class TableImpl extends Table {
   override def setFieldsWithReverseOrder(fieldsWithReverseOrder: Set[String]): Unit = {
     this.fieldsWithReverseOrder.clear()
     if (Objects.nonNull(fieldsWithReverseOrder)) {
-      this.fieldsWithReverseOrder.addAll(fieldsWithReverseOrder)
+      this.fieldsWithReverseOrder ++= fieldsWithReverseOrder
     }
   }
 
