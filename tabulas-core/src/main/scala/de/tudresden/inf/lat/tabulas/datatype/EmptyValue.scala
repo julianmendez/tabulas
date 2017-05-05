@@ -1,7 +1,6 @@
 
 package de.tudresden.inf.lat.tabulas.datatype
 
-import java.util.Collections
 import scala.collection.mutable.ArrayBuffer
 import scala.collection.mutable.Buffer
 
