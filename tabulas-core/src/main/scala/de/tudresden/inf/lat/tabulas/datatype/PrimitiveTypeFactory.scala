@@ -1,8 +1,8 @@
 package de.tudresden.inf.lat.tabulas.datatype;
 
-import java.util.Map
+import scala.collection.mutable.Map
 import java.util.Objects
-import java.util.TreeMap
+import scala.collection.mutable.TreeMap
 
 /**
  * This models a factory of primitive types.
@@ -40,7 +40,7 @@ class PrimitiveTypeFactory {
    *         primitive type
    */
   def contains(primType: String): Boolean = {
-    return this.map.containsKey(primType)
+    return this.map.get(primType).isDefined
   }
 
   /**
@@ -53,11 +53,11 @@ class PrimitiveTypeFactory {
    * @return a new value of the specified type
    */
   def newInstance(typeName: String, value: String): PrimitiveTypeValue = {
-    val primType: PrimitiveType = this.map.get(typeName)
-    if (Objects.isNull(primType)) {
+    val optPrimType: Option[PrimitiveType] = this.map.get(typeName)
+    if (optPrimType.isEmpty) {
       throw new ParseException("Type '" + typeName + "' is undefined.")
     } else {
-      return primType.parse(value)
+      return optPrimType.get.parse(value)
     }
   }
 

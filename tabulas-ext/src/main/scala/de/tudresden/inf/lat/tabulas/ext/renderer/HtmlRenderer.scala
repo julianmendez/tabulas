@@ -4,7 +4,7 @@ package de.tudresden.inf.lat.tabulas.ext.renderer
 import java.io.OutputStreamWriter
 import java.io.Writer
 import scala.collection.mutable.Buffer
-import java.util.Map
+import scala.collection.mutable.Map
 import java.util.Objects
 import java.util.Optional
 
@@ -143,8 +143,8 @@ class HtmlRenderer extends Renderer {
 
   def renderMap(output: UncheckedWriter, map: Map[String, String]): Unit = {
     output.write("<table summary=\"\" border=\"1\">\n")
-    map.keySet().asScala.foreach(key => {
-      val value: String = map.get(key)
+    map.keySet.foreach(key => {
+      val value: String = map.get(key).get
       output.write("<tr>\n")
       output.write("<td>")
       output.write(key)

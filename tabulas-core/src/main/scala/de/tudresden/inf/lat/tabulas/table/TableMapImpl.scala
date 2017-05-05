@@ -3,8 +3,8 @@ package de.tudresden.inf.lat.tabulas.table
 
 import scala.collection.mutable.ArrayBuffer
 import scala.collection.mutable.Buffer
-import java.util.Map
-import java.util.TreeMap
+import scala.collection.mutable.Map
+import scala.collection.mutable.TreeMap
 
 import scala.collection.JavaConverters._
 import scala.collection.JavaConverters.asScalaBufferConverter
@@ -35,7 +35,7 @@ class TableMapImpl extends TableMap {
    */
   def getTableIds(): Buffer[String] = {
     val ret: Buffer[String] = new ArrayBuffer[String]()
-    ret ++= this.map.keySet().asScala
+    ret ++= this.map.keySet
     return ret
   }
 
@@ -59,7 +59,9 @@ class TableMapImpl extends TableMap {
    * @return the table associated to the given identifier
    */
   def getTable(id: String): Table = {
-    return this.map.get(id)
+    val optTable: Option[Table] = this.map.get(id)
+    // @FIXME add condition to verify that the key was found
+    return optTable.get
   }
 
   override def hashCode(): Int = {

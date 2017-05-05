@@ -4,10 +4,10 @@ package de.tudresden.inf.lat.tabulas.datatype
 import scala.collection.mutable.ArrayBuffer
 import java.util.Collections
 import scala.collection.mutable.Buffer
-import java.util.Map
+import scala.collection.mutable.Map
 import java.util.Objects
 import java.util.Optional
-import java.util.TreeMap
+import scala.collection.mutable.TreeMap
 
 import scala.collection.JavaConverters.asScalaBufferConverter
 
@@ -38,11 +38,11 @@ class CompositeTypeImpl extends CompositeType {
 
   override def getFieldType(field: String): Optional[String] = {
     Objects.requireNonNull(field)
-    val value: String = this.fieldType.get(field)
-    if (Objects.isNull(value)) {
+    val optValue: Option[String] = this.fieldType.get(field)
+    if (optValue.isEmpty) {
       return Optional.empty()
     } else {
-      return Optional.of(value)
+      return Optional.of(optValue.get)
     }
   }
 

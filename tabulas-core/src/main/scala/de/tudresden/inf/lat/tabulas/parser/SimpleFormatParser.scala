@@ -7,12 +7,12 @@ import java.io.InputStreamReader
 import java.io.Reader
 import scala.collection.mutable.ArrayBuffer
 import scala.collection.mutable.Buffer
-import java.util.Map
+import scala.collection.mutable.Map
 import java.util.Objects
 import java.util.Optional
 import java.util.Set
 import java.util.StringTokenizer
-import java.util.TreeMap
+import scala.collection.mutable.TreeMap
 import java.util.TreeSet
 
 import scala.collection.JavaConverters.asScalaSetConverter
@@ -266,13 +266,13 @@ class SimpleFormatParser extends Parser {
           val optTableName: Optional[String] = getValue(line)
           if (optTableName.isPresent()) {
             val tableName: String = optTableName.get()
-            if (!mapOfTables.containsKey(tableName)) {
+            if (!mapOfTables.get(tableName).isDefined) {
               mapOfTables.put(tableName, new TableImpl(
                 new TableImpl()))
               mapOfRecordIdsOfTables.put(tableName, new TreeSet[String]())
             }
-            currentTable = mapOfTables.get(tableName)
-            recordIdsOfCurrentTable = mapOfRecordIdsOfTables.get(tableName)
+            currentTable = mapOfTables.get(tableName).get
+            recordIdsOfCurrentTable = mapOfRecordIdsOfTables.get(tableName).get
           }
 
         } else if (isTypeDefinition(line)) {
@@ -311,7 +311,7 @@ class SimpleFormatParser extends Parser {
     }
 
     val ret: TableMapImpl = new TableMapImpl()
-    mapOfTables.keySet().asScala.foreach(key => ret.put(key, mapOfTables.get(key)))
+    mapOfTables.keySet.foreach(key => ret.put(key, mapOfTables.get(key).get))
     ret
   }
 

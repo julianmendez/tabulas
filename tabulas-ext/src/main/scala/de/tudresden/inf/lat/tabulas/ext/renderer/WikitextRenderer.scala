@@ -4,7 +4,7 @@ package de.tudresden.inf.lat.tabulas.ext.renderer
 import java.io.OutputStreamWriter
 import java.io.Writer
 import scala.collection.mutable.Buffer
-import java.util.Map
+import scala.collection.mutable.Map
 import java.util.Objects
 import java.util.Optional
 
@@ -123,8 +123,8 @@ class WikitextRenderer extends Renderer {
   def renderMap(output: UncheckedWriter, map: Map[String, String]): Unit = {
     output.write("{| border=\"1\"\n")
     output.write("|-\n")
-    map.keySet().asScala.foreach(key => {
-      val value: String = map.get(key)
+    map.keySet.foreach(key => {
+      val value: String = map.get(key).get
       output.write("| ")
       output.write(key)
       output.write("\n")

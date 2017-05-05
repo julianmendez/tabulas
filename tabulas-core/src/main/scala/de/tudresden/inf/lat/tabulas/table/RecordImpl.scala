@@ -3,10 +3,10 @@ package de.tudresden.inf.lat.tabulas.table
 
 import scala.collection.mutable.ArrayBuffer
 import scala.collection.mutable.Buffer
-import java.util.Map
+import scala.collection.mutable.Map
 import java.util.Objects
 import java.util.Optional
-import java.util.TreeMap
+import scala.collection.mutable.TreeMap
 
 import scala.collection.JavaConverters._
 import scala.collection.JavaConverters.asScalaBufferConverter
@@ -37,11 +37,11 @@ class RecordImpl extends Record {
     if (Objects.isNull(key)) {
       return Optional.empty()
     } else {
-      val value: PrimitiveTypeValue = this.map.get(key);
-      if (Objects.isNull(value)) {
+      val optValue: Option[PrimitiveTypeValue] = this.map.get(key)
+      if (optValue.isEmpty) {
         return Optional.empty()
       } else {
-        return Optional.of(value)
+        return Optional.of(optValue.get)
       }
     }
   }
@@ -54,7 +54,7 @@ class RecordImpl extends Record {
 
   override def getProperties(): Buffer[String] = {
     val ret: Buffer[String] = new ArrayBuffer[String]
-    ret ++= map.keySet().asScala
+    ret ++= map.keySet
     return ret
   }
 

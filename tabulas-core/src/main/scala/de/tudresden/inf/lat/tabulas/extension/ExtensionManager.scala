@@ -3,9 +3,9 @@ package de.tudresden.inf.lat.tabulas.extension
 import java.io.UncheckedIOException
 import scala.collection.mutable.ArrayBuffer
 import scala.collection.mutable.Buffer
-import java.util.Map
+import scala.collection.mutable.Map
 import java.util.Objects
-import java.util.TreeMap
+import scala.collection.mutable.TreeMap
 
 import scala.collection.JavaConverters.asScalaBufferConverter
 
@@ -39,7 +39,7 @@ class ExtensionManager extends Extension {
       this.extensions ++= extensions
       extensions.foreach(extension => {
         val key: String = extension.getExtensionName()
-        if (this.extensionMap.containsKey(key)) {
+        if (this.extensionMap.get(key).isDefined) {
           throw new ExtensionException(
             "Only one implementation is allowed for each extension, and '"
               + key + "' was at least twice.")
@@ -58,15 +58,15 @@ class ExtensionManager extends Extension {
       val newArguments: Buffer[String] = new ArrayBuffer[String]()
       newArguments ++= arguments
       newArguments.remove(0)
-      val extension: Extension = this.extensionMap.get(command)
-      if (Objects.isNull(extension)) {
+      val optExtension: Option[Extension] = this.extensionMap.get(command)
+      if (optExtension.isEmpty) {
         throw new ExtensionException("Extension '" + command
           + "' was not found.")
-      } else if (newArguments.size < extension.getRequiredArguments()) {
+      } else if (newArguments.size < optExtension.get.getRequiredArguments()) {
         throw new ExtensionException("Insufficient number of arguments for extension '" + command + "'.")
       } else {
         try {
-          return extension.process(newArguments)
+          return optExtension.get.process(newArguments)
         } catch {
           case e @ (_: ParseException | _: UncheckedIOException | _: IOException) => {
             throw new ExtensionException(e.toString(), e)

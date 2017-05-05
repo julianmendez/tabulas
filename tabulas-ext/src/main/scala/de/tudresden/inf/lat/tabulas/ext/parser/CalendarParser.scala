@@ -6,11 +6,11 @@ import java.io.InputStreamReader
 import java.io.Reader
 import scala.collection.mutable.ArrayBuffer
 import scala.collection.mutable.Buffer
-import java.util.Map
+import scala.collection.mutable.Map
 import java.util.Objects
 import java.util.Optional
 import java.util.Stack
-import java.util.TreeMap
+import scala.collection.mutable.TreeMap
 
 import scala.collection.JavaConverters.asScalaBufferConverter
 import scala.collection.JavaConverters.asScalaSetConverter
@@ -277,11 +277,12 @@ class CalendarParser extends Parser {
           currentRecord.set(GeneratedIdFieldName, new StringValue(
             getGeneratedId(generatedIds, tableIdStack.size())))
           currentTableId = value
-          currentTable = map.get(value)
-          if (Objects.isNull(currentTable)) {
+          val optCurrentTable: Option[TableImpl] = map.get(value)
+          if (optCurrentTable.isEmpty) {
             throw new ParseException("Unknown type '" + value
               + "' (line " + lineCounter + ").")
           }
+          currentTable = optCurrentTable.get
 
         } else if (isEndLine(line)) {
           val foreignKey: String = currentRecord.get(GeneratedIdFieldName)
@@ -330,7 +331,7 @@ class CalendarParser extends Parser {
     }
 
     val ret: TableMapImpl = new TableMapImpl()
-    map.keySet().asScala.foreach(key => ret.put(key, map.get(key)))
+    map.keySet.foreach(key => ret.put(key, map.get(key).get))
     return ret
   }
 
