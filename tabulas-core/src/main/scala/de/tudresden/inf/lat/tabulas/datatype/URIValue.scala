@@ -15,7 +15,7 @@ class URIValue extends PrimitiveTypeValue {
 
   val SpecialSymbol: String = "#"
 
-  private var uri: URI = null
+  private var uri: URI = _
 
   /**
    * Constructs a new URI value using a string.

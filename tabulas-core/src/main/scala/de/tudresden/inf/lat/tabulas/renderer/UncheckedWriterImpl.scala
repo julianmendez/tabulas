@@ -13,7 +13,7 @@ import java.util.Objects
  */
 class UncheckedWriterImpl extends UncheckedWriter {
 
-  var writer: Writer = null
+  var writer: Writer = _
 
   /**
    * Constructs a new unchecked writer.

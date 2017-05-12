@@ -12,7 +12,7 @@ class ParameterizedListType extends PrimitiveType {
 
   val TypePrefix: String = "List_"
 
-  var parameter: PrimitiveType = null
+  var parameter: PrimitiveType = _
 
   def this(parameter: PrimitiveType) = {
     this()

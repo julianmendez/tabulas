@@ -17,7 +17,7 @@ class ParameterizedListValue extends ArrayBuffer[PrimitiveTypeValue] with Primit
 
   val Separator: String = " "
 
-  var parameter: PrimitiveType = null
+  var parameter: PrimitiveType = _
 
   /**
    * Constructs a new parameterized list value.

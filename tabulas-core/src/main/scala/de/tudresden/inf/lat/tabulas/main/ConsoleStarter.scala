@@ -22,7 +22,7 @@ class ConsoleStarter {
     "\nIf the extension is ommitted, the '" + (new NormalizationExtension()).Name + "' extension is executed." + //
     "\n\nThe available extensions are:" + "\n"
 
-  var manager: ExtensionManager = null
+  var manager: ExtensionManager = _
 
 	/**
 	 * Constructs a new console starter.
