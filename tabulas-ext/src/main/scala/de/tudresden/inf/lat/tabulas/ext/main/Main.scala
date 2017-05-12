@@ -1,7 +1,7 @@
 package de.tudresden.inf.lat.tabulas.ext.main
 
-import java.util.ArrayList
-import java.util.List
+import scala.collection.mutable.ArrayBuffer
+import scala.collection.mutable.Buffer
 
 import scala.Range
 
@@ -30,15 +30,15 @@ object Main {
 	 *            console arguments
 	 */
   def main(args: Array[String]): Unit = {
-    val extensions: List[Extension] = new ArrayList[Extension]()
-    extensions.add(new DefaultExtension())
-    extensions.add(new CsvParserExtension())
-    extensions.add(new CalendarParserExtension());
-    extensions.add(new WikitextExtension())
-    extensions.add(new SqlExtension())
-    extensions.add(new CsvExtension())
-    extensions.add(new HtmlExtension())
-    extensions.add(new NormalizationExtension())
+    val extensions: Buffer[Extension] = new ArrayBuffer[Extension]()
+    extensions += new DefaultExtension()
+    extensions += new CsvParserExtension()
+    extensions += new CalendarParserExtension()
+    extensions += new WikitextExtension()
+    extensions += new SqlExtension()
+    extensions += new CsvExtension()
+    extensions += new HtmlExtension()
+    extensions += new NormalizationExtension()
 
     val instance: ConsoleStarter = new ConsoleStarter()
     instance.run(extensions, args)

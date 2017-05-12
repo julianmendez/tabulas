@@ -32,7 +32,7 @@ class ParameterizedListType extends PrimitiveType {
     val ret: ParameterizedListValue = new ParameterizedListValue(this.parameter);
     val stok: StringTokenizer = new StringTokenizer(str)
     while (stok.hasMoreTokens()) {
-      ret.add(this.parameter.parse(stok.nextToken()))
+      ret += this.parameter.parse(stok.nextToken())
     }
     return ret
   }

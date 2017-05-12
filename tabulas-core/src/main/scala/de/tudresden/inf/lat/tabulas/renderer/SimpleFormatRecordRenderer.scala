@@ -3,9 +3,8 @@ package de.tudresden.inf.lat.tabulas.renderer
 
 import java.io.OutputStreamWriter
 import java.io.Writer
-import java.util.List
+import scala.collection.mutable.Buffer
 import java.util.Objects
-import java.util.Optional
 
 import scala.collection.JavaConverters.asScalaBufferConverter
 
@@ -38,8 +37,8 @@ class SimpleFormatRecordRenderer extends RecordRenderer {
       output.write(field)
       output.write(ParserConstant.Space + ParserConstant.EqualsSign)
       if (value.getType().isList()) {
-        val list: List[String] = value.renderAsList()
-        list.asScala.foreach(link => {
+        val list: Buffer[String] = value.renderAsList()
+        list.foreach(link => {
           output.write(ParserConstant.Space + ParserConstant.LineContinuationSymbol)
           output.write(ParserConstant.NewLine)
           output.write(ParserConstant.Space)
@@ -57,15 +56,15 @@ class SimpleFormatRecordRenderer extends RecordRenderer {
     }
   }
 
-  def render(output: UncheckedWriter, record: Record, fields: List[String]): Unit = {
+  def render(output: UncheckedWriter, record: Record, fields: Buffer[String]): Unit = {
     output.write(ParserConstant.NewLine)
     output.write(ParserConstant.NewRecordToken + ParserConstant.Space)
     output.write(ParserConstant.EqualsSign + ParserConstant.Space)
 
-    fields.asScala.foreach(field => {
-      val optValue: Optional[PrimitiveTypeValue] = record.get(field)
-      if (optValue.isPresent()) {
-        writeIfNotEmpty(output, field, optValue.get());
+    fields.foreach(field => {
+      val optValue: Option[PrimitiveTypeValue] = record.get(field)
+      if (optValue.isDefined) {
+        writeIfNotEmpty(output, field, optValue.get);
       }
     })
 
@@ -73,7 +72,7 @@ class SimpleFormatRecordRenderer extends RecordRenderer {
     output.flush()
   }
 
-  override def render(record: Record, fields: List[String]): Unit = {
+  override def render(record: Record, fields: Buffer[String]): Unit = {
     render(new UncheckedWriterImpl(this.output), record, fields)
   }
 

@@ -2,9 +2,8 @@
 package de.tudresden.inf.lat.tabulas.datatype
 
 import java.math.BigInteger
-import java.util.ArrayList
-import java.util.Collections
-import java.util.List
+import scala.collection.mutable.ArrayBuffer
+import scala.collection.mutable.Buffer
 import java.util.Objects
 
 /**
@@ -59,10 +58,10 @@ class IntegerValue extends PrimitiveTypeValue {
     return this.number.toString()
   }
 
-  override def renderAsList(): List[String] = {
-    val ret: List[String] = new ArrayList[String]()
-    ret.add(render())
-    return Collections.unmodifiableList(ret)
+  override def renderAsList(): Buffer[String] = {
+    val ret: Buffer[String] = new ArrayBuffer[String]()
+    ret += render()
+    return ret // @FIXME this should be immutable
 
   }
 

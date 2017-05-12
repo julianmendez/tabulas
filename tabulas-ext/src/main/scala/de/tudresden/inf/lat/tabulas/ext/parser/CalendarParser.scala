@@ -4,13 +4,12 @@ import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
 import java.io.Reader
-import java.util.ArrayList
-import java.util.List
-import java.util.Map
+import scala.collection.mutable.ArrayBuffer
+import scala.collection.mutable.Buffer
+import scala.collection.mutable.Map
 import java.util.Objects
-import java.util.Optional
-import java.util.Stack
-import java.util.TreeMap
+import scala.collection.mutable.Stack
+import scala.collection.mutable.TreeMap
 
 import scala.collection.JavaConverters.asScalaBufferConverter
 import scala.collection.JavaConverters.asScalaSetConverter
@@ -53,6 +52,20 @@ class CalendarParser extends Parser {
 
     def getLineCounter(): Int = {
       return this.lineCounter
+    }
+
+  }
+
+  class MyStack[A] extends ArrayBuffer[A] {
+
+    def push(elem: A): MyStack[A] = {
+      insert(0, elem)
+      return this
+    }
+
+    def pop(): A = {
+      iterator.next() // this throws an NoSuchElementException in an empty stack
+      return remove(0)
     }
 
   }
@@ -114,32 +127,32 @@ class CalendarParser extends Parser {
     this.input = input
   }
 
-  def getKey(line: String): Optional[String] = {
+  def getKey(line: String): Option[String] = {
     if (Objects.isNull(line)) {
-      return Optional.empty()
+      return Option.empty
     } else {
       var pos: Int = line.indexOf(ColonChar)
       if (pos == -1) {
-        return Optional.of(line)
+        return Option.apply(line)
       } else {
         var pos2: Int = line.indexOf(SemicolonChar)
         if (pos2 >= 0 && pos2 < pos) {
           pos = pos2
         }
-        return Optional.of(line.substring(0, pos).trim())
+        return Option.apply(line.substring(0, pos).trim())
       }
     }
   }
 
-  def getValue(line: String): Optional[String] = {
+  def getValue(line: String): Option[String] = {
     if (Objects.isNull(line)) {
-      return Optional.empty()
+      return Option.empty
     } else {
       var pos: Int = line.indexOf(ColonChar)
       if (pos == -1) {
-        return Optional.of("")
+        return Option.apply("")
       } else {
-        return Optional.of(line.substring(pos + 1, line.length()).trim())
+        return Option.apply(line.substring(pos + 1, line.length()).trim())
       }
     }
   }
@@ -158,9 +171,9 @@ class CalendarParser extends Parser {
       return new StringValue()
     } else {
       try {
-        val optTypeStr: Optional[String] = type0.getFieldType(key)
-        if (optTypeStr.isPresent()) {
-          return (new PrimitiveTypeFactory()).newInstance(optTypeStr.get(), value)
+        val optTypeStr: Option[String] = type0.getFieldType(key)
+        if (optTypeStr.isDefined) {
+          return (new PrimitiveTypeFactory()).newInstance(optTypeStr.get, value)
         } else {
           throw new ParseException("Key '" + key + "' has an undefined type.")
         }
@@ -173,8 +186,8 @@ class CalendarParser extends Parser {
     }
   }
 
-  private def preload(input: BufferedReader): List[Pair] = {
-    val ret: List[Pair] = new ArrayList[Pair]()
+  private def preload(input: BufferedReader): Buffer[Pair] = {
+    val ret: Buffer[Pair] = new ArrayBuffer[Pair]()
     var sbuf: StringBuffer = new StringBuffer()
     var finish: Boolean = false
     var lineCounter: Int = 0
@@ -183,7 +196,7 @@ class CalendarParser extends Parser {
       if (line.startsWith("" + SpaceChar)) {
         sbuf.append(line)
       } else {
-        ret.add(new Pair(lineCounter, sbuf.toString()))
+        ret += new Pair(lineCounter, sbuf.toString())
         sbuf = new StringBuffer()
         sbuf.append(line)
       }
@@ -199,29 +212,29 @@ class CalendarParser extends Parser {
         + lineCounter + ")")
     }
 
-    val optKey: Optional[String] = getKey(line)
-    val optValueStr: Optional[String] = getValue(line)
-    if (optKey.isPresent() && optValueStr.isPresent()) {
-      val key: String = optKey.get()
-      val valueStr: String = optValueStr.get()
+    val optKey: Option[String] = getKey(line)
+    val optValueStr: Option[String] = getValue(line)
+    if (optKey.isDefined && optValueStr.isDefined) {
+      val key: String = optKey.get
+      val valueStr: String = optValueStr.get
       val value: PrimitiveTypeValue = getTypedValue(key, valueStr,
         currentTable.getType(), lineCounter)
       record.set(key, value)
     }
   }
 
-  def getGeneratedId(generatedIds: List[Int], level: Int): String = {
-    while (level >= generatedIds.size()) {
-      generatedIds.add(FirstGeneratedIndex)
+  def getGeneratedId(generatedIds: Buffer[Int], level: Int): String = {
+    while (level >= generatedIds.size ) {
+      generatedIds += FirstGeneratedIndex
     }
-    val newValue: Int = generatedIds.get(level) + 1
-    while (level < generatedIds.size()) {
-      generatedIds.remove(generatedIds.size() - 1)
+    val newValue: Int = generatedIds(level) + 1
+    while (level < generatedIds.size ) {
+      generatedIds.remove(generatedIds.size - 1)
     }
-    generatedIds.add(newValue)
+    generatedIds += newValue
     val sbuf: StringBuffer = new StringBuffer()
     var firstTime: Boolean = true
-    for (counter: Int <- generatedIds.asScala) {
+    for (counter: Int <- generatedIds) {
       if (firstTime) {
         firstTime = false
       } else {
@@ -252,20 +265,20 @@ class CalendarParser extends Parser {
     var currentRecord: Record = null
     var currentTableId: String = null
 
-    val tableIdStack: Stack[String] = new Stack[String]()
-    val recordStack: Stack[Record] = new Stack[Record]()
-    val tableStack: Stack[TableImpl] = new Stack[TableImpl]()
-    val generatedIds: List[Int] = new ArrayList[Int]()
+    val tableIdStack: MyStack[String] = new MyStack[String]()
+    val recordStack: MyStack[Record] = new MyStack[Record]()
+    val tableStack: MyStack[TableImpl] = new MyStack[TableImpl]()
+    val generatedIds: Buffer[Int] = new ArrayBuffer[Int]()
 
-    val lines: List[Pair] = preload(input)
+    val lines: Buffer[Pair] = preload(input)
     var lineCounter: Int = 0
     var firstTime: Boolean = true
-    for (pair: Pair <- lines.asScala) {
+    for (pair: Pair <- lines) {
       val line: String = pair.getLine()
       lineCounter = pair.getLineCounter()
       if (Objects.nonNull(line) && !line.trim().isEmpty()) {
         if (isBeginLine(line)) {
-          val value: String = getValue(line).get()
+          val value: String = getValue(line).get
           if (firstTime) {
             firstTime = false
           } else {
@@ -275,19 +288,20 @@ class CalendarParser extends Parser {
           }
           currentRecord = new RecordImpl()
           currentRecord.set(GeneratedIdFieldName, new StringValue(
-            getGeneratedId(generatedIds, tableIdStack.size())))
+            getGeneratedId(generatedIds, tableIdStack.size)))
           currentTableId = value
-          currentTable = map.get(value)
-          if (Objects.isNull(currentTable)) {
+          val optCurrentTable: Option[TableImpl] = map.get(value)
+          if (optCurrentTable.isEmpty) {
             throw new ParseException("Unknown type '" + value
               + "' (line " + lineCounter + ").")
           }
+          currentTable = optCurrentTable.get
 
         } else if (isEndLine(line)) {
           val foreignKey: String = currentRecord.get(GeneratedIdFieldName)
-            .get().render()
+            .get.render()
           currentTable.add(currentRecord)
-          val value: String = getValue(line).get()
+          val value: String = getValue(line).get
           if (Objects.isNull(map.get(value))) {
             throw new ParseException("Unknown type '" + value
               + "' (line " + lineCounter + ").")
@@ -296,16 +310,16 @@ class CalendarParser extends Parser {
             throw new ParseException("Closing wrong type '" + value
               + "' (line " + lineCounter + ").")
           }
-          if (tableStack.isEmpty()) {
+          if (tableStack.isEmpty) {
             throw new ParseException("Too many " + EndKeyword
               + " keywords  (line " + lineCounter + ").")
           }
           currentTableId = tableIdStack.pop()
           currentTable = tableStack.pop()
           currentRecord = recordStack.pop()
-          var optSubItems: Optional[PrimitiveTypeValue] = currentRecord.get(SubItemsFieldName)
-          if (optSubItems.isPresent()) {
-            currentRecord.set(SubItemsFieldName, new StringValue(optSubItems.get().render() + SpaceChar + foreignKey))
+          var optSubItems: Option[PrimitiveTypeValue] = currentRecord.get(SubItemsFieldName)
+          if (optSubItems.isDefined) {
+            currentRecord.set(SubItemsFieldName, new StringValue(optSubItems.get.render() + SpaceChar + foreignKey))
 
           } else {
             currentRecord.set(SubItemsFieldName, new StringValue(foreignKey))
@@ -324,13 +338,13 @@ class CalendarParser extends Parser {
       currentTable.add(currentRecord)
     }
 
-    if (!tableStack.isEmpty()) {
+    if (!tableStack.isEmpty) {
       throw new ParseException("Too few " + EndKeyword
         + " keywords  (line " + lineCounter + ").")
     }
 
     val ret: TableMapImpl = new TableMapImpl()
-    map.keySet().asScala.foreach(key => ret.put(key, map.get(key)))
+    map.keySet.foreach(key => ret.put(key, map.get(key).get))
     return ret
   }
 

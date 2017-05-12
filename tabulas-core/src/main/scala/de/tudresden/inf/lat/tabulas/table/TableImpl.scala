@@ -1,25 +1,24 @@
 
 package de.tudresden.inf.lat.tabulas.table
 
-import java.util.ArrayList
-import java.util.Collections
-import java.util.List
+import scala.collection.mutable.ArrayBuffer
+import scala.collection.mutable.Buffer
 import java.util.Objects
-import java.util.Set
-import java.util.TreeSet
+import scala.collection.mutable.Set
+import scala.collection.mutable.TreeSet
 
 import de.tudresden.inf.lat.tabulas.datatype.CompositeType
 import de.tudresden.inf.lat.tabulas.datatype.CompositeTypeImpl
 import de.tudresden.inf.lat.tabulas.datatype.Record
 
 /**
- * This is the default implementation of a sorted table.
- */
+  * This is the default implementation of a sorted table.
+  */
 class TableImpl extends Table {
 
   private var tableType: CompositeType = new CompositeTypeImpl()
-  private val list: List[Record] = new ArrayList[Record]
-  private val sortingOrder: List[String] = new ArrayList[String]
+  private val list: Buffer[Record] = new ArrayBuffer[Record]
+  private val sortingOrder: Buffer[String] = new ArrayBuffer[String]
   private val fieldsWithReverseOrder: Set[String] = new TreeSet[String]()
 
   def this(newType: CompositeType) = {
@@ -30,11 +29,11 @@ class TableImpl extends Table {
   def this(other: Table) = {
     this()
     this.tableType = other.getType()
-    this.list.addAll(other.getRecords())
+    this.list ++= other.getRecords()
     if (other.isInstanceOf[Table]) {
       val otherTable: Table = other.asInstanceOf[Table]
-      this.sortingOrder.addAll(otherTable.getSortingOrder())
-      this.fieldsWithReverseOrder.addAll(otherTable.getFieldsWithReverseOrder())
+      this.sortingOrder ++= otherTable.getSortingOrder()
+      this.fieldsWithReverseOrder ++= otherTable.getFieldsWithReverseOrder()
     }
   }
 
@@ -50,18 +49,19 @@ class TableImpl extends Table {
     if (Objects.isNull(record)) {
       return false
     } else {
-      return this.list.add(record)
+      this.list += record
+      return true
     }
   }
 
-  override def getSortingOrder(): List[String] = {
+  override def getSortingOrder(): Buffer[String] = {
     return this.sortingOrder
   }
 
-  override def setSortingOrder(sortingOrder: List[String]): Unit = {
+  override def setSortingOrder(sortingOrder: Buffer[String]): Unit = {
     this.sortingOrder.clear()
     if (Objects.nonNull(sortingOrder)) {
-      this.sortingOrder.addAll(sortingOrder)
+      this.sortingOrder ++= sortingOrder
     }
   }
 
@@ -72,15 +72,15 @@ class TableImpl extends Table {
   override def setFieldsWithReverseOrder(fieldsWithReverseOrder: Set[String]): Unit = {
     this.fieldsWithReverseOrder.clear()
     if (Objects.nonNull(fieldsWithReverseOrder)) {
-      this.fieldsWithReverseOrder.addAll(fieldsWithReverseOrder)
+      this.fieldsWithReverseOrder ++= fieldsWithReverseOrder
     }
   }
 
-  override def getRecords(): List[Record] = {
-    val ret: List[Record] = new ArrayList[Record]
-    ret.addAll(this.list)
-    Collections.sort(ret, new RecordComparator(this.sortingOrder, this.fieldsWithReverseOrder))
-    return ret
+  override def getRecords(): Buffer[Record] = {
+    val comparator = new RecordComparator(this.sortingOrder, this.fieldsWithReverseOrder)
+    val ret: Buffer[Record] = new ArrayBuffer[Record]
+    ret ++= this.list
+    return ret.sortWith((record0, record1) => comparator.compare(record0, record1) < 0)
   }
 
   override def clear(): Unit = {

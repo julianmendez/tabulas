@@ -3,10 +3,9 @@ package de.tudresden.inf.lat.tabulas.ext.renderer
 
 import java.io.OutputStreamWriter
 import java.io.Writer
-import java.util.List
-import java.util.Map
+import scala.collection.mutable.Buffer
+import scala.collection.mutable.Map
 import java.util.Objects
-import java.util.Optional
 
 import scala.collection.JavaConverters.asScalaBufferConverter
 import scala.collection.JavaConverters.asScalaSetConverter
@@ -52,7 +51,7 @@ class WikitextRenderer extends Renderer {
   def writeParameterizedListIfNotEmpty(output: UncheckedWriter, prefix: String, list: ParameterizedListValue): Boolean = {
     if (Objects.nonNull(list)) {
       output.write(prefix);
-      list.asScala.foreach(value => {
+      list.foreach(value => {
         if (value.getType().equals(new URIType())) {
           val link: URIValue = (new URIType()).castInstance(value)
           writeLinkIfNotEmpty(output, "", link)
@@ -82,13 +81,13 @@ class WikitextRenderer extends Renderer {
     }
   }
 
-  def render(output: UncheckedWriter, record: Record, fields: List[String]): Unit = {
+  def render(output: UncheckedWriter, record: Record, fields: Buffer[String]): Unit = {
 
-    fields.asScala.foreach(field => {
-      val optValue: Optional[PrimitiveTypeValue] = record.get(field)
+    fields.foreach(field => {
+      val optValue: Option[PrimitiveTypeValue] = record.get(field)
       output.write("|")
-      if (optValue.isPresent()) {
-        val value: PrimitiveTypeValue = optValue.get();
+      if (optValue.isDefined) {
+        val value: PrimitiveTypeValue = optValue.get
         val prefix = field + ParserConstant.EqualsSign
         if (value.isInstanceOf[ParameterizedListValue]) {
           val list: ParameterizedListValue = value.asInstanceOf[ParameterizedListValue]
@@ -110,10 +109,10 @@ class WikitextRenderer extends Renderer {
   }
 
   def renderAllRecords(output: UncheckedWriter, table: CompositeTypeValue): Unit = {
-    val list: List[Record] = table.getRecords()
+    val list: Buffer[Record] = table.getRecords()
     output.write("{|\n")
     output.write("|-\n")
-    list.asScala.foreach(record => {
+    list.foreach(record => {
       render(output, record, table.getType().getFields())
       output.write("|-\n")
     })
@@ -123,8 +122,8 @@ class WikitextRenderer extends Renderer {
   def renderMap(output: UncheckedWriter, map: Map[String, String]): Unit = {
     output.write("{| border=\"1\"\n")
     output.write("|-\n")
-    map.keySet().asScala.foreach(key => {
-      val value: String = map.get(key)
+    map.keySet.foreach(key => {
+      val value: String = map.get(key).get
       output.write("| ")
       output.write(key)
       output.write("\n")
@@ -139,7 +138,7 @@ class WikitextRenderer extends Renderer {
 
   def render(output: UncheckedWriter, tableMap: TableMap): Unit = {
     output.write("\n")
-    tableMap.getTableIds().asScala.foreach(tableId => {
+    tableMap.getTableIds().foreach(tableId => {
       val table: Table = tableMap.getTable(tableId)
       renderAllRecords(output, table)
     })

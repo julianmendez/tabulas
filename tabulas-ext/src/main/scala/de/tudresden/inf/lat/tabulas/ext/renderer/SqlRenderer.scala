@@ -3,9 +3,8 @@ package de.tudresden.inf.lat.tabulas.ext.renderer
 
 import java.io.OutputStreamWriter
 import java.io.Writer
-import java.util.List
+import scala.collection.mutable.Buffer
 import java.util.Objects
-import java.util.Optional
 
 import scala.collection.JavaConverters.asScalaBufferConverter
 
@@ -71,9 +70,9 @@ class SqlRenderer extends Renderer {
   }
 
   def writeParameterizedListIfNotEmpty(output: UncheckedWriter, field: String, list: ParameterizedListValue): Boolean = {
-    if (Objects.nonNull(list) && !list.isEmpty()) {
+    if (Objects.nonNull(list) && !list.isEmpty) {
       output.write(Apostrophe)
-      list.asScala.foreach(value => {
+      list.foreach(value => {
         output.write(sanitize(value.toString()))
         output.write(ParserConstant.Space)
       })
@@ -98,7 +97,7 @@ class SqlRenderer extends Renderer {
     }
   }
 
-  def render(output: UncheckedWriter, tableName: String, record: Record, fields: List[String]): Unit = {
+  def render(output: UncheckedWriter, tableName: String, record: Record, fields: Buffer[String]): Unit = {
 
     output.write(ParserConstant.NewLine)
     output.write(InsertInto)
@@ -111,16 +110,16 @@ class SqlRenderer extends Renderer {
     output.write(ParserConstant.Space)
 
     var first: Boolean = true
-    for (field: String <- fields.asScala) {
+    for (field: String <- fields) {
       if (first) {
         first = false
       } else {
         output.write(Comma)
       }
       output.write(ParserConstant.NewLine)
-      val optValue: Optional[PrimitiveTypeValue] = record.get(field)
-      if (optValue.isPresent()) {
-        val value: PrimitiveTypeValue = optValue.get()
+      val optValue: Option[PrimitiveTypeValue] = record.get(field)
+      if (optValue.isDefined) {
+        val value: PrimitiveTypeValue = optValue.get
         if (value.isInstanceOf[ParameterizedListValue]) {
           val list: ParameterizedListValue = value.asInstanceOf[ParameterizedListValue]
           writeParameterizedListIfNotEmpty(output, field, list)
@@ -144,9 +143,9 @@ class SqlRenderer extends Renderer {
   }
 
   def renderAllRecords(output: UncheckedWriter, tableName: String, table: CompositeTypeValue): Unit = {
-    val list: List[Record] = table.getRecords()
+    val list: Buffer[Record] = table.getRecords()
     output.write(ParserConstant.NewLine)
-    list.asScala.foreach(record => {
+    list.foreach(record => {
       render(output, tableName, record, table.getType().getFields())
       output.write(ParserConstant.NewLine)
     })
@@ -160,7 +159,7 @@ class SqlRenderer extends Renderer {
     output.write(LeftPar)
     output.write(ParserConstant.NewLine)
     var first: Boolean = true
-    for (field: String <- table.getType().getFields().asScala) {
+    for (field: String <- table.getType().getFields()) {
       if (first) {
         first = false
       } else {
@@ -188,7 +187,7 @@ class SqlRenderer extends Renderer {
     output.write(ParserConstant.Space)
 
     var first: Boolean = true
-    for (field: String <- table.getSortingOrder().asScala) {
+    for (field: String <- table.getSortingOrder()) {
       if (first) {
         first = false
       } else {
@@ -220,7 +219,7 @@ class SqlRenderer extends Renderer {
 
   def render(output: UncheckedWriter, tableMap: TableMap): Unit = {
     renderPrefix(output)
-    tableMap.getTableIds().asScala.foreach(tableName => {
+    tableMap.getTableIds().foreach(tableName => {
       val table: Table = tableMap.getTable(tableName)
       renderTypes(output, tableName, table)
       renderAllRecords(output, tableName, table)

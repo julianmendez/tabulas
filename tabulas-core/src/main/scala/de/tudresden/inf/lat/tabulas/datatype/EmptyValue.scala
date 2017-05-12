@@ -1,8 +1,8 @@
 
 package de.tudresden.inf.lat.tabulas.datatype
 
-import java.util.Collections
-import java.util.List
+import scala.collection.mutable.ArrayBuffer
+import scala.collection.mutable.Buffer
 
 /**
  * This models a empty value.
@@ -24,8 +24,8 @@ class EmptyValue extends PrimitiveTypeValue {
     return Value
   }
 
-  override def renderAsList(): List[String] = {
-    return Collections.emptyList()
+  override def renderAsList(): Buffer[String] = {
+    return new ArrayBuffer[String]() // @FIXME this should be immutable
   }
 
   override def compareTo(other: PrimitiveTypeValue): Int = {

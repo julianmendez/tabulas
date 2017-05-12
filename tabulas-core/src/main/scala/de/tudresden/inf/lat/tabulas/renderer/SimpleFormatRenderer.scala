@@ -3,7 +3,7 @@ package de.tudresden.inf.lat.tabulas.renderer
 
 import java.io.OutputStreamWriter
 import java.io.Writer
-import java.util.List
+import scala.collection.mutable.Buffer
 
 import scala.collection.JavaConverters.asScalaBufferConverter
 
@@ -30,8 +30,8 @@ class SimpleFormatRenderer extends Renderer {
   def renderAllRecords(output: UncheckedWriter, table: Table): Unit = {
     val recordRenderer: SimpleFormatRecordRenderer = new SimpleFormatRecordRenderer(output)
     output.write(ParserConstant.NewLine);
-    val list: List[Record] = table.getRecords()
-    list.asScala.foreach(record => {
+    val list: Buffer[Record] = table.getRecords()
+    list.foreach(record => {
       recordRenderer.render(output, record, table.getType().getFields())
       output.write(ParserConstant.NewLine)
     })
@@ -52,13 +52,13 @@ class SimpleFormatRenderer extends Renderer {
     output.write(ParserConstant.TypeDefinitionToken + ParserConstant.Space)
     output.write(ParserConstant.EqualsSign)
 
-    table.getType().getFields().asScala.foreach(field => {
+    table.getType().getFields().foreach(field => {
       output.write(ParserConstant.Space + ParserConstant.LineContinuationSymbol)
       output.write(ParserConstant.NewLine)
       output.write(ParserConstant.Space)
       output.write(field)
       output.write(ParserConstant.TypeSign)
-      output.write(table.getType().getFieldType(field).get())
+      output.write(table.getType().getFieldType(field).get)
     })
     output.write(ParserConstant.NewLine)
   }
@@ -68,7 +68,7 @@ class SimpleFormatRenderer extends Renderer {
     output.write(ParserConstant.SortingOrderDeclarationToken + ParserConstant.Space)
     output.write(ParserConstant.EqualsSign)
 
-    table.getSortingOrder().asScala.foreach(field => {
+    table.getSortingOrder().foreach(field => {
       output.write(ParserConstant.Space + ParserConstant.LineContinuationSymbol)
       output.write(ParserConstant.NewLine)
       output.write(ParserConstant.Space)
@@ -82,7 +82,7 @@ class SimpleFormatRenderer extends Renderer {
 
   def render(output: UncheckedWriter, tableMap: TableMap): Unit = {
     output.write(Prefix)
-    tableMap.getTableIds().asScala.foreach(tableName => {
+    tableMap.getTableIds().foreach(tableName => {
       val table: Table = tableMap.getTable(tableName)
       renderTypeSelection(output, tableName, table)
       renderTypeDefinition(output, table)

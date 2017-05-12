@@ -1,11 +1,11 @@
 package de.tudresden.inf.lat.tabulas.extension
 
 import java.io.UncheckedIOException
-import java.util.ArrayList
-import java.util.List
-import java.util.Map
+import scala.collection.mutable.ArrayBuffer
+import scala.collection.mutable.Buffer
+import scala.collection.mutable.Map
 import java.util.Objects
-import java.util.TreeMap
+import scala.collection.mutable.TreeMap
 
 import scala.collection.JavaConverters.asScalaBufferConverter
 
@@ -24,7 +24,7 @@ class ExtensionManager extends Extension {
   val NewLine: Char = '\n'
   val Space: Char = ' '
 
-  val extensions: List[Extension] = new ArrayList[Extension]()
+  val extensions: Buffer[Extension] = new ArrayBuffer[Extension]()
   val extensionMap: Map[String, Extension] = new TreeMap[String, Extension]()
 
   /**
@@ -33,13 +33,13 @@ class ExtensionManager extends Extension {
    * @param extensions
    *            list of extensions
    */
-  def this(extensions: List[Extension]) = {
+  def this(extensions: Buffer[Extension]) = {
     this()
     if (Objects.nonNull(extensions)) {
-      this.extensions.addAll(extensions)
-      extensions.asScala.foreach(extension => {
+      this.extensions ++= extensions
+      extensions.foreach(extension => {
         val key: String = extension.getExtensionName()
-        if (this.extensionMap.containsKey(key)) {
+        if (this.extensionMap.get(key).isDefined) {
           throw new ExtensionException(
             "Only one implementation is allowed for each extension, and '"
               + key + "' was at least twice.")
@@ -49,24 +49,24 @@ class ExtensionManager extends Extension {
     }
   }
 
-  override def process(arguments: List[String]): Boolean = {
+  override def process(arguments: Buffer[String]): Boolean = {
     Objects.requireNonNull(arguments)
-    if (arguments.size() < RequiredArguments) {
+    if (arguments.size < RequiredArguments) {
       throw new ExtensionException("No extension name was given.")
     } else {
-      val command: String = arguments.get(0)
-      val newArguments: List[String] = new ArrayList[String]()
-      newArguments.addAll(arguments)
+      val command: String = arguments(0)
+      val newArguments: Buffer[String] = new ArrayBuffer[String]()
+      newArguments ++= arguments
       newArguments.remove(0)
-      val extension: Extension = this.extensionMap.get(command)
-      if (Objects.isNull(extension)) {
+      val optExtension: Option[Extension] = this.extensionMap.get(command)
+      if (optExtension.isEmpty) {
         throw new ExtensionException("Extension '" + command
           + "' was not found.")
-      } else if (newArguments.size() < extension.getRequiredArguments()) {
+      } else if (newArguments.size < optExtension.get.getRequiredArguments()) {
         throw new ExtensionException("Insufficient number of arguments for extension '" + command + "'.")
       } else {
         try {
-          return extension.process(newArguments)
+          return optExtension.get.process(newArguments)
         } catch {
           case e @ (_: ParseException | _: UncheckedIOException | _: IOException) => {
             throw new ExtensionException(e.toString(), e)
@@ -82,7 +82,7 @@ class ExtensionManager extends Extension {
 
   override def getHelp(): String = {
     val sbuf: StringBuffer = new StringBuffer()
-    this.extensions.asScala.foreach(extension => {
+    this.extensions.foreach(extension => {
       sbuf.append(extension.getExtensionName())
       sbuf.append(Space)
       sbuf.append(extension.getHelp())

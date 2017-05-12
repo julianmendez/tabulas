@@ -1,7 +1,7 @@
 
 package de.tudresden.inf.lat.tabulas.datatype
 
-import java.util.List
+import scala.collection.mutable.Buffer
 
 /**
  * This models a composite type value.
@@ -29,7 +29,7 @@ trait CompositeTypeValue {
    *
    * @return all the records
    */
-  def getRecords(): List[Record]
+  def getRecords(): Buffer[Record]
 
   /**
    * Adds a record. Returns <code>true</code> if and only if this composite

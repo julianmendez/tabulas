@@ -1,9 +1,8 @@
 
 package de.tudresden.inf.lat.tabulas.datatype
 
-import java.util.List
+import scala.collection.mutable.Buffer
 import java.util.Objects
-import java.util.Optional
 
 /**
  * This models a simplified composite type where the fields have the same type.
@@ -20,11 +19,11 @@ class SimplifiedCompositeType extends CompositeType {
     knownFields.foreach(field => this.dataType.declareField(field, DefaultFieldType))
   }
 
-  override def getFields(): List[String] = {
+  override def getFields(): Buffer[String] = {
     return this.dataType.getFields()
   }
 
-  override def getFieldType(field: String): Optional[String] = {
+  override def getFieldType(field: String): Option[String] = {
     return this.dataType.getFieldType(field)
   }
 

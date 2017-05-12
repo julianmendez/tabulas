@@ -3,9 +3,8 @@ package de.tudresden.inf.lat.tabulas.ext.renderer
 
 import java.io.OutputStreamWriter
 import java.io.Writer
-import java.util.List
+import scala.collection.mutable.Buffer
 import java.util.Objects
-import java.util.Optional
 
 import scala.Range
 import scala.collection.JavaConverters.asScalaBufferConverter
@@ -56,9 +55,9 @@ class CsvRenderer extends Renderer {
   }
 
   def writeParameterizedListIfNotEmpty(output: UncheckedWriter, field: String, list: ParameterizedListValue): Boolean = {
-    if (Objects.nonNull(list) && !list.isEmpty()) {
+    if (Objects.nonNull(list) && !list.isEmpty) {
       output.write(Quotes)
-      list.asScala.foreach(value => {
+      list.foreach(value => {
         output.write(sanitize(value.toString()))
         output.write(ParserConstant.Space)
       })
@@ -82,18 +81,18 @@ class CsvRenderer extends Renderer {
     }
   }
 
-  def render(output: UncheckedWriter, record: Record, fields: List[String]): Unit = {
+  def render(output: UncheckedWriter, record: Record, fields: Buffer[String]): Unit = {
 
     var first: Boolean = true
-    for (field: String <- fields.asScala) {
+    for (field: String <- fields) {
       if (first) {
         first = false
       } else {
         output.write(Comma)
       }
-      val optValue: Optional[PrimitiveTypeValue] = record.get(field)
-      if (optValue.isPresent()) {
-        val value: PrimitiveTypeValue = optValue.get()
+      val optValue: Option[PrimitiveTypeValue] = record.get(field)
+      if (optValue.isDefined) {
+        val value: PrimitiveTypeValue = optValue.get
         if (value.isInstanceOf[ParameterizedListValue]) {
           val list: ParameterizedListValue = value.asInstanceOf[ParameterizedListValue]
           writeParameterizedListIfNotEmpty(output, field, list)
@@ -115,8 +114,8 @@ class CsvRenderer extends Renderer {
   }
 
   def renderAllRecords(output: UncheckedWriter, table: Table): Unit = {
-    val list: List[Record] = table.getRecords()
-    list.asScala.foreach(record => {
+    val list: Buffer[Record] = table.getRecords()
+    list.foreach(record => {
       render(output, record, table.getType().getFields())
     })
   }
@@ -125,7 +124,7 @@ class CsvRenderer extends Renderer {
     output.write(Quotes)
     output.write(tableName)
     output.write(Quotes)
-    val n: Int = table.getType().getFields().size()
+    val n: Int = table.getType().getFields().size
     Range(1, n).foreach(index => {
       output.write(Comma)
       output.write(Null)
@@ -135,7 +134,7 @@ class CsvRenderer extends Renderer {
 
   def renderTypeDefinition(output: UncheckedWriter, table: Table): Unit = {
     var first: Boolean = true
-    for (field: String <- table.getType().getFields().asScala) {
+    for (field: String <- table.getType().getFields()) {
       if (first) {
         first = false
       } else {
@@ -149,7 +148,7 @@ class CsvRenderer extends Renderer {
   }
 
   def render(output: UncheckedWriter, tableMap: TableMap): Unit = {
-    tableMap.getTableIds().asScala.foreach(tableName => {
+    tableMap.getTableIds().foreach(tableName => {
       val table: Table = tableMap.getTable(tableName)
       renderTypeSelection(output, tableName, table)
       renderTypeDefinition(output, table)

@@ -4,7 +4,7 @@ import java.io.BufferedWriter
 import java.io.FileReader
 import java.io.FileWriter
 import java.io.IOException
-import java.util.List
+import scala.collection.mutable.Buffer
 import de.tudresden.inf.lat.tabulas.table.TableMap
 import de.tudresden.inf.lat.tabulas.parser.SimpleFormatParser
 import de.tudresden.inf.lat.tabulas.renderer.SimpleFormatRenderer
@@ -20,14 +20,14 @@ class DefaultExtension extends Extension {
   val Help: String = "(input) (output) : parse and create output file with a simple text format"
   val RequiredArguments: Int = 2
 
-  override def process(arguments: List[String]): Boolean = {
-    if (Objects.isNull(arguments) || arguments.size() != RequiredArguments) {
+  override def process(arguments: Buffer[String]): Boolean = {
+    if (Objects.isNull(arguments) || arguments.size != RequiredArguments) {
       return false
     } else {
       try {
 
-        val inputFileName: String = arguments.get(0)
-        val outputFileName: String = arguments.get(1)
+        val inputFileName: String = arguments(0)
+        val outputFileName: String = arguments(1)
         val tableMap: TableMap = new SimpleFormatParser(new FileReader(
           inputFileName)).parse()
         val output: BufferedWriter = new BufferedWriter(new FileWriter(
