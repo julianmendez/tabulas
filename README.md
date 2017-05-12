@@ -3,7 +3,6 @@
 
 
 [![Build Status](https://travis-ci.org/julianmendez/tabulas.png?branch=master)](https://travis-ci.org/julianmendez/tabulas)
-[![Coverage Status](https://coveralls.io/repos/github/julianmendez/tabulas/badge.svg?branch=master)](https://coveralls.io/github/julianmendez/tabulas?branch=master)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/de.tu-dresden.inf.lat.tabulas/tabulas-parent/badge.svg)](https://search.maven.org/#search|ga|1|g%3A%22de.tu-dresden.inf.lat.tabulas%22)
 
 
