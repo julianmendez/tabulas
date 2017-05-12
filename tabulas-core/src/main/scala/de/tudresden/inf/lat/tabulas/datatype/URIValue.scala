@@ -82,7 +82,7 @@ class URIValue extends PrimitiveTypeValue {
 
   def getLabel(): String = {
     val uriStr: String = this.uri.toASCIIString()
-    val pos: Int = uriStr.lastIndexOf(SpecialSymbol);
+    val pos: Int = uriStr.lastIndexOf(SpecialSymbol)
     if (pos == -1) {
       return ""
     } else {
@@ -116,7 +116,7 @@ class URIValue extends PrimitiveTypeValue {
     if (!(obj.isInstanceOf[URIValue])) {
       return false
     } else {
-      val other: URIValue = obj.asInstanceOf[URIValue];
+      val other: URIValue = obj.asInstanceOf[URIValue]
       return getUri().equals(other.getUri())
     }
   }

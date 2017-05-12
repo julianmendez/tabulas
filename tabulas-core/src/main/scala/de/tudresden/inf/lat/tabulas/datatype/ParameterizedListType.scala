@@ -10,7 +10,7 @@ import java.util.StringTokenizer
  */
 class ParameterizedListType extends PrimitiveType {
 
-  val TypePrefix: String = "List_";
+  val TypePrefix: String = "List_"
 
   var parameter: PrimitiveType = null
 
@@ -29,7 +29,7 @@ class ParameterizedListType extends PrimitiveType {
   }
 
   override def parse(str: String): ParameterizedListValue = {
-    val ret: ParameterizedListValue = new ParameterizedListValue(this.parameter);
+    val ret: ParameterizedListValue = new ParameterizedListValue(this.parameter)
     val stok: StringTokenizer = new StringTokenizer(str)
     while (stok.hasMoreTokens()) {
       ret += this.parameter.parse(stok.nextToken())

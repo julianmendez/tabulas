@@ -1,4 +1,4 @@
-package de.tudresden.inf.lat.tabulas.datatype;
+package de.tudresden.inf.lat.tabulas.datatype
 
 import scala.collection.mutable.Map
 import java.util.Objects
@@ -13,7 +13,7 @@ class PrimitiveTypeFactory {
   private val map: Map[String, PrimitiveType] = new TreeMap[String, PrimitiveType]()
 
   private def add(primType: PrimitiveType): Unit = {
-    this.map.put(primType.getTypeName(), primType);
+    this.map.put(primType.getTypeName(), primType)
   }
 
   /**

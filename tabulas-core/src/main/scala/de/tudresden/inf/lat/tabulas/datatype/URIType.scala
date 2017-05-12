@@ -1,5 +1,5 @@
 
-package de.tudresden.inf.lat.tabulas.datatype;
+package de.tudresden.inf.lat.tabulas.datatype
 
 import java.util.Objects
 

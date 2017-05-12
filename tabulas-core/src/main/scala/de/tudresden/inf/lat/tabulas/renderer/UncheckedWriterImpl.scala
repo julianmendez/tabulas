@@ -142,7 +142,7 @@ class UncheckedWriterImpl extends UncheckedWriter {
     if (!(obj.isInstanceOf[UncheckedWriter])) {
       return false
     } else {
-      val other: UncheckedWriter = obj.asInstanceOf[UncheckedWriter];
+      val other: UncheckedWriter = obj.asInstanceOf[UncheckedWriter]
       return asWriter().equals(other.asWriter())
     }
   }

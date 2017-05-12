@@ -38,8 +38,8 @@ class SimpleFormatParser extends Parser {
 
   class Pair(lineCounter0: Int, line0: String) {
 
-    private val line: String = line0;
-    private val lineCounter: Int = lineCounter0;
+    private val line: String = line0
+    private val lineCounter: Int = lineCounter0
 
     def getLine(): String = {
       this.line
@@ -193,9 +193,9 @@ class SimpleFormatParser extends Parser {
             lineCounter += 1
           }
         }
-        sb.append(getCleanLine(line));
+        sb.append(getCleanLine(line))
 
-        new Pair(lineCounter, sb.toString());
+        new Pair(lineCounter, sb.toString())
       }
     }
   }

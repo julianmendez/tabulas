@@ -45,22 +45,22 @@ class ConsoleStarter {
    *            console arguments
    */
   def run(extensions: mutable.Buffer[Extension], args: Array[String]): Unit = {
-    Objects.requireNonNull(extensions);
-    Objects.requireNonNull(args);
+    Objects.requireNonNull(extensions)
+    Objects.requireNonNull(args)
 
-    val arguments: mutable.Buffer[String] = new ArrayBuffer[String]();
+    val arguments: mutable.Buffer[String] = new ArrayBuffer[String]()
     if (args.length == 1) {
-      arguments += ((new NormalizationExtension()).Name);
+      arguments += ((new NormalizationExtension()).Name)
     }
-    arguments ++= args.toList;
+    arguments ++= args.toList
 
-    val manager: ExtensionManager = new ExtensionManager(extensions);
+    val manager: ExtensionManager = new ExtensionManager(extensions)
     try {
-      manager.process(arguments);
+      manager.process(arguments)
     } catch {
       case e: ExtensionException => {
-        System.out.println(ErrorPrefix + e.getMessage());
-        System.out.println(help + manager.getHelp());
+        System.out.println(ErrorPrefix + e.getMessage())
+        System.out.println(help + manager.getHelp())
       }
     }
   }

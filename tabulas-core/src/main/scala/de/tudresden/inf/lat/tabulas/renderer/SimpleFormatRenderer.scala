@@ -29,7 +29,7 @@ class SimpleFormatRenderer extends Renderer {
 
   def renderAllRecords(output: UncheckedWriter, table: Table): Unit = {
     val recordRenderer: SimpleFormatRecordRenderer = new SimpleFormatRecordRenderer(output)
-    output.write(ParserConstant.NewLine);
+    output.write(ParserConstant.NewLine)
     val list: mutable.Buffer[Record] = table.getRecords()
     list.foreach(record => {
       recordRenderer.render(output, record, table.getType().getFields())

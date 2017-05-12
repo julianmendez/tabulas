@@ -38,7 +38,7 @@ class EmptyValue extends PrimitiveTypeValue {
 
   override def equals(obj: Any): Boolean = {
     if (obj.isInstanceOf[EmptyValue]) {
-      return true;
+      return true
     } else {
       return false
     }

@@ -60,7 +60,7 @@ class MainTest {
     reader.lines().toArray().foreach(obj => {
       val line = obj.asInstanceOf[String]
       sb.append(line + NewLine)
-    });
+    })
     reader.close()
     return sb.toString()
   }

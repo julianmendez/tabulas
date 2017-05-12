@@ -64,7 +64,7 @@ class SimpleFormatRecordRenderer extends RecordRenderer {
     fields.foreach(field => {
       val optValue: Option[PrimitiveTypeValue] = record.get(field)
       if (optValue.isDefined) {
-        writeIfNotEmpty(output, field, optValue.get);
+        writeIfNotEmpty(output, field, optValue.get)
       }
     })
 

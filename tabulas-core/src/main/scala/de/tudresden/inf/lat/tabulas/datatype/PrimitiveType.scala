@@ -1,5 +1,5 @@
 
-package de.tudresden.inf.lat.tabulas.datatype;
+package de.tudresden.inf.lat.tabulas.datatype
 
 /**
  * This models a primitive type.
