@@ -1,7 +1,7 @@
 
 package de.tudresden.inf.lat.tabulas.renderer
 
-import scala.collection.mutable.Buffer
+import scala.collection.mutable
 
 import de.tudresden.inf.lat.tabulas.datatype.Record
 
@@ -11,7 +11,7 @@ import de.tudresden.inf.lat.tabulas.datatype.Record
  */
 trait RecordRenderer {
 
-  def render(record: Record, fields: Buffer[String]): Unit
+  def render(record: Record, fields: mutable.Buffer[String]): Unit
 
 }
 

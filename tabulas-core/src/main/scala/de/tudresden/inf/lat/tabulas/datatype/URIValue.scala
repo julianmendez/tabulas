@@ -4,7 +4,7 @@ package de.tudresden.inf.lat.tabulas.datatype
 import java.net.URI
 import java.net.URISyntaxException
 import scala.collection.mutable.ArrayBuffer
-import scala.collection.mutable.Buffer
+import scala.collection.mutable
 import java.util.Objects
 
 /**
@@ -98,8 +98,8 @@ class URIValue extends PrimitiveTypeValue {
     return this.uri.toASCIIString()
   }
 
-  override def renderAsList(): Buffer[String] = {
-    val ret: Buffer[String] = new ArrayBuffer[String]()
+  override def renderAsList(): mutable.Buffer[String] = {
+    val ret: mutable.Buffer[String] = new ArrayBuffer[String]()
     ret += render()
     return ret // @FIXME this should be immutable
   }

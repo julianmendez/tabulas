@@ -2,7 +2,7 @@
 package de.tudresden.inf.lat.tabulas.datatype
 
 import scala.collection.mutable.ArrayBuffer
-import scala.collection.mutable.Buffer
+import scala.collection.mutable
 import java.util.Objects
 
 import scala.collection.JavaConverters.asScalaBufferConverter
@@ -54,7 +54,7 @@ class ParameterizedListValue extends ArrayBuffer[PrimitiveTypeValue] with Primit
 
   override def render(): String = {
     val sbuf: StringBuffer = new StringBuffer()
-    val list: Buffer[String] = renderAsList()
+    val list: mutable.Buffer[String] = renderAsList()
     var first: Boolean = true
     for (str: String <- list) {
       if (first) {
@@ -67,8 +67,8 @@ class ParameterizedListValue extends ArrayBuffer[PrimitiveTypeValue] with Primit
     return sbuf.toString()
   }
 
-  override def renderAsList(): Buffer[String] = {
-    val ret: Buffer[String] = new ArrayBuffer[String]()
+  override def renderAsList(): mutable.Buffer[String] = {
+    val ret: mutable.Buffer[String] = new ArrayBuffer[String]()
     this.foreach(elem => ret += elem.render())
     return ret // @FIXME this should be immutable
   }

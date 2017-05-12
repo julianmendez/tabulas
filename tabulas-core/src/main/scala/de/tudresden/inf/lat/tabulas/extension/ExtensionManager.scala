@@ -2,7 +2,7 @@ package de.tudresden.inf.lat.tabulas.extension
 
 import java.io.UncheckedIOException
 import scala.collection.mutable.ArrayBuffer
-import scala.collection.mutable.Buffer
+import scala.collection.mutable
 import scala.collection.mutable.Map
 import java.util.Objects
 import scala.collection.mutable.TreeMap
@@ -24,7 +24,7 @@ class ExtensionManager extends Extension {
   val NewLine: Char = '\n'
   val Space: Char = ' '
 
-  val extensions: Buffer[Extension] = new ArrayBuffer[Extension]()
+  val extensions: mutable.Buffer[Extension] = new ArrayBuffer[Extension]()
   val extensionMap: Map[String, Extension] = new TreeMap[String, Extension]()
 
   /**
@@ -33,7 +33,7 @@ class ExtensionManager extends Extension {
    * @param extensions
    *            list of extensions
    */
-  def this(extensions: Buffer[Extension]) = {
+  def this(extensions: mutable.Buffer[Extension]) = {
     this()
     if (Objects.nonNull(extensions)) {
       this.extensions ++= extensions
@@ -49,13 +49,13 @@ class ExtensionManager extends Extension {
     }
   }
 
-  override def process(arguments: Buffer[String]): Boolean = {
+  override def process(arguments: mutable.Buffer[String]): Boolean = {
     Objects.requireNonNull(arguments)
     if (arguments.size < RequiredArguments) {
       throw new ExtensionException("No extension name was given.")
     } else {
       val command: String = arguments(0)
-      val newArguments: Buffer[String] = new ArrayBuffer[String]()
+      val newArguments: mutable.Buffer[String] = new ArrayBuffer[String]()
       newArguments ++= arguments
       newArguments.remove(0)
       val optExtension: Option[Extension] = this.extensionMap.get(command)

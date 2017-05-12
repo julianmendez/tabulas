@@ -6,7 +6,7 @@ import java.io.IOException
 import java.io.InputStreamReader
 import java.io.Reader
 import scala.collection.mutable.ArrayBuffer
-import scala.collection.mutable.Buffer
+import scala.collection.mutable
 import scala.collection.mutable.Map
 import java.util.Objects
 import scala.collection.mutable.Set
@@ -106,7 +106,7 @@ class SimpleFormatParser extends Parser {
 
   private def setSortingOrder(line: String, table: TableImpl): Unit = {
     val fieldsWithReverseOrder: Set[String] = new TreeSet[String]()
-    val list: Buffer[String] = new ArrayBuffer[String]
+    val list: mutable.Buffer[String] = new ArrayBuffer[String]
     val stok: StringTokenizer = new StringTokenizer(getValue(line).get)
     while (stok.hasMoreTokens()) {
       var token: String = stok.nextToken()

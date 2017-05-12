@@ -1,7 +1,7 @@
 package de.tudresden.inf.lat.tabulas.main
 
 import scala.collection.mutable.ArrayBuffer
-import scala.collection.mutable.Buffer
+import scala.collection.mutable
 
 import de.tudresden.inf.lat.tabulas.extension.DefaultExtension
 import de.tudresden.inf.lat.tabulas.extension.Extension
@@ -19,7 +19,7 @@ object Main {
 	 *            console arguments
 	 */
   def main(args: Array[String]): Unit = {
-    val extensions: Buffer[Extension] = new ArrayBuffer[Extension]()
+    val extensions: mutable.Buffer[Extension] = new ArrayBuffer[Extension]()
     extensions += new DefaultExtension()
     extensions += new NormalizationExtension()
 

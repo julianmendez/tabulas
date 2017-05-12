@@ -1,6 +1,6 @@
 package de.tudresden.inf.lat.tabulas.extension
 
-import scala.collection.mutable.Buffer
+import scala.collection.mutable
 
 /**
  * This models an extension.
@@ -14,7 +14,7 @@ trait Extension {
    *
    * @return <code>true</code> if the extension was successfully executed
    */
-  def process(arguments: Buffer[String]): Boolean
+  def process(arguments: mutable.Buffer[String]): Boolean
 
   /**
    * Returns a name for this extension.

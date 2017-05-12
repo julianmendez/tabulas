@@ -2,7 +2,7 @@
 package de.tudresden.inf.lat.tabulas.datatype
 
 import scala.collection.mutable.ArrayBuffer
-import scala.collection.mutable.Buffer
+import scala.collection.mutable
 
 /**
  * This models a empty value.
@@ -24,7 +24,7 @@ class EmptyValue extends PrimitiveTypeValue {
     return Value
   }
 
-  override def renderAsList(): Buffer[String] = {
+  override def renderAsList(): mutable.Buffer[String] = {
     return new ArrayBuffer[String]() // @FIXME this should be immutable
   }
 

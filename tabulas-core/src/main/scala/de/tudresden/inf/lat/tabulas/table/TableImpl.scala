@@ -2,7 +2,7 @@
 package de.tudresden.inf.lat.tabulas.table
 
 import scala.collection.mutable.ArrayBuffer
-import scala.collection.mutable.Buffer
+import scala.collection.mutable
 import java.util.Objects
 import scala.collection.mutable.Set
 import scala.collection.mutable.TreeSet
@@ -17,8 +17,8 @@ import de.tudresden.inf.lat.tabulas.datatype.Record
 class TableImpl extends Table {
 
   private var tableType: CompositeType = new CompositeTypeImpl()
-  private val list: Buffer[Record] = new ArrayBuffer[Record]
-  private val sortingOrder: Buffer[String] = new ArrayBuffer[String]
+  private val list: mutable.Buffer[Record] = new ArrayBuffer[Record]
+  private val sortingOrder: mutable.Buffer[String] = new ArrayBuffer[String]
   private val fieldsWithReverseOrder: Set[String] = new TreeSet[String]()
 
   def this(newType: CompositeType) = {
@@ -54,11 +54,11 @@ class TableImpl extends Table {
     }
   }
 
-  override def getSortingOrder(): Buffer[String] = {
+  override def getSortingOrder(): mutable.Buffer[String] = {
     return this.sortingOrder
   }
 
-  override def setSortingOrder(sortingOrder: Buffer[String]): Unit = {
+  override def setSortingOrder(sortingOrder: mutable.Buffer[String]): Unit = {
     this.sortingOrder.clear()
     if (Objects.nonNull(sortingOrder)) {
       this.sortingOrder ++= sortingOrder
@@ -76,9 +76,9 @@ class TableImpl extends Table {
     }
   }
 
-  override def getRecords(): Buffer[Record] = {
+  override def getRecords(): mutable.Buffer[Record] = {
     val comparator = new RecordComparator(this.sortingOrder, this.fieldsWithReverseOrder)
-    val ret: Buffer[Record] = new ArrayBuffer[Record]
+    val ret: mutable.Buffer[Record] = new ArrayBuffer[Record]
     ret ++= this.list
     return ret.sortWith((record0, record1) => comparator.compare(record0, record1) < 0)
   }

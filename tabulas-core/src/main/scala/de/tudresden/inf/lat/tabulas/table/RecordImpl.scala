@@ -2,7 +2,7 @@
 package de.tudresden.inf.lat.tabulas.table
 
 import scala.collection.mutable.ArrayBuffer
-import scala.collection.mutable.Buffer
+import scala.collection.mutable
 import scala.collection.mutable.Map
 import java.util.Objects
 import scala.collection.mutable.TreeMap
@@ -51,8 +51,8 @@ class RecordImpl extends Record {
     }
   }
 
-  override def getProperties(): Buffer[String] = {
-    val ret: Buffer[String] = new ArrayBuffer[String]
+  override def getProperties(): mutable.Buffer[String] = {
+    val ret: mutable.Buffer[String] = new ArrayBuffer[String]
     ret ++= map.keySet
     return ret
   }

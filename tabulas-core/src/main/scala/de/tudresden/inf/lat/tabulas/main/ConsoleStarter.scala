@@ -1,7 +1,7 @@
 package de.tudresden.inf.lat.tabulas.main
 
 import scala.collection.mutable.ArrayBuffer
-import scala.collection.mutable.Buffer
+import scala.collection.mutable
 import java.util.Objects
 
 import scala.collection.JavaConverters.seqAsJavaListConverter
@@ -44,11 +44,11 @@ class ConsoleStarter {
    * @param args
    *            console arguments
    */
-  def run(extensions: Buffer[Extension], args: Array[String]): Unit = {
+  def run(extensions: mutable.Buffer[Extension], args: Array[String]): Unit = {
     Objects.requireNonNull(extensions);
     Objects.requireNonNull(args);
 
-    val arguments: Buffer[String] = new ArrayBuffer[String]();
+    val arguments: mutable.Buffer[String] = new ArrayBuffer[String]();
     if (args.length == 1) {
       arguments += ((new NormalizationExtension()).Name);
     }

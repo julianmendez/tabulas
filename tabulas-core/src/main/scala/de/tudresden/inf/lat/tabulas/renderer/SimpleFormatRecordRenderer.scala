@@ -3,7 +3,7 @@ package de.tudresden.inf.lat.tabulas.renderer
 
 import java.io.OutputStreamWriter
 import java.io.Writer
-import scala.collection.mutable.Buffer
+import scala.collection.mutable
 import java.util.Objects
 
 import scala.collection.JavaConverters.asScalaBufferConverter
@@ -37,7 +37,7 @@ class SimpleFormatRecordRenderer extends RecordRenderer {
       output.write(field)
       output.write(ParserConstant.Space + ParserConstant.EqualsSign)
       if (value.getType().isList()) {
-        val list: Buffer[String] = value.renderAsList()
+        val list: mutable.Buffer[String] = value.renderAsList()
         list.foreach(link => {
           output.write(ParserConstant.Space + ParserConstant.LineContinuationSymbol)
           output.write(ParserConstant.NewLine)
@@ -56,7 +56,7 @@ class SimpleFormatRecordRenderer extends RecordRenderer {
     }
   }
 
-  def render(output: UncheckedWriter, record: Record, fields: Buffer[String]): Unit = {
+  def render(output: UncheckedWriter, record: Record, fields: mutable.Buffer[String]): Unit = {
     output.write(ParserConstant.NewLine)
     output.write(ParserConstant.NewRecordToken + ParserConstant.Space)
     output.write(ParserConstant.EqualsSign + ParserConstant.Space)
@@ -72,7 +72,7 @@ class SimpleFormatRecordRenderer extends RecordRenderer {
     output.flush()
   }
 
-  override def render(record: Record, fields: Buffer[String]): Unit = {
+  override def render(record: Record, fields: mutable.Buffer[String]): Unit = {
     render(new UncheckedWriterImpl(this.output), record, fields)
   }
 

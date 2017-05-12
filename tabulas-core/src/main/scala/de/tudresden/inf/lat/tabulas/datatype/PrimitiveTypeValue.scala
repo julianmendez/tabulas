@@ -1,7 +1,7 @@
 
 package de.tudresden.inf.lat.tabulas.datatype
 
-import scala.collection.mutable.Buffer
+import scala.collection.mutable
 
 /**
  * This models a value of a primitive type.
@@ -28,7 +28,7 @@ trait PrimitiveTypeValue extends Comparable[PrimitiveTypeValue] {
    *
    * @return a list of strings representing this value
    */
-  def renderAsList(): Buffer[String]
+  def renderAsList(): mutable.Buffer[String]
 
   /**
    * Tell whether this value represents an empty value.

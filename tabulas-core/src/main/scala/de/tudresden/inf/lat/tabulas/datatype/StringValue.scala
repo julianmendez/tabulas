@@ -2,7 +2,7 @@
 package de.tudresden.inf.lat.tabulas.datatype
 
 import scala.collection.mutable.ArrayBuffer
-import scala.collection.mutable.Buffer
+import scala.collection.mutable
 import java.util.Objects
 
 /**
@@ -47,8 +47,8 @@ class StringValue extends PrimitiveTypeValue {
     return str
   }
 
-  override def renderAsList(): Buffer[String] = {
-    val ret: Buffer[String] = new ArrayBuffer[String]()
+  override def renderAsList(): mutable.Buffer[String] = {
+    val ret: mutable.Buffer[String] = new ArrayBuffer[String]()
     ret += render()
     return ret // @FIXME this should be immutable
 

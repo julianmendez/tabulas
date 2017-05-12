@@ -3,7 +3,7 @@ package de.tudresden.inf.lat.tabulas.renderer
 
 import java.io.OutputStreamWriter
 import java.io.Writer
-import scala.collection.mutable.Buffer
+import scala.collection.mutable
 
 import scala.collection.JavaConverters.asScalaBufferConverter
 
@@ -30,7 +30,7 @@ class SimpleFormatRenderer extends Renderer {
   def renderAllRecords(output: UncheckedWriter, table: Table): Unit = {
     val recordRenderer: SimpleFormatRecordRenderer = new SimpleFormatRecordRenderer(output)
     output.write(ParserConstant.NewLine);
-    val list: Buffer[Record] = table.getRecords()
+    val list: mutable.Buffer[Record] = table.getRecords()
     list.foreach(record => {
       recordRenderer.render(output, record, table.getType().getFields())
       output.write(ParserConstant.NewLine)

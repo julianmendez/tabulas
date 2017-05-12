@@ -1,7 +1,7 @@
 
 package de.tudresden.inf.lat.tabulas.table
 
-import scala.collection.mutable.Buffer
+import scala.collection.mutable
 import scala.collection.mutable.Set
 
 import de.tudresden.inf.lat.tabulas.datatype.CompositeTypeValue
@@ -17,7 +17,7 @@ trait Table extends CompositeTypeValue {
    *
    * @return the sorting order for the fields
    */
-  def getSortingOrder(): Buffer[String]
+  def getSortingOrder(): mutable.Buffer[String]
 
   /**
    * Sets the sorting order for the fields.
@@ -25,7 +25,7 @@ trait Table extends CompositeTypeValue {
    * @param sortingOrder
    *            sorting order
    */
-  def setSortingOrder(sortingOrder: Buffer[String]): Unit
+  def setSortingOrder(sortingOrder: mutable.Buffer[String]): Unit
 
   /**
    * Returns the fields that are supposed to be sorted in reverse order.

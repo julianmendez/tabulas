@@ -4,7 +4,7 @@ import java.io.BufferedWriter
 import java.io.FileReader
 import java.io.FileWriter
 import java.io.IOException
-import scala.collection.mutable.Buffer
+import scala.collection.mutable
 import de.tudresden.inf.lat.tabulas.table.TableMap
 import de.tudresden.inf.lat.tabulas.parser.SimpleFormatParser
 import de.tudresden.inf.lat.tabulas.renderer.SimpleFormatRenderer
@@ -20,7 +20,7 @@ class DefaultExtension extends Extension {
   val Help: String = "(input) (output) : parse and create output file with a simple text format"
   val RequiredArguments: Int = 2
 
-  override def process(arguments: Buffer[String]): Boolean = {
+  override def process(arguments: mutable.Buffer[String]): Boolean = {
     if (Objects.isNull(arguments) || arguments.size != RequiredArguments) {
       return false
     } else {

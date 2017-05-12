@@ -1,7 +1,7 @@
 
 package de.tudresden.inf.lat.tabulas.datatype
 
-import scala.collection.mutable.Buffer
+import scala.collection.mutable
 import java.util.Objects
 
 /**
@@ -19,7 +19,7 @@ class SimplifiedCompositeType extends CompositeType {
     knownFields.foreach(field => this.dataType.declareField(field, DefaultFieldType))
   }
 
-  override def getFields(): Buffer[String] = {
+  override def getFields(): mutable.Buffer[String] = {
     return this.dataType.getFields()
   }
 

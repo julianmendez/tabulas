@@ -2,7 +2,7 @@
 package de.tudresden.inf.lat.tabulas.table
 
 import scala.collection.mutable.ArrayBuffer
-import scala.collection.mutable.Buffer
+import scala.collection.mutable
 import scala.collection.mutable.Map
 import scala.collection.mutable.TreeMap
 
@@ -33,8 +33,8 @@ class TableMapImpl extends TableMap {
    *
    * @return the identifiers of the stored tables
    */
-  def getTableIds(): Buffer[String] = {
-    val ret: Buffer[String] = new ArrayBuffer[String]()
+  def getTableIds(): mutable.Buffer[String] = {
+    val ret: mutable.Buffer[String] = new ArrayBuffer[String]()
     ret ++= this.map.keySet
     return ret
   }
@@ -72,7 +72,7 @@ class TableMapImpl extends TableMap {
     if (obj.isInstanceOf[TableMap]) {
       val other: TableMap = obj.asInstanceOf[TableMap]
       var ret: Boolean = getTableIds().equals(other.getTableIds())
-      val tableIds: Buffer[String] = getTableIds()
+      val tableIds: mutable.Buffer[String] = getTableIds()
       ret = ret && tableIds.forall(tableId => getTable(tableId).equals(other.getTable(tableId)))
       return ret
     } else {
@@ -82,7 +82,7 @@ class TableMapImpl extends TableMap {
 
   override def toString(): String = {
     val sbuf: StringBuffer = new StringBuffer()
-    val tableIds: Buffer[String] = getTableIds()
+    val tableIds: mutable.Buffer[String] = getTableIds()
     tableIds.foreach(tableId => {
       sbuf.append(tableId)
       sbuf.append("=")

@@ -1,7 +1,7 @@
 
 package de.tudresden.inf.lat.tabulas.table
 
-import scala.collection.mutable.Buffer
+import scala.collection.mutable
 
 /**
  * This models a collection of tables with identifiers.
@@ -14,7 +14,7 @@ trait TableMap {
    *
    * @return the identifiers of the stored tables
    */
-  def getTableIds(): Buffer[String]
+  def getTableIds(): mutable.Buffer[String]
 
   /**
    * Stores a table with the given identifier.
