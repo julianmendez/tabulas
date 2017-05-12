@@ -1,28 +1,19 @@
 
 package de.tudresden.inf.lat.tabulas.ext.renderer
 
-import java.io.OutputStreamWriter
-import java.io.Writer
-import scala.collection.mutable.Buffer
+import java.io.{OutputStreamWriter, Writer}
 import java.util.Objects
 
-import scala.Range
-import scala.collection.JavaConverters.asScalaBufferConverter
-
-import de.tudresden.inf.lat.tabulas.datatype.ParameterizedListValue
-import de.tudresden.inf.lat.tabulas.datatype.PrimitiveTypeValue
-import de.tudresden.inf.lat.tabulas.datatype.Record
-import de.tudresden.inf.lat.tabulas.datatype.URIValue
+import de.tudresden.inf.lat.tabulas.datatype.{ParameterizedListValue, PrimitiveTypeValue, Record, URIValue}
 import de.tudresden.inf.lat.tabulas.parser.ParserConstant
-import de.tudresden.inf.lat.tabulas.renderer.Renderer
-import de.tudresden.inf.lat.tabulas.renderer.UncheckedWriter
-import de.tudresden.inf.lat.tabulas.renderer.UncheckedWriterImpl
-import de.tudresden.inf.lat.tabulas.table.Table
-import de.tudresden.inf.lat.tabulas.table.TableMap
+import de.tudresden.inf.lat.tabulas.renderer.{Renderer, UncheckedWriter, UncheckedWriterImpl}
+import de.tudresden.inf.lat.tabulas.table.{Table, TableMap}
+
+import scala.collection.mutable.Buffer
 
 /**
- * Renderer of tables in comma-separated values format.
- */
+  * Renderer of tables in comma-separated values format.
+  */
 class CsvRenderer extends Renderer {
 
   val Quotes: String = "\""

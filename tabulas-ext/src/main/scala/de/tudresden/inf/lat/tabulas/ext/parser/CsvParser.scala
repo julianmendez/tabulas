@@ -1,31 +1,19 @@
 
 package de.tudresden.inf.lat.tabulas.ext.parser
 
-import java.io.BufferedReader
-import java.io.IOException
-import java.io.InputStreamReader
-import java.io.Reader
-import scala.collection.mutable.ArrayBuffer
-import scala.collection.mutable.Buffer
+import java.io.{BufferedReader, IOException, InputStreamReader, Reader}
 import java.util.Objects
 
-import scala.Range
-import scala.collection.JavaConverters.asScalaBufferConverter
+import de.tudresden.inf.lat.tabulas.datatype.{CompositeTypeImpl, ParseException, StringValue}
+import de.tudresden.inf.lat.tabulas.parser.{Parser, ParserConstant}
+import de.tudresden.inf.lat.tabulas.table.{RecordImpl, TableImpl, TableMap, TableMapImpl}
 
-import de.tudresden.inf.lat.tabulas.datatype.CompositeTypeImpl
-import de.tudresden.inf.lat.tabulas.datatype.ParseException
-import de.tudresden.inf.lat.tabulas.datatype.StringValue
-import de.tudresden.inf.lat.tabulas.parser.Parser
-import de.tudresden.inf.lat.tabulas.parser.ParserConstant
-import de.tudresden.inf.lat.tabulas.table.RecordImpl
-import de.tudresden.inf.lat.tabulas.table.TableImpl
-import de.tudresden.inf.lat.tabulas.table.TableMap
-import de.tudresden.inf.lat.tabulas.table.TableMapImpl
+import scala.collection.mutable.{ArrayBuffer, Buffer}
 
 /**
- * Parser of a table in comma-separated values format.
- *
- */
+  * Parser of a table in comma-separated values format.
+  *
+  */
 class CsvParser extends Parser {
 
   val UnderscoreChar: Char = '_'
@@ -39,11 +27,11 @@ class CsvParser extends Parser {
   private var input: Reader = new InputStreamReader(System.in)
 
   /**
-   * Constructs a new parser.
-   *
-   * @param input
-   *            input
-   */
+    * Constructs a new parser.
+    *
+    * @param input
+    * input
+    */
   def this(input: Reader) = {
     this()
     this.input = input
@@ -51,7 +39,11 @@ class CsvParser extends Parser {
 
   def getColumns(line0: String): Buffer[String] = {
     val ret: Buffer[String] = new ArrayBuffer[String]()
-    val line: String = if (Objects.isNull(line0)) { "" } else { line0.trim() }
+    val line: String = if (Objects.isNull(line0)) {
+      ""
+    } else {
+      line0.trim()
+    }
     var current: StringBuffer = new StringBuffer()
     var betweenQuotes: Boolean = false
     for (index <- 0 to (line.length() - 1)) {
@@ -81,8 +73,16 @@ class CsvParser extends Parser {
   }
 
   def normalize(fieldName: String): String = {
-    var auxName: String = if (Objects.isNull(fieldName)) { Underscore } else { fieldName.trim() }
-    val name = if (auxName.isEmpty()) { Underscore } else { auxName }
+    var auxName: String = if (Objects.isNull(fieldName)) {
+      Underscore
+    } else {
+      fieldName.trim()
+    }
+    val name = if (auxName.isEmpty()) {
+      Underscore
+    } else {
+      auxName
+    }
 
     val ret: StringBuffer = new StringBuffer()
     Range(0, name.length()).foreach(index => {

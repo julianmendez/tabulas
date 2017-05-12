@@ -1,26 +1,26 @@
 
 package de.tudresden.inf.lat.tabulas.ext.parser
 
-import java.io.BufferedWriter
-import java.io.FileReader
-import java.io.FileWriter
-import java.io.IOException
-import scala.collection.mutable.Buffer
+import java.io.{BufferedWriter, FileReader, FileWriter, IOException}
 import java.util.Objects
 
 import de.tudresden.inf.lat.tabulas.extension.Extension
 import de.tudresden.inf.lat.tabulas.renderer.SimpleFormatRenderer
 import de.tudresden.inf.lat.tabulas.table.TableMap
 
+import scala.collection.mutable.Buffer
+
 /**
- * This models an extension that reads comma-separated values and writes them
- * with the default format.
- *
- */
+  * This models an extension that reads comma-separated values and writes them
+  * with the default format.
+  *
+  */
 class CalendarParserExtension extends Extension {
 
   def Name: String = "parsecalendar"
+
   def Help: String = "(input) (output) : create output file with a simple text format parsing a calendar file"
+
   def RequiredArguments: Int = 2
 
   override def process(arguments: Buffer[String]): Boolean = {

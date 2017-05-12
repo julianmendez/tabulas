@@ -1,33 +1,19 @@
 
 package de.tudresden.inf.lat.tabulas.ext.renderer
 
-import java.io.OutputStreamWriter
-import java.io.Writer
-import scala.collection.mutable.Buffer
-import scala.collection.mutable.Map
+import java.io.{OutputStreamWriter, Writer}
 import java.util.Objects
 
-import scala.collection.JavaConverters.asScalaBufferConverter
-import scala.collection.JavaConverters.asScalaSetConverter
-
-import de.tudresden.inf.lat.tabulas.datatype.CompositeTypeValue
-import de.tudresden.inf.lat.tabulas.datatype.ParameterizedListValue
-import de.tudresden.inf.lat.tabulas.datatype.PrimitiveTypeValue
-import de.tudresden.inf.lat.tabulas.datatype.Record
-import de.tudresden.inf.lat.tabulas.datatype.StringType
-import de.tudresden.inf.lat.tabulas.datatype.StringValue
-import de.tudresden.inf.lat.tabulas.datatype.URIType
-import de.tudresden.inf.lat.tabulas.datatype.URIValue
+import de.tudresden.inf.lat.tabulas.datatype._
 import de.tudresden.inf.lat.tabulas.parser.ParserConstant
-import de.tudresden.inf.lat.tabulas.renderer.Renderer
-import de.tudresden.inf.lat.tabulas.renderer.UncheckedWriter
-import de.tudresden.inf.lat.tabulas.renderer.UncheckedWriterImpl
-import de.tudresden.inf.lat.tabulas.table.Table
-import de.tudresden.inf.lat.tabulas.table.TableMap
+import de.tudresden.inf.lat.tabulas.renderer.{Renderer, UncheckedWriter, UncheckedWriterImpl}
+import de.tudresden.inf.lat.tabulas.table.{Table, TableMap}
+
+import scala.collection.mutable.{Buffer, Map}
 
 /**
- * Renderer of a table.
- */
+  * Renderer of a table.
+  */
 class WikitextRenderer extends Renderer {
 
   private var output: Writer = new OutputStreamWriter(System.out)

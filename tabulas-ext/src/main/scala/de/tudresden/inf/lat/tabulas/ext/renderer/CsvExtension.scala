@@ -1,19 +1,18 @@
 package de.tudresden.inf.lat.tabulas.ext.renderer
 
-import java.io.BufferedWriter
-import java.io.FileReader
-import java.io.FileWriter
-import java.io.IOException
-import scala.collection.mutable.Buffer
-import de.tudresden.inf.lat.tabulas.extension.Extension
-import de.tudresden.inf.lat.tabulas.table.TableMap
-import de.tudresden.inf.lat.tabulas.parser.SimpleFormatParser
+import java.io.{BufferedWriter, FileReader, FileWriter, IOException}
 import java.util.Objects
 
+import de.tudresden.inf.lat.tabulas.extension.Extension
+import de.tudresden.inf.lat.tabulas.parser.SimpleFormatParser
+import de.tudresden.inf.lat.tabulas.table.TableMap
+
+import scala.collection.mutable.Buffer
+
 /**
- * This models an extension that writes the output in comma-separated values.
- *
- */
+  * This models an extension that writes the output in comma-separated values.
+  *
+  */
 class CsvExtension extends Extension {
 
   val Name: String = "csv"

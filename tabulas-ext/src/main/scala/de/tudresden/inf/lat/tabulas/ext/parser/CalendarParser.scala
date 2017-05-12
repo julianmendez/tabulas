@@ -1,44 +1,18 @@
 package de.tudresden.inf.lat.tabulas.ext.parser
 
-import java.io.BufferedReader
-import java.io.IOException
-import java.io.InputStreamReader
-import java.io.Reader
-import scala.collection.mutable.ArrayBuffer
-import scala.collection.mutable.Buffer
-import scala.collection.mutable.Map
+import java.io.{BufferedReader, IOException, InputStreamReader, Reader}
 import java.util.Objects
-import scala.collection.mutable.Stack
-import scala.collection.mutable.TreeMap
 
-import scala.collection.JavaConverters.asScalaBufferConverter
-import scala.collection.JavaConverters.asScalaSetConverter
-
-import de.tudresden.inf.lat.tabulas.datatype.CompositeType
-import de.tudresden.inf.lat.tabulas.datatype.ParseException
-import de.tudresden.inf.lat.tabulas.datatype.PrimitiveTypeFactory
-import de.tudresden.inf.lat.tabulas.datatype.PrimitiveTypeValue
-import de.tudresden.inf.lat.tabulas.datatype.Record
-import de.tudresden.inf.lat.tabulas.datatype.SimplifiedCompositeType
-import de.tudresden.inf.lat.tabulas.datatype.StringValue
+import de.tudresden.inf.lat.tabulas.datatype._
 import de.tudresden.inf.lat.tabulas.parser.Parser
-import de.tudresden.inf.lat.tabulas.table.RecordImpl
-import de.tudresden.inf.lat.tabulas.table.TableImpl
-import de.tudresden.inf.lat.tabulas.table.TableMap
-import de.tudresden.inf.lat.tabulas.table.TableMapImpl
-import de.tudresden.inf.lat.tabulas.table.TableImpl
-import de.tudresden.inf.lat.tabulas.table.RecordImpl
-import de.tudresden.inf.lat.tabulas.table.TableMapImpl
-import de.tudresden.inf.lat.tabulas.datatype.PrimitiveTypeValue
-import de.tudresden.inf.lat.tabulas.datatype.SimplifiedCompositeType
-import de.tudresden.inf.lat.tabulas.datatype.PrimitiveTypeFactory
-import de.tudresden.inf.lat.tabulas.datatype.Record
-import de.tudresden.inf.lat.tabulas.table.TableMap
+import de.tudresden.inf.lat.tabulas.table.{RecordImpl, TableImpl, TableMap, TableMapImpl}
+
+import scala.collection.mutable.{ArrayBuffer, Buffer, Map, TreeMap}
 
 /**
- * Parser of a calendar.
- *
- */
+  * Parser of a calendar.
+  *
+  */
 class CalendarParser extends Parser {
 
   class Pair(lineCounter0: Int, line0: String) {
@@ -166,7 +140,7 @@ class CalendarParser extends Parser {
   }
 
   private def getTypedValue(key: String, value: String,
-    type0: CompositeType, lineCounter: Int): PrimitiveTypeValue = {
+                            type0: CompositeType, lineCounter: Int): PrimitiveTypeValue = {
     if (Objects.isNull(key)) {
       return new StringValue()
     } else {
@@ -206,7 +180,7 @@ class CalendarParser extends Parser {
   }
 
   private def parseProperty(line: String, currentTable: TableImpl,
-    record: Record, lineCounter: Int): Unit = {
+                            record: Record, lineCounter: Int): Unit = {
     if (Objects.isNull(currentTable)) {
       throw new ParseException("New record was not declared (line "
         + lineCounter + ")")
@@ -224,11 +198,11 @@ class CalendarParser extends Parser {
   }
 
   def getGeneratedId(generatedIds: Buffer[Int], level: Int): String = {
-    while (level >= generatedIds.size ) {
+    while (level >= generatedIds.size) {
       generatedIds += FirstGeneratedIndex
     }
     val newValue: Int = generatedIds(level) + 1
-    while (level < generatedIds.size ) {
+    while (level < generatedIds.size) {
       generatedIds.remove(generatedIds.size - 1)
     }
     generatedIds += newValue

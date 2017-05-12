@@ -1,28 +1,19 @@
 
 package de.tudresden.inf.lat.tabulas.ext.renderer
 
-import java.io.OutputStreamWriter
-import java.io.Writer
-import scala.collection.mutable.Buffer
+import java.io.{OutputStreamWriter, Writer}
 import java.util.Objects
 
-import scala.collection.JavaConverters.asScalaBufferConverter
-
-import de.tudresden.inf.lat.tabulas.datatype.CompositeTypeValue
-import de.tudresden.inf.lat.tabulas.datatype.ParameterizedListValue
-import de.tudresden.inf.lat.tabulas.datatype.PrimitiveTypeValue
-import de.tudresden.inf.lat.tabulas.datatype.Record
-import de.tudresden.inf.lat.tabulas.datatype.URIValue
+import de.tudresden.inf.lat.tabulas.datatype._
 import de.tudresden.inf.lat.tabulas.parser.ParserConstant
-import de.tudresden.inf.lat.tabulas.renderer.Renderer
-import de.tudresden.inf.lat.tabulas.renderer.UncheckedWriter
-import de.tudresden.inf.lat.tabulas.renderer.UncheckedWriterImpl
-import de.tudresden.inf.lat.tabulas.table.Table
-import de.tudresden.inf.lat.tabulas.table.TableMap
+import de.tudresden.inf.lat.tabulas.renderer.{Renderer, UncheckedWriter, UncheckedWriterImpl}
+import de.tudresden.inf.lat.tabulas.table.{Table, TableMap}
+
+import scala.collection.mutable.Buffer
 
 /**
- * Renderer of tables in SQL format.
- */
+  * Renderer of tables in SQL format.
+  */
 class SqlRenderer extends Renderer {
 
   val DefaultSize: Int = 0x800
