@@ -4,9 +4,9 @@ package de.tudresden.inf.lat.tabulas.datatype
 import java.util.Objects
 
 /**
- * This models the primitive data type Empty.
- *
- */
+  * This models the primitive data type Empty.
+  *
+  */
 class EmptyType extends PrimitiveType {
 
   val TypeName: String = "Empty"

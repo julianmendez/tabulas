@@ -1,18 +1,15 @@
 package de.tudresden.inf.lat.tabulas.main
 
-import java.io.FileReader
-import java.io.StringWriter
-
-import org.junit.Assert
-import org.junit.Test
+import java.io.{FileReader, StringWriter}
 
 import de.tudresden.inf.lat.tabulas.parser.SimpleFormatParser
 import de.tudresden.inf.lat.tabulas.renderer.SimpleFormatRenderer
 import de.tudresden.inf.lat.tabulas.table.TableMap
+import org.junit.{Assert, Test}
 
 /**
- * This is a test of normalization of files.
- */
+  * This is a test of normalization of files.
+  */
 class NormalizationTest {
 
   val InputFileName0: String = "example.properties"

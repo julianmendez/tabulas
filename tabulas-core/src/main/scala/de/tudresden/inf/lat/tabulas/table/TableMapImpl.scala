@@ -1,38 +1,33 @@
 
 package de.tudresden.inf.lat.tabulas.table
 
-import scala.collection.mutable.ArrayBuffer
 import scala.collection.mutable
-import scala.collection.mutable.Map
-import scala.collection.mutable.TreeMap
-
-import scala.collection.JavaConverters._
-import scala.collection.JavaConverters.asScalaBufferConverter
+import scala.collection.mutable.{ArrayBuffer, Map, TreeMap}
 
 /**
- * This is the default implementation of a table map.
- *
- */
+  * This is the default implementation of a table map.
+  *
+  */
 class TableMapImpl extends TableMap {
 
   private val map: Map[String, Table] = new TreeMap[String, Table]()
 
   /**
-   * Constructs a new table map using another one.
-   *
-   * @param otherTableMap
-   *            other table map
-   */
+    * Constructs a new table map using another one.
+    *
+    * @param otherTableMap
+    * other table map
+    */
   def this(otherTableMap: TableMap) = {
     this()
     otherTableMap.getTableIds().foreach(tableId => put(tableId, otherTableMap.getTable(tableId)))
   }
 
   /**
-   * Returns the identifiers of the stored tables.
-   *
-   * @return the identifiers of the stored tables
-   */
+    * Returns the identifiers of the stored tables.
+    *
+    * @return the identifiers of the stored tables
+    */
   def getTableIds(): mutable.Buffer[String] = {
     val ret: mutable.Buffer[String] = new ArrayBuffer[String]()
     ret ++= this.map.keySet
@@ -40,24 +35,24 @@ class TableMapImpl extends TableMap {
   }
 
   /**
-   * Stores a table with the given identifier.
-   *
-   * @param id
-   *            identifier
-   * @param table
-   *            table
-   */
+    * Stores a table with the given identifier.
+    *
+    * @param id
+    * identifier
+    * @param table
+    * table
+    */
   def put(id: String, table: Table): Unit = {
     this.map.put(id, table)
   }
 
   /**
-   * Returns the table associated to the given identifier.
-   *
-   * @param id
-   *            identifier
-   * @return the table associated to the given identifier
-   */
+    * Returns the table associated to the given identifier.
+    *
+    * @param id
+    * identifier
+    * @return the table associated to the given identifier
+    */
   def getTable(id: String): Table = {
     val optTable: Option[Table] = this.map.get(id)
     // @FIXME add condition to verify that the key was found

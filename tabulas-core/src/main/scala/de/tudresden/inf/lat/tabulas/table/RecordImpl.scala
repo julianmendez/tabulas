@@ -1,32 +1,27 @@
 
 package de.tudresden.inf.lat.tabulas.table
 
-import scala.collection.mutable.ArrayBuffer
-import scala.collection.mutable
-import scala.collection.mutable.Map
 import java.util.Objects
-import scala.collection.mutable.TreeMap
 
-import scala.collection.JavaConverters._
-import scala.collection.JavaConverters.asScalaBufferConverter
+import de.tudresden.inf.lat.tabulas.datatype.{PrimitiveTypeValue, Record}
 
-import de.tudresden.inf.lat.tabulas.datatype.PrimitiveTypeValue
-import de.tudresden.inf.lat.tabulas.datatype.Record
+import scala.collection.mutable
+import scala.collection.mutable.{ArrayBuffer, Map, TreeMap}
 
 /**
- * This is the default implementation of a record.
- *
- */
+  * This is the default implementation of a record.
+  *
+  */
 class RecordImpl extends Record {
 
   private val map: Map[String, PrimitiveTypeValue] = new TreeMap[String, PrimitiveTypeValue]()
 
   /**
-   * Constructs a new record using another one.
-   *
-   * @param otherRecord
-   *            other record
-   */
+    * Constructs a new record using another one.
+    *
+    * @param otherRecord
+    * other record
+    */
   def this(otherRecord: Record) = {
     this()
     otherRecord.getProperties().foreach(property => set(property, otherRecord.get(property).get))

@@ -1,30 +1,17 @@
 package de.tudresden.inf.lat.tabulas.main
 
-import java.io.BufferedReader
-import java.io.FileReader
-import java.io.StringWriter
+import java.io.{BufferedReader, FileReader, StringWriter}
 import java.util.Objects
 
-import scala.collection.JavaConverters.asScalaBufferConverter
-
-import org.junit.Assert
-import org.junit.Test
-
-import de.tudresden.inf.lat.tabulas.datatype.CompositeType
-import de.tudresden.inf.lat.tabulas.datatype.CompositeTypeImpl
-import de.tudresden.inf.lat.tabulas.datatype.PrimitiveTypeValue
-import de.tudresden.inf.lat.tabulas.datatype.Record
-import de.tudresden.inf.lat.tabulas.datatype.StringValue
+import de.tudresden.inf.lat.tabulas.datatype._
 import de.tudresden.inf.lat.tabulas.parser.SimpleFormatParser
 import de.tudresden.inf.lat.tabulas.renderer.SimpleFormatRenderer
-import de.tudresden.inf.lat.tabulas.table.Table
-import de.tudresden.inf.lat.tabulas.table.TableImpl
-import de.tudresden.inf.lat.tabulas.table.TableMap
-import de.tudresden.inf.lat.tabulas.table.TableMapImpl
+import de.tudresden.inf.lat.tabulas.table.{Table, TableImpl, TableMap, TableMapImpl}
+import org.junit.{Assert, Test}
 
 /**
- * This is a test of modification of a Tabula file.
- */
+  * This is a test of modification of a Tabula file.
+  */
 class MainTest {
 
   val InputFileName: String = "example.properties"
@@ -42,15 +29,19 @@ class MainTest {
   }
 
   /**
-   * Returns the number of authors for a given record.
-   *
-   * @param record
-   *            record
-   * @return the number of authors for a given record
-   */
+    * Returns the number of authors for a given record.
+    *
+    * @param record
+    * record
+    * @return the number of authors for a given record
+    */
   def computeFieldValue(record: Record): StringValue = {
     val value: PrimitiveTypeValue = record.get(FieldNameAuthors).get
-    val size: Int = if (Objects.isNull(value)) { 0 } else { value.renderAsList().size }
+    val size: Int = if (Objects.isNull(value)) {
+      0
+    } else {
+      value.renderAsList().size
+    }
     return new StringValue("" + size)
   }
 

@@ -1,13 +1,11 @@
 package de.tudresden.inf.lat.tabulas.datatype
 
-import scala.collection.mutable.Map
-import java.util.Objects
-import scala.collection.mutable.TreeMap
+import scala.collection.mutable.{Map, TreeMap}
 
 /**
- * This models a factory of primitive types.
- *
- */
+  * This models a factory of primitive types.
+  *
+  */
 class PrimitiveTypeFactory {
 
   private val map: Map[String, PrimitiveType] = new TreeMap[String, PrimitiveType]()
@@ -17,8 +15,8 @@ class PrimitiveTypeFactory {
   }
 
   /**
-   * Constructs a new primitive type factory.
-   */
+    * Constructs a new primitive type factory.
+    */
   {
     add(new EmptyType())
     add(new StringType())
@@ -32,26 +30,26 @@ class PrimitiveTypeFactory {
   }
 
   /**
-   * Tells whether this factory contains the given primitive type.
-   *
-   * @param primType
-   *            primitive type
-   * @return <code>true</code> if and only if this factory contains the given
-   *         primitive type
-   */
+    * Tells whether this factory contains the given primitive type.
+    *
+    * @param primType
+    * primitive type
+    * @return <code>true</code> if and only if this factory contains the given
+    *         primitive type
+    */
   def contains(primType: String): Boolean = {
     return this.map.get(primType).isDefined
   }
 
   /**
-   * Returns a new value of the specified type.
-   *
-   * @param typeName
-   *            type name
-   * @param value
-   *            value
-   * @return a new value of the specified type
-   */
+    * Returns a new value of the specified type.
+    *
+    * @param typeName
+    * type name
+    * @param value
+    * value
+    * @return a new value of the specified type
+    */
   def newInstance(typeName: String, value: String): PrimitiveTypeValue = {
     val optPrimType: Option[PrimitiveType] = this.map.get(typeName)
     if (optPrimType.isEmpty) {

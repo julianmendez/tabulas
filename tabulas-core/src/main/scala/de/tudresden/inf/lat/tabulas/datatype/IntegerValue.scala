@@ -2,27 +2,28 @@
 package de.tudresden.inf.lat.tabulas.datatype
 
 import java.math.BigInteger
-import scala.collection.mutable.ArrayBuffer
-import scala.collection.mutable
 import java.util.Objects
 
+import scala.collection.mutable
+import scala.collection.mutable.ArrayBuffer
+
 /**
- * This models a integer value.
- *
- */
+  * This models a integer value.
+  *
+  */
 class IntegerValue extends PrimitiveTypeValue {
 
   private var number: BigInteger = BigInteger.ZERO
 
   /**
-   * Constructs a new integer value using a string.
-   *
-   * @param str
-   *            string
-   * @throws ParseException
-   *              <code>str</code> is not a valid representation of an integer
-   *              value.
-   */
+    * Constructs a new integer value using a string.
+    *
+    * @param str
+    * string
+    * @throws ParseException
+    * <code>str</code> is not a valid representation of an integer
+    * value.
+    */
   def this(str: String) = {
     this()
     Objects.requireNonNull(str)
@@ -36,11 +37,11 @@ class IntegerValue extends PrimitiveTypeValue {
   }
 
   /**
-   * Constructs a new integer value using another integer value.
-   *
-   * @param other
-   *            an integer value
-   */
+    * Constructs a new integer value using another integer value.
+    *
+    * @param other
+    * an integer value
+    */
   def this(other: IntegerValue) = {
     this()
     this.number = other.number

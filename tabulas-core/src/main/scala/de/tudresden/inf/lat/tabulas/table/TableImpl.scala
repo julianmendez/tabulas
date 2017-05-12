@@ -1,15 +1,12 @@
 
 package de.tudresden.inf.lat.tabulas.table
 
-import scala.collection.mutable.ArrayBuffer
-import scala.collection.mutable
 import java.util.Objects
-import scala.collection.mutable.Set
-import scala.collection.mutable.TreeSet
 
-import de.tudresden.inf.lat.tabulas.datatype.CompositeType
-import de.tudresden.inf.lat.tabulas.datatype.CompositeTypeImpl
-import de.tudresden.inf.lat.tabulas.datatype.Record
+import de.tudresden.inf.lat.tabulas.datatype.{CompositeType, CompositeTypeImpl, Record}
+
+import scala.collection.mutable
+import scala.collection.mutable.{ArrayBuffer, Set, TreeSet}
 
 /**
   * This is the default implementation of a sorted table.

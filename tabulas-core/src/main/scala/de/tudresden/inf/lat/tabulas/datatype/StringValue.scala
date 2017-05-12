@@ -1,35 +1,40 @@
 
 package de.tudresden.inf.lat.tabulas.datatype
 
-import scala.collection.mutable.ArrayBuffer
-import scala.collection.mutable
 import java.util.Objects
 
+import scala.collection.mutable
+import scala.collection.mutable.ArrayBuffer
+
 /**
- * This models a string value.
- *
- */
+  * This models a string value.
+  *
+  */
 class StringValue extends PrimitiveTypeValue {
 
   private var str: String = ""
 
   /**
-   * Constructs a new string value using a string.
-   *
-   * @param str
-   *            string
-   */
+    * Constructs a new string value using a string.
+    *
+    * @param str
+    * string
+    */
   def this(str: String) = {
     this()
-    this.str = if (Objects.isNull(str)) { "" } else { str }
+    this.str = if (Objects.isNull(str)) {
+      ""
+    } else {
+      str
+    }
   }
 
   /**
-   * Constructs a new string value using another string value.
-   *
-   * @param other
-   *            a string value
-   */
+    * Constructs a new string value using another string value.
+    *
+    * @param other
+    * a string value
+    */
   def this(other: StringValue) = {
     this()
     this.str = other.str

@@ -1,37 +1,19 @@
 
 package de.tudresden.inf.lat.tabulas.parser
 
-import java.io.BufferedReader
-import java.io.IOException
-import java.io.InputStreamReader
-import java.io.Reader
-import scala.collection.mutable.ArrayBuffer
+import java.io.{BufferedReader, IOException, InputStreamReader, Reader}
+import java.util.{Objects, StringTokenizer}
+
+import de.tudresden.inf.lat.tabulas.datatype._
+import de.tudresden.inf.lat.tabulas.table.{RecordImpl, TableImpl, TableMap, TableMapImpl}
+
 import scala.collection.mutable
-import scala.collection.mutable.Map
-import java.util.Objects
-import scala.collection.mutable.Set
-import java.util.StringTokenizer
-import scala.collection.mutable.TreeMap
-import scala.collection.mutable.TreeSet
-
-import scala.collection.JavaConverters.asScalaSetConverter
-
-import de.tudresden.inf.lat.tabulas.datatype.CompositeType
-import de.tudresden.inf.lat.tabulas.datatype.CompositeTypeImpl
-import de.tudresden.inf.lat.tabulas.datatype.ParseException
-import de.tudresden.inf.lat.tabulas.datatype.PrimitiveTypeFactory
-import de.tudresden.inf.lat.tabulas.datatype.PrimitiveTypeValue
-import de.tudresden.inf.lat.tabulas.datatype.Record
-import de.tudresden.inf.lat.tabulas.datatype.StringValue
-import de.tudresden.inf.lat.tabulas.table.RecordImpl
-import de.tudresden.inf.lat.tabulas.table.TableImpl
-import de.tudresden.inf.lat.tabulas.table.TableMap
-import de.tudresden.inf.lat.tabulas.table.TableMapImpl
+import scala.collection.mutable.{ArrayBuffer, Map, Set, TreeMap, TreeSet}
 
 /**
- * Parser of a table in simple format.
- *
- */
+  * Parser of a table in simple format.
+  *
+  */
 class SimpleFormatParser extends Parser {
 
   private var input: Reader = new InputStreamReader(System.in)
@@ -220,7 +202,7 @@ class SimpleFormatParser extends Parser {
   }
 
   private def parseProperty(line: String, currentTable: TableImpl,
-    recordIdsOfCurrentTable: Set[String], record: Record, lineCounter: Int): Unit = {
+                            recordIdsOfCurrentTable: Set[String], record: Record, lineCounter: Int): Unit = {
     if (Objects.isNull(currentTable)) {
       throw new ParseException("New record was not declared (line "
         + lineCounter + ")")

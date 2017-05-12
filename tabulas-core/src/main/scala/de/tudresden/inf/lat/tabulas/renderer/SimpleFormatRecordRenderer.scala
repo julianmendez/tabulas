@@ -1,20 +1,17 @@
 
 package de.tudresden.inf.lat.tabulas.renderer
 
-import java.io.OutputStreamWriter
-import java.io.Writer
-import scala.collection.mutable
+import java.io.{OutputStreamWriter, Writer}
 import java.util.Objects
 
-import scala.collection.JavaConverters.asScalaBufferConverter
-
-import de.tudresden.inf.lat.tabulas.datatype.PrimitiveTypeValue
-import de.tudresden.inf.lat.tabulas.datatype.Record
+import de.tudresden.inf.lat.tabulas.datatype.{PrimitiveTypeValue, Record}
 import de.tudresden.inf.lat.tabulas.parser.ParserConstant
 
+import scala.collection.mutable
+
 /**
- * Renderer of a table in simple format.
- */
+  * Renderer of a table in simple format.
+  */
 class SimpleFormatRecordRenderer extends RecordRenderer {
 
   private var output: Writer = new OutputStreamWriter(System.out)

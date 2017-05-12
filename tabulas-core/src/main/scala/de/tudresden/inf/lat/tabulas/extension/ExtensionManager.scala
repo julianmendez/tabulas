@@ -1,21 +1,17 @@
 package de.tudresden.inf.lat.tabulas.extension
 
-import java.io.UncheckedIOException
-import scala.collection.mutable.ArrayBuffer
-import scala.collection.mutable
-import scala.collection.mutable.Map
+import java.io.{IOException, UncheckedIOException}
 import java.util.Objects
-import scala.collection.mutable.TreeMap
-
-import scala.collection.JavaConverters.asScalaBufferConverter
 
 import de.tudresden.inf.lat.tabulas.datatype.ParseException
-import java.io.IOException
+
+import scala.collection.mutable
+import scala.collection.mutable.{ArrayBuffer, Map, TreeMap}
 
 /**
- * This models an extension that can execute other extensions.
- *
- */
+  * This models an extension that can execute other extensions.
+  *
+  */
 class ExtensionManager extends Extension {
 
   val Name: String = "ext"
@@ -28,11 +24,11 @@ class ExtensionManager extends Extension {
   val extensionMap: Map[String, Extension] = new TreeMap[String, Extension]()
 
   /**
-   * Constructs an extension manager.
-   *
-   * @param extensions
-   *            list of extensions
-   */
+    * Constructs an extension manager.
+    *
+    * @param extensions
+    * list of extensions
+    */
   def this(extensions: mutable.Buffer[Extension]) = {
     this()
     if (Objects.nonNull(extensions)) {
@@ -68,7 +64,7 @@ class ExtensionManager extends Extension {
         try {
           return optExtension.get.process(newArguments)
         } catch {
-          case e @ (_: ParseException | _: UncheckedIOException | _: IOException) => {
+          case e@(_: ParseException | _: UncheckedIOException | _: IOException) => {
             throw new ExtensionException(e.toString(), e)
           }
         }

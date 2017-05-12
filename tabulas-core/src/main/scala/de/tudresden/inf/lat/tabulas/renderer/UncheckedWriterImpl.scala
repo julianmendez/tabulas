@@ -1,26 +1,24 @@
 package de.tudresden.inf.lat.tabulas.renderer
 
-import java.io.IOException
-import java.io.UncheckedIOException
-import java.io.Writer
+import java.io.{IOException, UncheckedIOException, Writer}
 import java.util.Objects
 
 /**
- * This is the default implementation of {@link UncheckedWriter}.
- *
- * @author Julian Mendez
- *
- */
+  * This is the default implementation of {@link UncheckedWriter}.
+  *
+  * @author Julian Mendez
+  *
+  */
 class UncheckedWriterImpl extends UncheckedWriter {
 
   var writer: Writer = _
 
   /**
-   * Constructs a new unchecked writer.
-   *
-   * @param writer
-   *            writer
-   */
+    * Constructs a new unchecked writer.
+    *
+    * @param writer
+    * writer
+    */
   def this(writer: Writer) = {
     this()
     Objects.requireNonNull(writer)

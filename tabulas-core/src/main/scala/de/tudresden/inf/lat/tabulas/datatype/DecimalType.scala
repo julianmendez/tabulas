@@ -4,9 +4,9 @@ package de.tudresden.inf.lat.tabulas.datatype
 import java.util.Objects
 
 /**
- * This models the primitive data type Decimal.
- *
- */
+  * This models the primitive data type Decimal.
+  *
+  */
 class DecimalType extends PrimitiveType {
 
   val TypeName: String = "Decimal"

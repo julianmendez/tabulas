@@ -1,16 +1,15 @@
 
 package de.tudresden.inf.lat.tabulas.datatype
 
-import scala.collection.mutable.ArrayBuffer
-import scala.collection.mutable
 import java.util.Objects
 
-import scala.collection.JavaConverters.asScalaBufferConverter
+import scala.collection.mutable
+import scala.collection.mutable.ArrayBuffer
 
 /**
- * This models a list of elements with a parameterized type.
- *
- */
+  * This models a list of elements with a parameterized type.
+  *
+  */
 class ParameterizedListValue extends ArrayBuffer[PrimitiveTypeValue] with PrimitiveTypeValue {
 
   val serialVersionUID: Long = -8983139857000842808L
@@ -20,11 +19,11 @@ class ParameterizedListValue extends ArrayBuffer[PrimitiveTypeValue] with Primit
   var parameter: PrimitiveType = _
 
   /**
-   * Constructs a new parameterized list value.
-   *
-   * @param parameter
-   *            primitive type
-   */
+    * Constructs a new parameterized list value.
+    *
+    * @param parameter
+    * primitive type
+    */
   def this(parameter: PrimitiveType) = {
     this()
     Objects.requireNonNull(parameter)
@@ -32,12 +31,12 @@ class ParameterizedListValue extends ArrayBuffer[PrimitiveTypeValue] with Primit
   }
 
   /**
-   * Constructs a new parameterized list value using another parameterized
-   * list value.
-   *
-   * @param other
-   *            parameterized list value
-   */
+    * Constructs a new parameterized list value using another parameterized
+    * list value.
+    *
+    * @param other
+    * parameterized list value
+    */
   def this(other: ParameterizedListValue) = {
     this()
     Objects.requireNonNull(other)

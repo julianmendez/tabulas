@@ -1,16 +1,16 @@
 
 package de.tudresden.inf.lat.tabulas.datatype
 
-import java.net.URI
-import java.net.URISyntaxException
-import scala.collection.mutable.ArrayBuffer
-import scala.collection.mutable
+import java.net.{URI, URISyntaxException}
 import java.util.Objects
 
+import scala.collection.mutable
+import scala.collection.mutable.ArrayBuffer
+
 /**
- * This models a URI.
- *
- */
+  * This models a URI.
+  *
+  */
 class URIValue extends PrimitiveTypeValue {
 
   val SpecialSymbol: String = "#"
@@ -18,11 +18,11 @@ class URIValue extends PrimitiveTypeValue {
   private var uri: URI = _
 
   /**
-   * Constructs a new URI value using a string.
-   *
-   * @param uriStr
-   *            URI
-   */
+    * Constructs a new URI value using a string.
+    *
+    * @param uriStr
+    * URI
+    */
   def this(uriStr: String) = {
     this()
     Objects.requireNonNull(uriStr)
@@ -30,11 +30,11 @@ class URIValue extends PrimitiveTypeValue {
   }
 
   /**
-   * Constructs a new URI value using a URI.
-   *
-   * @param uri
-   *            URI
-   */
+    * Constructs a new URI value using a URI.
+    *
+    * @param uri
+    * URI
+    */
   def this(uri: URI) = {
     this()
     Objects.requireNonNull(uri)
@@ -42,11 +42,11 @@ class URIValue extends PrimitiveTypeValue {
   }
 
   /**
-   * Constructs a new URI value using another URI value.
-   *
-   * @param other
-   *            URI value
-   */
+    * Constructs a new URI value using another URI value.
+    *
+    * @param other
+    * URI value
+    */
   def this(other: URIValue) {
     this()
     this.uri = other.getUri()

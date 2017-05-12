@@ -2,8 +2,8 @@
 package de.tudresden.inf.lat.tabulas.parser
 
 /**
- * Parser constants.
- */
+  * Parser constants.
+  */
 object ParserConstant {
 
   val CommentSymbol: String = "#"

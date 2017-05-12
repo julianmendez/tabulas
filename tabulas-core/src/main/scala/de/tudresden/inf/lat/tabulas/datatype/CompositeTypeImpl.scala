@@ -1,29 +1,26 @@
 
 package de.tudresden.inf.lat.tabulas.datatype
 
-import scala.collection.mutable.ArrayBuffer
-import scala.collection.mutable
-import scala.collection.mutable.Map
 import java.util.Objects
-import scala.collection.mutable.TreeMap
 
-import scala.collection.JavaConverters.asScalaBufferConverter
+import scala.collection.mutable
+import scala.collection.mutable.{ArrayBuffer, Map, TreeMap}
 
 /**
- * Default implementation of a composite type.
- *
- */
+  * Default implementation of a composite type.
+  *
+  */
 class CompositeTypeImpl extends CompositeType {
 
   private val fields: mutable.Buffer[String] = new ArrayBuffer[String]
   private val fieldType: Map[String, String] = new TreeMap[String, String]
 
   /**
-   * Constructs a new composite type using another one.
-   *
-   * @param otherType
-   *            other type
-   */
+    * Constructs a new composite type using another one.
+    *
+    * @param otherType
+    * other type
+    */
   def this(otherType: CompositeType) = {
     this()
     Objects.requireNonNull(otherType)
@@ -45,13 +42,13 @@ class CompositeTypeImpl extends CompositeType {
   }
 
   /**
-   * Declares a field.
-   *
-   * @param field
-   *            field name
-   * @param typeStr
-   *            type of the field
-   */
+    * Declares a field.
+    *
+    * @param field
+    * field name
+    * @param typeStr
+    * type of the field
+    */
   def declareField(field: String, typeStr: String): Unit = {
     if (this.fields.contains(field)) {
       throw new ParseException("Field '" + field + "' has been already defined.")

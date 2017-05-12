@@ -1,20 +1,18 @@
 package de.tudresden.inf.lat.tabulas.extension
 
-import java.io.BufferedWriter
-import java.io.FileReader
-import java.io.FileWriter
-import java.io.IOException
-import scala.collection.mutable
+import java.io.{BufferedWriter, FileReader, FileWriter, IOException}
 import java.util.Objects
 
 import de.tudresden.inf.lat.tabulas.parser.SimpleFormatParser
 import de.tudresden.inf.lat.tabulas.renderer.SimpleFormatRenderer
 import de.tudresden.inf.lat.tabulas.table.TableMap
 
+import scala.collection.mutable
+
 /**
- * Normalization extension. It reads and writes using the same file.
- *
- */
+  * Normalization extension. It reads and writes using the same file.
+  *
+  */
 class NormalizationExtension extends Extension {
 
   val Name: String = "normalize"

@@ -4,9 +4,9 @@ package de.tudresden.inf.lat.tabulas.datatype
 import java.util.Objects
 
 /**
- * This models the primitive data type Integer.
- *
- */
+  * This models the primitive data type Integer.
+  *
+  */
 class IntegerType extends PrimitiveType {
 
   val TypeName: String = "Integer"

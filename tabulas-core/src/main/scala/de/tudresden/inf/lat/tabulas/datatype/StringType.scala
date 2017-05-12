@@ -4,9 +4,9 @@ package de.tudresden.inf.lat.tabulas.datatype
 import java.util.Objects
 
 /**
- * This models the primitive data type String.
- *
- */
+  * This models the primitive data type String.
+  *
+  */
 class StringType extends PrimitiveType {
 
   val TypeName: String = "String"

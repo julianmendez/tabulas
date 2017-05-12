@@ -1,20 +1,17 @@
 
 package de.tudresden.inf.lat.tabulas.renderer
 
-import java.io.OutputStreamWriter
-import java.io.Writer
-import scala.collection.mutable
-
-import scala.collection.JavaConverters.asScalaBufferConverter
+import java.io.{OutputStreamWriter, Writer}
 
 import de.tudresden.inf.lat.tabulas.datatype.Record
 import de.tudresden.inf.lat.tabulas.parser.ParserConstant
-import de.tudresden.inf.lat.tabulas.table.Table
-import de.tudresden.inf.lat.tabulas.table.TableMap
+import de.tudresden.inf.lat.tabulas.table.{Table, TableMap}
+
+import scala.collection.mutable
 
 /**
- * Renderer of a table in simple format.
- */
+  * Renderer of a table in simple format.
+  */
 class SimpleFormatRenderer extends Renderer {
 
   val Prefix: String = "" +

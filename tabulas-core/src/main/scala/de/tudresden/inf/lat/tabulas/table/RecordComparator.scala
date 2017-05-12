@@ -1,20 +1,17 @@
 
 package de.tudresden.inf.lat.tabulas.table
 
-import scala.collection.mutable.ArrayBuffer
-import java.util.Comparator
-import scala.collection.mutable
-import java.util.Objects
-import scala.collection.mutable.Set
-import scala.collection.mutable.TreeSet
+import java.util.{Comparator, Objects}
 
-import de.tudresden.inf.lat.tabulas.datatype.PrimitiveTypeValue
-import de.tudresden.inf.lat.tabulas.datatype.Record
+import de.tudresden.inf.lat.tabulas.datatype.{PrimitiveTypeValue, Record}
+
+import scala.collection.mutable
+import scala.collection.mutable.{ArrayBuffer, Set, TreeSet}
 
 /**
- * Comparator for records.
- *
- */
+  * Comparator for records.
+  *
+  */
 class RecordComparator extends Comparator[Record] {
 
   private val sortingOrder: mutable.Buffer[String] = new ArrayBuffer[String]
@@ -41,9 +38,15 @@ class RecordComparator extends Comparator[Record] {
 
   override def compare(record0: Record, record1: Record): Int = {
     if (Objects.isNull(record0)) {
-      if (Objects.isNull(record1)) { return 0 } else { return -1 }
+      if (Objects.isNull(record1)) {
+        return 0
+      } else {
+        return -1
+      }
     } else {
-      if (Objects.isNull(record1)) { return 1 } else {
+      if (Objects.isNull(record1)) {
+        return 1
+      } else {
         var ret: Int = 0
         val it: Iterator[String] = this.sortingOrder.iterator
         while (it.hasNext && (ret == 0)) {
@@ -60,9 +63,17 @@ class RecordComparator extends Comparator[Record] {
       return compareValues(optValue1, optValue0, false)
     } else {
       if (optValue0.isDefined) {
-        if (optValue1.isDefined) { return optValue0.get.compareTo(optValue1.get) } else { return 1 }
+        if (optValue1.isDefined) {
+          return optValue0.get.compareTo(optValue1.get)
+        } else {
+          return 1
+        }
       } else {
-        if (optValue1.isDefined) { return -1 } else { return 0 }
+        if (optValue1.isDefined) {
+          return -1
+        } else {
+          return 0
+        }
       }
     }
   }

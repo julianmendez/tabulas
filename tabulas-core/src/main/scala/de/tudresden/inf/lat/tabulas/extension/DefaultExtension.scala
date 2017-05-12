@@ -1,19 +1,18 @@
 package de.tudresden.inf.lat.tabulas.extension
 
-import java.io.BufferedWriter
-import java.io.FileReader
-import java.io.FileWriter
-import java.io.IOException
-import scala.collection.mutable
-import de.tudresden.inf.lat.tabulas.table.TableMap
-import de.tudresden.inf.lat.tabulas.parser.SimpleFormatParser
-import de.tudresden.inf.lat.tabulas.renderer.SimpleFormatRenderer
+import java.io.{BufferedWriter, FileReader, FileWriter, IOException}
 import java.util.Objects
 
+import de.tudresden.inf.lat.tabulas.parser.SimpleFormatParser
+import de.tudresden.inf.lat.tabulas.renderer.SimpleFormatRenderer
+import de.tudresden.inf.lat.tabulas.table.TableMap
+
+import scala.collection.mutable
+
 /**
- * Default extension. It reads and writes using the default format.
- *
- */
+  * Default extension. It reads and writes using the default format.
+  *
+  */
 class DefaultExtension extends Extension {
 
   val Name: String = "simple"

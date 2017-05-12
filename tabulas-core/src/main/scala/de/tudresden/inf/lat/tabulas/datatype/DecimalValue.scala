@@ -2,27 +2,28 @@
 package de.tudresden.inf.lat.tabulas.datatype
 
 import java.math.BigDecimal
-import scala.collection.mutable.ArrayBuffer
-import scala.collection.mutable
 import java.util.Objects
 
+import scala.collection.mutable
+import scala.collection.mutable.ArrayBuffer
+
 /**
- * This models a decimal value.
- *
- */
+  * This models a decimal value.
+  *
+  */
 class DecimalValue extends PrimitiveTypeValue {
 
   private var number: BigDecimal = BigDecimal.ZERO
 
   /**
-   * Constructs a new decimal value using a string.
-   *
-   * @param str
-   *            string
-   * @throws ParseException
-   *              <code>str</code> is not a valid representation of a decimal
-   *              value.
-   */
+    * Constructs a new decimal value using a string.
+    *
+    * @param str
+    * string
+    * @throws ParseException
+    * <code>str</code> is not a valid representation of a decimal
+    * value.
+    */
   def this(str: String) = {
     this()
     Objects.requireNonNull(str)
@@ -36,11 +37,11 @@ class DecimalValue extends PrimitiveTypeValue {
   }
 
   /**
-   * Constructs a new decimal value using another decimal value.
-   *
-   * @param other
-   *            a decimal value
-   */
+    * Constructs a new decimal value using another decimal value.
+    *
+    * @param other
+    * a decimal value
+    */
   def this(other: DecimalValue) = {
     this()
     this.number = other.number
