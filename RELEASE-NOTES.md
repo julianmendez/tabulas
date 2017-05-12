@@ -21,7 +21,8 @@
   * Decimal
   * List_Decimal
   * Empty
-* executes `normalize` extension, if no extension is given 
+* executes `normalize` extension, if no extension is given
+* uses the Scala collections and changes its traits accordingly
 * build command:
 
 ```
