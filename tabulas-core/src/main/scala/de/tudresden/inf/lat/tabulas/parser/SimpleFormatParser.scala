@@ -232,10 +232,10 @@ class SimpleFormatParser extends Parser {
     val mapOfRecordIdsOfTables: Map[String, Set[String]] = new TreeMap[String, Set[String]]()
 
     var line: String = ""
-    var currentTable: TableImpl = null
-    var recordIdsOfCurrentTable: Set[String] = null
-    var currentId: String = null
-    var record: Record = null
+    var currentTable: TableImpl = new TableImpl()
+    var recordIdsOfCurrentTable: Set[String] = Set.empty
+    var optCurrentId: Option[String] = Option.empty
+    var record: Record = new RecordImpl()
     var lineCounter: Int = 0
 
     while (Objects.nonNull(line)) {
@@ -265,23 +265,22 @@ class SimpleFormatParser extends Parser {
         } else if (isNewRecord(line)) {
           record = new RecordImpl()
           currentTable.add(record)
-          currentId = null
+          optCurrentId = Option.empty
 
         } else {
           parseProperty(line, currentTable, recordIdsOfCurrentTable, record, lineCounter)
           if (isIdProperty(line)) {
             var successful: Boolean = false
-            if (Objects.isNull(currentId)) {
-              val optCurrentId: Option[String] = getIdProperty(line)
+            if (optCurrentId.isEmpty) {
+              optCurrentId = getIdProperty(line)
               if (optCurrentId.isDefined) {
-                currentId = optCurrentId.get
-                successful = recordIdsOfCurrentTable.add(currentId)
+                successful = recordIdsOfCurrentTable.add(optCurrentId.get)
               }
             }
             if (!successful) {
               throw new ParseException(
                 "Identifier has been already defined ('"
-                  + currentId + "') (line "
+                  + optCurrentId.get + "') (line "
                   + lineCounter + ")")
             }
           }
