@@ -6,7 +6,8 @@ lazy val commonSettings = Seq(
   scalaVersion := "2.12.1",
   libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.3" % "test",
   libraryDependencies += "junit" % "junit" % "4.12" % "test",
-  libraryDependencies += "com.novocode" % "junit-interface" % "0.11" % "test"
+  libraryDependencies += "com.novocode" % "junit-interface" % "0.11" % "test",
+  publishTo := Some(Resolver.file("file",  new File(Path.userHome.absolutePath+"/.m2/repository")))
 )
 
 lazy val core = project
