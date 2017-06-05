@@ -109,9 +109,6 @@ class SimpleFormatParser extends Parser {
       } else {
         val key: String = token.substring(0, pos)
         val value: String = token.substring((pos + ParserConstant.PrefixSign.length()), token.length())
-        if (key.isEmpty) {
-          throw new ParseException("Empty prefixes are not supported. (line " + lineCounter + ")")
-        }
         ret.put(asUri(key, lineCounter), asUri(value, lineCounter))
       }
     }

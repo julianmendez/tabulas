@@ -39,7 +39,11 @@ class SimpleFormatRecordRenderer extends RecordRenderer {
     prefixMap.keySet.foreach(key => {
       val expansion = prefixMap.get(key).get.toASCIIString()
       if (!found && uriStr.startsWith(expansion)) {
-        ret = ParserConstant.PrefixAmpersand + key.toASCIIString() + ParserConstant.PrefixSemicolon + uriStr.substring(expansion.length)
+        val keyStr = key.toASCIIString()
+        if (!keyStr.isEmpty) {
+          ret = ParserConstant.PrefixAmpersand + keyStr + ParserConstant.PrefixSemicolon
+        }
+        ret += uriStr.substring(expansion.length)
         found = true
       }
     })
