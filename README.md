@@ -61,6 +61,18 @@ def = \
 where each *FIELD_NAME* can be any identifier,
 and each *FIELD_TYPE* can be any of the primitive types.
 
+The URIs can be shortened by using prefixes. The prefixes are URIs themselves without colons, because the colon (`:`) is used to define the association. 
+
+```properties
+prefix = \
+ PREFIX_0:URI_0 \
+ PREFIX_1:URI_1 \
+ ...
+ PREFIX_n:URI_n
+```
+
+The prefixes are sorted by alphabetical order. They are applied using that order during parsing and serialization. Although the serialization shortens every possible URI using the prefixes, it is possible to expand all of them by adding the empty prefix with an empty value, i.e. a colon (`:`) alone. This could be useful to rename the prefixes.
+
 The order in which the instances are shown is defined as follows:
 
 ```properties
@@ -131,6 +143,10 @@ def = \
  documents:List_URI
 
 
+prefix = \
+ arxiv:https://arxiv.org/
+
+
 order = \
  id
 
@@ -153,11 +169,11 @@ id = arXiv:1412.3313
 title = Infinitary stability theory
 authors = \
  Sebastien_Vasey
-web = https://arxiv.org/abs/1412.3313
+web = &arxiv;abs/1412.3313
 documents = \
- https://arxiv.org/pdf/1412.3313#pdf \
- https://arxiv.org/ps/1412.3313#ps \
- https://arxiv.org/format/1412.3313#other
+ &arxiv;pdf/1412.3313#pdf \
+ &arxiv;ps/1412.3313#ps \
+ &arxiv;format/1412.3313#other
 
 
 ```
