@@ -24,11 +24,11 @@ class SimpleFormatParser extends Parser {
     private val lineCounter: Int = lineCounter0
 
     def getLine(): String = {
-      this.line
+      return this.line
     }
 
     def getLineCounter(): Int = {
-      this.lineCounter
+      return this.lineCounter
     }
 
   }
@@ -40,32 +40,32 @@ class SimpleFormatParser extends Parser {
 
   def getKey(line: String): Option[String] = {
     if (Objects.isNull(line)) {
-      Option.empty
+      return Option.empty
     } else {
       val pos: Int = line.indexOf(ParserConstant.EqualsSign)
       if (pos == -1) {
-        Option.apply(line)
+        return Option.apply(line)
       } else {
-        Option.apply(line.substring(0, pos).trim())
+        return Option.apply(line.substring(0, pos).trim())
       }
     }
   }
 
   def getValue(line: String): Option[String] = {
     if (Objects.isNull(line)) {
-      Option.empty
+      return Option.empty
     } else {
       val pos: Int = line.indexOf(ParserConstant.EqualsSign)
       if (pos == -1) {
-        Option.apply("")
+        return Option.apply("")
       } else {
-        Option.apply(line.substring(pos + ParserConstant.EqualsSign.length(), line.length()).trim())
+        return Option.apply(line.substring(pos + ParserConstant.EqualsSign.length(), line.length()).trim())
       }
     }
   }
 
   def parseTypes(line: String, lineCounter: Int): CompositeTypeImpl = {
-    val ret = new CompositeTypeImpl()
+    val ret: CompositeTypeImpl = new CompositeTypeImpl()
     val stok: StringTokenizer = new StringTokenizer(getValue(line).get)
     val factory: PrimitiveTypeFactory = new PrimitiveTypeFactory()
     while (stok.hasMoreTokens()) {
@@ -83,7 +83,7 @@ class SimpleFormatParser extends Parser {
         }
       }
     }
-    ret
+    return ret
   }
 
   private def setSortingOrder(line: String, table: TableImpl): Unit = {
@@ -107,29 +107,29 @@ class SimpleFormatParser extends Parser {
   }
 
   def isTypeSelection(line: String): Boolean = {
-    Objects.nonNull(line) && line.trim().startsWith(ParserConstant.TypeSelectionToken)
+    return Objects.nonNull(line) && line.trim().startsWith(ParserConstant.TypeSelectionToken)
   }
 
   def isTypeDefinition(line: String): Boolean = {
-    Objects.nonNull(line) && line.trim().startsWith(ParserConstant.TypeDefinitionToken)
+    return Objects.nonNull(line) && line.trim().startsWith(ParserConstant.TypeDefinitionToken)
   }
 
   def isSortingOrderDeclaration(line: String): Boolean = {
-    Objects.nonNull(line) && line.trim().startsWith(ParserConstant.SortingOrderDeclarationToken)
+    return Objects.nonNull(line) && line.trim().startsWith(ParserConstant.SortingOrderDeclarationToken)
   }
 
   def isNewRecord(line: String): Boolean = {
-    Objects.nonNull(line) && line.trim().startsWith(ParserConstant.NewRecordToken)
+    return Objects.nonNull(line) && line.trim().startsWith(ParserConstant.NewRecordToken)
   }
 
   def getTypedValue(key: String, value: String, type0: CompositeType, lineCounter: Int): PrimitiveTypeValue = {
     if (Objects.isNull(key)) {
-      new StringValue()
+      return new StringValue()
     } else {
       try {
         var optTypeStr: Option[String] = type0.getFieldType(key)
         if (optTypeStr.isDefined) {
-          (new PrimitiveTypeFactory()).newInstance(optTypeStr.get, value)
+          return (new PrimitiveTypeFactory()).newInstance(optTypeStr.get, value)
 
         } else {
           throw new ParseException("Key '" + key + "' has an undefined type.")
@@ -144,15 +144,15 @@ class SimpleFormatParser extends Parser {
   }
 
   def isMultiLine(line: String): Boolean = {
-    line.trim().endsWith(ParserConstant.LineContinuationSymbol)
+    return line.trim().endsWith(ParserConstant.LineContinuationSymbol)
   }
 
   def getCleanLine(line: String): String = {
     val trimmedLine: String = line.trim()
     if (isMultiLine(line)) {
-      trimmedLine.substring(0, trimmedLine.length() - ParserConstant.LineContinuationSymbol.length()).trim()
+      return trimmedLine.substring(0, trimmedLine.length() - ParserConstant.LineContinuationSymbol.length()).trim()
     } else {
-      trimmedLine
+      return trimmedLine
     }
   }
 
@@ -160,11 +160,11 @@ class SimpleFormatParser extends Parser {
     var lineCounter: Int = lineCounter0
     var line: String = input.readLine()
     if (Objects.isNull(line)) {
-      new Pair(lineCounter, null)
+      return new Pair(lineCounter, null)
     } else {
       lineCounter += 1
       if (line.startsWith(ParserConstant.CommentSymbol)) {
-        new Pair(lineCounter, "")
+        return new Pair(lineCounter, "")
       } else {
         val sb: StringBuilder = new StringBuilder()
         while (isMultiLine(line)) {
@@ -177,7 +177,7 @@ class SimpleFormatParser extends Parser {
         }
         sb.append(getCleanLine(line))
 
-        new Pair(lineCounter, sb.toString())
+        return new Pair(lineCounter, sb.toString())
       }
     }
   }
@@ -185,9 +185,9 @@ class SimpleFormatParser extends Parser {
   private def isIdProperty(line: String): Boolean = {
     val optKey: Option[String] = getKey(line)
     if (optKey.isDefined) {
-      optKey.get.equals(ParserConstant.IdKeyword)
+      return optKey.get.equals(ParserConstant.IdKeyword)
     } else {
-      false
+      return false
     }
   }
 
@@ -195,9 +195,9 @@ class SimpleFormatParser extends Parser {
     val optKey: Option[String] = getKey(line)
     val optValueStr: Option[String] = getValue(line)
     if (optKey.isDefined && optValueStr.isDefined && optKey.get.equals(ParserConstant.IdKeyword)) {
-      Option.apply(optValueStr.get)
+      return Option.apply(optValueStr.get)
     } else {
-      Option.empty
+      return Option.empty
     }
   }
 
@@ -292,12 +292,12 @@ class SimpleFormatParser extends Parser {
 
     val ret: TableMapImpl = new TableMapImpl()
     mapOfTables.keySet.foreach(key => ret.put(key, mapOfTables.get(key).get))
-    ret
+    return ret
   }
 
   override def parse(): TableMap = {
     try {
-      parseMap(new BufferedReader(this.input))
+      return parseMap(new BufferedReader(this.input))
 
     } catch {
       case e: IOException => {
