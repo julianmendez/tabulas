@@ -22,6 +22,7 @@
   * List_Decimal
   * Empty
 * executes `normalize` extension, if no extension is given
+* includes a `prefix` map to shorten URIs
 * uses the Scala collections and changes its traits accordingly
 * build command:
 
