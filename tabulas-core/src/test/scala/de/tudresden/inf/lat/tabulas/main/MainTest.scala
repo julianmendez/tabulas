@@ -110,6 +110,9 @@ class MainTest {
     // Update type of table
     newTable.setType(newType)
 
+    // Update the map of URI prefixes
+    newTable.setPrefixMap(table.getPrefixMap())
+
     // Compute the number of authors for each record
     table.getRecords().foreach(record => record.set(FieldNameNumberOfAuthors, computeFieldValue(record)))
 

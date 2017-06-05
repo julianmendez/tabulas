@@ -2,6 +2,7 @@
 package de.tudresden.inf.lat.tabulas.parser
 
 import java.io.{BufferedReader, IOException, InputStreamReader, Reader}
+import java.net.{URI, URISyntaxException}
 import java.util.{Objects, StringTokenizer}
 
 import de.tudresden.inf.lat.tabulas.datatype._
@@ -86,6 +87,37 @@ class SimpleFormatParser extends Parser {
     return ret
   }
 
+  private def asUri(uriStr: String, lineCounter: Int): URI = {
+    try {
+      val uri: URI = new URI(uriStr)
+      return uri
+    } catch {
+      case e: URISyntaxException => {
+        throw new ParseException("String '" + uriStr + "' is not a valid URI. (line " + lineCounter + ")")
+      }
+    }
+  }
+
+  def parsePrefixMap(line: String, lineCounter: Int): Map[URI, URI] = {
+    val ret: Map[URI, URI] = new TreeMap[URI, URI]
+    val stok: StringTokenizer = new StringTokenizer(getValue(line).get)
+    while (stok.hasMoreTokens()) {
+      val token: String = stok.nextToken()
+      val pos: Int = token.indexOf(ParserConstant.PrefixSign)
+      if (pos == -1) {
+        throw new ParseException("Prefix '" + line + "' does not have a definition. (line " + lineCounter + ")")
+      } else {
+        val key: String = token.substring(0, pos)
+        val value: String = token.substring((pos + ParserConstant.PrefixSign.length()), token.length())
+        if (key.isEmpty) {
+          throw new ParseException("Empty prefixes are not supported. (line " + lineCounter + ")")
+        }
+        ret.put(asUri(key, lineCounter), asUri(value, lineCounter))
+      }
+    }
+    return ret
+  }
+
   private def setSortingOrder(line: String, table: TableImpl): Unit = {
     val fieldsWithReverseOrder: Set[String] = new TreeSet[String]()
     val list: mutable.Buffer[String] = new ArrayBuffer[String]
@@ -114,6 +146,10 @@ class SimpleFormatParser extends Parser {
     return Objects.nonNull(line) && line.trim().startsWith(ParserConstant.TypeDefinitionToken)
   }
 
+  def isPrefixMapDefinition(line: String): Boolean = {
+    return Objects.nonNull(line) && line.trim().startsWith(ParserConstant.PrefixMapToken)
+  }
+
   def isSortingOrderDeclaration(line: String): Boolean = {
     return Objects.nonNull(line) && line.trim().startsWith(ParserConstant.SortingOrderDeclarationToken)
   }
@@ -122,14 +158,46 @@ class SimpleFormatParser extends Parser {
     return Objects.nonNull(line) && line.trim().startsWith(ParserConstant.NewRecordToken)
   }
 
-  def getTypedValue(key: String, value: String, type0: CompositeType, lineCounter: Int): PrimitiveTypeValue = {
+  def expandUri(value: URIValue, prefixMap: Map[URI, URI], lineCounter: Int): URIValue = {
+    var ret: URIValue = value
+    val valueStr = value.render()
+    if (valueStr.startsWith(ParserConstant.PrefixAmpersand)) {
+      val pos = valueStr.indexOf(ParserConstant.PrefixSemicolon, ParserConstant.PrefixAmpersand.length())
+      if (pos != -1) {
+        val prefix: URI = asUri(valueStr.substring(ParserConstant.PrefixAmpersand.length(), pos), lineCounter)
+        val optExpansion: Option[URI] = prefixMap.get(prefix)
+        if (optExpansion.isDefined) {
+          ret = new URIValue(optExpansion.get + valueStr.substring(pos + ParserConstant.PrefixSemicolon.length))
+        }
+      }
+    }
+    return ret
+  }
+
+  def getTypedValue(key: String, value: String, type0: CompositeType, prefixMap: Map[URI, URI], lineCounter: Int): PrimitiveTypeValue = {
     if (Objects.isNull(key)) {
       return new StringValue()
     } else {
       try {
         var optTypeStr: Option[String] = type0.getFieldType(key)
         if (optTypeStr.isDefined) {
-          return (new PrimitiveTypeFactory()).newInstance(optTypeStr.get, value)
+          val typeStr: String = optTypeStr.get
+          var ret: PrimitiveTypeValue = (new PrimitiveTypeFactory()).newInstance(typeStr, value)
+          if (ret.getType().equals(new URIType())) {
+            val uri: URIValue = ret.asInstanceOf[URIValue]
+            ret = expandUri(uri, prefixMap, lineCounter)
+          } else if (ret.isInstanceOf[ParameterizedListValue]) {
+            val list: ParameterizedListValue = ret.asInstanceOf[ParameterizedListValue]
+            if (list.getParameter().equals(new URIType())) {
+              val newList = new ParameterizedListValue(new URIType())
+              list.foreach(elem => {
+                val uri: URIValue = elem.asInstanceOf[URIValue]
+                newList += expandUri(uri, prefixMap, lineCounter)
+              })
+              ret = newList
+            }
+          }
+          return ret
 
         } else {
           throw new ParseException("Key '" + key + "' has an undefined type.")
@@ -213,7 +281,7 @@ class SimpleFormatParser extends Parser {
     if (optKey.isDefined && optValueStr.isDefined) {
       val key: String = optKey.get
       val valueStr: String = optValueStr.get
-      val value: PrimitiveTypeValue = getTypedValue(key, valueStr, currentTable.getType(), lineCounter)
+      val value: PrimitiveTypeValue = getTypedValue(key, valueStr, currentTable.getType(), currentTable.getPrefixMap(), lineCounter)
       if (key.equals(ParserConstant.IdKeyword)) {
         if (recordIdsOfCurrentTable.contains(valueStr)) {
           throw new ParseException("Identifier '"
@@ -258,6 +326,9 @@ class SimpleFormatParser extends Parser {
 
         } else if (isTypeDefinition(line)) {
           currentTable.setType(parseTypes(line, lineCounter))
+
+        } else if (isPrefixMapDefinition(line)) {
+          currentTable.setPrefixMap(parsePrefixMap(line, lineCounter))
 
         } else if (isSortingOrderDeclaration(line)) {
           setSortingOrder(line, currentTable)

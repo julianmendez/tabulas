@@ -1,16 +1,34 @@
 
 package de.tudresden.inf.lat.tabulas.table
 
+import java.net.URI
+
 import de.tudresden.inf.lat.tabulas.datatype.CompositeTypeValue
 
 import scala.collection.mutable
-import scala.collection.mutable.Set
+import scala.collection.mutable.{Map, Set}
+
 
 /**
-  * This models a sorted table.
+  * This models a sorted table with a map of URI prefixes.
   *
   */
 trait Table extends CompositeTypeValue {
+
+  /**
+    * Returns the map of URI prefixes.
+    *
+    * @return the map of URI prefixes
+    */
+  def getPrefixMap(): Map[URI, URI]
+
+  /**
+    * Sets the map of URI prefixes
+    *
+    * @param prefixMap
+    * map of URI prefixes
+    */
+  def setPrefixMap(prefixMap: Map[URI, URI]): Unit
 
   /**
     * Returns the sorting order for the fields.

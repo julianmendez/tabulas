@@ -25,7 +25,7 @@ class SimpleFormatRenderer extends Renderer {
   }
 
   def renderAllRecords(output: UncheckedWriter, table: Table): Unit = {
-    val recordRenderer: SimpleFormatRecordRenderer = new SimpleFormatRecordRenderer(output)
+    val recordRenderer: SimpleFormatRecordRenderer = new SimpleFormatRecordRenderer(output, table.getPrefixMap())
     output.write(ParserConstant.NewLine)
     val list: mutable.Buffer[Record] = table.getRecords()
     list.foreach(record => {
@@ -60,6 +60,22 @@ class SimpleFormatRenderer extends Renderer {
     output.write(ParserConstant.NewLine)
   }
 
+  def renderPrefixMap(output: UncheckedWriter, table: Table): Unit = {
+    output.write(ParserConstant.NewLine + ParserConstant.NewLine)
+    output.write(ParserConstant.PrefixMapToken + ParserConstant.Space)
+    output.write(ParserConstant.EqualsSign)
+
+    table.getPrefixMap().keySet.foreach(prefix => {
+      output.write(ParserConstant.Space + ParserConstant.LineContinuationSymbol)
+      output.write(ParserConstant.NewLine)
+      output.write(ParserConstant.Space)
+      output.write(prefix.toASCIIString())
+      output.write(ParserConstant.TypeSign)
+      output.write(table.getPrefixMap().get(prefix).get.toASCIIString())
+    })
+    output.write(ParserConstant.NewLine)
+  }
+
   def renderOrder(output: UncheckedWriter, table: Table): Unit = {
     output.write(ParserConstant.NewLine + ParserConstant.NewLine)
     output.write(ParserConstant.SortingOrderDeclarationToken + ParserConstant.Space)
@@ -83,6 +99,7 @@ class SimpleFormatRenderer extends Renderer {
       val table: Table = tableMap.getTable(tableName)
       renderTypeSelection(output, tableName, table)
       renderTypeDefinition(output, table)
+      renderPrefixMap(output, table)
       renderOrder(output, table)
       renderAllRecords(output, table)
     })

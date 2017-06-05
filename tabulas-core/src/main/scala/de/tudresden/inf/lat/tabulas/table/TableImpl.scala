@@ -1,12 +1,13 @@
 
 package de.tudresden.inf.lat.tabulas.table
 
+import java.net.URI
 import java.util.Objects
 
 import de.tudresden.inf.lat.tabulas.datatype.{CompositeType, CompositeTypeImpl, Record}
 
 import scala.collection.mutable
-import scala.collection.mutable.{ArrayBuffer, Set, TreeSet}
+import scala.collection.mutable.{ArrayBuffer, Map, Set, TreeMap, TreeSet}
 
 /**
   * This is the default implementation of a sorted table.
@@ -15,6 +16,7 @@ class TableImpl extends Table {
 
   private var tableType: CompositeType = new CompositeTypeImpl()
   private val list: mutable.Buffer[Record] = new ArrayBuffer[Record]
+  private var prefixMap: Map[URI, URI] = new TreeMap[URI, URI]()
   private val sortingOrder: mutable.Buffer[String] = new ArrayBuffer[String]
   private val fieldsWithReverseOrder: Set[String] = new TreeSet[String]()
 
@@ -40,6 +42,14 @@ class TableImpl extends Table {
 
   override def setType(newType: CompositeType): Unit = {
     this.tableType = newType
+  }
+
+  override def getPrefixMap(): Map[URI, URI] = {
+    return this.prefixMap
+  }
+
+  override def setPrefixMap(newPrefixMap: Map[URI, URI]): Unit = {
+    this.prefixMap = newPrefixMap
   }
 
   override def add(record: Record): Boolean = {

@@ -2,12 +2,14 @@
 package de.tudresden.inf.lat.tabulas.renderer
 
 import java.io.{OutputStreamWriter, Writer}
+import java.net.URI
 import java.util.Objects
 
-import de.tudresden.inf.lat.tabulas.datatype.{PrimitiveTypeValue, Record}
+import de.tudresden.inf.lat.tabulas.datatype._
 import de.tudresden.inf.lat.tabulas.parser.ParserConstant
 
 import scala.collection.mutable
+import scala.collection.mutable.{Map, TreeMap}
 
 /**
   * Renderer of a table in simple format.
@@ -15,17 +17,33 @@ import scala.collection.mutable
 class SimpleFormatRecordRenderer extends RecordRenderer {
 
   private var output: Writer = new OutputStreamWriter(System.out)
+  private var prefixMap: Map[URI, URI] = new TreeMap[URI, URI]
 
-  def this(output: Writer) = {
+  def this(output: Writer, prefixMap: Map[URI, URI]) = {
     this()
     Objects.requireNonNull(output)
     this.output = output
+    this.prefixMap = prefixMap
   }
 
-  def this(output: UncheckedWriter) = {
+  def this(output: UncheckedWriter, prefixMap: Map[URI, URI]) = {
     this()
     Objects.requireNonNull(output)
     this.output = output.asWriter()
+    this.prefixMap = prefixMap
+  }
+
+  def renderWithPrefix(uriStr: String): String = {
+    var ret: String = uriStr
+    var found: Boolean = false
+    prefixMap.keySet.foreach(key => {
+      val expansion = prefixMap.get(key).get.toASCIIString()
+      if (!found && uriStr.startsWith(expansion)) {
+        ret = ParserConstant.PrefixAmpersand + key.toASCIIString() + ParserConstant.PrefixSemicolon + uriStr.substring(expansion.length)
+        found = true
+      }
+    })
+    return ret
   }
 
   def writeIfNotEmpty(output: UncheckedWriter, field: String, value: PrimitiveTypeValue): Boolean = {
@@ -34,18 +52,30 @@ class SimpleFormatRecordRenderer extends RecordRenderer {
       output.write(field)
       output.write(ParserConstant.Space + ParserConstant.EqualsSign)
       if (value.getType().isList()) {
+        var hasUris: Boolean = false
+        if (value.isInstanceOf[ParameterizedListValue]) {
+          hasUris = (value.asInstanceOf[ParameterizedListValue]).getParameter().equals(new URIType())
+        }
+        value.getType()
         val list: mutable.Buffer[String] = value.renderAsList()
-        list.foreach(link => {
+        list.foreach(elem => {
           output.write(ParserConstant.Space + ParserConstant.LineContinuationSymbol)
           output.write(ParserConstant.NewLine)
           output.write(ParserConstant.Space)
-          output.write(link.toString())
+          if (hasUris) {
+            output.write(renderWithPrefix(elem))
+          } else {
+            output.write(elem.toString())
+          }
         })
 
       } else {
         output.write(ParserConstant.Space)
-        output.write(value.toString())
-
+        if (value.getType().equals(new URIType())) {
+          output.write(renderWithPrefix(value.toString()))
+        } else {
+          output.write(value.toString())
+        }
       }
       return true
     } else {
