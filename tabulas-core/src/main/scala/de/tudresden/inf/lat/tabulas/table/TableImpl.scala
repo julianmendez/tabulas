@@ -31,7 +31,7 @@ class TableImpl extends Table {
     this.list ++= other.getRecords()
     if (other.isInstanceOf[Table]) {
       val otherTable: Table = other.asInstanceOf[Table]
-      val otherMap: Map[URI, URI] = other.getPrefixMap()
+      val otherMap: Map[URI, URI] = otherTable.getPrefixMap()
       otherMap.keySet.foreach(key => this.prefixMap.put(key, otherMap.get(key).get))
       this.sortingOrder ++= otherTable.getSortingOrder()
       this.fieldsWithReverseOrder ++= otherTable.getFieldsWithReverseOrder()
@@ -98,7 +98,7 @@ class TableImpl extends Table {
   }
 
   override def hashCode(): Int = {
-    return this.tableType.hashCode() + 0x1F * (this.sortingOrder.hashCode() + 0x1F * (this.fieldsWithReverseOrder.hashCode() + 0x1F * (this.list.hashCode() + 0x1F * this.prefixMap.hashCode())))
+    return this.tableType.hashCode() + 0x1F * (this.prefixMap.hashCode() + 0x1F * (this.sortingOrder.hashCode() + 0x1F * (this.fieldsWithReverseOrder.hashCode() + 0x1F * this.list.hashCode())))
   }
 
   override def equals(obj: Any): Boolean = {
