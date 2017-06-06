@@ -16,7 +16,7 @@ class TableImpl extends Table {
 
   private var tableType: CompositeType = new CompositeTypeImpl()
   private val list: mutable.Buffer[Record] = new ArrayBuffer[Record]
-  private var prefixMap: Map[URI, URI] = new TreeMap[URI, URI]()
+  private val prefixMap: Map[URI, URI] = new TreeMap[URI, URI]()
   private val sortingOrder: mutable.Buffer[String] = new ArrayBuffer[String]
   private val fieldsWithReverseOrder: Set[String] = new TreeSet[String]()
 
@@ -31,6 +31,8 @@ class TableImpl extends Table {
     this.list ++= other.getRecords()
     if (other.isInstanceOf[Table]) {
       val otherTable: Table = other.asInstanceOf[Table]
+      val otherMap: Map[URI, URI] = other.getPrefixMap()
+      otherMap.keySet.foreach(key => this.prefixMap.put(key, otherMap.get(key).get))
       this.sortingOrder ++= otherTable.getSortingOrder()
       this.fieldsWithReverseOrder ++= otherTable.getFieldsWithReverseOrder()
     }
@@ -49,7 +51,8 @@ class TableImpl extends Table {
   }
 
   override def setPrefixMap(newPrefixMap: Map[URI, URI]): Unit = {
-    this.prefixMap = newPrefixMap
+    this.prefixMap.clear()
+    newPrefixMap.keySet.foreach(key => this.prefixMap.put(key, newPrefixMap.get(key).get))
   }
 
   override def add(record: Record): Boolean = {
@@ -95,15 +98,16 @@ class TableImpl extends Table {
   }
 
   override def hashCode(): Int = {
-    return this.sortingOrder.hashCode() + 0x1F * (this.fieldsWithReverseOrder.hashCode() + 0x1F * (this.list.hashCode() + 0x1F * this.tableType.hashCode()))
+    return this.tableType.hashCode() + 0x1F * (this.sortingOrder.hashCode() + 0x1F * (this.fieldsWithReverseOrder.hashCode() + 0x1F * (this.list.hashCode() + 0x1F * this.prefixMap.hashCode())))
   }
 
   override def equals(obj: Any): Boolean = {
     if (obj.isInstanceOf[Table]) {
       val other: Table = obj.asInstanceOf[Table]
-      return getSortingOrder().equals(other.getSortingOrder()) &&
+      return getType().equals(other.getType()) &&
+        getPrefixMap().equals(other.getPrefixMap()) &&
+        getSortingOrder().equals(other.getSortingOrder()) &&
         getFieldsWithReverseOrder().equals(other.getFieldsWithReverseOrder()) &&
-        getType().equals(other.getType()) &&
         getRecords().equals(other.getRecords())
     } else {
       return false
@@ -111,7 +115,7 @@ class TableImpl extends Table {
   }
 
   override def toString(): String = {
-    return this.tableType.toString() + " " + this.sortingOrder + " " + this.fieldsWithReverseOrder.toString() + " " + this.list.toString()
+    return this.tableType.toString() + " " + this.prefixMap.toString() + " " + this.sortingOrder.toString() + " " + this.fieldsWithReverseOrder.toString() + " " + this.list.toString()
   }
 
 }
