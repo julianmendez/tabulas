@@ -2,21 +2,27 @@ package de.tudresden.inf.lat.tabulas.table
 
 import java.net.URI
 
-import scala.collection.mutable.{Map, TreeMap}
+import scala.collection.mutable
+import scala.collection.mutable.{ArrayBuffer, Map, TreeMap}
 
 /**
   * An object of this class is a map of URI prefixes.
+  * This implementation iterates on the keys keeping the order in which they were added for the first time.
   *
   */
 class PrefixMapImpl extends PrefixMap {
 
   private val prefixMap: Map[URI, URI] = new TreeMap[URI, URI]
+  private val keyList: mutable.Buffer[URI] = new ArrayBuffer[URI]
 
   override def get(key: URI): Option[URI] = {
     return this.prefixMap.get(key)
   }
 
   override def put(key: URI, value: URI): Option[URI] = {
+    if (!this.prefixMap.contains(key)) {
+      this.keyList += key
+    }
     return this.prefixMap.put(key, value)
   }
 
@@ -37,7 +43,7 @@ class PrefixMapImpl extends PrefixMap {
       val pos = uriStr.indexOf(PrefixSemicolon, PrefixAmpersand.length())
       if (pos != -1) {
         val prefix: URI = URI.create(uriStr.substring(PrefixAmpersand.length(), pos))
-        val optExpansion: Option[URI] = prefixMap.get(prefix)
+        val optExpansion: Option[URI] = this.prefixMap.get(prefix)
         if (optExpansion.isDefined) {
           ret = URI.create(optExpansion.get.toASCIIString() + uriStr.substring(pos + PrefixSemicolon.length))
         }
@@ -64,16 +70,17 @@ class PrefixMapImpl extends PrefixMap {
     return ret
   }
 
-  override def asMap(): Map[URI, URI] = {
-    return prefixMap
-  }
-
   override def getKeysAsStream(): Stream[URI] = {
-    return prefixMap.keySet.toStream
+    return this.keyList.toStream
   }
 
   override def clear(): Unit = {
-    prefixMap.clear()
+    this.prefixMap.clear()
+    this.keyList.clear()
+  }
+
+  override def size(): Int = {
+    return this.prefixMap.size
   }
 
 }
