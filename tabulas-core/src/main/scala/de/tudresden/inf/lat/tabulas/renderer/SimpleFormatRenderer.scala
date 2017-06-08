@@ -65,7 +65,7 @@ class SimpleFormatRenderer extends Renderer {
     output.write(ParserConstant.PrefixMapToken + ParserConstant.Space)
     output.write(ParserConstant.EqualsSign)
 
-    table.getPrefixMap().keySet.foreach(prefix => {
+    table.getPrefixMap().getKeysAsStream().foreach(prefix => {
       output.write(ParserConstant.Space + ParserConstant.LineContinuationSymbol)
       output.write(ParserConstant.NewLine)
       output.write(ParserConstant.Space)

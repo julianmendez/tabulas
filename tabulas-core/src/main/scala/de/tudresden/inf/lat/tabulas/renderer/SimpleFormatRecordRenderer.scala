@@ -7,9 +7,9 @@ import java.util.Objects
 
 import de.tudresden.inf.lat.tabulas.datatype._
 import de.tudresden.inf.lat.tabulas.parser.ParserConstant
+import de.tudresden.inf.lat.tabulas.table.{PrefixMap, PrefixMapImpl}
 
 import scala.collection.mutable
-import scala.collection.mutable.{Map, TreeMap}
 
 /**
   * Renderer of a table in simple format.
@@ -17,40 +17,22 @@ import scala.collection.mutable.{Map, TreeMap}
 class SimpleFormatRecordRenderer extends RecordRenderer {
 
   private var output: Writer = new OutputStreamWriter(System.out)
-  private var prefixMap: Map[URI, URI] = new TreeMap[URI, URI]
+  private var prefixMap: PrefixMap = new PrefixMapImpl()
 
-  def this(output: Writer, prefixMap: Map[URI, URI]) = {
+  def this(output: Writer, prefixMap: PrefixMap) = {
     this()
     Objects.requireNonNull(output)
     this.output = output
     this.prefixMap = prefixMap
   }
 
-  def this(output: UncheckedWriter, prefixMap: Map[URI, URI]) = {
+  def this(output: UncheckedWriter, prefixMap: PrefixMap) = {
     this()
     Objects.requireNonNull(output)
     this.output = output.asWriter()
     this.prefixMap = prefixMap
   }
 
-  def renderWithPrefix(uriStr: String): String = {
-    var ret: String = uriStr
-    var found: Boolean = false
-    prefixMap.keySet.foreach(key => {
-      val expansion = prefixMap.get(key).get.toASCIIString()
-      if (!found && uriStr.startsWith(expansion)) {
-        val keyStr = key.toASCIIString()
-        if (keyStr.isEmpty()) {
-          ret = ""
-        } else {
-          ret = ParserConstant.PrefixAmpersand + keyStr + ParserConstant.PrefixSemicolon
-        }
-        ret += uriStr.substring(expansion.length)
-        found = true
-      }
-    })
-    return ret
-  }
 
   def writeIfNotEmpty(output: UncheckedWriter, field: String, value: PrimitiveTypeValue): Boolean = {
     if (Objects.nonNull(field) && !field.trim().isEmpty() && Objects.nonNull(value) && !value.isEmpty()) {
@@ -69,7 +51,7 @@ class SimpleFormatRecordRenderer extends RecordRenderer {
           output.write(ParserConstant.NewLine)
           output.write(ParserConstant.Space)
           if (hasUris) {
-            output.write(renderWithPrefix(elem))
+            output.write(prefixMap.getWithPrefix(URI.create(elem)).toASCIIString())
           } else {
             output.write(elem.toString())
           }
@@ -78,7 +60,7 @@ class SimpleFormatRecordRenderer extends RecordRenderer {
       } else {
         output.write(ParserConstant.Space)
         if (value.getType().equals(new URIType())) {
-          output.write(renderWithPrefix(value.toString()))
+          output.write(prefixMap.getWithPrefix(URI.create(value.toString())).toASCIIString())
         } else {
           output.write(value.toString())
         }

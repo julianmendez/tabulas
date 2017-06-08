@@ -1,13 +1,12 @@
 
 package de.tudresden.inf.lat.tabulas.table
 
-import java.net.URI
 import java.util.Objects
 
 import de.tudresden.inf.lat.tabulas.datatype.{CompositeType, CompositeTypeImpl, Record}
 
 import scala.collection.mutable
-import scala.collection.mutable.{ArrayBuffer, Map, Set, TreeMap, TreeSet}
+import scala.collection.mutable.{ArrayBuffer, Set, TreeSet}
 
 /**
   * This is the default implementation of a sorted table.
@@ -16,7 +15,7 @@ class TableImpl extends Table {
 
   private var tableType: CompositeType = new CompositeTypeImpl()
   private val list: mutable.Buffer[Record] = new ArrayBuffer[Record]
-  private val prefixMap: Map[URI, URI] = new TreeMap[URI, URI]()
+  private val prefixMap: PrefixMap = new PrefixMapImpl()
   private val sortingOrder: mutable.Buffer[String] = new ArrayBuffer[String]
   private val fieldsWithReverseOrder: Set[String] = new TreeSet[String]()
 
@@ -31,8 +30,8 @@ class TableImpl extends Table {
     this.list ++= other.getRecords()
     if (other.isInstanceOf[Table]) {
       val otherTable: Table = other.asInstanceOf[Table]
-      val otherMap: Map[URI, URI] = otherTable.getPrefixMap()
-      otherMap.keySet.foreach(key => this.prefixMap.put(key, otherMap.get(key).get))
+      val otherMap: PrefixMap = otherTable.getPrefixMap()
+      otherMap.getKeysAsStream().foreach(key => this.prefixMap.put(key, otherMap.get(key).get))
       this.sortingOrder ++= otherTable.getSortingOrder()
       this.fieldsWithReverseOrder ++= otherTable.getFieldsWithReverseOrder()
     }
@@ -46,13 +45,13 @@ class TableImpl extends Table {
     this.tableType = newType
   }
 
-  override def getPrefixMap(): Map[URI, URI] = {
+  override def getPrefixMap(): PrefixMap = {
     return this.prefixMap
   }
 
-  override def setPrefixMap(newPrefixMap: Map[URI, URI]): Unit = {
+  override def setPrefixMap(newPrefixMap: PrefixMap): Unit = {
     this.prefixMap.clear()
-    newPrefixMap.keySet.foreach(key => this.prefixMap.put(key, newPrefixMap.get(key).get))
+    newPrefixMap.getKeysAsStream().foreach(key => this.prefixMap.put(key, newPrefixMap.get(key).get))
   }
 
   override def add(record: Record): Boolean = {

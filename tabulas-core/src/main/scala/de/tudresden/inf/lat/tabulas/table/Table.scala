@@ -20,7 +20,7 @@ trait Table extends CompositeTypeValue {
     *
     * @return the map of URI prefixes
     */
-  def getPrefixMap(): Map[URI, URI]
+  def getPrefixMap(): PrefixMap
 
   /**
     * Sets the map of URI prefixes
@@ -28,7 +28,7 @@ trait Table extends CompositeTypeValue {
     * @param prefixMap
     * map of URI prefixes
     */
-  def setPrefixMap(prefixMap: Map[URI, URI]): Unit
+  def setPrefixMap(prefixMap: PrefixMap): Unit
 
   /**
     * Returns the sorting order for the fields.

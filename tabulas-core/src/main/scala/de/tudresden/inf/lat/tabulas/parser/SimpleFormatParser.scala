@@ -6,7 +6,7 @@ import java.net.{URI, URISyntaxException}
 import java.util.{Objects, StringTokenizer}
 
 import de.tudresden.inf.lat.tabulas.datatype._
-import de.tudresden.inf.lat.tabulas.table.{RecordImpl, TableImpl, TableMap, TableMapImpl}
+import de.tudresden.inf.lat.tabulas.table._
 
 import scala.collection.mutable
 import scala.collection.mutable.{ArrayBuffer, Map, Set, TreeMap, TreeSet}
@@ -98,8 +98,8 @@ class SimpleFormatParser extends Parser {
     }
   }
 
-  def parsePrefixMap(line: String, lineCounter: Int): Map[URI, URI] = {
-    val ret: Map[URI, URI] = new TreeMap[URI, URI]
+  def parsePrefixMap(line: String, lineCounter: Int): PrefixMap = {
+    val ret: PrefixMap = new PrefixMapImpl()
     val stok: StringTokenizer = new StringTokenizer(getValue(line).get)
     while (stok.hasMoreTokens()) {
       val token: String = stok.nextToken()
@@ -155,23 +155,7 @@ class SimpleFormatParser extends Parser {
     return Objects.nonNull(line) && line.trim().startsWith(ParserConstant.NewRecordToken)
   }
 
-  def expandUri(value: URIValue, prefixMap: Map[URI, URI], lineCounter: Int): URIValue = {
-    var ret: URIValue = value
-    val valueStr = value.render()
-    if (valueStr.startsWith(ParserConstant.PrefixAmpersand)) {
-      val pos = valueStr.indexOf(ParserConstant.PrefixSemicolon, ParserConstant.PrefixAmpersand.length())
-      if (pos != -1) {
-        val prefix: URI = asUri(valueStr.substring(ParserConstant.PrefixAmpersand.length(), pos), lineCounter)
-        val optExpansion: Option[URI] = prefixMap.get(prefix)
-        if (optExpansion.isDefined) {
-          ret = new URIValue(optExpansion.get + valueStr.substring(pos + ParserConstant.PrefixSemicolon.length))
-        }
-      }
-    }
-    return ret
-  }
-
-  def getTypedValue(key: String, value: String, type0: CompositeType, prefixMap: Map[URI, URI], lineCounter: Int): PrimitiveTypeValue = {
+  def getTypedValue(key: String, value: String, type0: CompositeType, prefixMap: PrefixMap, lineCounter: Int): PrimitiveTypeValue = {
     if (Objects.isNull(key)) {
       return new StringValue()
     } else {
@@ -182,14 +166,14 @@ class SimpleFormatParser extends Parser {
           var ret: PrimitiveTypeValue = (new PrimitiveTypeFactory()).newInstance(typeStr, value)
           if (ret.getType().equals(new URIType())) {
             val uri: URIValue = ret.asInstanceOf[URIValue]
-            ret = expandUri(uri, prefixMap, lineCounter)
+            ret = new URIValue(prefixMap.getWithoutPrefix(uri.getUri()))
           } else if (ret.isInstanceOf[ParameterizedListValue]) {
             val list: ParameterizedListValue = ret.asInstanceOf[ParameterizedListValue]
             if (list.getParameter().equals(new URIType())) {
               val newList = new ParameterizedListValue(new URIType())
               list.foreach(elem => {
                 val uri: URIValue = elem.asInstanceOf[URIValue]
-                newList += expandUri(uri, prefixMap, lineCounter)
+                newList += new URIValue(prefixMap.getWithoutPrefix(uri.getUri()))
               })
               ret = newList
             }
