@@ -59,9 +59,9 @@ trait PrefixMap {
   def getPrefixFor(uri: URI): Option[URI]
 
   /**
-    * Returns a stream to itereate on the keys.
+    * Returns a stream to iterate on the keys.
     *
-    * @return a stream to itereate on the keys
+    * @return a stream to iterate on the keys
     */
   def getKeysAsStream(): Stream[URI]
 
@@ -73,7 +73,7 @@ trait PrefixMap {
   /**
     * Returns the size of this prefix map.
     *
-    * @return
+    * @return the size of this prefix map
     */
   def size(): Int
 
