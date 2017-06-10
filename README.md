@@ -71,7 +71,7 @@ prefix = \
  PREFIX_n:URI_n
 ```
 
-The prefixes are sorted by alphabetical order. They are applied using that order during parsing and serialization. Although the serialization shortens every possible URI using the prefixes, it is possible to expand all of them by adding the empty prefix with an empty value, i.e. a colon (`:`) alone. This could be useful to rename the prefixes.
+They are applied using the declaration order during parsing and serialization. Although the serialization shortens every possible URI using the prefixes, it is possible to expand all of them by adding the empty prefix with an empty value, i.e. a colon (`:`) alone, and it has to be the first prefix. This could be useful to rename the prefixes.
 
 The order in which the instances are shown is defined as follows:
 
