@@ -36,9 +36,8 @@ The Tabula format has *primitive types* and *composite types*. Unless something 
 * `List_`... (e.g. `List_String`): list of space-separated values, for the types above
 * `Empty`: type that ignores any given value
 
-With this format it is possible to define one or many composite *types*. Each type is defined by its *fields*. The *instances* of each type are listed just after the type definition.
-The name of a type or field can be any *identifier*. A identifier is a word that is not any of the reserved words: `type`, `def`, `new`, `id`.
-Instances can be identified by the field `id`.
+With this format it is possible to define one or many composite *types*. Each type is defined by its *fields*. The *instances* of each type are listed just after the type definition. The type name can be any Tabula String.
+The field name can be any Tabula String that does not contain an equals sign (`'='` 0x3D), and that is not the words `type` or `new`. The field name `id` is reserved to identify instances. Thus, two instances of the same type cannot have the same identifier.
 
 Each type is defined as follows:
 
