@@ -119,7 +119,7 @@ is the same as
 field_name = a b c
 ```
 
-However, the format will normalize and present them differently according to the declared type. Thus, the values of fields with type `List_String` and `List_URI` will be presented as multi-line values.
+However, the format will normalize and present them differently according to the declared type. Thus, the values of fields with type `List_`... (e.g. `List_String`) will be presented as multi-line values.
 
 
 ## Example
