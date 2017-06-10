@@ -147,7 +147,7 @@ class HtmlRenderer extends Renderer {
   def render(output: UncheckedWriter, tableMap: TableMap): Unit = {
     output.write(Prefix)
     tableMap.getTableIds().foreach(tableName => {
-      val table: Table = tableMap.getTable(tableName)
+      val table: Table = tableMap.getTable(tableName).get
       renderAllRecords(output, table)
     })
     output.write("\n")

@@ -211,7 +211,7 @@ class SqlRenderer extends Renderer {
   def render(output: UncheckedWriter, tableMap: TableMap): Unit = {
     renderPrefix(output)
     tableMap.getTableIds().foreach(tableName => {
-      val table: Table = tableMap.getTable(tableName)
+      val table: Table = tableMap.getTable(tableName).get
       renderTypes(output, tableName, table)
       renderAllRecords(output, tableName, table)
       renderOrder(output, tableName, table)

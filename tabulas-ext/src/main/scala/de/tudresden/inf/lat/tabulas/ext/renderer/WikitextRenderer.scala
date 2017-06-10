@@ -125,7 +125,7 @@ class WikitextRenderer extends Renderer {
   def render(output: UncheckedWriter, tableMap: TableMap): Unit = {
     output.write("\n")
     tableMap.getTableIds().foreach(tableId => {
-      val table: Table = tableMap.getTable(tableId)
+      val table: Table = tableMap.getTable(tableId).get
       renderAllRecords(output, table)
     })
     output.write("\n")

@@ -96,7 +96,7 @@ class SimpleFormatRenderer extends Renderer {
   def render(output: UncheckedWriter, tableMap: TableMap): Unit = {
     output.write(Prefix)
     tableMap.getTableIds().foreach(tableName => {
-      val table: Table = tableMap.getTable(tableName)
+      val table: Table = tableMap.getTable(tableName).get
       renderTypeSelection(output, tableName, table)
       renderTypeDefinition(output, table)
       renderPrefixMap(output, table)

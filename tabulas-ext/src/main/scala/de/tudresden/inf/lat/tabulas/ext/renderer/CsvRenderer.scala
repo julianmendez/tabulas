@@ -140,7 +140,7 @@ class CsvRenderer extends Renderer {
 
   def render(output: UncheckedWriter, tableMap: TableMap): Unit = {
     tableMap.getTableIds().foreach(tableName => {
-      val table: Table = tableMap.getTable(tableName)
+      val table: Table = tableMap.getTable(tableName).get
       renderTypeSelection(output, tableName, table)
       renderTypeDefinition(output, table)
       renderAllRecords(output, table)

@@ -20,43 +20,21 @@ class TableMapImpl extends TableMap {
     */
   def this(otherTableMap: TableMap) = {
     this()
-    otherTableMap.getTableIds().foreach(tableId => put(tableId, otherTableMap.getTable(tableId)))
+    otherTableMap.getTableIds().foreach(tableId => put(tableId, otherTableMap.getTable(tableId).get))
   }
 
-  /**
-    * Returns the identifiers of the stored tables.
-    *
-    * @return the identifiers of the stored tables
-    */
-  def getTableIds(): mutable.Buffer[String] = {
+  override def getTableIds(): mutable.Buffer[String] = {
     val ret: mutable.Buffer[String] = new ArrayBuffer[String]()
     ret ++= this.map.keySet
     return ret
   }
 
-  /**
-    * Stores a table with the given identifier.
-    *
-    * @param id
-    * identifier
-    * @param table
-    * table
-    */
-  def put(id: String, table: Table): Unit = {
-    this.map.put(id, table)
+  override def put(id: String, table: Table): Option[Table] = {
+    return this.map.put(id, table)
   }
 
-  /**
-    * Returns the table associated to the given identifier.
-    *
-    * @param id
-    * identifier
-    * @return the table associated to the given identifier
-    */
-  def getTable(id: String): Table = {
-    val optTable: Option[Table] = this.map.get(id)
-    // @FIXME add condition to verify that the key was found
-    return optTable.get
+  override def getTable(id: String): Option[Table] = {
+    return this.map.get(id)
   }
 
   override def hashCode(): Int = {

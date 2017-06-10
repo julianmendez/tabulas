@@ -81,12 +81,12 @@ class MainTest {
     // Make a copy of the tableMap
     // val newTableMap: TableMapImpl = new TableMapImpl(oldTableMap)
     val newTableMap: TableMapImpl = new TableMapImpl()
-    oldTableMap.getTableIds().foreach(tableId => newTableMap.put(tableId, oldTableMap.getTable(tableId)))
+    oldTableMap.getTableIds().foreach(tableId => newTableMap.put(tableId, oldTableMap.getTable(tableId).get))
 
     assertContent(newTableMap, ExpectedOutputFileName)
 
     // Get the main table
-    val table: Table = newTableMap.getTable(TypeNameRecord)
+    val table: Table = newTableMap.getTable(TypeNameRecord).get
 
     // Make a copy of the main table
     val newTable: TableImpl = new TableImpl(table)

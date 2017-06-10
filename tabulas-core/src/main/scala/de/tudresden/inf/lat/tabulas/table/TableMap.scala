@@ -23,17 +23,21 @@ trait TableMap {
     * identifier
     * @param table
     * table
+    * @return an optional containing the previous value associated to the given
+    *         key, or an empty optional if there was no association before
     */
-  def put(id: String, table: Table): Unit
+  def put(id: String, table: Table): Option[Table]
 
   /**
-    * Returns the table associated to the given identifier.
+    * Returns an optional containing the value associated to the given key, or
+    * an empty optional if there is no association.
     *
     * @param id
     * identifier
-    * @return the table associated to the given identifier
+    * @return an optional containing the value associated to the given key, or
+    *         an empty optional if there is no association
     */
-  def getTable(id: String): Table
+  def getTable(id: String): Option[Table]
 
 }
 
