@@ -52,6 +52,11 @@ class SimpleFormatParser extends Parser {
     }
   }
 
+  def hasKey(line: String, key: String): Boolean = {
+    val optKey: Option[String] = getKey(line)
+    return (optKey.isDefined && (optKey.get == key))
+  }
+
   def getValue(line: String): Option[String] = {
     if (Objects.isNull(line)) {
       return Option.empty
@@ -133,26 +138,6 @@ class SimpleFormatParser extends Parser {
     }
     table.setSortingOrder(list)
     table.setFieldsWithReverseOrder(fieldsWithReverseOrder)
-  }
-
-  def isTypeSelection(line: String): Boolean = {
-    return Objects.nonNull(line) && line.trim().startsWith(ParserConstant.TypeSelectionToken)
-  }
-
-  def isTypeDefinition(line: String): Boolean = {
-    return Objects.nonNull(line) && line.trim().startsWith(ParserConstant.TypeDefinitionToken)
-  }
-
-  def isPrefixMapDefinition(line: String): Boolean = {
-    return Objects.nonNull(line) && line.trim().startsWith(ParserConstant.PrefixMapToken)
-  }
-
-  def isSortingOrderDeclaration(line: String): Boolean = {
-    return Objects.nonNull(line) && line.trim().startsWith(ParserConstant.SortingOrderDeclarationToken)
-  }
-
-  def isNewRecord(line: String): Boolean = {
-    return Objects.nonNull(line) && line.trim().startsWith(ParserConstant.NewRecordToken)
   }
 
   def getTypedValue(key: String, value: String, type0: CompositeType, prefixMap: PrefixMap, lineCounter: Int): PrimitiveTypeValue = {
@@ -286,13 +271,15 @@ class SimpleFormatParser extends Parser {
     var optCurrentId: Option[String] = Option.empty
     var record: Record = new RecordImpl()
     var lineCounter: Int = 0
+    var isDefiningType: Boolean = false
 
     while (Objects.nonNull(line)) {
       var pair: Pair = readMultiLine(input, lineCounter)
       line = pair.getLine()
       lineCounter = pair.getLineCounter()
       if (Objects.nonNull(line) && !line.trim().isEmpty()) {
-        if (isTypeSelection(line)) {
+        if (hasKey(line, ParserConstant.TypeSelectionToken)) {
+          isDefiningType = true
           val optTableName: Option[String] = getValue(line)
           if (optTableName.isDefined) {
             val tableName: String = optTableName.get
@@ -305,16 +292,17 @@ class SimpleFormatParser extends Parser {
             recordIdsOfCurrentTable = mapOfRecordIdsOfTables.get(tableName).get
           }
 
-        } else if (isTypeDefinition(line)) {
+        } else if (isDefiningType && hasKey(line, ParserConstant.TypeDefinitionToken)) {
           currentTable.setType(parseTypes(line, lineCounter))
 
-        } else if (isPrefixMapDefinition(line)) {
+        } else if (isDefiningType && hasKey(line, ParserConstant.PrefixMapToken)) {
           currentTable.setPrefixMap(parsePrefixMap(line, lineCounter))
 
-        } else if (isSortingOrderDeclaration(line)) {
+        } else if (isDefiningType && hasKey(line, ParserConstant.SortingOrderDeclarationToken)) {
           setSortingOrder(line, currentTable)
 
-        } else if (isNewRecord(line)) {
+        } else if (hasKey(line, ParserConstant.NewRecordToken)) {
+          isDefiningType = false
           record = new RecordImpl()
           currentTable.add(record)
           optCurrentId = Option.empty

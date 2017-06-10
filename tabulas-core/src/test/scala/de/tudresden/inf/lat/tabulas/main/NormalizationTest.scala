@@ -18,6 +18,9 @@ class NormalizationTest {
   val InputFileName1: String = "multiple_tables.properties"
   val ExpectedOutputFileName1: String = "multiple_tables-expected.properties"
 
+  val InputFileName2: String = "another_example.properties"
+  val ExpectedOutputFileName2: String = "another_example-expected.properties"
+
   val NewLine: String = "\n"
 
   def getPath(fileName: String): String = {
@@ -37,6 +40,7 @@ class NormalizationTest {
   def testNormalization(): Unit = {
     testNormalizationOfFile(InputFileName0, ExpectedOutputFileName0)
     testNormalizationOfFile(InputFileName1, ExpectedOutputFileName1)
+    testNormalizationOfFile(InputFileName2, ExpectedOutputFileName2)
   }
 
 }
