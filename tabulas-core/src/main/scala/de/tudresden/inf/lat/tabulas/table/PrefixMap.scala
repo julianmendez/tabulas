@@ -18,6 +18,20 @@ trait PrefixMap {
   val PrefixSemicolon: String = ";"
 
   /**
+    * Returns <code>true</code> if and only if this map does not contain associations.
+    *
+    * @return <code>true</code> if and only if this map does not contain associations
+    */
+  def isEmpty(): Boolean
+
+  /**
+    * Returns the size of this prefix map.
+    *
+    * @return the size of this prefix map
+    */
+  def size(): Int
+
+  /**
     * Returns the expansion for the given prefix.
     *
     * @param key the prefix
@@ -69,12 +83,5 @@ trait PrefixMap {
     * Clears the content.
     */
   def clear(): Unit
-
-  /**
-    * Returns the size of this prefix map.
-    *
-    * @return the size of this prefix map
-    */
-  def size(): Int
 
 }

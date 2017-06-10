@@ -15,6 +15,14 @@ class PrefixMapImpl extends PrefixMap {
   private val prefixMap: Map[URI, URI] = new TreeMap[URI, URI]
   private val keyList: mutable.Buffer[URI] = new ArrayBuffer[URI]
 
+  override def isEmpty(): Boolean = {
+    return this.prefixMap.isEmpty
+  }
+
+  override def size(): Int = {
+    return this.prefixMap.size
+  }
+
   override def get(key: URI): Option[URI] = {
     return this.prefixMap.get(key)
   }
@@ -77,10 +85,6 @@ class PrefixMapImpl extends PrefixMap {
   override def clear(): Unit = {
     this.prefixMap.clear()
     this.keyList.clear()
-  }
-
-  override def size(): Int = {
-    return this.prefixMap.size
   }
 
 }

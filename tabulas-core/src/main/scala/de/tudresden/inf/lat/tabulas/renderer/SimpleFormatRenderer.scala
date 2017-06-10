@@ -60,37 +60,41 @@ class SimpleFormatRenderer extends Renderer {
     output.write(ParserConstant.NewLine)
   }
 
-  def renderPrefixMap(output: UncheckedWriter, table: Table): Unit = {
-    output.write(ParserConstant.NewLine + ParserConstant.NewLine)
-    output.write(ParserConstant.PrefixMapToken + ParserConstant.Space)
-    output.write(ParserConstant.EqualsSign)
+  def renderPrefixMapIfNecessary(output: UncheckedWriter, table: Table): Unit = {
+    if (!table.getPrefixMap().isEmpty) {
+      output.write(ParserConstant.NewLine + ParserConstant.NewLine)
+      output.write(ParserConstant.PrefixMapToken + ParserConstant.Space)
+      output.write(ParserConstant.EqualsSign)
 
-    table.getPrefixMap().getKeysAsStream().foreach(prefix => {
-      output.write(ParserConstant.Space + ParserConstant.LineContinuationSymbol)
+      table.getPrefixMap().getKeysAsStream().foreach(prefix => {
+        output.write(ParserConstant.Space + ParserConstant.LineContinuationSymbol)
+        output.write(ParserConstant.NewLine)
+        output.write(ParserConstant.Space)
+        output.write(prefix.toASCIIString())
+        output.write(ParserConstant.TypeSign)
+        output.write(table.getPrefixMap().get(prefix).get.toASCIIString())
+      })
       output.write(ParserConstant.NewLine)
-      output.write(ParserConstant.Space)
-      output.write(prefix.toASCIIString())
-      output.write(ParserConstant.TypeSign)
-      output.write(table.getPrefixMap().get(prefix).get.toASCIIString())
-    })
-    output.write(ParserConstant.NewLine)
+    }
   }
 
-  def renderOrder(output: UncheckedWriter, table: Table): Unit = {
-    output.write(ParserConstant.NewLine + ParserConstant.NewLine)
-    output.write(ParserConstant.SortingOrderDeclarationToken + ParserConstant.Space)
-    output.write(ParserConstant.EqualsSign)
+  def renderOrderIfNecessary(output: UncheckedWriter, table: Table): Unit = {
+    if (!table.getSortingOrder().isEmpty) {
+      output.write(ParserConstant.NewLine + ParserConstant.NewLine)
+      output.write(ParserConstant.SortingOrderDeclarationToken + ParserConstant.Space)
+      output.write(ParserConstant.EqualsSign)
 
-    table.getSortingOrder().foreach(field => {
-      output.write(ParserConstant.Space + ParserConstant.LineContinuationSymbol)
+      table.getSortingOrder().foreach(field => {
+        output.write(ParserConstant.Space + ParserConstant.LineContinuationSymbol)
+        output.write(ParserConstant.NewLine)
+        output.write(ParserConstant.Space)
+        if (table.getFieldsWithReverseOrder().contains(field)) {
+          output.write(ParserConstant.ReverseOrderSign)
+        }
+        output.write(field)
+      })
       output.write(ParserConstant.NewLine)
-      output.write(ParserConstant.Space)
-      if (table.getFieldsWithReverseOrder().contains(field)) {
-        output.write(ParserConstant.ReverseOrderSign)
-      }
-      output.write(field)
-    })
-    output.write(ParserConstant.NewLine)
+    }
   }
 
   def render(output: UncheckedWriter, tableMap: TableMap): Unit = {
@@ -99,8 +103,8 @@ class SimpleFormatRenderer extends Renderer {
       val table: Table = tableMap.getTable(tableName).get
       renderTypeSelection(output, tableName, table)
       renderTypeDefinition(output, table)
-      renderPrefixMap(output, table)
-      renderOrder(output, table)
+      renderPrefixMapIfNecessary(output, table)
+      renderOrderIfNecessary(output, table)
       renderAllRecords(output, table)
     })
     output.flush()
