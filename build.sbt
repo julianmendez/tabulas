@@ -14,8 +14,8 @@ lazy val commonSettings = Seq(
 lazy val core = project
   .in(file("tabulas-core"))
   .settings(
-    name := "tabulas-core",
-    commonSettings
+    commonSettings,
+    name := "tabulas-core"
   )
 
 lazy val ext = project
@@ -23,8 +23,8 @@ lazy val ext = project
   .aggregate(core)
   .dependsOn(core)
   .settings(
-    name := "tabulas-ext",
-    commonSettings
+    commonSettings,
+    name := "tabulas-ext"
   )
 
 lazy val dist = project
@@ -32,10 +32,10 @@ lazy val dist = project
   .aggregate(core, ext)
   .dependsOn(core, ext)
   .settings(
+    commonSettings,
     name := "tabulas-distribution",
     mainClass in assembly := Some("de.tudresden.inf.lat.tabulas.ext.main.Main"),
-    assemblyJarName in assembly := "tabulas-" + version.value + ".jar",
-    commonSettings
+    assemblyJarName in assembly := "tabulas-" + version.value + ".jar"
   )
 
 lazy val root = project
@@ -43,8 +43,8 @@ lazy val root = project
   .aggregate(dist)
   .dependsOn(dist)
   .settings(
-    name := "tabulas-parent",
     commonSettings,
+    name := "tabulas-parent",
     mainClass in (Compile,run) := Some("de.tudresden.inf.lat.tabulas.ext.main.Main")
   )
 
