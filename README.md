@@ -240,7 +240,7 @@ This software is distributed under the [Apache License Version 2.0](https://www.
 
 ## Release notes
 
-See [release notes](https://github.com/julianmendez/tabulas/blob/master/RELEASE-NOTES.md).
+See [release notes](https://julianmendez.github.io/tabulas/RELEASE-NOTES.html).
 
 
 ## Contact
