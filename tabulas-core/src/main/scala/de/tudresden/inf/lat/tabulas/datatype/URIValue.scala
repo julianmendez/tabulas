@@ -49,10 +49,10 @@ class URIValue extends PrimitiveTypeValue {
     */
   def this(other: URIValue) {
     this()
-    this.uri = other.getUri()
+    this.uri = other.getUri
   }
 
-  override def getType(): PrimitiveType = {
+  override def getType: PrimitiveType = {
     return new URIType()
   }
 
@@ -66,11 +66,11 @@ class URIValue extends PrimitiveTypeValue {
     }
   }
 
-  def getUri(): URI = {
+  def getUri: URI = {
     return this.uri
   }
 
-  def getUriNoLabel(): URI = {
+  def getUriNoLabel: URI = {
     val uriStr: String = this.uri.toASCIIString()
     val pos: Int = uriStr.lastIndexOf(SpecialSymbol)
     if (pos == -1) {
@@ -80,7 +80,7 @@ class URIValue extends PrimitiveTypeValue {
     }
   }
 
-  def getLabel(): String = {
+  def getLabel: String = {
     val uriStr: String = this.uri.toASCIIString()
     val pos: Int = uriStr.lastIndexOf(SpecialSymbol)
     if (pos == -1) {
@@ -90,12 +90,12 @@ class URIValue extends PrimitiveTypeValue {
     }
   }
 
-  override def isEmpty(): Boolean = {
-    return (getUri().toASCIIString().trim().isEmpty())
+  override def isEmpty: Boolean = {
+    return (getUri.toASCIIString.trim().isEmpty)
   }
 
   override def render(): String = {
-    return this.uri.toASCIIString()
+    return this.uri.toASCIIString
   }
 
   override def renderAsList(): mutable.Buffer[String] = {
@@ -105,7 +105,7 @@ class URIValue extends PrimitiveTypeValue {
   }
 
   override def compareTo(other: PrimitiveTypeValue): Int = {
-    return toString().compareTo(other.toString())
+    return toString.compareTo(other.toString)
   }
 
   override def hashCode(): Int = {
@@ -117,11 +117,11 @@ class URIValue extends PrimitiveTypeValue {
       return false
     } else {
       val other: URIValue = obj.asInstanceOf[URIValue]
-      return getUri().equals(other.getUri())
+      return getUri.equals(other.getUri)
     }
   }
 
-  override def toString(): String = {
+  override def toString: String = {
     return render()
   }
 

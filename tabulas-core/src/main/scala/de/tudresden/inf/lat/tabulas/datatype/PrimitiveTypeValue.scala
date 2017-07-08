@@ -14,7 +14,7 @@ trait PrimitiveTypeValue extends Comparable[PrimitiveTypeValue] {
     *
     * @return the primitive type
     */
-  def getType(): PrimitiveType
+  def getType: PrimitiveType
 
   /**
     * Returns a string representing this value.
@@ -36,6 +36,6 @@ trait PrimitiveTypeValue extends Comparable[PrimitiveTypeValue] {
     * @return <code>true</code> if and only if this value represents an empty
     *         value
     */
-  def isEmpty(): Boolean
+  def isEmpty: Boolean
 
 }

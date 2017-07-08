@@ -19,24 +19,24 @@ class ParameterizedListType extends PrimitiveType {
     this.parameter = parameter
   }
 
-  override def getTypeName(): String = {
-    return TypePrefix + this.parameter.getTypeName()
+  override def getTypeName: String = {
+    return TypePrefix + this.parameter.getTypeName
   }
 
-  override def isList(): Boolean = {
+  override def isList: Boolean = {
     return true
   }
 
   override def parse(str: String): ParameterizedListValue = {
     val ret: ParameterizedListValue = new ParameterizedListValue(this.parameter)
     val stok: StringTokenizer = new StringTokenizer(str)
-    while (stok.hasMoreTokens()) {
+    while (stok.hasMoreTokens) {
       ret += this.parameter.parse(stok.nextToken())
     }
     return ret
   }
 
-  def getParameter(): PrimitiveType = {
+  def getParameter: PrimitiveType = {
     return this.parameter
   }
 
@@ -59,8 +59,8 @@ class ParameterizedListType extends PrimitiveType {
     }
   }
 
-  override def toString(): String = {
-    return getTypeName()
+  override def toString: String = {
+    return getTypeName
   }
 
 }

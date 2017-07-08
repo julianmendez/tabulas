@@ -24,10 +24,10 @@ class CompositeTypeImpl extends CompositeType {
   def this(otherType: CompositeType) = {
     this()
     Objects.requireNonNull(otherType)
-    otherType.getFields().foreach(field => declareField(field, otherType.getFieldType(field).get))
+    otherType.getFields.foreach(field => declareField(field, otherType.getFieldType(field).get))
   }
 
-  override def getFields(): mutable.Buffer[String] = {
+  override def getFields: mutable.Buffer[String] = {
     return this.fields // @FIXME this should be immutable
   }
 
@@ -65,9 +65,9 @@ class CompositeTypeImpl extends CompositeType {
   override def equals(obj: Any): Boolean = {
     if (obj.isInstanceOf[CompositeType]) {
       val other: CompositeType = obj.asInstanceOf[CompositeType]
-      var ret: Boolean = getFields().equals(other.getFields())
+      var ret: Boolean = getFields.equals(other.getFields)
       if (ret) {
-        val fields: mutable.Buffer[String] = getFields()
+        val fields: mutable.Buffer[String] = getFields
         ret = ret && fields.forall(field => getFieldType(field).equals(other.getFieldType(field)))
       }
       return ret
@@ -75,10 +75,10 @@ class CompositeTypeImpl extends CompositeType {
     return false
   }
 
-  override def toString(): String = {
+  override def toString: String = {
     val sbuf: StringBuffer = new StringBuffer()
     this.fields.foreach(field => sbuf.append(field + ":" + this.fieldType.get(field) + " "))
-    return sbuf.toString()
+    return sbuf.toString
   }
 
 }

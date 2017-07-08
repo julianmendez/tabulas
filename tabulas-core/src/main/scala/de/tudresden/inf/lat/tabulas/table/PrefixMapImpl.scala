@@ -35,8 +35,8 @@ class PrefixMapImpl extends PrefixMap {
   }
 
   override def getPrefixFor(uri: URI): Option[URI] = {
-    val uriStr: String = uri.toASCIIString()
-    val key: Option[URI] = prefixMap.keySet.find(e => uriStr.startsWith(prefixMap.get(e).get.toASCIIString()))
+    val uriStr: String = uri.toASCIIString
+    val key: Option[URI] = prefixMap.keySet.find(e => uriStr.startsWith(prefixMap.get(e).get.toASCIIString))
     if (key.isDefined) {
       return Option.apply(key.get)
     } else {
@@ -46,14 +46,14 @@ class PrefixMapImpl extends PrefixMap {
 
   override def getWithoutPrefix(uri: URI): URI = {
     var ret: URI = uri
-    val uriStr = uri.toASCIIString()
+    val uriStr = uri.toASCIIString
     if (uriStr.startsWith(PrefixAmpersand)) {
       val pos = uriStr.indexOf(PrefixSemicolon, PrefixAmpersand.length())
       if (pos != -1) {
         val prefix: URI = URI.create(uriStr.substring(PrefixAmpersand.length(), pos))
         val optExpansion: Option[URI] = this.prefixMap.get(prefix)
         if (optExpansion.isDefined) {
-          ret = URI.create(optExpansion.get.toASCIIString() + uriStr.substring(pos + PrefixSemicolon.length))
+          ret = URI.create(optExpansion.get.toASCIIString + uriStr.substring(pos + PrefixSemicolon.length))
         }
       }
     }
@@ -64,12 +64,12 @@ class PrefixMapImpl extends PrefixMap {
     var ret: URI = uri
     val optPrefix: Option[URI] = getPrefixFor(uri)
     if (optPrefix.isDefined) {
-      val uriStr = uri.toASCIIString()
+      val uriStr = uri.toASCIIString
       val key: URI = optPrefix.get
-      val keyStr: String = key.toASCIIString()
+      val keyStr: String = key.toASCIIString
       val optExpansion: Option[URI] = get(key)
-      val expansionStr = optExpansion.get.toASCIIString()
-      if (keyStr.isEmpty()) {
+      val expansionStr = optExpansion.get.toASCIIString
+      if (keyStr.isEmpty) {
         ret = URI.create(uriStr.substring(expansionStr.length))
       } else {
         ret = URI.create(PrefixAmpersand + keyStr + PrefixSemicolon + uriStr.substring(expansionStr.length))
@@ -78,7 +78,7 @@ class PrefixMapImpl extends PrefixMap {
     return ret
   }
 
-  override def getKeysAsStream(): Stream[URI] = {
+  override def getKeysAsStream: Stream[URI] = {
     return this.keyList.toStream
   }
 

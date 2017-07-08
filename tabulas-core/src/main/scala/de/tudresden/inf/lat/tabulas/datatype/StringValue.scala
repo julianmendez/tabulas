@@ -40,12 +40,12 @@ class StringValue extends PrimitiveTypeValue {
     this.str = other.str
   }
 
-  override def getType(): PrimitiveType = {
+  override def getType: PrimitiveType = {
     return new StringType()
   }
 
-  override def isEmpty(): Boolean = {
-    return str.trim().isEmpty()
+  override def isEmpty: Boolean = {
+    return str.trim().isEmpty
   }
 
   override def render(): String = {
@@ -60,7 +60,7 @@ class StringValue extends PrimitiveTypeValue {
   }
 
   override def compareTo(other: PrimitiveTypeValue): Int = {
-    return toString().compareTo(other.toString())
+    return toString.compareTo(other.toString)
   }
 
   override def hashCode(): Int = {
@@ -76,7 +76,7 @@ class StringValue extends PrimitiveTypeValue {
     }
   }
 
-  override def toString(): String = {
+  override def toString: String = {
     return this.str
   }
 

@@ -25,7 +25,7 @@ class MainTest {
   val NewLine: String = "\n"
 
   def getPath(fileName: String): String = {
-    return getClass().getClassLoader().getResource(fileName).getFile()
+    return getClass.getClassLoader.getResource(fileName).getFile
   }
 
   /**
@@ -53,7 +53,7 @@ class MainTest {
       sb.append(line + NewLine)
     })
     reader.close()
-    return sb.toString()
+    return sb.toString
   }
 
   def assertContent(tableMap: TableMap, fileName: String): Unit = {
@@ -66,7 +66,7 @@ class MainTest {
     val expectedOutput: String = readFile(fileName)
 
     // Compare the expected output with the actual output
-    Assert.assertEquals(expectedOutput, writer.toString())
+    Assert.assertEquals(expectedOutput, writer.toString)
   }
 
   @Test
@@ -81,7 +81,7 @@ class MainTest {
     // Make a copy of the tableMap
     // val newTableMap: TableMapImpl = new TableMapImpl(oldTableMap)
     val newTableMap: TableMapImpl = new TableMapImpl()
-    oldTableMap.getTableIds().foreach(tableId => newTableMap.put(tableId, oldTableMap.getTable(tableId).get))
+    oldTableMap.getTableIds.foreach(tableId => newTableMap.put(tableId, oldTableMap.getTable(tableId).get))
 
     assertContent(newTableMap, ExpectedOutputFileName)
 
@@ -95,15 +95,15 @@ class MainTest {
     newTableMap.put(TypeNameRecord, newTable)
 
     // Get type of main table
-    val oldType: CompositeType = table.getType()
+    val oldType: CompositeType = table.getType
 
     // Make a copy of type
     // val newType: CompositeTypeImpl = new CompositeTypeImpl(oldType)
     val newType: CompositeTypeImpl = new CompositeTypeImpl()
-    oldType.getFields().foreach(field => newType.declareField(field, oldType.getFieldType(field).get))
+    oldType.getFields.foreach(field => newType.declareField(field, oldType.getFieldType(field).get))
 
     // Add new declaration with number of authors
-    if (!newType.getFields().contains(FieldNameNumberOfAuthors)) {
+    if (!newType.getFields.contains(FieldNameNumberOfAuthors)) {
       newType.declareField(FieldNameNumberOfAuthors, TypeOfNumberOfAuthors)
     }
 
@@ -111,10 +111,10 @@ class MainTest {
     newTable.setType(newType)
 
     // Update the map of URI prefixes
-    newTable.setPrefixMap(table.getPrefixMap())
+    newTable.setPrefixMap(table.getPrefixMap)
 
     // Compute the number of authors for each record
-    table.getRecords().foreach(record => record.set(FieldNameNumberOfAuthors, computeFieldValue(record)))
+    table.getRecords.foreach(record => record.set(FieldNameNumberOfAuthors, computeFieldValue(record)))
 
     assertContent(newTableMap, ModifiedOutputFileName)
   }

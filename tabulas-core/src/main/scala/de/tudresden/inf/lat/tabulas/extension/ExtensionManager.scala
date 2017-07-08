@@ -34,7 +34,7 @@ class ExtensionManager extends Extension {
     if (Objects.nonNull(extensions)) {
       this.extensions ++= extensions
       extensions.foreach(extension => {
-        val key: String = extension.getExtensionName()
+        val key: String = extension.getExtensionName
         if (this.extensionMap.get(key).isDefined) {
           throw new ExtensionException(
             "Only one implementation is allowed for each extension, and '"
@@ -58,36 +58,36 @@ class ExtensionManager extends Extension {
       if (optExtension.isEmpty) {
         throw new ExtensionException("Extension '" + command
           + "' was not found.")
-      } else if (newArguments.size < optExtension.get.getRequiredArguments()) {
+      } else if (newArguments.size < optExtension.get.getRequiredArguments) {
         throw new ExtensionException("Insufficient number of arguments for extension '" + command + "'.")
       } else {
         try {
           return optExtension.get.process(newArguments)
         } catch {
           case e@(_: ParseException | _: UncheckedIOException | _: IOException) => {
-            throw new ExtensionException(e.toString(), e)
+            throw new ExtensionException(e.toString, e)
           }
         }
       }
     }
   }
 
-  override def getExtensionName(): String = {
+  override def getExtensionName: String = {
     return Name
   }
 
-  override def getHelp(): String = {
+  override def getHelp: String = {
     val sbuf: StringBuffer = new StringBuffer()
     this.extensions.foreach(extension => {
-      sbuf.append(extension.getExtensionName())
+      sbuf.append(extension.getExtensionName)
       sbuf.append(Space)
-      sbuf.append(extension.getHelp())
+      sbuf.append(extension.getHelp)
       sbuf.append(NewLine)
     })
-    return sbuf.toString()
+    return sbuf.toString
   }
 
-  override def getRequiredArguments(): Int = {
+  override def getRequiredArguments: Int = {
     return RequiredArguments
   }
 

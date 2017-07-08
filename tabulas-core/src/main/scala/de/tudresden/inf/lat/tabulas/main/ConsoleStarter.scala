@@ -54,8 +54,8 @@ class ConsoleStarter {
       manager.process(arguments)
     } catch {
       case e: ExtensionException => {
-        System.out.println(ErrorPrefix + e.getMessage())
-        System.out.println(help + manager.getHelp())
+        System.out.println(ErrorPrefix + e.getMessage)
+        System.out.println(help + manager.getHelp)
       }
     }
   }

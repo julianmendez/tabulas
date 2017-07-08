@@ -45,8 +45,8 @@ class HtmlRenderer extends Renderer {
   }
 
   def writeAsStringIfNotEmpty(output: UncheckedWriter, value: PrimitiveTypeValue): Boolean = {
-    if (Objects.nonNull(value) && !value.toString().trim().isEmpty()) {
-      output.write(value.toString())
+    if (Objects.nonNull(value) && !value.toString.trim().isEmpty) {
+      output.write(value.toString)
       output.write("\n")
       return true
     } else {
@@ -57,7 +57,7 @@ class HtmlRenderer extends Renderer {
   def writeParameterizedListIfNotEmpty(output: UncheckedWriter, list: ParameterizedListValue): Boolean = {
     if (Objects.nonNull(list)) {
       list.foreach(value => {
-        if (value.getType().equals(new URIType())) {
+        if (value.getType.equals(new URIType())) {
           val link: URIValue = (new URIType()).castInstance(value)
           writeLinkIfNotEmpty(output, link)
         } else {
@@ -72,11 +72,11 @@ class HtmlRenderer extends Renderer {
   }
 
   def writeLinkIfNotEmpty(output: UncheckedWriter, link: URIValue): Boolean = {
-    if (Objects.nonNull(link) && !link.isEmpty()) {
+    if (Objects.nonNull(link) && !link.isEmpty) {
       output.write("<a href=\"")
-      output.write(link.getUriNoLabel().toASCIIString())
+      output.write(link.getUriNoLabel.toASCIIString)
       output.write("\">(")
-      output.write(link.getLabel())
+      output.write(link.getLabel)
       output.write(")</a>")
       output.write("\n")
       return true
@@ -117,11 +117,11 @@ class HtmlRenderer extends Renderer {
   }
 
   def renderAllRecords(output: UncheckedWriter, table: Table): Unit = {
-    val list: Buffer[Record] = table.getRecords()
+    val list: Buffer[Record] = table.getRecords
     output.write("<table summary=\"\">\n")
     list.foreach(record => {
       output.write("<tr>\n")
-      render(output, record, table.getType().getFields())
+      render(output, record, table.getType.getFields)
       output.write("</tr>\n")
     })
     output.write("</table>\n")
@@ -146,7 +146,7 @@ class HtmlRenderer extends Renderer {
 
   def render(output: UncheckedWriter, tableMap: TableMap): Unit = {
     output.write(Prefix)
-    tableMap.getTableIds().foreach(tableName => {
+    tableMap.getTableIds.foreach(tableName => {
       val table: Table = tableMap.getTable(tableName).get
       renderAllRecords(output, table)
     })

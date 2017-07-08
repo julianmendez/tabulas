@@ -48,10 +48,10 @@ class SqlRenderer extends Renderer {
   }
 
   def writeAsStringIfNotEmpty(output: UncheckedWriter, field: String, value: PrimitiveTypeValue): Boolean = {
-    if (Objects.nonNull(field) && !field.trim().isEmpty() && Objects.nonNull(value)
-      && !value.toString().trim().isEmpty()) {
+    if (Objects.nonNull(field) && !field.trim().isEmpty && Objects.nonNull(value)
+      && !value.toString.trim().isEmpty) {
       output.write(Apostrophe)
-      output.write(sanitize(value.toString()))
+      output.write(sanitize(value.toString))
       output.write(Apostrophe)
       return true
     } else {
@@ -64,7 +64,7 @@ class SqlRenderer extends Renderer {
     if (Objects.nonNull(list) && !list.isEmpty) {
       output.write(Apostrophe)
       list.foreach(value => {
-        output.write(sanitize(value.toString()))
+        output.write(sanitize(value.toString))
         output.write(ParserConstant.Space)
       })
       output.write(Apostrophe)
@@ -76,10 +76,10 @@ class SqlRenderer extends Renderer {
   }
 
   def writeLinkIfNotEmpty(output: UncheckedWriter, prefix: String, link: URIValue): Boolean = {
-    if (Objects.nonNull(link) && !link.isEmpty()) {
+    if (Objects.nonNull(link) && !link.isEmpty) {
       output.write(prefix)
       output.write(Apostrophe)
-      output.write(sanitize(link.toString()))
+      output.write(sanitize(link.toString))
       output.write(Apostrophe)
       return true
     } else {
@@ -134,10 +134,10 @@ class SqlRenderer extends Renderer {
   }
 
   def renderAllRecords(output: UncheckedWriter, tableName: String, table: CompositeTypeValue): Unit = {
-    val list: Buffer[Record] = table.getRecords()
+    val list: Buffer[Record] = table.getRecords
     output.write(ParserConstant.NewLine)
     list.foreach(record => {
-      render(output, tableName, record, table.getType().getFields())
+      render(output, tableName, record, table.getType.getFields)
       output.write(ParserConstant.NewLine)
     })
     output.write(ParserConstant.NewLine)
@@ -150,7 +150,7 @@ class SqlRenderer extends Renderer {
     output.write(LeftPar)
     output.write(ParserConstant.NewLine)
     var first: Boolean = true
-    for (field: String <- table.getType().getFields()) {
+    for (field: String <- table.getType.getFields) {
       if (first) {
         first = false
       } else {
@@ -178,7 +178,7 @@ class SqlRenderer extends Renderer {
     output.write(ParserConstant.Space)
 
     var first: Boolean = true
-    for (field: String <- table.getSortingOrder()) {
+    for (field: String <- table.getSortingOrder) {
       if (first) {
         first = false
       } else {
@@ -187,7 +187,7 @@ class SqlRenderer extends Renderer {
       }
       output.write(field)
       output.write(ParserConstant.Space)
-      if (table.getFieldsWithReverseOrder().contains(field)) {
+      if (table.getFieldsWithReverseOrder.contains(field)) {
         output.write(Desc)
       } else {
         output.write(Asc)
@@ -210,7 +210,7 @@ class SqlRenderer extends Renderer {
 
   def render(output: UncheckedWriter, tableMap: TableMap): Unit = {
     renderPrefix(output)
-    tableMap.getTableIds().foreach(tableName => {
+    tableMap.getTableIds.foreach(tableName => {
       val table: Table = tableMap.getTable(tableName).get
       renderTypes(output, tableName, table)
       renderAllRecords(output, tableName, table)

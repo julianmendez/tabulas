@@ -31,7 +31,7 @@ class DecimalValue extends PrimitiveTypeValue {
       this.number = new BigDecimal(str)
     } catch {
       case e: NumberFormatException => {
-        throw new ParseException(e.getMessage(), e)
+        throw new ParseException(e.getMessage, e)
       }
     }
   }
@@ -47,16 +47,16 @@ class DecimalValue extends PrimitiveTypeValue {
     this.number = other.number
   }
 
-  override def getType(): PrimitiveType = {
+  override def getType: PrimitiveType = {
     return new DecimalType()
   }
 
-  override def isEmpty(): Boolean = {
+  override def isEmpty: Boolean = {
     return false
   }
 
   override def render(): String = {
-    return this.number.toString()
+    return this.number.toString
   }
 
   override def renderAsList(): mutable.Buffer[String] = {
@@ -88,8 +88,8 @@ class DecimalValue extends PrimitiveTypeValue {
     }
   }
 
-  override def toString(): String = {
-    return this.number.toString()
+  override def toString: String = {
+    return this.number.toString
   }
 
 }

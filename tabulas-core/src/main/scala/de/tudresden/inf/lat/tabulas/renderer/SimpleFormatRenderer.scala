@@ -25,11 +25,11 @@ class SimpleFormatRenderer extends Renderer {
   }
 
   def renderAllRecords(output: UncheckedWriter, table: Table): Unit = {
-    val recordRenderer: SimpleFormatRecordRenderer = new SimpleFormatRecordRenderer(output, table.getPrefixMap())
+    val recordRenderer: SimpleFormatRecordRenderer = new SimpleFormatRecordRenderer(output, table.getPrefixMap)
     output.write(ParserConstant.NewLine)
-    val list: mutable.Buffer[Record] = table.getRecords()
+    val list: mutable.Buffer[Record] = table.getRecords
     list.foreach(record => {
-      recordRenderer.render(output, record, table.getType().getFields())
+      recordRenderer.render(output, record, table.getType.getFields)
       output.write(ParserConstant.NewLine)
     })
     output.write(ParserConstant.NewLine)
@@ -49,46 +49,46 @@ class SimpleFormatRenderer extends Renderer {
     output.write(ParserConstant.TypeDefinitionToken + ParserConstant.Space)
     output.write(ParserConstant.EqualsSign)
 
-    table.getType().getFields().foreach(field => {
+    table.getType.getFields.foreach(field => {
       output.write(ParserConstant.Space + ParserConstant.LineContinuationSymbol)
       output.write(ParserConstant.NewLine)
       output.write(ParserConstant.Space)
       output.write(field)
       output.write(ParserConstant.TypeSign)
-      output.write(table.getType().getFieldType(field).get)
+      output.write(table.getType.getFieldType(field).get)
     })
     output.write(ParserConstant.NewLine)
   }
 
   def renderPrefixMapIfNecessary(output: UncheckedWriter, table: Table): Unit = {
-    if (!table.getPrefixMap().isEmpty) {
+    if (!table.getPrefixMap.isEmpty) {
       output.write(ParserConstant.NewLine + ParserConstant.NewLine)
       output.write(ParserConstant.PrefixMapToken + ParserConstant.Space)
       output.write(ParserConstant.EqualsSign)
 
-      table.getPrefixMap().getKeysAsStream().foreach(prefix => {
+      table.getPrefixMap.getKeysAsStream.foreach(prefix => {
         output.write(ParserConstant.Space + ParserConstant.LineContinuationSymbol)
         output.write(ParserConstant.NewLine)
         output.write(ParserConstant.Space)
         output.write(prefix.toASCIIString())
         output.write(ParserConstant.TypeSign)
-        output.write(table.getPrefixMap().get(prefix).get.toASCIIString())
+        output.write(table.getPrefixMap.get(prefix).get.toASCIIString())
       })
       output.write(ParserConstant.NewLine)
     }
   }
 
   def renderOrderIfNecessary(output: UncheckedWriter, table: Table): Unit = {
-    if (!table.getSortingOrder().isEmpty) {
+    if (!table.getSortingOrder.isEmpty) {
       output.write(ParserConstant.NewLine + ParserConstant.NewLine)
       output.write(ParserConstant.SortingOrderDeclarationToken + ParserConstant.Space)
       output.write(ParserConstant.EqualsSign)
 
-      table.getSortingOrder().foreach(field => {
+      table.getSortingOrder.foreach(field => {
         output.write(ParserConstant.Space + ParserConstant.LineContinuationSymbol)
         output.write(ParserConstant.NewLine)
         output.write(ParserConstant.Space)
-        if (table.getFieldsWithReverseOrder().contains(field)) {
+        if (table.getFieldsWithReverseOrder.contains(field)) {
           output.write(ParserConstant.ReverseOrderSign)
         }
         output.write(field)
@@ -99,7 +99,7 @@ class SimpleFormatRenderer extends Renderer {
 
   def render(output: UncheckedWriter, tableMap: TableMap): Unit = {
     output.write(Prefix)
-    tableMap.getTableIds().foreach(tableName => {
+    tableMap.getTableIds.foreach(tableName => {
       val table: Table = tableMap.getTable(tableName).get
       renderTypeSelection(output, tableName, table)
       renderTypeDefinition(output, table)

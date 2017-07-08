@@ -43,15 +43,15 @@ class WikitextExtension extends Extension {
     }
   }
 
-  override def getExtensionName(): String = {
+  override def getExtensionName: String = {
     return Name
   }
 
-  override def getHelp(): String = {
+  override def getHelp: String = {
     return Help
   }
 
-  override def getRequiredArguments(): Int = {
+  override def getRequiredArguments: Int = {
     return RequiredArguments
   }
 

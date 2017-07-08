@@ -35,34 +35,34 @@ class SimpleFormatRecordRenderer extends RecordRenderer {
 
 
   def writeIfNotEmpty(output: UncheckedWriter, field: String, value: PrimitiveTypeValue): Boolean = {
-    if (Objects.nonNull(field) && !field.trim().isEmpty() && Objects.nonNull(value) && !value.isEmpty()) {
+    if (Objects.nonNull(field) && !field.trim().isEmpty && Objects.nonNull(value) && !value.isEmpty) {
       output.write(ParserConstant.NewLine)
       output.write(field)
       output.write(ParserConstant.Space + ParserConstant.EqualsSign)
-      if (value.getType().isList()) {
+      if (value.getType.isList) {
         var hasUris: Boolean = false
         if (value.isInstanceOf[ParameterizedListValue]) {
-          hasUris = (value.asInstanceOf[ParameterizedListValue]).getParameter().equals(new URIType())
+          hasUris = (value.asInstanceOf[ParameterizedListValue]).getParameter.equals(new URIType())
         }
-        value.getType()
+        value.getType
         val list: mutable.Buffer[String] = value.renderAsList()
         list.foreach(elem => {
           output.write(ParserConstant.Space + ParserConstant.LineContinuationSymbol)
           output.write(ParserConstant.NewLine)
           output.write(ParserConstant.Space)
           if (hasUris) {
-            output.write(prefixMap.getWithPrefix(URI.create(elem)).toASCIIString())
+            output.write(prefixMap.getWithPrefix(URI.create(elem)).toASCIIString)
           } else {
-            output.write(elem.toString())
+            output.write(elem.toString)
           }
         })
 
       } else {
         output.write(ParserConstant.Space)
-        if (value.getType().equals(new URIType())) {
-          output.write(prefixMap.getWithPrefix(URI.create(value.toString())).toASCIIString())
+        if (value.getType.equals(new URIType())) {
+          output.write(prefixMap.getWithPrefix(URI.create(value.toString)).toASCIIString)
         } else {
-          output.write(value.toString())
+          output.write(value.toString)
         }
       }
       return true

@@ -24,7 +24,7 @@ class NormalizationTest {
   val NewLine: String = "\n"
 
   def getPath(fileName: String): String = {
-    return getClass().getClassLoader().getResource(fileName).getFile()
+    return getClass.getClassLoader.getResource(fileName).getFile
   }
 
   def testNormalizationOfFile(inputFileName: String, expectedFileName: String): Unit = {
@@ -33,7 +33,7 @@ class NormalizationTest {
     val writer: StringWriter = new StringWriter()
     val renderer: SimpleFormatRenderer = new SimpleFormatRenderer(writer)
     renderer.render(tableMap)
-    Assert.assertEquals(expectedResult, writer.toString())
+    Assert.assertEquals(expectedResult, writer.toString)
   }
 
   @Test

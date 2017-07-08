@@ -20,7 +20,7 @@ class TableMapImpl extends TableMap {
     */
   def this(otherTableMap: TableMap) = {
     this()
-    otherTableMap.getTableIds().foreach(tableId => put(tableId, otherTableMap.getTable(tableId).get))
+    otherTableMap.getTableIds.foreach(tableId => put(tableId, otherTableMap.getTable(tableId).get))
   }
 
   override def getTableIds(): mutable.Buffer[String] = {
@@ -44,7 +44,7 @@ class TableMapImpl extends TableMap {
   override def equals(obj: Any): Boolean = {
     if (obj.isInstanceOf[TableMap]) {
       val other: TableMap = obj.asInstanceOf[TableMap]
-      var ret: Boolean = getTableIds().equals(other.getTableIds())
+      var ret: Boolean = getTableIds().equals(other.getTableIds)
       val tableIds: mutable.Buffer[String] = getTableIds()
       ret = ret && tableIds.forall(tableId => getTable(tableId).equals(other.getTable(tableId)))
       return ret
@@ -53,7 +53,7 @@ class TableMapImpl extends TableMap {
     }
   }
 
-  override def toString(): String = {
+  override def toString: String = {
     val sbuf: StringBuffer = new StringBuffer()
     val tableIds: mutable.Buffer[String] = getTableIds()
     tableIds.foreach(tableId => {
@@ -62,7 +62,7 @@ class TableMapImpl extends TableMap {
       sbuf.append(getTable(tableId))
       sbuf.append("\n")
     })
-    return sbuf.toString()
+    return sbuf.toString
   }
 
 }

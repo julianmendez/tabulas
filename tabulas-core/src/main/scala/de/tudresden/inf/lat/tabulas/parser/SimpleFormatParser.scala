@@ -149,16 +149,16 @@ class SimpleFormatParser extends Parser {
         if (optTypeStr.isDefined) {
           val typeStr: String = optTypeStr.get
           var ret: PrimitiveTypeValue = (new PrimitiveTypeFactory()).newInstance(typeStr, value)
-          if (ret.getType().equals(new URIType())) {
+          if (ret.getType.equals(new URIType())) {
             val uri: URIValue = ret.asInstanceOf[URIValue]
-            ret = new URIValue(prefixMap.getWithoutPrefix(uri.getUri()))
+            ret = new URIValue(prefixMap.getWithoutPrefix(uri.getUri))
           } else if (ret.isInstanceOf[ParameterizedListValue]) {
             val list: ParameterizedListValue = ret.asInstanceOf[ParameterizedListValue]
-            if (list.getParameter().equals(new URIType())) {
+            if (list.getParameter.equals(new URIType())) {
               val newList = new ParameterizedListValue(new URIType())
               list.foreach(elem => {
                 val uri: URIValue = elem.asInstanceOf[URIValue]
-                newList += new URIValue(prefixMap.getWithoutPrefix(uri.getUri()))
+                newList += new URIValue(prefixMap.getWithoutPrefix(uri.getUri))
               })
               ret = newList
             }
@@ -170,8 +170,8 @@ class SimpleFormatParser extends Parser {
         }
       } catch {
         case e: ParseException => {
-          throw new ParseException(e.getMessage() + " (line "
-            + lineCounter + ")", e.getCause())
+          throw new ParseException(e.getMessage + " (line "
+            + lineCounter + ")", e.getCause)
         }
       }
     }
@@ -211,7 +211,7 @@ class SimpleFormatParser extends Parser {
         }
         sb.append(getCleanLine(line))
 
-        return new Pair(lineCounter, sb.toString())
+        return new Pair(lineCounter, sb.toString)
       }
     }
   }
@@ -247,7 +247,7 @@ class SimpleFormatParser extends Parser {
     if (optKey.isDefined && optValueStr.isDefined) {
       val key: String = optKey.get
       val valueStr: String = optValueStr.get
-      val value: PrimitiveTypeValue = getTypedValue(key, valueStr, currentTable.getType(), currentTable.getPrefixMap(), lineCounter)
+      val value: PrimitiveTypeValue = getTypedValue(key, valueStr, currentTable.getType, currentTable.getPrefixMap, lineCounter)
       if (key.equals(ParserConstant.IdKeyword)) {
         if (recordIdsOfCurrentTable.contains(valueStr)) {
           throw new ParseException("Identifier '"
@@ -277,7 +277,7 @@ class SimpleFormatParser extends Parser {
       var pair: Pair = readMultiLine(input, lineCounter)
       line = pair.getLine()
       lineCounter = pair.getLineCounter()
-      if (Objects.nonNull(line) && !line.trim().isEmpty()) {
+      if (Objects.nonNull(line) && !line.trim().isEmpty) {
         if (hasKey(line, ParserConstant.TypeSelectionToken)) {
           isDefiningType = true
           val optTableName: Option[String] = getValue(line)

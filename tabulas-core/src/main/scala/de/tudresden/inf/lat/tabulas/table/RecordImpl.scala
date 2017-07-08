@@ -24,7 +24,7 @@ class RecordImpl extends Record {
     */
   def this(otherRecord: Record) = {
     this()
-    otherRecord.getProperties().foreach(property => set(property, otherRecord.get(property).get))
+    otherRecord.getProperties.foreach(property => set(property, otherRecord.get(property).get))
   }
 
   override def get(key: String): Option[PrimitiveTypeValue] = {
@@ -46,7 +46,7 @@ class RecordImpl extends Record {
     }
   }
 
-  override def getProperties(): mutable.Buffer[String] = {
+  override def getProperties: mutable.Buffer[String] = {
     val ret: mutable.Buffer[String] = new ArrayBuffer[String]
     ret ++= map.keySet
     return ret
@@ -55,8 +55,8 @@ class RecordImpl extends Record {
   override def equals(o: Any): Boolean = {
     if (o.isInstanceOf[Record]) {
       val other: Record = o.asInstanceOf[Record]
-      var ret: Boolean = getProperties().equals(other.getProperties())
-      ret = ret && getProperties().forall(property => get(property).equals(other.get(property)))
+      var ret: Boolean = getProperties.equals(other.getProperties)
+      ret = ret && getProperties.forall(property => get(property).equals(other.get(property)))
       return ret
     } else {
       return false
@@ -67,8 +67,8 @@ class RecordImpl extends Record {
     return this.map.hashCode()
   }
 
-  override def toString(): String = {
-    return this.map.toString()
+  override def toString: String = {
+    return this.map.toString
   }
 
 }

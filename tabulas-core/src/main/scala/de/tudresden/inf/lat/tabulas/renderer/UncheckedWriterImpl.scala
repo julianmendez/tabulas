@@ -145,8 +145,8 @@ class UncheckedWriterImpl extends UncheckedWriter {
     }
   }
 
-  override def toString(): String = {
-    return this.writer.toString()
+  override def toString: String = {
+    return this.writer.toString
   }
 
 }

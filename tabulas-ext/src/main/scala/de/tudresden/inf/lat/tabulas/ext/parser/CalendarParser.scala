@@ -20,11 +20,11 @@ class CalendarParser extends Parser {
     private val line: String = line0;
     private val lineCounter: Int = lineCounter0;
 
-    def getLine(): String = {
+    def getLine: String = {
       return this.line
     }
 
-    def getLineCounter(): Int = {
+    def getLineCounter: Int = {
       return this.lineCounter
     }
 
@@ -153,8 +153,8 @@ class CalendarParser extends Parser {
         }
       } catch {
         case e: IOException => {
-          throw new ParseException(e.getMessage() + " (line "
-            + lineCounter + ")", e.getCause())
+          throw new ParseException(e.getMessage + " (line "
+            + lineCounter + ")", e.getCause)
         }
       }
     }
@@ -170,7 +170,7 @@ class CalendarParser extends Parser {
       if (line.startsWith("" + SpaceChar)) {
         sbuf.append(line)
       } else {
-        ret += new Pair(lineCounter, sbuf.toString())
+        ret += new Pair(lineCounter, sbuf.toString)
         sbuf = new StringBuffer()
         sbuf.append(line)
       }
@@ -192,7 +192,7 @@ class CalendarParser extends Parser {
       val key: String = optKey.get
       val valueStr: String = optValueStr.get
       val value: PrimitiveTypeValue = getTypedValue(key, valueStr,
-        currentTable.getType(), lineCounter)
+        currentTable.getType, lineCounter)
       record.set(key, value)
     }
   }
@@ -216,7 +216,7 @@ class CalendarParser extends Parser {
       }
       sbuf.append(counter)
     }
-    return sbuf.toString()
+    return sbuf.toString
   }
 
   def parseMap(input: BufferedReader): TableMap = {
@@ -248,9 +248,9 @@ class CalendarParser extends Parser {
     var lineCounter: Int = 0
     var firstTime: Boolean = true
     for (pair: Pair <- lines) {
-      val line: String = pair.getLine()
-      lineCounter = pair.getLineCounter()
-      if (Objects.nonNull(line) && !line.trim().isEmpty()) {
+      val line: String = pair.getLine
+      lineCounter = pair.getLineCounter
+      if (Objects.nonNull(line) && !line.trim().isEmpty) {
         if (isBeginLine(line)) {
           val value: String = getValue(line).get
           if (firstTime) {

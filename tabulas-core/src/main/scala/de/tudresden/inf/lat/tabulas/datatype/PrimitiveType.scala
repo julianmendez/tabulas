@@ -12,14 +12,14 @@ trait PrimitiveType extends DataType {
     *
     * @return the name of this type
     */
-  def getTypeName(): String
+  def getTypeName: String
 
   /**
     * Tells whether this type is a list.
     *
     * @return <code>true</code> if and only if this type is a list
     */
-  def isList(): Boolean
+  def isList: Boolean
 
   /**
     * Returns a value based on the given string.

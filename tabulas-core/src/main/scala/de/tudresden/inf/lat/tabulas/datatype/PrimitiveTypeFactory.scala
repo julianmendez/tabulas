@@ -11,7 +11,7 @@ class PrimitiveTypeFactory {
   private val map: Map[String, PrimitiveType] = new TreeMap[String, PrimitiveType]()
 
   private def add(primType: PrimitiveType): Unit = {
-    this.map.put(primType.getTypeName(), primType)
+    this.map.put(primType.getTypeName, primType)
   }
 
   /**

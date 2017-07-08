@@ -28,11 +28,11 @@ class RecordComparator extends Comparator[Record] {
     this.fieldsWithReverseOrder ++= fieldsWithReverseOrder
   }
 
-  def getSortingOrder(): mutable.Buffer[String] = {
+  def getSortingOrder: mutable.Buffer[String] = {
     return this.sortingOrder
   }
 
-  def getFieldsWithReverseOrder(): Set[String] = {
+  def getFieldsWithReverseOrder: Set[String] = {
     return this.fieldsWithReverseOrder
   }
 
@@ -91,8 +91,8 @@ class RecordComparator extends Comparator[Record] {
     return this.sortingOrder.hashCode()
   }
 
-  override def toString(): String = {
-    return this.sortingOrder.toString()
+  override def toString: String = {
+    return this.sortingOrder.toString
   }
 
 }

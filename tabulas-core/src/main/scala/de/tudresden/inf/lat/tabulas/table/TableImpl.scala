@@ -26,18 +26,18 @@ class TableImpl extends Table {
 
   def this(other: Table) = {
     this()
-    this.tableType = other.getType()
-    this.list ++= other.getRecords()
+    this.tableType = other.getType
+    this.list ++= other.getRecords
     if (other.isInstanceOf[Table]) {
       val otherTable: Table = other.asInstanceOf[Table]
-      val otherMap: PrefixMap = otherTable.getPrefixMap()
-      otherMap.getKeysAsStream().foreach(key => this.prefixMap.put(key, otherMap.get(key).get))
-      this.sortingOrder ++= otherTable.getSortingOrder()
-      this.fieldsWithReverseOrder ++= otherTable.getFieldsWithReverseOrder()
+      val otherMap: PrefixMap = otherTable.getPrefixMap
+      otherMap.getKeysAsStream.foreach(key => this.prefixMap.put(key, otherMap.get(key).get))
+      this.sortingOrder ++= otherTable.getSortingOrder
+      this.fieldsWithReverseOrder ++= otherTable.getFieldsWithReverseOrder
     }
   }
 
-  override def getType(): CompositeType = {
+  override def getType: CompositeType = {
     return this.tableType
   }
 
@@ -45,13 +45,13 @@ class TableImpl extends Table {
     this.tableType = newType
   }
 
-  override def getPrefixMap(): PrefixMap = {
+  override def getPrefixMap: PrefixMap = {
     return this.prefixMap
   }
 
   override def setPrefixMap(newPrefixMap: PrefixMap): Unit = {
     this.prefixMap.clear()
-    newPrefixMap.getKeysAsStream().foreach(key => this.prefixMap.put(key, newPrefixMap.get(key).get))
+    newPrefixMap.getKeysAsStream.foreach(key => this.prefixMap.put(key, newPrefixMap.get(key).get))
   }
 
   override def add(record: Record): Boolean = {
@@ -85,7 +85,7 @@ class TableImpl extends Table {
     }
   }
 
-  override def getRecords(): mutable.Buffer[Record] = {
+  override def getRecords: mutable.Buffer[Record] = {
     val comparator = new RecordComparator(this.sortingOrder, this.fieldsWithReverseOrder)
     val ret: mutable.Buffer[Record] = new ArrayBuffer[Record]
     ret ++= this.list
@@ -103,18 +103,18 @@ class TableImpl extends Table {
   override def equals(obj: Any): Boolean = {
     if (obj.isInstanceOf[Table]) {
       val other: Table = obj.asInstanceOf[Table]
-      return getType().equals(other.getType()) &&
-        getPrefixMap().equals(other.getPrefixMap()) &&
-        getSortingOrder().equals(other.getSortingOrder()) &&
-        getFieldsWithReverseOrder().equals(other.getFieldsWithReverseOrder()) &&
-        getRecords().equals(other.getRecords())
+      return getType.equals(other.getType) &&
+        getPrefixMap.equals(other.getPrefixMap) &&
+        getSortingOrder.equals(other.getSortingOrder) &&
+        getFieldsWithReverseOrder.equals(other.getFieldsWithReverseOrder) &&
+        getRecords.equals(other.getRecords)
     } else {
       return false
     }
   }
 
-  override def toString(): String = {
-    return this.tableType.toString() + " " + this.prefixMap.toString() + " " + this.sortingOrder.toString() + " " + this.fieldsWithReverseOrder.toString() + " " + this.list.toString()
+  override def toString: String = {
+    return this.tableType.toString + " " + this.prefixMap.toString + " " + this.sortingOrder.toString + " " + this.fieldsWithReverseOrder.toString + " " + this.list.toString
   }
 
 }

@@ -20,7 +20,7 @@ trait Table extends CompositeTypeValue {
     *
     * @return the map of URI prefixes
     */
-  def getPrefixMap(): PrefixMap
+  def getPrefixMap: PrefixMap
 
   /**
     * Sets the map of URI prefixes
@@ -35,7 +35,7 @@ trait Table extends CompositeTypeValue {
     *
     * @return the sorting order for the fields
     */
-  def getSortingOrder(): mutable.Buffer[String]
+  def getSortingOrder: mutable.Buffer[String]
 
   /**
     * Sets the sorting order for the fields.
@@ -50,7 +50,7 @@ trait Table extends CompositeTypeValue {
     *
     * @return the fields that are supposed to be sorted in reverse order
     */
-  def getFieldsWithReverseOrder(): Set[String]
+  def getFieldsWithReverseOrder: Set[String]
 
   /**
     * Sets the fields that are supposed to be sorted in reverse order.

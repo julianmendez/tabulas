@@ -33,10 +33,10 @@ class CsvRenderer extends Renderer {
   }
 
   def writeAsStringIfNotEmpty(output: UncheckedWriter, field: String, value: PrimitiveTypeValue): Boolean = {
-    if (Objects.nonNull(field) && !field.trim().isEmpty() && Objects.nonNull(value)
-      && !value.toString().trim().isEmpty()) {
+    if (Objects.nonNull(field) && !field.trim().isEmpty && Objects.nonNull(value)
+      && !value.toString.trim().isEmpty) {
       output.write(Quotes)
-      output.write(sanitize(value.toString()))
+      output.write(sanitize(value.toString))
       output.write(Quotes)
       return true
     } else {
@@ -49,7 +49,7 @@ class CsvRenderer extends Renderer {
     if (Objects.nonNull(list) && !list.isEmpty) {
       output.write(Quotes)
       list.foreach(value => {
-        output.write(sanitize(value.toString()))
+        output.write(sanitize(value.toString))
         output.write(ParserConstant.Space)
       })
       output.write(Quotes)
@@ -61,9 +61,9 @@ class CsvRenderer extends Renderer {
   }
 
   def writeLinkIfNotEmpty(output: UncheckedWriter, field: String, link: URIValue): Boolean = {
-    if (Objects.nonNull(link) && !link.isEmpty()) {
+    if (Objects.nonNull(link) && !link.isEmpty) {
       output.write(Quotes)
-      output.write(sanitize(link.toString()))
+      output.write(sanitize(link.toString))
       output.write(Quotes)
       return true
     } else {
@@ -105,9 +105,9 @@ class CsvRenderer extends Renderer {
   }
 
   def renderAllRecords(output: UncheckedWriter, table: Table): Unit = {
-    val list: Buffer[Record] = table.getRecords()
+    val list: Buffer[Record] = table.getRecords
     list.foreach(record => {
-      render(output, record, table.getType().getFields())
+      render(output, record, table.getType.getFields)
     })
   }
 
@@ -115,7 +115,7 @@ class CsvRenderer extends Renderer {
     output.write(Quotes)
     output.write(tableName)
     output.write(Quotes)
-    val n: Int = table.getType().getFields().size
+    val n: Int = table.getType.getFields.size
     Range(1, n).foreach(index => {
       output.write(Comma)
       output.write(Null)
@@ -125,7 +125,7 @@ class CsvRenderer extends Renderer {
 
   def renderTypeDefinition(output: UncheckedWriter, table: Table): Unit = {
     var first: Boolean = true
-    for (field: String <- table.getType().getFields()) {
+    for (field: String <- table.getType.getFields) {
       if (first) {
         first = false
       } else {
@@ -139,7 +139,7 @@ class CsvRenderer extends Renderer {
   }
 
   def render(output: UncheckedWriter, tableMap: TableMap): Unit = {
-    tableMap.getTableIds().foreach(tableName => {
+    tableMap.getTableIds.foreach(tableName => {
       val table: Table = tableMap.getTable(tableName).get
       renderTypeSelection(output, tableName, table)
       renderTypeDefinition(output, table)

@@ -51,14 +51,14 @@ class CsvParser extends Parser {
       if (ch == QuotesChar) {
         betweenQuotes = !betweenQuotes
       } else if ((ch == CommaChar) && !betweenQuotes) {
-        ret += current.toString()
+        ret += current.toString
         current = new StringBuffer()
       } else {
         current.append(ch)
       }
     }
-    if (!current.toString().isEmpty()) {
-      ret += current.toString()
+    if (!current.toString.isEmpty) {
+      ret += current.toString
     }
     return ret
   }
@@ -78,7 +78,7 @@ class CsvParser extends Parser {
     } else {
       fieldName.trim()
     }
-    val name = if (auxName.isEmpty()) {
+    val name = if (auxName.isEmpty) {
       Underscore
     } else {
       auxName
@@ -92,7 +92,7 @@ class CsvParser extends Parser {
       }
       ret.append(ch)
     })
-    return ret.toString()
+    return ret.toString
   }
 
   def normalizeHeaders(headers: Buffer[String], lineCounter: Int): Buffer[String] = {
@@ -126,7 +126,7 @@ class CsvParser extends Parser {
     while (Objects.nonNull(line)) {
       line = input.readLine()
       lineCounter += 1
-      if ((Objects.nonNull(line)) && !line.trim().isEmpty()) {
+      if ((Objects.nonNull(line)) && !line.trim().isEmpty) {
         val columns: Buffer[String] = getColumns(line)
         if (columns.size > fieldNames.size) {
           throw new ParseException("Too many fields in line: "

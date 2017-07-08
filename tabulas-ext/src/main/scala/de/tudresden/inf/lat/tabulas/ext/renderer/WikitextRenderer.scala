@@ -24,9 +24,9 @@ class WikitextRenderer extends Renderer {
   }
 
   def writeAsStringIfNotEmpty(output: UncheckedWriter, prefix: String, value: PrimitiveTypeValue): Boolean = {
-    if (Objects.nonNull(value) && !value.toString().trim().isEmpty()) {
+    if (Objects.nonNull(value) && !value.toString.trim().isEmpty) {
       output.write(prefix)
-      output.write(value.toString())
+      output.write(value.toString)
       output.write("\n")
       return true
     } else {
@@ -38,7 +38,7 @@ class WikitextRenderer extends Renderer {
     if (Objects.nonNull(list)) {
       output.write(prefix);
       list.foreach(value => {
-        if (value.getType().equals(new URIType())) {
+        if (value.getType.equals(new URIType())) {
           val link: URIValue = (new URIType()).castInstance(value)
           writeLinkIfNotEmpty(output, "", link)
         } else {
@@ -53,12 +53,12 @@ class WikitextRenderer extends Renderer {
   }
 
   def writeLinkIfNotEmpty(output: UncheckedWriter, prefix: String, link: URIValue): Boolean = {
-    if (Objects.nonNull(link) && !link.isEmpty()) {
+    if (Objects.nonNull(link) && !link.isEmpty) {
       output.write(prefix);
       output.write("[")
-      output.write(link.getUriNoLabel().toASCIIString())
+      output.write(link.getUriNoLabel.toASCIIString)
       output.write(" (")
-      output.write(link.getLabel())
+      output.write(link.getLabel)
       output.write(")]")
       output.write("\n")
       return true
@@ -95,11 +95,11 @@ class WikitextRenderer extends Renderer {
   }
 
   def renderAllRecords(output: UncheckedWriter, table: CompositeTypeValue): Unit = {
-    val list: Buffer[Record] = table.getRecords()
+    val list: Buffer[Record] = table.getRecords
     output.write("{|\n")
     output.write("|-\n")
     list.foreach(record => {
-      render(output, record, table.getType().getFields())
+      render(output, record, table.getType.getFields)
       output.write("|-\n")
     })
     output.write("|}\n")
@@ -124,7 +124,7 @@ class WikitextRenderer extends Renderer {
 
   def render(output: UncheckedWriter, tableMap: TableMap): Unit = {
     output.write("\n")
-    tableMap.getTableIds().foreach(tableId => {
+    tableMap.getTableIds.foreach(tableId => {
       val table: Table = tableMap.getTable(tableId).get
       renderAllRecords(output, table)
     })

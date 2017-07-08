@@ -12,11 +12,11 @@ class EmptyValue extends PrimitiveTypeValue {
 
   private val Value: String = ""
 
-  override def getType(): PrimitiveType = {
+  override def getType: PrimitiveType = {
     return new EmptyType()
   }
 
-  override def isEmpty(): Boolean = {
+  override def isEmpty: Boolean = {
     return true
   }
 
@@ -29,7 +29,7 @@ class EmptyValue extends PrimitiveTypeValue {
   }
 
   override def compareTo(other: PrimitiveTypeValue): Int = {
-    return toString().compareTo(other.toString())
+    return toString.compareTo(other.toString)
   }
 
   override def hashCode(): Int = {
@@ -44,7 +44,7 @@ class EmptyValue extends PrimitiveTypeValue {
     }
   }
 
-  override def toString(): String = {
+  override def toString: String = {
     return Value
   }
 

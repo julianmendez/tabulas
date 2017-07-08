@@ -40,10 +40,10 @@ class ParameterizedListValue extends ArrayBuffer[PrimitiveTypeValue] with Primit
   def this(other: ParameterizedListValue) = {
     this()
     Objects.requireNonNull(other)
-    this.parameter = other.getParameter()
+    this.parameter = other.getParameter
   }
 
-  override def getType(): PrimitiveType = {
+  override def getType: PrimitiveType = {
     return new ParameterizedListType(this.parameter)
   }
 
@@ -63,7 +63,7 @@ class ParameterizedListValue extends ArrayBuffer[PrimitiveTypeValue] with Primit
       }
       sbuf.append(str)
     }
-    return sbuf.toString()
+    return sbuf.toString
   }
 
   override def renderAsList(): mutable.Buffer[String] = {
@@ -77,15 +77,15 @@ class ParameterizedListValue extends ArrayBuffer[PrimitiveTypeValue] with Primit
       val other: ParameterizedListValue = obj.asInstanceOf[ParameterizedListValue]
       var ret: Int = size - other.size
       if (ret == 0) {
-        ret = toString().compareTo(other.toString())
+        ret = toString.compareTo(other.toString)
       }
       return ret
     } else {
-      return toString().compareTo(obj.toString())
+      return toString.compareTo(obj.toString)
     }
   }
 
-  def getParameter(): PrimitiveType = {
+  def getParameter: PrimitiveType = {
     return this.parameter
   }
 

@@ -77,7 +77,7 @@ trait PrefixMap {
     *
     * @return a stream to iterate on the keys
     */
-  def getKeysAsStream(): Stream[URI]
+  def getKeysAsStream: Stream[URI]
 
   /**
     * Clears the content.

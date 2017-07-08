@@ -11,11 +11,11 @@ class IntegerType extends PrimitiveType {
 
   val TypeName: String = "Integer"
 
-  override def getTypeName(): String = {
+  override def getTypeName: String = {
     return TypeName
   }
 
-  override def isList(): Boolean = {
+  override def isList: Boolean = {
     return false
   }
 
@@ -28,7 +28,7 @@ class IntegerType extends PrimitiveType {
   }
 
   override def hashCode(): Int = {
-    return getTypeName().hashCode()
+    return getTypeName.hashCode()
   }
 
   override def equals(obj: Any): Boolean = {
@@ -39,8 +39,8 @@ class IntegerType extends PrimitiveType {
     }
   }
 
-  override def toString(): String = {
-    return getTypeName()
+  override def toString: String = {
+    return getTypeName
   }
 
 }

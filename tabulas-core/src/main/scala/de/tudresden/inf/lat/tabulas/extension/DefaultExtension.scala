@@ -43,7 +43,7 @@ class DefaultExtension extends Extension {
     }
   }
 
-  override def getExtensionName(): String = {
+  override def getExtensionName: String = {
     return Name
   }
 

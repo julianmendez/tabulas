@@ -14,7 +14,7 @@ trait CompositeTypeValue {
     *
     * @return the type of this composite type value
     */
-  def getType(): CompositeType
+  def getType: CompositeType
 
   /**
     * Sets the type of this composite type value.
@@ -29,7 +29,7 @@ trait CompositeTypeValue {
     *
     * @return all the records
     */
-  def getRecords(): mutable.Buffer[Record]
+  def getRecords: mutable.Buffer[Record]
 
   /**
     * Adds a record. Returns <code>true</code> if and only if this composite

@@ -20,8 +20,8 @@ class SimplifiedCompositeType extends CompositeType {
     knownFields.foreach(field => this.dataType.declareField(field, DefaultFieldType))
   }
 
-  override def getFields(): mutable.Buffer[String] = {
-    return this.dataType.getFields()
+  override def getFields: mutable.Buffer[String] = {
+    return this.dataType.getFields
   }
 
   override def getFieldType(field: String): Option[String] = {
@@ -43,8 +43,8 @@ class SimplifiedCompositeType extends CompositeType {
     }
   }
 
-  override def toString(): String = {
-    return this.dataType.toString()
+  override def toString: String = {
+    return this.dataType.toString
   }
 
 }
