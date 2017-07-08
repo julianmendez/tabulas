@@ -45,7 +45,7 @@ class ConsoleStarter {
 
     val arguments: mutable.Buffer[String] = new ArrayBuffer[String]()
     if (args.length == 1) {
-      arguments += ((new NormalizationExtension()).Name)
+      arguments += (new NormalizationExtension()).Name
     }
     arguments ++= args.toList
 

@@ -63,7 +63,7 @@ class TableImpl extends Table {
     }
   }
 
-  override def getSortingOrder(): mutable.Buffer[String] = {
+  override def getSortingOrder: mutable.Buffer[String] = {
     return this.sortingOrder
   }
 
@@ -74,7 +74,7 @@ class TableImpl extends Table {
     }
   }
 
-  override def getFieldsWithReverseOrder(): Set[String] = {
+  override def getFieldsWithReverseOrder: Set[String] = {
     return this.fieldsWithReverseOrder
   }
 
@@ -93,7 +93,7 @@ class TableImpl extends Table {
   }
 
   override def clear(): Unit = {
-    return this.list.clear()
+    this.list.clear()
   }
 
   override def hashCode(): Int = {

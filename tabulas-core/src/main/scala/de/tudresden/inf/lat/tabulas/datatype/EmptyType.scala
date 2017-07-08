@@ -35,7 +35,7 @@ class EmptyType extends PrimitiveType {
     if (Objects.isNull(obj)) {
       return false
     } else {
-      return (obj.isInstanceOf[EmptyType])
+      return obj.isInstanceOf[EmptyType]
     }
   }
 

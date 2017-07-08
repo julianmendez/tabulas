@@ -71,7 +71,7 @@ class URIValue extends PrimitiveTypeValue {
   }
 
   def getUriNoLabel: URI = {
-    val uriStr: String = this.uri.toASCIIString()
+    val uriStr: String = this.uri.toASCIIString
     val pos: Int = uriStr.lastIndexOf(SpecialSymbol)
     if (pos == -1) {
       return this.uri
@@ -81,7 +81,7 @@ class URIValue extends PrimitiveTypeValue {
   }
 
   def getLabel: String = {
-    val uriStr: String = this.uri.toASCIIString()
+    val uriStr: String = this.uri.toASCIIString
     val pos: Int = uriStr.lastIndexOf(SpecialSymbol)
     if (pos == -1) {
       return ""
@@ -91,7 +91,7 @@ class URIValue extends PrimitiveTypeValue {
   }
 
   override def isEmpty: Boolean = {
-    return (getUri.toASCIIString.trim().isEmpty)
+    return getUri.toASCIIString.trim().isEmpty
   }
 
   override def render(): String = {
@@ -113,7 +113,7 @@ class URIValue extends PrimitiveTypeValue {
   }
 
   override def equals(obj: Any): Boolean = {
-    if (!(obj.isInstanceOf[URIValue])) {
+    if (!obj.isInstanceOf[URIValue]) {
       return false
     } else {
       val other: URIValue = obj.asInstanceOf[URIValue]

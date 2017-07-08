@@ -36,7 +36,7 @@ class URIType extends PrimitiveType {
     if (Objects.isNull(obj)) {
       return false
     } else {
-      return (obj.isInstanceOf[URIType])
+      return obj.isInstanceOf[URIType]
     }
   }
 

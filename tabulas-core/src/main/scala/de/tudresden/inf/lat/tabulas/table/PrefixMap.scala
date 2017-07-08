@@ -22,7 +22,7 @@ trait PrefixMap {
     *
     * @return <code>true</code> if and only if this map does not contain associations
     */
-  def isEmpty(): Boolean
+  def isEmpty: Boolean
 
   /**
     * Returns the size of this prefix map.

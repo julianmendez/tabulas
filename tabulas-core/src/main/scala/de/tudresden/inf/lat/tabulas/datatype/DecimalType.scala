@@ -35,7 +35,7 @@ class DecimalType extends PrimitiveType {
     if (Objects.isNull(obj)) {
       return false
     } else {
-      return (obj.isInstanceOf[DecimalType])
+      return obj.isInstanceOf[DecimalType]
     }
   }
 

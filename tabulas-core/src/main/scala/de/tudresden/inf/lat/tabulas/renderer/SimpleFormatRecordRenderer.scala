@@ -42,7 +42,7 @@ class SimpleFormatRecordRenderer extends RecordRenderer {
       if (value.getType.isList) {
         var hasUris: Boolean = false
         if (value.isInstanceOf[ParameterizedListValue]) {
-          hasUris = (value.asInstanceOf[ParameterizedListValue]).getParameter.equals(new URIType())
+          hasUris = value.asInstanceOf[ParameterizedListValue].getParameter.equals(new URIType())
         }
         value.getType
         val list: mutable.Buffer[String] = value.renderAsList()

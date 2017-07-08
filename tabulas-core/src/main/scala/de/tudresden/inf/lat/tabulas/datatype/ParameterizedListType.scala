@@ -53,7 +53,7 @@ class ParameterizedListType extends PrimitiveType {
       return false
     } else if (obj.isInstanceOf[ParameterizedListType]) {
       val other: ParameterizedListType = obj.asInstanceOf[ParameterizedListType]
-      return (this.parameter.equals(other.parameter))
+      return this.parameter.equals(other.parameter)
     } else {
       return false
     }

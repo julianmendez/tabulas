@@ -126,7 +126,7 @@ class CsvParser extends Parser {
     while (Objects.nonNull(line)) {
       line = input.readLine()
       lineCounter += 1
-      if ((Objects.nonNull(line)) && !line.trim().isEmpty) {
+      if (Objects.nonNull(line) && !line.trim().isEmpty) {
         val columns: Buffer[String] = getColumns(line)
         if (columns.size > fieldNames.size) {
           throw new ParseException("Too many fields in line: "

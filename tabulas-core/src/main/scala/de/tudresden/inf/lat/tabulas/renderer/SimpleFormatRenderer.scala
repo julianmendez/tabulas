@@ -70,9 +70,9 @@ class SimpleFormatRenderer extends Renderer {
         output.write(ParserConstant.Space + ParserConstant.LineContinuationSymbol)
         output.write(ParserConstant.NewLine)
         output.write(ParserConstant.Space)
-        output.write(prefix.toASCIIString())
+        output.write(prefix.toASCIIString)
         output.write(ParserConstant.TypeSign)
-        output.write(table.getPrefixMap.get(prefix).get.toASCIIString())
+        output.write(table.getPrefixMap.get(prefix).get.toASCIIString)
       })
       output.write(ParserConstant.NewLine)
     }

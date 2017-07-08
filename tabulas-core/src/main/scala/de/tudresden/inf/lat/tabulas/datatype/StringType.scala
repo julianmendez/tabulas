@@ -35,7 +35,7 @@ class StringType extends PrimitiveType {
     if (Objects.isNull(obj)) {
       return false
     } else {
-      return (obj.isInstanceOf[StringType])
+      return obj.isInstanceOf[StringType]
     }
   }
 

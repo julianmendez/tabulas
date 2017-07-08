@@ -37,7 +37,7 @@ class SimplifiedCompositeType extends CompositeType {
       return false
     } else if (obj.isInstanceOf[SimplifiedCompositeType]) {
       val other: SimplifiedCompositeType = obj.asInstanceOf[SimplifiedCompositeType]
-      return (this.dataType.equals(other.dataType))
+      return this.dataType.equals(other.dataType)
     } else {
       return false
     }

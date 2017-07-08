@@ -35,7 +35,7 @@ class IntegerType extends PrimitiveType {
     if (Objects.isNull(obj)) {
       return false
     } else {
-      return (obj.isInstanceOf[IntegerType])
+      return obj.isInstanceOf[IntegerType]
     }
   }
 
