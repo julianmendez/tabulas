@@ -17,8 +17,8 @@ class CalendarParser extends Parser {
 
   class Pair(lineCounter0: Int, line0: String) {
 
-    private val line: String = line0;
-    private val lineCounter: Int = lineCounter0;
+    private val line: String = line0
+    private val lineCounter: Int = lineCounter0
 
     def getLine: String = {
       return this.line
@@ -175,7 +175,7 @@ class CalendarParser extends Parser {
         sbuf.append(line)
       }
       lineCounter += 1
-    });
+    })
     return ret
   }
 

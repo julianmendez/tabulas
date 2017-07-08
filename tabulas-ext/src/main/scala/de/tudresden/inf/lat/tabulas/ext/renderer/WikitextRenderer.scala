@@ -36,7 +36,7 @@ class WikitextRenderer extends Renderer {
 
   def writeParameterizedListIfNotEmpty(output: UncheckedWriter, prefix: String, list: ParameterizedListValue): Boolean = {
     if (Objects.nonNull(list)) {
-      output.write(prefix);
+      output.write(prefix)
       list.foreach(value => {
         if (value.getType.equals(new URIType())) {
           val link: URIValue = (new URIType()).castInstance(value)
@@ -54,7 +54,7 @@ class WikitextRenderer extends Renderer {
 
   def writeLinkIfNotEmpty(output: UncheckedWriter, prefix: String, link: URIValue): Boolean = {
     if (Objects.nonNull(link) && !link.isEmpty) {
-      output.write(prefix);
+      output.write(prefix)
       output.write("[")
       output.write(link.getUriNoLabel.toASCIIString)
       output.write(" (")

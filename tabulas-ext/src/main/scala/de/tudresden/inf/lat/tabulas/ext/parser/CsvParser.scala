@@ -132,7 +132,7 @@ class CsvParser extends Parser {
           throw new ParseException("Too many fields in line: "
             + columns.size + " instead of "
             + fieldNames.size + " (line " + lineCounter
-            + ")");
+            + ")")
         }
 
         val record: RecordImpl = new RecordImpl()
