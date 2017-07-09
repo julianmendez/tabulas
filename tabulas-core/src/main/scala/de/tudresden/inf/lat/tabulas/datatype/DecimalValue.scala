@@ -80,11 +80,9 @@ class DecimalValue extends PrimitiveTypeValue {
   }
 
   override def equals(obj: Any): Boolean = {
-    if (obj.isInstanceOf[DecimalValue]) {
-      val other: DecimalValue = obj.asInstanceOf[DecimalValue]
-      return this.number.equals(other.number)
-    } else {
-      return false
+    obj match {
+      case other: DecimalValue => return this.number.equals(other.number)
+      case _ => return false
     }
   }
 

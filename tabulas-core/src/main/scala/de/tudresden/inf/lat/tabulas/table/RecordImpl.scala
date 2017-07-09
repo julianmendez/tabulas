@@ -52,14 +52,15 @@ class RecordImpl extends Record {
     return ret
   }
 
-  override def equals(o: Any): Boolean = {
-    if (o.isInstanceOf[Record]) {
-      val other: Record = o.asInstanceOf[Record]
-      var ret: Boolean = getProperties.equals(other.getProperties)
-      ret = ret && getProperties.forall(property => get(property).equals(other.get(property)))
-      return ret
-    } else {
-      return false
+
+  override def equals(obj: Any): Boolean = {
+    obj match {
+      case other: Record => {
+        var ret: Boolean = getProperties.equals(other.getProperties)
+        ret = ret && getProperties.forall(property => get(property).equals(other.get(property)))
+        return ret
+      }
+      case _ => return false
     }
   }
 

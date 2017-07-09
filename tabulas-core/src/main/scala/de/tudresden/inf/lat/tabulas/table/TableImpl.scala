@@ -101,15 +101,13 @@ class TableImpl extends Table {
   }
 
   override def equals(obj: Any): Boolean = {
-    if (obj.isInstanceOf[Table]) {
-      val other: Table = obj.asInstanceOf[Table]
-      return getType.equals(other.getType) &&
+    obj match {
+      case other: Table => return getType.equals(other.getType) &&
         getPrefixMap.equals(other.getPrefixMap) &&
         getSortingOrder.equals(other.getSortingOrder) &&
         getFieldsWithReverseOrder.equals(other.getFieldsWithReverseOrder) &&
         getRecords.equals(other.getRecords)
-    } else {
-      return false
+      case _ => return false
     }
   }
 

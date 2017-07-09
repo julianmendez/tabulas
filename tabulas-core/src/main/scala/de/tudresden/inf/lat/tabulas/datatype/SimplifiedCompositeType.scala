@@ -1,8 +1,6 @@
 
 package de.tudresden.inf.lat.tabulas.datatype
 
-import java.util.Objects
-
 import scala.collection.mutable
 
 /**
@@ -33,13 +31,9 @@ class SimplifiedCompositeType extends CompositeType {
   }
 
   override def equals(obj: Any): Boolean = {
-    if (Objects.isNull(obj)) {
-      return false
-    } else if (obj.isInstanceOf[SimplifiedCompositeType]) {
-      val other: SimplifiedCompositeType = obj.asInstanceOf[SimplifiedCompositeType]
-      return this.dataType.equals(other.dataType)
-    } else {
-      return false
+    obj match {
+      case other: SimplifiedCompositeType => return this.dataType.equals(other.dataType)
+      case _ => return false
     }
   }
 

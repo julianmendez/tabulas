@@ -33,10 +33,9 @@ class URIType extends PrimitiveType {
   }
 
   override def equals(obj: Any): Boolean = {
-    if (Objects.isNull(obj)) {
-      return false
-    } else {
-      return obj.isInstanceOf[URIType]
+    obj match {
+      case other: URIType => return true
+      case _ => return false
     }
   }
 

@@ -80,11 +80,9 @@ class IntegerValue extends PrimitiveTypeValue {
   }
 
   override def equals(obj: Any): Boolean = {
-    if (obj.isInstanceOf[IntegerValue]) {
-      val other: IntegerValue = obj.asInstanceOf[IntegerValue]
-      return this.number.equals(other.number)
-    } else {
-      return false
+    obj match {
+      case other: IntegerValue => return this.number.equals(other.number)
+      case _ => return false
     }
   }
 

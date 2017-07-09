@@ -63,16 +63,17 @@ class CompositeTypeImpl extends CompositeType {
   }
 
   override def equals(obj: Any): Boolean = {
-    if (obj.isInstanceOf[CompositeType]) {
-      val other: CompositeType = obj.asInstanceOf[CompositeType]
-      var ret: Boolean = getFields.equals(other.getFields)
-      if (ret) {
-        val fields: mutable.Buffer[String] = getFields
-        ret = ret && fields.forall(field => getFieldType(field).equals(other.getFieldType(field)))
+    obj match {
+      case other: CompositeType => {
+        var ret: Boolean = getFields.equals(other.getFields)
+        if (ret) {
+          val fields: mutable.Buffer[String] = getFields
+          ret = ret && fields.forall(field => getFieldType(field).equals(other.getFieldType(field)))
+        }
+        return ret
       }
-      return ret
+      case _ => return false
     }
-    return false
   }
 
   override def toString: String = {

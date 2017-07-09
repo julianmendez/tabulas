@@ -137,11 +137,9 @@ class UncheckedWriterImpl extends UncheckedWriter {
   }
 
   override def equals(obj: Any): Boolean = {
-    if (!obj.isInstanceOf[UncheckedWriter]) {
-      return false
-    } else {
-      val other: UncheckedWriter = obj.asInstanceOf[UncheckedWriter]
-      return asWriter().equals(other.asWriter())
+    obj match {
+      case other: UncheckedWriter => return asWriter().equals(other.asWriter())
+      case _ => return false
     }
   }
 

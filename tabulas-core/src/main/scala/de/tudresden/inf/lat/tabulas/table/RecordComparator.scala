@@ -78,12 +78,10 @@ class RecordComparator extends Comparator[Record] {
     }
   }
 
-  override def equals(o: Any): Boolean = {
-    if (o.isInstanceOf[RecordComparator]) {
-      val other: RecordComparator = o.asInstanceOf[RecordComparator]
-      return this.sortingOrder.equals(other.sortingOrder)
-    } else {
-      return false
+  override def equals(obj: Any): Boolean = {
+    obj match {
+      case other: RecordComparator => return this.sortingOrder.equals(other.sortingOrder)
+      case _ => return false
     }
   }
 

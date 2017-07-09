@@ -42,14 +42,14 @@ class TableMapImpl extends TableMap {
   }
 
   override def equals(obj: Any): Boolean = {
-    if (obj.isInstanceOf[TableMap]) {
-      val other: TableMap = obj.asInstanceOf[TableMap]
-      var ret: Boolean = getTableIds().equals(other.getTableIds)
-      val tableIds: mutable.Buffer[String] = getTableIds()
-      ret = ret && tableIds.forall(tableId => getTable(tableId).equals(other.getTable(tableId)))
-      return ret
-    } else {
-      return false
+    obj match {
+      case other: TableMap => {
+        var ret: Boolean = getTableIds().equals(other.getTableIds)
+        val tableIds: mutable.Buffer[String] = getTableIds()
+        ret = ret && tableIds.forall(tableId => getTable(tableId).equals(other.getTable(tableId)))
+        return ret
+      }
+      case _ => return false
     }
   }
 

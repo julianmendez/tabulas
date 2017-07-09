@@ -1,8 +1,6 @@
 
 package de.tudresden.inf.lat.tabulas.datatype
 
-import java.util.Objects
-
 /**
   * This models the primitive data type Integer.
   *
@@ -32,10 +30,9 @@ class IntegerType extends PrimitiveType {
   }
 
   override def equals(obj: Any): Boolean = {
-    if (Objects.isNull(obj)) {
-      return false
-    } else {
-      return obj.isInstanceOf[IntegerType]
+    obj match {
+      case other: IntegerType => return true
+      case _ => return false
     }
   }
 

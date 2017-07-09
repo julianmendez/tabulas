@@ -1,8 +1,6 @@
 
 package de.tudresden.inf.lat.tabulas.datatype
 
-import java.util.Objects
-
 /**
   * This models the primitive data type Empty.
   *
@@ -32,10 +30,9 @@ class EmptyType extends PrimitiveType {
   }
 
   override def equals(obj: Any): Boolean = {
-    if (Objects.isNull(obj)) {
-      return false
-    } else {
-      return obj.isInstanceOf[EmptyType]
+    obj match {
+      case other: EmptyType => return true
+      case _ => return false
     }
   }
 

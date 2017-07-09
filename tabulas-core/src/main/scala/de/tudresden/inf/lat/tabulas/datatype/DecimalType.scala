@@ -1,8 +1,6 @@
 
 package de.tudresden.inf.lat.tabulas.datatype
 
-import java.util.Objects
-
 /**
   * This models the primitive data type Decimal.
   *
@@ -32,10 +30,9 @@ class DecimalType extends PrimitiveType {
   }
 
   override def equals(obj: Any): Boolean = {
-    if (Objects.isNull(obj)) {
-      return false
-    } else {
-      return obj.isInstanceOf[DecimalType]
+    obj match {
+      case other: DecimalType => return true
+      case _ => return false
     }
   }
 
