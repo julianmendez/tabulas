@@ -6,7 +6,7 @@ import java.util.Objects
 import de.tudresden.inf.lat.tabulas.datatype.{PrimitiveTypeValue, Record}
 
 import scala.collection.mutable
-import scala.collection.mutable.{ArrayBuffer, Map, TreeMap}
+import scala.collection.mutable.ArrayBuffer
 
 /**
   * This is the default implementation of a record.
@@ -14,7 +14,7 @@ import scala.collection.mutable.{ArrayBuffer, Map, TreeMap}
   */
 class RecordImpl extends Record {
 
-  private val map: Map[String, PrimitiveTypeValue] = new TreeMap[String, PrimitiveTypeValue]()
+  private val map: mutable.Map[String, PrimitiveTypeValue] = new mutable.TreeMap[String, PrimitiveTypeValue]()
 
   /**
     * Constructs a new record using another one.
@@ -51,7 +51,6 @@ class RecordImpl extends Record {
     ret ++= map.keySet
     return ret
   }
-
 
   override def equals(obj: Any): Boolean = {
     obj match {

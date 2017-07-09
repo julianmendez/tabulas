@@ -4,7 +4,7 @@ package de.tudresden.inf.lat.tabulas.datatype
 import java.util.Objects
 
 import scala.collection.mutable
-import scala.collection.mutable.{ArrayBuffer, Map, TreeMap}
+import scala.collection.mutable.ArrayBuffer
 
 /**
   * Default implementation of a composite type.
@@ -13,7 +13,7 @@ import scala.collection.mutable.{ArrayBuffer, Map, TreeMap}
 class CompositeTypeImpl extends CompositeType {
 
   private val fields: mutable.Buffer[String] = new ArrayBuffer[String]
-  private val fieldType: Map[String, String] = new TreeMap[String, String]
+  private val fieldType: mutable.Map[String, String] = new mutable.TreeMap[String, String]
 
   /**
     * Constructs a new composite type using another one.

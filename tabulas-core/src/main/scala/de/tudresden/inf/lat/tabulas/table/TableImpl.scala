@@ -6,7 +6,7 @@ import java.util.Objects
 import de.tudresden.inf.lat.tabulas.datatype.{CompositeType, CompositeTypeImpl, Record}
 
 import scala.collection.mutable
-import scala.collection.mutable.{ArrayBuffer, Set, TreeSet}
+import scala.collection.mutable.ArrayBuffer
 
 /**
   * This is the default implementation of a sorted table.
@@ -17,7 +17,7 @@ class TableImpl extends Table {
   private val list: mutable.Buffer[Record] = new ArrayBuffer[Record]
   private val prefixMap: PrefixMap = new PrefixMapImpl()
   private val sortingOrder: mutable.Buffer[String] = new ArrayBuffer[String]
-  private val fieldsWithReverseOrder: Set[String] = new TreeSet[String]()
+  private val fieldsWithReverseOrder: mutable.Set[String] = new mutable.TreeSet[String]()
 
   def this(newType: CompositeType) = {
     this()
@@ -74,11 +74,11 @@ class TableImpl extends Table {
     }
   }
 
-  override def getFieldsWithReverseOrder: Set[String] = {
+  override def getFieldsWithReverseOrder: mutable.Set[String] = {
     return this.fieldsWithReverseOrder
   }
 
-  override def setFieldsWithReverseOrder(fieldsWithReverseOrder: Set[String]): Unit = {
+  override def setFieldsWithReverseOrder(fieldsWithReverseOrder: mutable.Set[String]): Unit = {
     this.fieldsWithReverseOrder.clear()
     if (Objects.nonNull(fieldsWithReverseOrder)) {
       this.fieldsWithReverseOrder ++= fieldsWithReverseOrder

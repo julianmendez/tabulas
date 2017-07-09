@@ -6,7 +6,7 @@ import java.util.{Comparator, Objects}
 import de.tudresden.inf.lat.tabulas.datatype.{PrimitiveTypeValue, Record}
 
 import scala.collection.mutable
-import scala.collection.mutable.{ArrayBuffer, Set, TreeSet}
+import scala.collection.mutable.ArrayBuffer
 
 /**
   * Comparator for records.
@@ -15,14 +15,14 @@ import scala.collection.mutable.{ArrayBuffer, Set, TreeSet}
 class RecordComparator extends Comparator[Record] {
 
   private val sortingOrder: mutable.Buffer[String] = new ArrayBuffer[String]
-  private val fieldsWithReverseOrder: Set[String] = new TreeSet[String]()
+  private val fieldsWithReverseOrder: mutable.Set[String] = new mutable.TreeSet[String]()
 
   def this(sortingOrder: mutable.Buffer[String]) = {
     this()
     this.sortingOrder ++= sortingOrder
   }
 
-  def this(sortingOrder: mutable.Buffer[String], fieldsWithReverseOrder: Set[String]) = {
+  def this(sortingOrder: mutable.Buffer[String], fieldsWithReverseOrder: mutable.Set[String]) = {
     this()
     this.sortingOrder ++= sortingOrder
     this.fieldsWithReverseOrder ++= fieldsWithReverseOrder
@@ -32,7 +32,7 @@ class RecordComparator extends Comparator[Record] {
     return this.sortingOrder
   }
 
-  def getFieldsWithReverseOrder: Set[String] = {
+  def getFieldsWithReverseOrder: mutable.Set[String] = {
     return this.fieldsWithReverseOrder
   }
 

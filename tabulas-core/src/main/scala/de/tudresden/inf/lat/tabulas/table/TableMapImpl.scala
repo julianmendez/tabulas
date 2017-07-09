@@ -2,7 +2,7 @@
 package de.tudresden.inf.lat.tabulas.table
 
 import scala.collection.mutable
-import scala.collection.mutable.{ArrayBuffer, Map, TreeMap}
+import scala.collection.mutable.ArrayBuffer
 
 /**
   * This is the default implementation of a table map.
@@ -10,7 +10,7 @@ import scala.collection.mutable.{ArrayBuffer, Map, TreeMap}
   */
 class TableMapImpl extends TableMap {
 
-  private val map: Map[String, Table] = new TreeMap[String, Table]()
+  private val map: mutable.Map[String, Table] = new mutable.TreeMap[String, Table]()
 
   /**
     * Constructs a new table map using another one.
@@ -23,7 +23,7 @@ class TableMapImpl extends TableMap {
     otherTableMap.getTableIds.foreach(tableId => put(tableId, otherTableMap.getTable(tableId).get))
   }
 
-  override def getTableIds(): mutable.Buffer[String] = {
+  override def getTableIds: mutable.Buffer[String] = {
     val ret: mutable.Buffer[String] = new ArrayBuffer[String]()
     ret ++= this.map.keySet
     return ret
@@ -44,8 +44,8 @@ class TableMapImpl extends TableMap {
   override def equals(obj: Any): Boolean = {
     obj match {
       case other: TableMap => {
-        var ret: Boolean = getTableIds().equals(other.getTableIds)
-        val tableIds: mutable.Buffer[String] = getTableIds()
+        var ret: Boolean = getTableIds.equals(other.getTableIds)
+        val tableIds: mutable.Buffer[String] = getTableIds
         ret = ret && tableIds.forall(tableId => getTable(tableId).equals(other.getTable(tableId)))
         return ret
       }
@@ -55,7 +55,7 @@ class TableMapImpl extends TableMap {
 
   override def toString: String = {
     val sbuf: StringBuffer = new StringBuffer()
-    val tableIds: mutable.Buffer[String] = getTableIds()
+    val tableIds: mutable.Buffer[String] = getTableIds
     tableIds.foreach(tableId => {
       sbuf.append(tableId)
       sbuf.append("=")
