@@ -31,12 +31,7 @@ class RecordImpl extends Record {
     if (Objects.isNull(key)) {
       return Option.empty
     } else {
-      val optValue: Option[PrimitiveTypeValue] = this.map.get(key)
-      if (optValue.isEmpty) {
-        return Option.empty
-      } else {
-        return Option.apply(optValue.get)
-      }
+      return this.map.get(key)
     }
   }
 

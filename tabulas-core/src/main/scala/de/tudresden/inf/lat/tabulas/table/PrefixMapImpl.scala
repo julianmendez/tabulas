@@ -37,11 +37,7 @@ class PrefixMapImpl extends PrefixMap {
   override def getPrefixFor(uri: URI): Option[URI] = {
     val uriStr: String = uri.toASCIIString
     val key: Option[URI] = prefixMap.keySet.find(e => uriStr.startsWith(prefixMap.get(e).get.toASCIIString))
-    if (key.isDefined) {
-      return Option.apply(key.get)
-    } else {
-      return Option.empty
-    }
+    return key
   }
 
   override def getWithoutPrefix(uri: URI): URI = {

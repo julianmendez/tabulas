@@ -33,12 +33,7 @@ class CompositeTypeImpl extends CompositeType {
 
   override def getFieldType(field: String): Option[String] = {
     Objects.requireNonNull(field)
-    val optValue: Option[String] = this.fieldType.get(field)
-    if (optValue.isEmpty) {
-      return Option.empty
-    } else {
-      return Option.apply(optValue.get)
-    }
+    this.fieldType.get(field)
   }
 
   /**
