@@ -16,7 +16,7 @@ class ParameterizedListValue extends ArrayBuffer[PrimitiveTypeValue] with Primit
 
   val Separator: String = " "
 
-  var parameter: PrimitiveType = _
+  private var _parameter: PrimitiveType = _
 
   /**
     * Constructs a new parameterized list value.
@@ -27,7 +27,7 @@ class ParameterizedListValue extends ArrayBuffer[PrimitiveTypeValue] with Primit
   def this(parameter: PrimitiveType) = {
     this()
     Objects.requireNonNull(parameter)
-    this.parameter = parameter
+    this._parameter = parameter
   }
 
   /**
@@ -40,15 +40,15 @@ class ParameterizedListValue extends ArrayBuffer[PrimitiveTypeValue] with Primit
   def this(other: ParameterizedListValue) = {
     this()
     Objects.requireNonNull(other)
-    this.parameter = other.getParameter
+    this._parameter = other.getParameter
   }
 
   override def getType: PrimitiveType = {
-    return new ParameterizedListType(this.parameter)
+    return new ParameterizedListType(this._parameter)
   }
 
   def add(str: String): Unit = {
-    this += this.parameter.parse(str)
+    this += this._parameter.parse(str)
   }
 
   override def render(): String = {
@@ -86,7 +86,7 @@ class ParameterizedListValue extends ArrayBuffer[PrimitiveTypeValue] with Primit
   }
 
   def getParameter: PrimitiveType = {
-    return this.parameter
+    return this._parameter
   }
 
 }

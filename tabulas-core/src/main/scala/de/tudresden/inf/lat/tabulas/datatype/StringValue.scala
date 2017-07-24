@@ -12,7 +12,7 @@ import scala.collection.mutable.ArrayBuffer
   */
 class StringValue extends PrimitiveTypeValue {
 
-  private var str: String = ""
+  private var _str: String = ""
 
   /**
     * Constructs a new string value using a string.
@@ -22,7 +22,7 @@ class StringValue extends PrimitiveTypeValue {
     */
   def this(str: String) = {
     this()
-    this.str = if (Objects.isNull(str)) {
+    this._str = if (Objects.isNull(str)) {
       ""
     } else {
       str
@@ -37,7 +37,7 @@ class StringValue extends PrimitiveTypeValue {
     */
   def this(other: StringValue) = {
     this()
-    this.str = other.str
+    this._str = other._str
   }
 
   override def getType: PrimitiveType = {
@@ -45,11 +45,11 @@ class StringValue extends PrimitiveTypeValue {
   }
 
   override def isEmpty: Boolean = {
-    return str.trim().isEmpty
+    return _str.trim().isEmpty
   }
 
   override def render(): String = {
-    return str
+    return _str
   }
 
   override def renderAsList(): mutable.Buffer[String] = {
@@ -64,18 +64,18 @@ class StringValue extends PrimitiveTypeValue {
   }
 
   override def hashCode(): Int = {
-    return this.str.hashCode()
+    return this._str.hashCode()
   }
 
   override def equals(obj: Any): Boolean = {
     obj match {
-      case other: StringValue => return this.str.equals(other.str)
+      case other: StringValue => return this._str.equals(other._str)
       case _ => return false
     }
   }
 
   override def toString: String = {
-    return this.str
+    return this._str
   }
 
 }

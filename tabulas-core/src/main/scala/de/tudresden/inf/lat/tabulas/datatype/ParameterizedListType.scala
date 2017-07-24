@@ -11,16 +11,16 @@ class ParameterizedListType extends PrimitiveType {
 
   val TypePrefix: String = "List_"
 
-  var parameter: PrimitiveType = _
+  private var _parameter: PrimitiveType = _
 
   def this(parameter: PrimitiveType) = {
     this()
     Objects.requireNonNull(parameter)
-    this.parameter = parameter
+    this._parameter = parameter
   }
 
   override def getTypeName: String = {
-    return TypePrefix + this.parameter.getTypeName
+    return TypePrefix + this._parameter.getTypeName
   }
 
   override def isList: Boolean = {
@@ -28,16 +28,16 @@ class ParameterizedListType extends PrimitiveType {
   }
 
   override def parse(str: String): ParameterizedListValue = {
-    val ret: ParameterizedListValue = new ParameterizedListValue(this.parameter)
+    val ret: ParameterizedListValue = new ParameterizedListValue(this._parameter)
     val stok: StringTokenizer = new StringTokenizer(str)
     while (stok.hasMoreTokens) {
-      ret += this.parameter.parse(stok.nextToken())
+      ret += this._parameter.parse(stok.nextToken())
     }
     return ret
   }
 
   def getParameter: PrimitiveType = {
-    return this.parameter
+    return this._parameter
   }
 
   def castInstance(value: PrimitiveTypeValue): ParameterizedListValue = {
@@ -45,13 +45,13 @@ class ParameterizedListType extends PrimitiveType {
   }
 
   override def hashCode(): Int = {
-    return this.parameter.hashCode()
+    return this._parameter.hashCode()
   }
 
   override def equals(obj: Any): Boolean = {
     obj match {
       case other: ParameterizedListType =>
-        return this.parameter.equals(other.parameter)
+        return this._parameter.equals(other._parameter)
       case _ => return false
     }
   }

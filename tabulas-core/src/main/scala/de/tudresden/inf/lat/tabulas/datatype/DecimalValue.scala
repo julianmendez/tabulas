@@ -13,7 +13,7 @@ import scala.collection.mutable.ArrayBuffer
   */
 class DecimalValue extends PrimitiveTypeValue {
 
-  private var number: BigDecimal = BigDecimal.ZERO
+  private var _number: BigDecimal = BigDecimal.ZERO
 
   /**
     * Constructs a new decimal value using a string.
@@ -28,7 +28,7 @@ class DecimalValue extends PrimitiveTypeValue {
     this()
     Objects.requireNonNull(str)
     try {
-      this.number = new BigDecimal(str)
+      this._number = new BigDecimal(str)
     } catch {
       case e: NumberFormatException => {
         throw new ParseException(e.getMessage, e)
@@ -44,7 +44,7 @@ class DecimalValue extends PrimitiveTypeValue {
     */
   def this(other: DecimalValue) = {
     this()
-    this.number = other.number
+    this._number = other._number
   }
 
   override def getType: PrimitiveType = {
@@ -56,7 +56,7 @@ class DecimalValue extends PrimitiveTypeValue {
   }
 
   override def render(): String = {
-    return this.number.toString
+    return this._number.toString
   }
 
   override def renderAsList(): mutable.Buffer[String] = {
@@ -69,25 +69,25 @@ class DecimalValue extends PrimitiveTypeValue {
   override def compareTo(other: PrimitiveTypeValue): Int = {
     if (other.isInstanceOf[DecimalValue]) {
       val otherValue: DecimalValue = other.asInstanceOf[DecimalValue]
-      return this.number.compareTo(otherValue.number)
+      return this._number.compareTo(otherValue._number)
     } else {
       return render().compareTo(other.render())
     }
   }
 
   override def hashCode(): Int = {
-    return this.number.hashCode()
+    return this._number.hashCode()
   }
 
   override def equals(obj: Any): Boolean = {
     obj match {
-      case other: DecimalValue => return this.number.equals(other.number)
+      case other: DecimalValue => return this._number.equals(other._number)
       case _ => return false
     }
   }
 
   override def toString: String = {
-    return this.number.toString
+    return this._number.toString
   }
 
 }

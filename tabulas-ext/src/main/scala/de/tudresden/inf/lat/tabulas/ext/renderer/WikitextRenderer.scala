@@ -16,11 +16,11 @@ import scala.collection.mutable.{Buffer, Map}
   */
 class WikitextRenderer extends Renderer {
 
-  private var output: Writer = new OutputStreamWriter(System.out)
+  private var _output: Writer = new OutputStreamWriter(System.out)
 
   def this(output: Writer) = {
     this()
-    this.output = output
+    this._output = output
   }
 
   def writeAsStringIfNotEmpty(output: UncheckedWriter, prefix: String, value: PrimitiveTypeValue): Boolean = {
@@ -134,7 +134,7 @@ class WikitextRenderer extends Renderer {
   }
 
   override def render(tableMap: TableMap): Unit = {
-    render(new UncheckedWriterImpl(this.output), tableMap)
+    render(new UncheckedWriterImpl(this._output), tableMap)
   }
 
 }

@@ -14,26 +14,26 @@ import scala.collection.mutable.ArrayBuffer
   */
 class RecordComparator extends Comparator[Record] {
 
-  private val sortingOrder: mutable.Buffer[String] = new ArrayBuffer[String]
-  private val fieldsWithReverseOrder: mutable.Set[String] = new mutable.TreeSet[String]()
+  private val _sortingOrder: mutable.Buffer[String] = new ArrayBuffer[String]
+  private val _fieldsWithReverseOrder: mutable.Set[String] = new mutable.TreeSet[String]()
 
   def this(sortingOrder: mutable.Buffer[String]) = {
     this()
-    this.sortingOrder ++= sortingOrder
+    this._sortingOrder ++= sortingOrder
   }
 
   def this(sortingOrder: mutable.Buffer[String], fieldsWithReverseOrder: mutable.Set[String]) = {
     this()
-    this.sortingOrder ++= sortingOrder
-    this.fieldsWithReverseOrder ++= fieldsWithReverseOrder
+    this._sortingOrder ++= sortingOrder
+    this._fieldsWithReverseOrder ++= fieldsWithReverseOrder
   }
 
   def getSortingOrder: mutable.Buffer[String] = {
-    return this.sortingOrder
+    return this._sortingOrder
   }
 
   def getFieldsWithReverseOrder: mutable.Set[String] = {
-    return this.fieldsWithReverseOrder
+    return this._fieldsWithReverseOrder
   }
 
   override def compare(record0: Record, record1: Record): Int = {
@@ -48,10 +48,10 @@ class RecordComparator extends Comparator[Record] {
         return 1
       } else {
         var ret: Int = 0
-        val it: Iterator[String] = this.sortingOrder.iterator
+        val it: Iterator[String] = this._sortingOrder.iterator
         while (it.hasNext && (ret == 0)) {
           val token: String = it.next()
-          ret = compareValues(record0.get(token), record1.get(token), this.fieldsWithReverseOrder.contains(token))
+          ret = compareValues(record0.get(token), record1.get(token), this._fieldsWithReverseOrder.contains(token))
         }
         return ret
       }
@@ -80,17 +80,17 @@ class RecordComparator extends Comparator[Record] {
 
   override def equals(obj: Any): Boolean = {
     obj match {
-      case other: RecordComparator => return this.sortingOrder.equals(other.sortingOrder)
+      case other: RecordComparator => return this._sortingOrder.equals(other._sortingOrder)
       case _ => return false
     }
   }
 
   override def hashCode(): Int = {
-    return this.sortingOrder.hashCode()
+    return this._sortingOrder.hashCode()
   }
 
   override def toString: String = {
-    return this.sortingOrder.toString
+    return this._sortingOrder.toString
   }
 
 }

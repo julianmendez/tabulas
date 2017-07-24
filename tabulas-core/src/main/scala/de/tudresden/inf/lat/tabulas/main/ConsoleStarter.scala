@@ -14,11 +14,11 @@ class ConsoleStarter {
 
   private val ErrorPrefix: String = "ERROR: "
 
-  private var help: String = "\nusage: java -jar (jarname) (extension) (input) (output)\n" + //
+  private var _help: String = "\nusage: java -jar (jarname) (extension) (input) (output)\n" + //
     "\nIf the extension is ommitted, the '" + (new NormalizationExtension()).Name + "' extension is executed." + //
     "\n\nThe available extensions are:" + "\n"
 
-  var manager: ExtensionManager = _
+  private var _manager: ExtensionManager = _
 
   /**
     * Constructs a new console starter.
@@ -28,7 +28,7 @@ class ConsoleStarter {
     */
   def this(help: String) = {
     this()
-    this.help = help
+    this._help = help
   }
 
   /**
@@ -55,7 +55,7 @@ class ConsoleStarter {
     } catch {
       case e: ExtensionException => {
         System.out.println(ErrorPrefix + e.getMessage)
-        System.out.println(help + manager.getHelp)
+        System.out.println(_help + manager.getHelp)
       }
     }
   }

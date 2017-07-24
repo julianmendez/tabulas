@@ -14,7 +14,7 @@ import scala.collection.mutable.ArrayBuffer
   */
 class RecordImpl extends Record {
 
-  private val map: mutable.Map[String, PrimitiveTypeValue] = new mutable.TreeMap[String, PrimitiveTypeValue]()
+  private val _map: mutable.Map[String, PrimitiveTypeValue] = new mutable.TreeMap[String, PrimitiveTypeValue]()
 
   /**
     * Constructs a new record using another one.
@@ -31,19 +31,19 @@ class RecordImpl extends Record {
     if (Objects.isNull(key)) {
       return Option.empty
     } else {
-      return this.map.get(key)
+      return this._map.get(key)
     }
   }
 
   override def set(key: String, value: PrimitiveTypeValue): Unit = {
     if (Objects.nonNull(key)) {
-      this.map.put(key, value)
+      this._map.put(key, value)
     }
   }
 
   override def getProperties: mutable.Buffer[String] = {
     val ret: mutable.Buffer[String] = new ArrayBuffer[String]
-    ret ++= map.keySet
+    ret ++= _map.keySet
     return ret
   }
 
@@ -59,11 +59,11 @@ class RecordImpl extends Record {
   }
 
   override def hashCode(): Int = {
-    return this.map.hashCode()
+    return this._map.hashCode()
   }
 
   override def toString: String = {
-    return this.map.toString
+    return this._map.toString
   }
 
 }

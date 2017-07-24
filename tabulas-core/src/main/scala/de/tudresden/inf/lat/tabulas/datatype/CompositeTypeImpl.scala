@@ -12,8 +12,8 @@ import scala.collection.mutable.ArrayBuffer
   */
 class CompositeTypeImpl extends CompositeType {
 
-  private val fields: mutable.Buffer[String] = new ArrayBuffer[String]
-  private val fieldType: mutable.Map[String, String] = new mutable.TreeMap[String, String]
+  private val _fields: mutable.Buffer[String] = new ArrayBuffer[String]
+  private val _fieldType: mutable.Map[String, String] = new mutable.TreeMap[String, String]
 
   /**
     * Constructs a new composite type using another one.
@@ -28,12 +28,12 @@ class CompositeTypeImpl extends CompositeType {
   }
 
   override def getFields: mutable.Buffer[String] = {
-    return this.fields // @FIXME this should be immutable
+    return this._fields // @FIXME this should be immutable
   }
 
   override def getFieldType(field: String): Option[String] = {
     Objects.requireNonNull(field)
-    this.fieldType.get(field)
+    this._fieldType.get(field)
   }
 
   /**
@@ -45,16 +45,16 @@ class CompositeTypeImpl extends CompositeType {
     * type of the field
     */
   def declareField(field: String, typeStr: String): Unit = {
-    if (this.fields.contains(field)) {
+    if (this._fields.contains(field)) {
       throw new ParseException("Field '" + field + "' has been already defined.")
     } else {
-      this.fields += field
-      this.fieldType.put(field, typeStr)
+      this._fields += field
+      this._fieldType.put(field, typeStr)
     }
   }
 
   override def hashCode(): Int = {
-    return this.fields.hashCode() + (0x1F * this.fieldType.hashCode())
+    return this._fields.hashCode() + (0x1F * this._fieldType.hashCode())
   }
 
   override def equals(obj: Any): Boolean = {
@@ -73,7 +73,7 @@ class CompositeTypeImpl extends CompositeType {
 
   override def toString: String = {
     val sbuf: StringBuffer = new StringBuffer()
-    this.fields.foreach(field => sbuf.append(field + ":" + this.fieldType.get(field) + " "))
+    this._fields.foreach(field => sbuf.append(field + ":" + this._fieldType.get(field) + " "))
     return sbuf.toString
   }
 

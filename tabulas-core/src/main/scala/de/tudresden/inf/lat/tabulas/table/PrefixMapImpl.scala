@@ -12,31 +12,31 @@ import scala.collection.mutable.{ArrayBuffer, Map, TreeMap}
   */
 class PrefixMapImpl extends PrefixMap {
 
-  private val prefixMap: Map[URI, URI] = new TreeMap[URI, URI]
-  private val keyList: mutable.Buffer[URI] = new ArrayBuffer[URI]
+  private val _prefixMap: Map[URI, URI] = new TreeMap[URI, URI]
+  private val _keyList: mutable.Buffer[URI] = new ArrayBuffer[URI]
 
   override def isEmpty(): Boolean = {
-    return this.prefixMap.isEmpty
+    return this._prefixMap.isEmpty
   }
 
   override def size(): Int = {
-    return this.prefixMap.size
+    return this._prefixMap.size
   }
 
   override def get(key: URI): Option[URI] = {
-    return this.prefixMap.get(key)
+    return this._prefixMap.get(key)
   }
 
   override def put(key: URI, value: URI): Option[URI] = {
-    if (!this.prefixMap.contains(key)) {
-      this.keyList += key
+    if (!this._prefixMap.contains(key)) {
+      this._keyList += key
     }
-    return this.prefixMap.put(key, value)
+    return this._prefixMap.put(key, value)
   }
 
   override def getPrefixFor(uri: URI): Option[URI] = {
     val uriStr: String = uri.toASCIIString
-    val key: Option[URI] = prefixMap.keySet.find(e => uriStr.startsWith(prefixMap.get(e).get.toASCIIString))
+    val key: Option[URI] = _prefixMap.keySet.find(e => uriStr.startsWith(_prefixMap.get(e).get.toASCIIString))
     return key
   }
 
@@ -47,7 +47,7 @@ class PrefixMapImpl extends PrefixMap {
       val pos = uriStr.indexOf(PrefixSemicolon, PrefixAmpersand.length())
       if (pos != -1) {
         val prefix: URI = URI.create(uriStr.substring(PrefixAmpersand.length(), pos))
-        val optExpansion: Option[URI] = this.prefixMap.get(prefix)
+        val optExpansion: Option[URI] = this._prefixMap.get(prefix)
         if (optExpansion.isDefined) {
           ret = URI.create(optExpansion.get.toASCIIString + uriStr.substring(pos + PrefixSemicolon.length))
         }
@@ -75,12 +75,12 @@ class PrefixMapImpl extends PrefixMap {
   }
 
   override def getKeysAsStream: Stream[URI] = {
-    return this.keyList.toStream
+    return this._keyList.toStream
   }
 
   override def clear(): Unit = {
-    this.prefixMap.clear()
-    this.keyList.clear()
+    this._prefixMap.clear()
+    this._keyList.clear()
   }
 
 }

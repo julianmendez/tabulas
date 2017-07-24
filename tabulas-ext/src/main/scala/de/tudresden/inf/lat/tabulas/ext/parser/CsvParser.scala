@@ -24,7 +24,7 @@ class CsvParser extends Parser {
   val DefaultFieldType: String = "String"
   val Underscore: String = "" + UnderscoreChar
 
-  private var input: Reader = new InputStreamReader(System.in)
+  private var _input: Reader = new InputStreamReader(System.in)
 
   /**
     * Constructs a new parser.
@@ -34,7 +34,7 @@ class CsvParser extends Parser {
     */
   def this(input: Reader) = {
     this()
-    this.input = input
+    this._input = input
   }
 
   def getColumns(line0: String): Buffer[String] = {
@@ -155,7 +155,7 @@ class CsvParser extends Parser {
 
   override def parse(): TableMap = {
     try {
-      return parseMap(new BufferedReader(this.input))
+      return parseMap(new BufferedReader(this._input))
 
     } catch {
       case e: IOException => {

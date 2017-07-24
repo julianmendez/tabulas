@@ -13,91 +13,91 @@ import scala.collection.mutable.ArrayBuffer
   */
 class TableImpl extends Table {
 
-  private var tableType: CompositeType = new CompositeTypeImpl()
-  private val list: mutable.Buffer[Record] = new ArrayBuffer[Record]
-  private val prefixMap: PrefixMap = new PrefixMapImpl()
-  private val sortingOrder: mutable.Buffer[String] = new ArrayBuffer[String]
-  private val fieldsWithReverseOrder: mutable.Set[String] = new mutable.TreeSet[String]()
+  private var _tableType: CompositeType = new CompositeTypeImpl()
+  private val _list: mutable.Buffer[Record] = new ArrayBuffer[Record]
+  private val _prefixMap: PrefixMap = new PrefixMapImpl()
+  private val _sortingOrder: mutable.Buffer[String] = new ArrayBuffer[String]
+  private val _fieldsWithReverseOrder: mutable.Set[String] = new mutable.TreeSet[String]()
 
   def this(newType: CompositeType) = {
     this()
-    this.tableType = newType
+    this._tableType = newType
   }
 
   def this(other: Table) = {
     this()
-    this.tableType = other.getType
-    this.list ++= other.getRecords
+    this._tableType = other.getType
+    this._list ++= other.getRecords
     if (other.isInstanceOf[Table]) {
       val otherTable: Table = other.asInstanceOf[Table]
       val otherMap: PrefixMap = otherTable.getPrefixMap
-      otherMap.getKeysAsStream.foreach(key => this.prefixMap.put(key, otherMap.get(key).get))
-      this.sortingOrder ++= otherTable.getSortingOrder
-      this.fieldsWithReverseOrder ++= otherTable.getFieldsWithReverseOrder
+      otherMap.getKeysAsStream.foreach(key => this._prefixMap.put(key, otherMap.get(key).get))
+      this._sortingOrder ++= otherTable.getSortingOrder
+      this._fieldsWithReverseOrder ++= otherTable.getFieldsWithReverseOrder
     }
   }
 
   override def getType: CompositeType = {
-    return this.tableType
+    return this._tableType
   }
 
   override def setType(newType: CompositeType): Unit = {
-    this.tableType = newType
+    this._tableType = newType
   }
 
   override def getPrefixMap: PrefixMap = {
-    return this.prefixMap
+    return this._prefixMap
   }
 
   override def setPrefixMap(newPrefixMap: PrefixMap): Unit = {
-    this.prefixMap.clear()
-    newPrefixMap.getKeysAsStream.foreach(key => this.prefixMap.put(key, newPrefixMap.get(key).get))
+    this._prefixMap.clear()
+    newPrefixMap.getKeysAsStream.foreach(key => this._prefixMap.put(key, newPrefixMap.get(key).get))
   }
 
   override def add(record: Record): Boolean = {
     if (Objects.isNull(record)) {
       return false
     } else {
-      this.list += record
+      this._list += record
       return true
     }
   }
 
   override def getSortingOrder: mutable.Buffer[String] = {
-    return this.sortingOrder
+    return this._sortingOrder
   }
 
   override def setSortingOrder(sortingOrder: mutable.Buffer[String]): Unit = {
-    this.sortingOrder.clear()
+    this._sortingOrder.clear()
     if (Objects.nonNull(sortingOrder)) {
-      this.sortingOrder ++= sortingOrder
+      this._sortingOrder ++= sortingOrder
     }
   }
 
   override def getFieldsWithReverseOrder: mutable.Set[String] = {
-    return this.fieldsWithReverseOrder
+    return this._fieldsWithReverseOrder
   }
 
   override def setFieldsWithReverseOrder(fieldsWithReverseOrder: mutable.Set[String]): Unit = {
-    this.fieldsWithReverseOrder.clear()
+    this._fieldsWithReverseOrder.clear()
     if (Objects.nonNull(fieldsWithReverseOrder)) {
-      this.fieldsWithReverseOrder ++= fieldsWithReverseOrder
+      this._fieldsWithReverseOrder ++= fieldsWithReverseOrder
     }
   }
 
   override def getRecords: mutable.Buffer[Record] = {
-    val comparator = new RecordComparator(this.sortingOrder, this.fieldsWithReverseOrder)
+    val comparator = new RecordComparator(this._sortingOrder, this._fieldsWithReverseOrder)
     val ret: mutable.Buffer[Record] = new ArrayBuffer[Record]
-    ret ++= this.list
+    ret ++= this._list
     return ret.sortWith((record0, record1) => comparator.compare(record0, record1) < 0)
   }
 
   override def clear(): Unit = {
-    this.list.clear()
+    this._list.clear()
   }
 
   override def hashCode(): Int = {
-    return this.tableType.hashCode() + 0x1F * (this.prefixMap.hashCode() + 0x1F * (this.sortingOrder.hashCode() + 0x1F * (this.fieldsWithReverseOrder.hashCode() + 0x1F * this.list.hashCode())))
+    return this._tableType.hashCode() + 0x1F * (this._prefixMap.hashCode() + 0x1F * (this._sortingOrder.hashCode() + 0x1F * (this._fieldsWithReverseOrder.hashCode() + 0x1F * this._list.hashCode())))
   }
 
   override def equals(obj: Any): Boolean = {
@@ -112,7 +112,7 @@ class TableImpl extends Table {
   }
 
   override def toString: String = {
-    return this.tableType.toString + " " + this.prefixMap.toString + " " + this.sortingOrder.toString + " " + this.fieldsWithReverseOrder.toString + " " + this.list.toString
+    return this._tableType.toString + " " + this._prefixMap.toString + " " + this._sortingOrder.toString + " " + this._fieldsWithReverseOrder.toString + " " + this._list.toString
   }
 
 }

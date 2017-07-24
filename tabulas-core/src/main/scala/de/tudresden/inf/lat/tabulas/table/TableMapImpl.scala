@@ -10,7 +10,7 @@ import scala.collection.mutable.ArrayBuffer
   */
 class TableMapImpl extends TableMap {
 
-  private val map: mutable.Map[String, Table] = new mutable.TreeMap[String, Table]()
+  private val _map: mutable.Map[String, Table] = new mutable.TreeMap[String, Table]()
 
   /**
     * Constructs a new table map using another one.
@@ -25,20 +25,20 @@ class TableMapImpl extends TableMap {
 
   override def getTableIds: mutable.Buffer[String] = {
     val ret: mutable.Buffer[String] = new ArrayBuffer[String]()
-    ret ++= this.map.keySet
+    ret ++= this._map.keySet
     return ret
   }
 
   override def put(id: String, table: Table): Option[Table] = {
-    return this.map.put(id, table)
+    return this._map.put(id, table)
   }
 
   override def getTable(id: String): Option[Table] = {
-    return this.map.get(id)
+    return this._map.get(id)
   }
 
   override def hashCode(): Int = {
-    return this.map.hashCode()
+    return this._map.hashCode()
   }
 
   override def equals(obj: Any): Boolean = {

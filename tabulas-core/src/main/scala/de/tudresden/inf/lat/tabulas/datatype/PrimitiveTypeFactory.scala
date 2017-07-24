@@ -8,10 +8,10 @@ import scala.collection.mutable.{Map, TreeMap}
   */
 class PrimitiveTypeFactory {
 
-  private val map: Map[String, PrimitiveType] = new TreeMap[String, PrimitiveType]()
+  private val _map: Map[String, PrimitiveType] = new TreeMap[String, PrimitiveType]()
 
   private def add(primType: PrimitiveType): Unit = {
-    this.map.put(primType.getTypeName, primType)
+    this._map.put(primType.getTypeName, primType)
   }
 
   /**
@@ -38,7 +38,7 @@ class PrimitiveTypeFactory {
     *         primitive type
     */
   def contains(primType: String): Boolean = {
-    return this.map.get(primType).isDefined
+    return this._map.get(primType).isDefined
   }
 
   /**
@@ -51,7 +51,7 @@ class PrimitiveTypeFactory {
     * @return a new value of the specified type
     */
   def newInstance(typeName: String, value: String): PrimitiveTypeValue = {
-    val optPrimType: Option[PrimitiveType] = this.map.get(typeName)
+    val optPrimType: Option[PrimitiveType] = this._map.get(typeName)
     if (optPrimType.isEmpty) {
       throw new ParseException("Type '" + typeName + "' is undefined.")
     } else {

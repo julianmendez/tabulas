@@ -17,11 +17,11 @@ class SimpleFormatRenderer extends Renderer {
   val Prefix: String = "" +
     ParserConstant.CommentSymbol + " simple format 1.0.0" + ParserConstant.NewLine
 
-  private var output: Writer = new OutputStreamWriter(System.out)
+  private var _output: Writer = new OutputStreamWriter(System.out)
 
   def this(output: Writer) = {
     this()
-    this.output = output
+    this._output = output
   }
 
   def renderAllRecords(output: UncheckedWriter, table: Table): Unit = {
@@ -111,7 +111,7 @@ class SimpleFormatRenderer extends Renderer {
   }
 
   override def render(tableMap: TableMap): Unit = {
-    render(new UncheckedWriterImpl(this.output), tableMap)
+    render(new UncheckedWriterImpl(this._output), tableMap)
   }
 
 }

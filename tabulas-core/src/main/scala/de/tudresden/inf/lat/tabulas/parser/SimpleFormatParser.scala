@@ -17,26 +17,26 @@ import scala.collection.mutable.{ArrayBuffer, Map, Set, TreeMap, TreeSet}
   */
 class SimpleFormatParser extends Parser {
 
-  private var input: Reader = new InputStreamReader(System.in)
+  private var _input: Reader = new InputStreamReader(System.in)
 
   class Pair(lineCounter0: Int, line0: String) {
 
-    private val line: String = line0
-    private val lineCounter: Int = lineCounter0
+    private val _line: String = line0
+    private val _lineCounter: Int = lineCounter0
 
     def getLine(): String = {
-      return this.line
+      return this._line
     }
 
     def getLineCounter(): Int = {
-      return this.lineCounter
+      return this._lineCounter
     }
 
   }
 
   def this(input: Reader) = {
     this()
-    this.input = input
+    this._input = input
   }
 
   def getKey(line: String): Option[String] = {
@@ -337,7 +337,7 @@ class SimpleFormatParser extends Parser {
 
   override def parse(): TableMap = {
     try {
-      return parseMap(new BufferedReader(this.input))
+      return parseMap(new BufferedReader(this._input))
 
     } catch {
       case e: IOException => {

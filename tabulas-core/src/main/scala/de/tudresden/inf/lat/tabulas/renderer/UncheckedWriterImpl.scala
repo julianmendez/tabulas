@@ -11,7 +11,7 @@ import java.util.Objects
   */
 class UncheckedWriterImpl extends UncheckedWriter {
 
-  var writer: Writer = _
+  private var _writer: Writer = _
 
   /**
     * Constructs a new unchecked writer.
@@ -22,12 +22,12 @@ class UncheckedWriterImpl extends UncheckedWriter {
   def this(writer: Writer) = {
     this()
     Objects.requireNonNull(writer)
-    this.writer = writer
+    this._writer = writer
   }
 
   override def write(character: Int): Unit = {
     try {
-      this.writer.write(character)
+      this._writer.write(character)
     } catch {
       case e: IOException => {
         throw new UncheckedIOException(e)
@@ -37,7 +37,7 @@ class UncheckedWriterImpl extends UncheckedWriter {
 
   override def write(charBuffer: Array[Char]): Unit = {
     try {
-      this.writer.write(charBuffer)
+      this._writer.write(charBuffer)
     } catch {
       case e: IOException => {
         throw new UncheckedIOException(e)
@@ -47,7 +47,7 @@ class UncheckedWriterImpl extends UncheckedWriter {
 
   override def write(charBuffer: Array[Char], offset: Int, length: Int): Unit = {
     try {
-      this.writer.write(charBuffer, offset, length)
+      this._writer.write(charBuffer, offset, length)
     } catch {
       case e: IOException => {
         throw new UncheckedIOException(e)
@@ -57,7 +57,7 @@ class UncheckedWriterImpl extends UncheckedWriter {
 
   override def write(str: String): Unit = {
     try {
-      this.writer.write(str)
+      this._writer.write(str)
     } catch {
       case e: IOException => {
         throw new UncheckedIOException(e)
@@ -67,7 +67,7 @@ class UncheckedWriterImpl extends UncheckedWriter {
 
   override def write(str: String, offset: Int, length: Int): Unit = {
     try {
-      this.writer.write(str, offset, length)
+      this._writer.write(str, offset, length)
     } catch {
       case e: IOException => {
         throw new UncheckedIOException(e)
@@ -77,7 +77,7 @@ class UncheckedWriterImpl extends UncheckedWriter {
 
   override def close(): Unit = {
     try {
-      this.writer.close()
+      this._writer.close()
     } catch {
       case e: IOException => {
         throw new UncheckedIOException(e)
@@ -87,7 +87,7 @@ class UncheckedWriterImpl extends UncheckedWriter {
 
   override def flush(): Unit = {
     try {
-      this.writer.flush()
+      this._writer.flush()
     } catch {
       case e: IOException => {
         throw new UncheckedIOException(e)
@@ -97,7 +97,7 @@ class UncheckedWriterImpl extends UncheckedWriter {
 
   override def append(character: Char): UncheckedWriter = {
     try {
-      this.writer.append(character)
+      this._writer.append(character)
     } catch {
       case e: IOException => {
         throw new UncheckedIOException(e)
@@ -108,7 +108,7 @@ class UncheckedWriterImpl extends UncheckedWriter {
 
   override def append(charSequence: CharSequence): UncheckedWriter = {
     try {
-      this.writer.append(charSequence)
+      this._writer.append(charSequence)
     } catch {
       case e: IOException => {
         throw new UncheckedIOException(e)
@@ -119,7 +119,7 @@ class UncheckedWriterImpl extends UncheckedWriter {
 
   override def append(charSequence: CharSequence, start: Int, end: Int): UncheckedWriter = {
     try {
-      this.writer.append(charSequence, start, end)
+      this._writer.append(charSequence, start, end)
     } catch {
       case e: IOException => {
         throw new UncheckedIOException(e)
@@ -129,11 +129,11 @@ class UncheckedWriterImpl extends UncheckedWriter {
   }
 
   override def asWriter(): Writer = {
-    return this.writer
+    return this._writer
   }
 
   override def hashCode(): Int = {
-    return this.writer.hashCode()
+    return this._writer.hashCode()
   }
 
   override def equals(obj: Any): Boolean = {
@@ -144,7 +144,7 @@ class UncheckedWriterImpl extends UncheckedWriter {
   }
 
   override def toString: String = {
-    return this.writer.toString
+    return this._writer.toString
   }
 
 }

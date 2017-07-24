@@ -20,8 +20,8 @@ class ExtensionManager extends Extension {
   val NewLine: Char = '\n'
   val Space: Char = ' '
 
-  val extensions: mutable.Buffer[Extension] = new ArrayBuffer[Extension]()
-  val extensionMap: Map[String, Extension] = new TreeMap[String, Extension]()
+  private val _extensions: mutable.Buffer[Extension] = new ArrayBuffer[Extension]()
+  private val _extensionMap: Map[String, Extension] = new TreeMap[String, Extension]()
 
   /**
     * Constructs an extension manager.
@@ -32,15 +32,15 @@ class ExtensionManager extends Extension {
   def this(extensions: mutable.Buffer[Extension]) = {
     this()
     if (Objects.nonNull(extensions)) {
-      this.extensions ++= extensions
+      this._extensions ++= extensions
       extensions.foreach(extension => {
         val key: String = extension.getExtensionName
-        if (this.extensionMap.get(key).isDefined) {
+        if (this._extensionMap.get(key).isDefined) {
           throw new ExtensionException(
             "Only one implementation is allowed for each extension, and '"
               + key + "' was at least twice.")
         }
-        this.extensionMap.put(key, extension)
+        this._extensionMap.put(key, extension)
       })
     }
   }
@@ -54,7 +54,7 @@ class ExtensionManager extends Extension {
       val newArguments: mutable.Buffer[String] = new ArrayBuffer[String]()
       newArguments ++= arguments
       newArguments.remove(0)
-      val optExtension: Option[Extension] = this.extensionMap.get(command)
+      val optExtension: Option[Extension] = this._extensionMap.get(command)
       if (optExtension.isEmpty) {
         throw new ExtensionException("Extension '" + command
           + "' was not found.")
@@ -78,7 +78,7 @@ class ExtensionManager extends Extension {
 
   override def getHelp: String = {
     val sbuf: StringBuffer = new StringBuffer()
-    this.extensions.foreach(extension => {
+    this._extensions.foreach(extension => {
       sbuf.append(extension.getExtensionName)
       sbuf.append(Space)
       sbuf.append(extension.getHelp)
