@@ -45,16 +45,20 @@ class HtmlRenderer extends Renderer {
   }
 
   def writeAsStringIfNotEmpty(output: UncheckedWriter, value: PrimitiveTypeValue): Boolean = {
+    var result: Boolean = false
     if (Objects.nonNull(value) && !value.toString.trim().isEmpty) {
       output.write(value.toString)
       output.write("\n")
-      return true
+      result = true
     } else {
-      return false
+      result = false
     }
+
+    return result
   }
 
   def writeParameterizedListIfNotEmpty(output: UncheckedWriter, list: ParameterizedListValue): Boolean = {
+    var result: Boolean = false
     if (Objects.nonNull(list)) {
       list.foreach(value => {
         if (value.getType.equals(new URIType())) {
@@ -65,13 +69,16 @@ class HtmlRenderer extends Renderer {
           writeAsStringIfNotEmpty(output, strVal)
         }
       })
-      return true
+      result = true
     } else {
-      return false
+      result = false
     }
+
+    return result
   }
 
   def writeLinkIfNotEmpty(output: UncheckedWriter, link: URIValue): Boolean = {
+    var result: Boolean = false
     if (Objects.nonNull(link) && !link.isEmpty) {
       output.write("<a href=\"")
       output.write(link.getUriNoLabel.toASCIIString)
@@ -79,10 +86,12 @@ class HtmlRenderer extends Renderer {
       output.write(link.getLabel)
       output.write(")</a>")
       output.write("\n")
-      return true
+      result = true
     } else {
-      return false
+      result = false
     }
+
+    return result
   }
 
   def render(output: UncheckedWriter, record: Record, fields: Buffer[String]): Unit = {

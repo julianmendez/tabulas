@@ -30,10 +30,13 @@ class IntegerType extends PrimitiveType {
   }
 
   override def equals(obj: Any): Boolean = {
+    var result = false
     obj match {
-      case other: IntegerType => return true
-      case _ => return false
+      case other: IntegerType => result = true
+      case _ => result = false
     }
+
+    return result
   }
 
   override def toString: String = {

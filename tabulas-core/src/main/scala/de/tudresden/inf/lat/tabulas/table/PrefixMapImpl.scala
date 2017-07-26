@@ -31,17 +31,20 @@ class PrefixMapImpl extends PrefixMap {
     if (!this._prefixMap.contains(key)) {
       this._keyList += key
     }
-    return this._prefixMap.put(key, value)
+    val result: Option[URI] = this._prefixMap.put(key, value)
+
+    return result
   }
 
   override def getPrefixFor(uri: URI): Option[URI] = {
     val uriStr: String = uri.toASCIIString
-    val key: Option[URI] = _prefixMap.keySet.find(e => uriStr.startsWith(_prefixMap.get(e).get.toASCIIString))
-    return key
+    val result: Option[URI] = _prefixMap.keySet.find(e => uriStr.startsWith(_prefixMap.get(e).get.toASCIIString))
+
+    return result
   }
 
   override def getWithoutPrefix(uri: URI): URI = {
-    var ret: URI = uri
+    var result: URI = uri
     val uriStr = uri.toASCIIString
     if (uriStr.startsWith(PrefixAmpersand)) {
       val pos = uriStr.indexOf(PrefixSemicolon, PrefixAmpersand.length())
@@ -49,15 +52,16 @@ class PrefixMapImpl extends PrefixMap {
         val prefix: URI = URI.create(uriStr.substring(PrefixAmpersand.length(), pos))
         val optExpansion: Option[URI] = this._prefixMap.get(prefix)
         if (optExpansion.isDefined) {
-          ret = URI.create(optExpansion.get.toASCIIString + uriStr.substring(pos + PrefixSemicolon.length))
+          result = URI.create(optExpansion.get.toASCIIString + uriStr.substring(pos + PrefixSemicolon.length))
         }
       }
     }
-    return ret
+
+    return result
   }
 
   override def getWithPrefix(uri: URI): URI = {
-    var ret: URI = uri
+    var result: URI = uri
     val optPrefix: Option[URI] = getPrefixFor(uri)
     if (optPrefix.isDefined) {
       val uriStr = uri.toASCIIString
@@ -66,12 +70,13 @@ class PrefixMapImpl extends PrefixMap {
       val optExpansion: Option[URI] = get(key)
       val expansionStr = optExpansion.get.toASCIIString
       if (keyStr.isEmpty) {
-        ret = URI.create(uriStr.substring(expansionStr.length))
+        result = URI.create(uriStr.substring(expansionStr.length))
       } else {
-        ret = URI.create(PrefixAmpersand + keyStr + PrefixSemicolon + uriStr.substring(expansionStr.length))
+        result = URI.create(PrefixAmpersand + keyStr + PrefixSemicolon + uriStr.substring(expansionStr.length))
       }
     }
-    return ret
+
+    return result
   }
 
   override def getKeysAsStream: Stream[URI] = {

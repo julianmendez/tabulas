@@ -20,8 +20,9 @@ class CsvExtension extends Extension {
   val RequiredArguments: Int = 2
 
   override def process(arguments: Buffer[String]): Boolean = {
+    var result: Boolean = false
     if (Objects.isNull(arguments) || arguments.size != RequiredArguments) {
-      return false
+      result = false
     } else {
       try {
 
@@ -33,7 +34,7 @@ class CsvExtension extends Extension {
           outputFileName))
         val renderer: CsvRenderer = new CsvRenderer(output)
         renderer.render(tableMap)
-        return true
+        result = true
 
       } catch {
         case e: IOException => {
@@ -41,6 +42,8 @@ class CsvExtension extends Extension {
         }
       }
     }
+
+    return result
   }
 
   override def getExtensionName: String = {

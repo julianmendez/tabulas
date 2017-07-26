@@ -34,12 +34,15 @@ class CalendarParser extends Parser {
 
     def push(elem: A): MyStack[A] = {
       insert(0, elem)
+
       return this
     }
 
     def pop(): A = {
       iterator.next() // this throws an NoSuchElementException in an empty stack
-      return remove(0)
+      val result: A = remove(0)
+
+      return result
     }
 
   }
@@ -102,33 +105,39 @@ class CalendarParser extends Parser {
   }
 
   def getKey(line: String): Option[String] = {
+    var result: Option[String] = Option.empty
     if (Objects.isNull(line)) {
-      return Option.empty
+      result = Option.empty
     } else {
       var pos: Int = line.indexOf(ColonChar)
       if (pos == -1) {
-        return Option.apply(line)
+        result = Option.apply(line)
       } else {
         var pos2: Int = line.indexOf(SemicolonChar)
         if (pos2 >= 0 && pos2 < pos) {
           pos = pos2
         }
-        return Option.apply(line.substring(0, pos).trim())
+        result = Option.apply(line.substring(0, pos).trim())
       }
     }
+
+    return result
   }
 
   def getValue(line: String): Option[String] = {
+    var result: Option[String] = Option.empty
     if (Objects.isNull(line)) {
-      return Option.empty
+      result = Option.empty
     } else {
       var pos: Int = line.indexOf(ColonChar)
       if (pos == -1) {
-        return Option.apply("")
+        result = Option.apply("")
       } else {
-        return Option.apply(line.substring(pos + 1, line.length()).trim())
+        result = Option.apply(line.substring(pos + 1, line.length()).trim())
       }
     }
+
+    return result
   }
 
   def isBeginLine(line: String): Boolean = {
@@ -141,13 +150,14 @@ class CalendarParser extends Parser {
 
   private def getTypedValue(key: String, value: String,
                             type0: CompositeType, lineCounter: Int): PrimitiveTypeValue = {
+    var result: PrimitiveTypeValue = new StringValue()
     if (Objects.isNull(key)) {
-      return new StringValue()
+      result = new StringValue()
     } else {
       try {
         val optTypeStr: Option[String] = type0.getFieldType(key)
         if (optTypeStr.isDefined) {
-          return (new PrimitiveTypeFactory()).newInstance(optTypeStr.get, value)
+          result = (new PrimitiveTypeFactory()).newInstance(optTypeStr.get, value)
         } else {
           throw new ParseException("Key '" + key + "' has an undefined type.")
         }
@@ -158,10 +168,12 @@ class CalendarParser extends Parser {
         }
       }
     }
+
+    return result
   }
 
   private def preload(input: BufferedReader): Buffer[Pair] = {
-    val ret: Buffer[Pair] = new ArrayBuffer[Pair]()
+    val result: Buffer[Pair] = new ArrayBuffer[Pair]()
     var sbuf: StringBuffer = new StringBuffer()
     var finish: Boolean = false
     var lineCounter: Int = 0
@@ -170,13 +182,14 @@ class CalendarParser extends Parser {
       if (line.startsWith("" + SpaceChar)) {
         sbuf.append(line)
       } else {
-        ret += new Pair(lineCounter, sbuf.toString)
+        result += new Pair(lineCounter, sbuf.toString)
         sbuf = new StringBuffer()
         sbuf.append(line)
       }
       lineCounter += 1
     })
-    return ret
+
+    return result
   }
 
   private def parseProperty(line: String, currentTable: TableImpl,
@@ -216,7 +229,9 @@ class CalendarParser extends Parser {
       }
       sbuf.append(counter)
     }
-    return sbuf.toString
+    val result: String = sbuf.toString
+
+    return result
   }
 
   def parseMap(input: BufferedReader): TableMap = {
@@ -317,20 +332,24 @@ class CalendarParser extends Parser {
         + " keywords  (line " + lineCounter + ").")
     }
 
-    val ret: TableMapImpl = new TableMapImpl()
-    map.keySet.foreach(key => ret.put(key, map.get(key).get))
-    return ret
+    val result: TableMapImpl = new TableMapImpl()
+    map.keySet.foreach(key => result.put(key, map.get(key).get))
+
+    return result
   }
 
   override def parse(): TableMap = {
+    var result: TableMap = null
     try {
-      return parseMap(new BufferedReader(this.input))
+      result = parseMap(new BufferedReader(this.input))
 
     } catch {
       case e: IOException => {
         throw new RuntimeException(e)
       }
     }
+
+    return result
   }
 
 }

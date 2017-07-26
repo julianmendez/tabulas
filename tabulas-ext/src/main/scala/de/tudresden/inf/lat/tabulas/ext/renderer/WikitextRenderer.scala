@@ -24,17 +24,21 @@ class WikitextRenderer extends Renderer {
   }
 
   def writeAsStringIfNotEmpty(output: UncheckedWriter, prefix: String, value: PrimitiveTypeValue): Boolean = {
+    var result: Boolean = false
     if (Objects.nonNull(value) && !value.toString.trim().isEmpty) {
       output.write(prefix)
       output.write(value.toString)
       output.write("\n")
-      return true
+      result = true
     } else {
-      return false
+      result = false
     }
+
+    return result
   }
 
   def writeParameterizedListIfNotEmpty(output: UncheckedWriter, prefix: String, list: ParameterizedListValue): Boolean = {
+    var result: Boolean = false
     if (Objects.nonNull(list)) {
       output.write(prefix)
       list.foreach(value => {
@@ -46,13 +50,16 @@ class WikitextRenderer extends Renderer {
           writeAsStringIfNotEmpty(output, "", strVal)
         }
       })
-      return true
+      result = true
     } else {
-      return false
+      result = false
     }
+
+    return result
   }
 
   def writeLinkIfNotEmpty(output: UncheckedWriter, prefix: String, link: URIValue): Boolean = {
+    var result: Boolean = false
     if (Objects.nonNull(link) && !link.isEmpty) {
       output.write(prefix)
       output.write("[")
@@ -61,14 +68,15 @@ class WikitextRenderer extends Renderer {
       output.write(link.getLabel)
       output.write(")]")
       output.write("\n")
-      return true
+      result = true
     } else {
-      return false
+      result = false
     }
+
+    return result
   }
 
   def render(output: UncheckedWriter, record: Record, fields: Buffer[String]): Unit = {
-
     fields.foreach(field => {
       val optValue: Option[PrimitiveTypeValue] = record.get(field)
       output.write("|")

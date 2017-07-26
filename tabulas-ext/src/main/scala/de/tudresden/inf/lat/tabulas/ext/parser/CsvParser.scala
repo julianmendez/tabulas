@@ -38,7 +38,7 @@ class CsvParser extends Parser {
   }
 
   def getColumns(line0: String): Buffer[String] = {
-    val ret: Buffer[String] = new ArrayBuffer[String]()
+    val result: Buffer[String] = new ArrayBuffer[String]()
     val line: String = if (Objects.isNull(line0)) {
       ""
     } else {
@@ -51,25 +51,27 @@ class CsvParser extends Parser {
       if (ch == QuotesChar) {
         betweenQuotes = !betweenQuotes
       } else if ((ch == CommaChar) && !betweenQuotes) {
-        ret += current.toString
+        result += current.toString
         current = new StringBuffer()
       } else {
         current.append(ch)
       }
     }
     if (!current.toString.isEmpty) {
-      ret += current.toString
+      result += current.toString
     }
-    return ret
+
+    return result
   }
 
   private def createSortedTable(fields: Buffer[String]): TableImpl = {
     var tableType: CompositeTypeImpl = new CompositeTypeImpl()
     fields.foreach(fieldName => tableType.declareField(fieldName, DefaultFieldType))
 
-    val ret: TableImpl = new TableImpl()
-    ret.setType(tableType)
-    return ret
+    val result: TableImpl = new TableImpl()
+    result.setType(tableType)
+
+    return result
   }
 
   def normalize(fieldName: String): String = {
@@ -92,11 +94,13 @@ class CsvParser extends Parser {
       }
       ret.append(ch)
     })
-    return ret.toString
+    val result = ret.toString
+
+    return result
   }
 
   def normalizeHeaders(headers: Buffer[String], lineCounter: Int): Buffer[String] = {
-    val ret: Buffer[String] = new ArrayBuffer[String]()
+    val result: Buffer[String] = new ArrayBuffer[String]()
     var idCount: Int = 0
     for (header: String <- headers) {
       val fieldName: String = normalize(header)
@@ -109,10 +113,11 @@ class CsvParser extends Parser {
             + ParserConstant.IdKeyword + "') (line "
             + lineCounter + ")")
       } else {
-        ret += fieldName
+        result += fieldName
       }
     }
-    return ret
+
+    return result
   }
 
   def parseMap(input: BufferedReader): TableMap = {
@@ -148,20 +153,24 @@ class CsvParser extends Parser {
       }
     }
 
-    val ret: TableMapImpl = new TableMapImpl()
-    ret.put(DefaultTableName, currentTable)
-    return ret
+    val result: TableMapImpl = new TableMapImpl()
+    result.put(DefaultTableName, currentTable)
+
+    return result
   }
 
   override def parse(): TableMap = {
+    var result: TableMap = null
     try {
-      return parseMap(new BufferedReader(this._input))
+      result = parseMap(new BufferedReader(this._input))
 
     } catch {
       case e: IOException => {
         throw new RuntimeException(e)
       }
     }
+
+    return result
   }
 
 }

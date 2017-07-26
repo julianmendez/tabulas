@@ -37,52 +37,60 @@ class RecordComparator extends Comparator[Record] {
   }
 
   override def compare(record0: Record, record1: Record): Int = {
+    var result: Int = 0
     if (Objects.isNull(record0)) {
       if (Objects.isNull(record1)) {
-        return 0
+        result = 0
       } else {
-        return -1
+        result = -1
       }
     } else {
       if (Objects.isNull(record1)) {
-        return 1
+        result = 1
       } else {
-        var ret: Int = 0
+        result = 0
         val it: Iterator[String] = this._sortingOrder.iterator
-        while (it.hasNext && (ret == 0)) {
+        while (it.hasNext && (result == 0)) {
           val token: String = it.next()
-          ret = compareValues(record0.get(token), record1.get(token), this._fieldsWithReverseOrder.contains(token))
+          result = compareValues(record0.get(token), record1.get(token), this._fieldsWithReverseOrder.contains(token))
         }
-        return ret
       }
     }
+
+    return result
   }
 
   def compareValues(optValue0: Option[PrimitiveTypeValue], optValue1: Option[PrimitiveTypeValue], hasReverseOrder: Boolean): Int = {
+    var result: Int = 0
     if (hasReverseOrder) {
-      return compareValues(optValue1, optValue0, false)
+      result = compareValues(optValue1, optValue0, false)
     } else {
       if (optValue0.isDefined) {
         if (optValue1.isDefined) {
-          return optValue0.get.compareTo(optValue1.get)
+          result = optValue0.get.compareTo(optValue1.get)
         } else {
-          return 1
+          result = 1
         }
       } else {
         if (optValue1.isDefined) {
-          return -1
+          result = -1
         } else {
-          return 0
+          result = 0
         }
       }
     }
+
+    return result
   }
 
   override def equals(obj: Any): Boolean = {
+    var result: Boolean = false
     obj match {
-      case other: RecordComparator => return this._sortingOrder.equals(other._sortingOrder)
-      case _ => return false
+      case other: RecordComparator => result = this._sortingOrder.equals(other._sortingOrder)
+      case _ => result = false
     }
+
+    return result
   }
 
   override def hashCode(): Int = {

@@ -55,12 +55,14 @@ class TableImpl extends Table {
   }
 
   override def add(record: Record): Boolean = {
+    var result: Boolean = false
     if (Objects.isNull(record)) {
-      return false
+      result = false
     } else {
       this._list += record
-      return true
+      result = true
     }
+    return result
   }
 
   override def getSortingOrder: mutable.Buffer[String] = {
@@ -89,7 +91,9 @@ class TableImpl extends Table {
     val comparator = new RecordComparator(this._sortingOrder, this._fieldsWithReverseOrder)
     val ret: mutable.Buffer[Record] = new ArrayBuffer[Record]
     ret ++= this._list
-    return ret.sortWith((record0, record1) => comparator.compare(record0, record1) < 0)
+    val result = ret.sortWith((record0, record1) => comparator.compare(record0, record1) < 0)
+
+    return result
   }
 
   override def clear(): Unit = {
@@ -101,14 +105,17 @@ class TableImpl extends Table {
   }
 
   override def equals(obj: Any): Boolean = {
+    var result: Boolean = false
     obj match {
-      case other: Table => return getType.equals(other.getType) &&
+      case other: Table => result = getType.equals(other.getType) &&
         getPrefixMap.equals(other.getPrefixMap) &&
         getSortingOrder.equals(other.getSortingOrder) &&
         getFieldsWithReverseOrder.equals(other.getFieldsWithReverseOrder) &&
         getRecords.equals(other.getRecords)
-      case _ => return false
+      case _ => result = false
     }
+
+    return result
   }
 
   override def toString: String = {

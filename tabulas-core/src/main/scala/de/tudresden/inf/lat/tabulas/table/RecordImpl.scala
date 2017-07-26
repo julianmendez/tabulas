@@ -28,11 +28,14 @@ class RecordImpl extends Record {
   }
 
   override def get(key: String): Option[PrimitiveTypeValue] = {
+    var result: Option[PrimitiveTypeValue] = Option.empty
     if (Objects.isNull(key)) {
-      return Option.empty
+      result = Option.empty
     } else {
-      return this._map.get(key)
+      result = this._map.get(key)
     }
+
+    return result
   }
 
   override def set(key: String, value: PrimitiveTypeValue): Unit = {
@@ -42,20 +45,23 @@ class RecordImpl extends Record {
   }
 
   override def getProperties: mutable.Buffer[String] = {
-    val ret: mutable.Buffer[String] = new ArrayBuffer[String]
-    ret ++= _map.keySet
-    return ret
+    val result: mutable.Buffer[String] = new ArrayBuffer[String]
+    result ++= _map.keySet
+
+    return result
   }
 
   override def equals(obj: Any): Boolean = {
+    var result: Boolean = false
     obj match {
       case other: Record => {
-        var ret: Boolean = getProperties.equals(other.getProperties)
-        ret = ret && getProperties.forall(property => get(property).equals(other.get(property)))
-        return ret
+        result = getProperties.equals(other.getProperties)
+        result = result && getProperties.forall(property => get(property).equals(other.get(property)))
       }
-      case _ => return false
+      case _ => result = false
     }
+
+    return result
   }
 
   override def hashCode(): Int = {

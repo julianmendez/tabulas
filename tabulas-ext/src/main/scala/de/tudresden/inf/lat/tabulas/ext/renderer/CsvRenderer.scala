@@ -33,19 +33,23 @@ class CsvRenderer extends Renderer {
   }
 
   def writeAsStringIfNotEmpty(output: UncheckedWriter, field: String, value: PrimitiveTypeValue): Boolean = {
+    var result: Boolean = false
     if (Objects.nonNull(field) && !field.trim().isEmpty && Objects.nonNull(value)
       && !value.toString.trim().isEmpty) {
       output.write(Quotes)
       output.write(sanitize(value.toString))
       output.write(Quotes)
-      return true
+      result = true
     } else {
       output.write(Null)
-      return false
+      result = false
     }
+
+    return result
   }
 
   def writeParameterizedListIfNotEmpty(output: UncheckedWriter, field: String, list: ParameterizedListValue): Boolean = {
+    var result: Boolean = false
     if (Objects.nonNull(list) && !list.isEmpty) {
       output.write(Quotes)
       list.foreach(value => {
@@ -53,27 +57,31 @@ class CsvRenderer extends Renderer {
         output.write(ParserConstant.Space)
       })
       output.write(Quotes)
-      return true
+      result = true
     } else {
       output.write(Null)
-      return false
+      result = false
     }
+
+    return result
   }
 
   def writeLinkIfNotEmpty(output: UncheckedWriter, field: String, link: URIValue): Boolean = {
+    var result: Boolean = false
     if (Objects.nonNull(link) && !link.isEmpty) {
       output.write(Quotes)
       output.write(sanitize(link.toString))
       output.write(Quotes)
-      return true
+      result = true
     } else {
       output.write(Null)
-      return false
+      result = false
     }
+
+    return result
   }
 
   def render(output: UncheckedWriter, record: Record, fields: Buffer[String]): Unit = {
-
     var first: Boolean = true
     for (field: String <- fields) {
       if (first) {

@@ -40,38 +40,46 @@ class SimpleFormatParser extends Parser {
   }
 
   def getKey(line: String): Option[String] = {
+    var result: Option[String] = Option.empty
     if (Objects.isNull(line)) {
-      return Option.empty
+      result = Option.empty
     } else {
       val pos: Int = line.indexOf(ParserConstant.EqualsSign)
       if (pos == -1) {
-        return Option.apply(line)
+        result = Option.apply(line)
       } else {
-        return Option.apply(line.substring(0, pos).trim())
+        result = Option.apply(line.substring(0, pos).trim())
       }
     }
+
+    return result
   }
 
   def hasKey(line: String, key: String): Boolean = {
     val optKey: Option[String] = getKey(line)
-    return (optKey.isDefined && (optKey.get == key))
+    val result: Boolean = (optKey.isDefined && (optKey.get == key))
+
+    return result
   }
 
   def getValue(line: String): Option[String] = {
+    var result: Option[String] = Option.empty
     if (Objects.isNull(line)) {
-      return Option.empty
+      result = Option.empty
     } else {
       val pos: Int = line.indexOf(ParserConstant.EqualsSign)
       if (pos == -1) {
-        return Option.apply("")
+        result = Option.apply("")
       } else {
-        return Option.apply(line.substring(pos + ParserConstant.EqualsSign.length(), line.length()).trim())
+        result = Option.apply(line.substring(pos + ParserConstant.EqualsSign.length(), line.length()).trim())
       }
     }
+
+    return result
   }
 
   def parseTypes(line: String, lineCounter: Int): CompositeTypeImpl = {
-    val ret: CompositeTypeImpl = new CompositeTypeImpl()
+    val result: CompositeTypeImpl = new CompositeTypeImpl()
     val stok: StringTokenizer = new StringTokenizer(getValue(line).get)
     val factory: PrimitiveTypeFactory = new PrimitiveTypeFactory()
     while (stok.hasMoreTokens()) {
@@ -83,28 +91,31 @@ class SimpleFormatParser extends Parser {
         val key: String = token.substring(0, pos)
         val value: String = token.substring((pos + ParserConstant.TypeSign.length()), token.length())
         if (factory.contains(value)) {
-          ret.declareField(key, value)
+          result.declareField(key, value)
         } else {
           throw new ParseException("Type '" + value + "' is undefined. (line " + lineCounter + ")")
         }
       }
     }
-    return ret
+
+    return result
   }
 
   private def asUri(uriStr: String, lineCounter: Int): URI = {
+    var result: URI = null
     try {
-      val uri: URI = new URI(uriStr)
-      return uri
+      result = new URI(uriStr)
     } catch {
       case e: URISyntaxException => {
         throw new ParseException("String '" + uriStr + "' is not a valid URI. (line " + lineCounter + ")")
       }
     }
+
+    return result
   }
 
   def parsePrefixMap(line: String, lineCounter: Int): PrefixMap = {
-    val ret: PrefixMap = new PrefixMapImpl()
+    val result: PrefixMap = new PrefixMapImpl()
     val stok: StringTokenizer = new StringTokenizer(getValue(line).get)
     while (stok.hasMoreTokens()) {
       val token: String = stok.nextToken()
@@ -114,10 +125,11 @@ class SimpleFormatParser extends Parser {
       } else {
         val key: String = token.substring(0, pos)
         val value: String = token.substring((pos + ParserConstant.PrefixSign.length()), token.length())
-        ret.put(asUri(key, lineCounter), asUri(value, lineCounter))
+        result.put(asUri(key, lineCounter), asUri(value, lineCounter))
       }
     }
-    return ret
+
+    return result
   }
 
   private def setSortingOrder(line: String, table: TableImpl): Unit = {
@@ -141,29 +153,29 @@ class SimpleFormatParser extends Parser {
   }
 
   def getTypedValue(key: String, value: String, type0: CompositeType, prefixMap: PrefixMap, lineCounter: Int): PrimitiveTypeValue = {
+    var result: PrimitiveTypeValue = new StringValue()
     if (Objects.isNull(key)) {
-      return new StringValue()
+      result = new StringValue()
     } else {
       try {
         var optTypeStr: Option[String] = type0.getFieldType(key)
         if (optTypeStr.isDefined) {
           val typeStr: String = optTypeStr.get
-          var ret: PrimitiveTypeValue = (new PrimitiveTypeFactory()).newInstance(typeStr, value)
-          if (ret.getType.equals(new URIType())) {
-            val uri: URIValue = ret.asInstanceOf[URIValue]
-            ret = new URIValue(prefixMap.getWithoutPrefix(uri.getUri))
-          } else if (ret.isInstanceOf[ParameterizedListValue]) {
-            val list: ParameterizedListValue = ret.asInstanceOf[ParameterizedListValue]
+          result = (new PrimitiveTypeFactory()).newInstance(typeStr, value)
+          if (result.getType.equals(new URIType())) {
+            val uri: URIValue = result.asInstanceOf[URIValue]
+            result = new URIValue(prefixMap.getWithoutPrefix(uri.getUri))
+          } else if (result.isInstanceOf[ParameterizedListValue]) {
+            val list: ParameterizedListValue = result.asInstanceOf[ParameterizedListValue]
             if (list.getParameter.equals(new URIType())) {
               val newList = new ParameterizedListValue(new URIType())
               list.foreach(elem => {
                 val uri: URIValue = elem.asInstanceOf[URIValue]
                 newList += new URIValue(prefixMap.getWithoutPrefix(uri.getUri))
               })
-              ret = newList
+              result = newList
             }
           }
-          return ret
 
         } else {
           throw new ParseException("Key '" + key + "' has an undefined type.")
@@ -175,6 +187,8 @@ class SimpleFormatParser extends Parser {
         }
       }
     }
+
+    return result
   }
 
   def isMultiLine(line: String): Boolean = {
@@ -183,22 +197,26 @@ class SimpleFormatParser extends Parser {
 
   def getCleanLine(line: String): String = {
     val trimmedLine: String = line.trim()
+    var result = trimmedLine
     if (isMultiLine(line)) {
-      return trimmedLine.substring(0, trimmedLine.length() - ParserConstant.LineContinuationSymbol.length()).trim()
+      result = trimmedLine.substring(0, trimmedLine.length() - ParserConstant.LineContinuationSymbol.length()).trim()
     } else {
-      return trimmedLine
+      result = trimmedLine
     }
+
+    return result
   }
 
   def readMultiLine(input: BufferedReader, lineCounter0: Int): Pair = {
+    var result: Pair = null
     var lineCounter: Int = lineCounter0
     var line: String = input.readLine()
     if (Objects.isNull(line)) {
-      return new Pair(lineCounter, null)
+      result = new Pair(lineCounter, null)
     } else {
       lineCounter += 1
       if (line.startsWith(ParserConstant.CommentSymbol)) {
-        return new Pair(lineCounter, "")
+        result = new Pair(lineCounter, "")
       } else {
         val sb: StringBuilder = new StringBuilder()
         while (isMultiLine(line)) {
@@ -211,28 +229,36 @@ class SimpleFormatParser extends Parser {
         }
         sb.append(getCleanLine(line))
 
-        return new Pair(lineCounter, sb.toString)
+        result = new Pair(lineCounter, sb.toString)
       }
     }
+
+    return result
   }
 
   private def isIdProperty(line: String): Boolean = {
+    var result: Boolean = false
     val optKey: Option[String] = getKey(line)
     if (optKey.isDefined) {
-      return optKey.get.equals(ParserConstant.IdKeyword)
+      result = optKey.get.equals(ParserConstant.IdKeyword)
     } else {
-      return false
+      result = false
     }
+
+    return result
   }
 
   private def getIdProperty(line: String): Option[String] = {
+    var result: Option[String] = Option.empty
     val optKey: Option[String] = getKey(line)
     val optValueStr: Option[String] = getValue(line)
     if (optKey.isDefined && optValueStr.isDefined && optKey.get.equals(ParserConstant.IdKeyword)) {
-      return Option.apply(optValueStr.get)
+      result = Option.apply(optValueStr.get)
     } else {
-      return Option.empty
+      result = Option.empty
     }
+
+    return result
   }
 
   private def parseProperty(line: String, currentTable: TableImpl,
@@ -330,20 +356,24 @@ class SimpleFormatParser extends Parser {
 
     }
 
-    val ret: TableMapImpl = new TableMapImpl()
-    mapOfTables.keySet.foreach(key => ret.put(key, mapOfTables.get(key).get))
-    return ret
+    val result: TableMapImpl = new TableMapImpl()
+    mapOfTables.keySet.foreach(key => result.put(key, mapOfTables.get(key).get))
+
+    return result
   }
 
   override def parse(): TableMap = {
+    var result: TableMap = null
     try {
-      return parseMap(new BufferedReader(this._input))
+      result = parseMap(new BufferedReader(this._input))
 
     } catch {
       case e: IOException => {
         throw new RuntimeException(e)
       }
     }
+
+    return result
   }
 
 }

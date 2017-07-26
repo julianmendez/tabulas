@@ -28,12 +28,13 @@ class ParameterizedListType extends PrimitiveType {
   }
 
   override def parse(str: String): ParameterizedListValue = {
-    val ret: ParameterizedListValue = new ParameterizedListValue(this._parameter)
+    val result: ParameterizedListValue = new ParameterizedListValue(this._parameter)
     val stok: StringTokenizer = new StringTokenizer(str)
     while (stok.hasMoreTokens) {
-      ret += this._parameter.parse(stok.nextToken())
+      result += this._parameter.parse(stok.nextToken())
     }
-    return ret
+
+    return result
   }
 
   def getParameter: PrimitiveType = {
@@ -49,11 +50,14 @@ class ParameterizedListType extends PrimitiveType {
   }
 
   override def equals(obj: Any): Boolean = {
+    var result: Boolean = false
     obj match {
       case other: ParameterizedListType =>
-        return this._parameter.equals(other._parameter)
-      case _ => return false
+        result = this._parameter.equals(other._parameter)
+      case _ => result = false
     }
+
+    return result
   }
 
   override def toString: String = {

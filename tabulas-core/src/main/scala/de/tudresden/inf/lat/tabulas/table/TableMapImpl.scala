@@ -24,9 +24,10 @@ class TableMapImpl extends TableMap {
   }
 
   override def getTableIds: mutable.Buffer[String] = {
-    val ret: mutable.Buffer[String] = new ArrayBuffer[String]()
-    ret ++= this._map.keySet
-    return ret
+    val result: mutable.Buffer[String] = new ArrayBuffer[String]()
+    result ++= this._map.keySet
+
+    return result
   }
 
   override def put(id: String, table: Table): Option[Table] = {
@@ -42,15 +43,17 @@ class TableMapImpl extends TableMap {
   }
 
   override def equals(obj: Any): Boolean = {
+    var result: Boolean = false
     obj match {
       case other: TableMap => {
-        var ret: Boolean = getTableIds.equals(other.getTableIds)
+        result = getTableIds.equals(other.getTableIds)
         val tableIds: mutable.Buffer[String] = getTableIds
-        ret = ret && tableIds.forall(tableId => getTable(tableId).equals(other.getTable(tableId)))
-        return ret
+        result = result && tableIds.forall(tableId => getTable(tableId).equals(other.getTable(tableId)))
       }
-      case _ => return false
+      case _ => result = false
     }
+
+    return result
   }
 
   override def toString: String = {
@@ -62,7 +65,9 @@ class TableMapImpl extends TableMap {
       sbuf.append(getTable(tableId))
       sbuf.append("\n")
     })
-    return sbuf.toString
+    val result: String = sbuf.toString
+
+    return result
   }
 
 }

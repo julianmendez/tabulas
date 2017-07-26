@@ -48,19 +48,23 @@ class SqlRenderer extends Renderer {
   }
 
   def writeAsStringIfNotEmpty(output: UncheckedWriter, field: String, value: PrimitiveTypeValue): Boolean = {
+    var result: Boolean = false
     if (Objects.nonNull(field) && !field.trim().isEmpty && Objects.nonNull(value)
       && !value.toString.trim().isEmpty) {
       output.write(Apostrophe)
       output.write(sanitize(value.toString))
       output.write(Apostrophe)
-      return true
+      result = true
     } else {
       output.write(Null)
-      return false
+      result = false
     }
+
+    return result
   }
 
   def writeParameterizedListIfNotEmpty(output: UncheckedWriter, field: String, list: ParameterizedListValue): Boolean = {
+    var result: Boolean = false
     if (Objects.nonNull(list) && !list.isEmpty) {
       output.write(Apostrophe)
       list.foreach(value => {
@@ -68,28 +72,32 @@ class SqlRenderer extends Renderer {
         output.write(ParserConstant.Space)
       })
       output.write(Apostrophe)
-      return true
+      result = true
     } else {
       output.write(Null)
-      return false
+      result = false
     }
+
+    return result
   }
 
   def writeLinkIfNotEmpty(output: UncheckedWriter, prefix: String, link: URIValue): Boolean = {
+    var result: Boolean = false
     if (Objects.nonNull(link) && !link.isEmpty) {
       output.write(prefix)
       output.write(Apostrophe)
       output.write(sanitize(link.toString))
       output.write(Apostrophe)
-      return true
+      result = true
     } else {
       output.write(Null)
-      return false
+      result = false
     }
+
+    return result
   }
 
   def render(output: UncheckedWriter, tableName: String, record: Record, fields: Buffer[String]): Unit = {
-
     output.write(ParserConstant.NewLine)
     output.write(InsertInto)
     output.write(ParserConstant.Space)

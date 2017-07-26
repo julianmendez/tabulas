@@ -24,8 +24,9 @@ class CalendarParserExtension extends Extension {
   def RequiredArguments: Int = 2
 
   override def process(arguments: Buffer[String]): Boolean = {
+    var result: Boolean = false
     if (Objects.isNull(arguments) || arguments.size != RequiredArguments) {
-      return false
+      result = false
     } else {
       try {
 
@@ -37,7 +38,7 @@ class CalendarParserExtension extends Extension {
           outputFileName))
         val renderer: SimpleFormatRenderer = new SimpleFormatRenderer(output)
         renderer.render(tableMap)
-        return true
+        result = true
 
       } catch {
         case e: IOException => {
@@ -45,6 +46,8 @@ class CalendarParserExtension extends Extension {
         }
       }
     }
+
+    return result
   }
 
   override def getExtensionName: String = {
