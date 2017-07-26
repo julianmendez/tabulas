@@ -60,19 +60,23 @@ class IntegerValue extends PrimitiveTypeValue {
   }
 
   override def renderAsList(): mutable.Buffer[String] = {
-    val ret: mutable.Buffer[String] = new ArrayBuffer[String]()
-    ret += render()
-    return ret // @FIXME this should be immutable
+    val list: mutable.Buffer[String] = new ArrayBuffer[String]()
+    list += render()
+    val result: mutable.Buffer[String] = list // @FIXME this should be immutable
 
+    return result
   }
 
   override def compareTo(other: PrimitiveTypeValue): Int = {
+    var result: Int = 0
     if (other.isInstanceOf[IntegerValue]) {
       val otherValue: IntegerValue = other.asInstanceOf[IntegerValue]
-      return this._number.compareTo(otherValue._number)
+      result = this._number.compareTo(otherValue._number)
     } else {
-      return render().compareTo(other.render())
+      result = render().compareTo(other.render())
     }
+
+    return result
   }
 
   override def hashCode(): Int = {
@@ -80,10 +84,13 @@ class IntegerValue extends PrimitiveTypeValue {
   }
 
   override def equals(obj: Any): Boolean = {
+    var result: Boolean = false
     obj match {
-      case other: IntegerValue => return this._number.equals(other._number)
-      case _ => return false
+      case other: IntegerValue => result = this._number.equals(other._number)
+      case _ => result = false
     }
+
+    return result
   }
 
   override def toString: String = {

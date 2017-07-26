@@ -57,13 +57,16 @@ class URIValue extends PrimitiveTypeValue {
   }
 
   def createURI(uriStr: String): URI = {
+    var result: URI = null
     try {
-      return new URI(uriStr)
+      result = new URI(uriStr)
     } catch {
       case e: URISyntaxException => {
         throw new ParseException("Invalid URI '" + uriStr + "'.", e)
       }
     }
+
+    return result
   }
 
   def getUri: URI = {
@@ -73,21 +76,27 @@ class URIValue extends PrimitiveTypeValue {
   def getUriNoLabel: URI = {
     val uriStr: String = this.uri.toASCIIString
     val pos: Int = uriStr.lastIndexOf(SpecialSymbol)
+    var result: URI = this.uri
     if (pos == -1) {
-      return this.uri
+      result = this.uri
     } else {
-      return createURI(uriStr.substring(0, pos))
+      result = createURI(uriStr.substring(0, pos))
     }
+
+    return result
   }
 
   def getLabel: String = {
     val uriStr: String = this.uri.toASCIIString
     val pos: Int = uriStr.lastIndexOf(SpecialSymbol)
+    var result: String = ""
     if (pos == -1) {
-      return ""
+      result = ""
     } else {
-      return uriStr.substring(pos + SpecialSymbol.length())
+      result = uriStr.substring(pos + SpecialSymbol.length())
     }
+
+    return result
   }
 
   override def isEmpty: Boolean = {
@@ -99,9 +108,11 @@ class URIValue extends PrimitiveTypeValue {
   }
 
   override def renderAsList(): mutable.Buffer[String] = {
-    val ret: mutable.Buffer[String] = new ArrayBuffer[String]()
-    ret += render()
-    return ret // @FIXME this should be immutable
+    val list: mutable.Buffer[String] = new ArrayBuffer[String]()
+    list += render()
+    val result: mutable.Buffer[String] = list // @FIXME this should be immutable
+
+    return result
   }
 
   override def compareTo(other: PrimitiveTypeValue): Int = {
@@ -113,10 +124,13 @@ class URIValue extends PrimitiveTypeValue {
   }
 
   override def equals(obj: Any): Boolean = {
+    var result: Boolean = false
     obj match {
-      case other: URIValue => return getUri.equals(other.getUri)
-      case _ => return false
+      case other: URIValue => result = getUri.equals(other.getUri)
+      case _ => result = false
     }
+
+    return result
   }
 
   override def toString: String = {
