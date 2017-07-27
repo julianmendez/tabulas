@@ -15,7 +15,7 @@ class PrefixMapImpl extends PrefixMap {
   private val _prefixMap: mutable.Map[URI, URI] = new mutable.TreeMap[URI, URI]
   private val _keyList: mutable.Buffer[URI] = new ArrayBuffer[URI]
 
-  override def isEmpty(): Boolean = {
+  override def isEmpty: Boolean = {
     return this._prefixMap.isEmpty
   }
 

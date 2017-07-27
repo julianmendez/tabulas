@@ -24,11 +24,11 @@ class SimpleFormatParser extends Parser {
     private val _line: String = line0
     private val _lineCounter: Int = lineCounter0
 
-    def getLine(): String = {
+    def getLine: String = {
       return this._line
     }
 
-    def getLineCounter(): Int = {
+    def getLineCounter: Int = {
       return this._lineCounter
     }
 
@@ -82,7 +82,7 @@ class SimpleFormatParser extends Parser {
     val result: CompositeTypeImpl = new CompositeTypeImpl()
     val stok: StringTokenizer = new StringTokenizer(getValue(line).get)
     val factory: PrimitiveTypeFactory = new PrimitiveTypeFactory()
-    while (stok.hasMoreTokens()) {
+    while (stok.hasMoreTokens) {
       val token: String = stok.nextToken()
       val pos: Int = token.indexOf(ParserConstant.TypeSign)
       if (pos == -1) {
@@ -115,7 +115,7 @@ class SimpleFormatParser extends Parser {
   def parsePrefixMap(line: String, lineCounter: Int): PrefixMap = {
     val result: PrefixMap = new PrefixMapImpl()
     val stok: StringTokenizer = new StringTokenizer(getValue(line).get)
-    while (stok.hasMoreTokens()) {
+    while (stok.hasMoreTokens) {
       val token: String = stok.nextToken()
       val pos: Int = token.indexOf(ParserConstant.PrefixSign)
       if (pos == -1) {
@@ -134,7 +134,7 @@ class SimpleFormatParser extends Parser {
     val fieldsWithReverseOrder: mutable.Set[String] = new mutable.TreeSet[String]()
     val list: mutable.Buffer[String] = new ArrayBuffer[String]
     val stok: StringTokenizer = new StringTokenizer(getValue(line).get)
-    while (stok.hasMoreTokens()) {
+    while (stok.hasMoreTokens) {
       var token: String = stok.nextToken()
       if (token.startsWith(ParserConstant.StandardOrderSign)) {
         token = token.substring(ParserConstant.StandardOrderSign
@@ -297,8 +297,8 @@ class SimpleFormatParser extends Parser {
 
     while (Objects.nonNull(line)) {
       val pair: Pair = readMultiLine(input, lineCounter)
-      line = pair.getLine()
-      lineCounter = pair.getLineCounter()
+      line = pair.getLine
+      lineCounter = pair.getLineCounter
       if (Objects.nonNull(line) && !line.trim().isEmpty) {
         if (hasKey(line, ParserConstant.TypeSelectionToken)) {
           isDefiningType = true
