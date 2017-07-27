@@ -47,7 +47,7 @@ class CsvParser extends Parser {
     var current: StringBuffer = new StringBuffer()
     var betweenQuotes: Boolean = false
     for (index <- 0 to (line.length() - 1)) {
-      var ch: Char = line.charAt(index)
+      val ch: Char = line.charAt(index)
       if (ch == QuotesChar) {
         betweenQuotes = !betweenQuotes
       } else if ((ch == CommaChar) && !betweenQuotes) {
@@ -65,7 +65,7 @@ class CsvParser extends Parser {
   }
 
   private def createSortedTable(fields: Buffer[String]): TableImpl = {
-    var tableType: CompositeTypeImpl = new CompositeTypeImpl()
+    val tableType: CompositeTypeImpl = new CompositeTypeImpl()
     fields.foreach(fieldName => tableType.declareField(fieldName, DefaultFieldType))
 
     val result: TableImpl = new TableImpl()
@@ -75,7 +75,7 @@ class CsvParser extends Parser {
   }
 
   def normalize(fieldName: String): String = {
-    var auxName: String = if (Objects.isNull(fieldName)) {
+    val auxName: String = if (Objects.isNull(fieldName)) {
       Underscore
     } else {
       fieldName.trim()
@@ -143,8 +143,8 @@ class CsvParser extends Parser {
         val record: RecordImpl = new RecordImpl()
         var index: Int = 0
         for (column: String <- columns) {
-          var field: String = fieldNames(index)
-          var value: StringValue = new StringValue(column)
+          val field: String = fieldNames(index)
+          val value: StringValue = new StringValue(column)
           record.set(field, value)
           index += 1
         }

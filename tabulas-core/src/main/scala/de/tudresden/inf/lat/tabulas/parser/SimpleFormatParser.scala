@@ -158,7 +158,7 @@ class SimpleFormatParser extends Parser {
       result = new StringValue()
     } else {
       try {
-        var optTypeStr: Option[String] = type0.getFieldType(key)
+        val optTypeStr: Option[String] = type0.getFieldType(key)
         if (optTypeStr.isDefined) {
           val typeStr: String = optTypeStr.get
           result = (new PrimitiveTypeFactory()).newInstance(typeStr, value)
@@ -300,7 +300,7 @@ class SimpleFormatParser extends Parser {
     var isDefiningType: Boolean = false
 
     while (Objects.nonNull(line)) {
-      var pair: Pair = readMultiLine(input, lineCounter)
+      val pair: Pair = readMultiLine(input, lineCounter)
       line = pair.getLine()
       lineCounter = pair.getLineCounter()
       if (Objects.nonNull(line) && !line.trim().isEmpty) {

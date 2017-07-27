@@ -113,7 +113,7 @@ class CalendarParser extends Parser {
       if (pos == -1) {
         result = Option.apply(line)
       } else {
-        var pos2: Int = line.indexOf(SemicolonChar)
+        val pos2: Int = line.indexOf(SemicolonChar)
         if (pos2 >= 0 && pos2 < pos) {
           pos = pos2
         }
@@ -129,7 +129,7 @@ class CalendarParser extends Parser {
     if (Objects.isNull(line)) {
       result = Option.empty
     } else {
-      var pos: Int = line.indexOf(ColonChar)
+      val pos: Int = line.indexOf(ColonChar)
       if (pos == -1) {
         result = Option.apply("")
       } else {
@@ -306,7 +306,7 @@ class CalendarParser extends Parser {
           currentTableId = tableIdStack.pop()
           currentTable = tableStack.pop()
           currentRecord = recordStack.pop()
-          var optSubItems: Option[PrimitiveTypeValue] = currentRecord.get(SubItemsFieldName)
+          val optSubItems: Option[PrimitiveTypeValue] = currentRecord.get(SubItemsFieldName)
           if (optSubItems.isDefined) {
             currentRecord.set(SubItemsFieldName, new StringValue(optSubItems.get.render() + SpaceChar + foreignKey))
 
