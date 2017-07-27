@@ -1,12 +1,9 @@
 
 package de.tudresden.inf.lat.tabulas.table
 
-import java.net.URI
-
 import de.tudresden.inf.lat.tabulas.datatype.CompositeTypeValue
 
 import scala.collection.mutable
-import scala.collection.mutable.{Map, Set}
 
 
 /**
@@ -50,7 +47,7 @@ trait Table extends CompositeTypeValue {
     *
     * @return the fields that are supposed to be sorted in reverse order
     */
-  def getFieldsWithReverseOrder: Set[String]
+  def getFieldsWithReverseOrder: mutable.Set[String]
 
   /**
     * Sets the fields that are supposed to be sorted in reverse order.
@@ -58,7 +55,7 @@ trait Table extends CompositeTypeValue {
     * @param fieldsWithReverseOrder
     * fields with reverse order
     */
-  def setFieldsWithReverseOrder(fieldsWithReverseOrder: Set[String]): Unit
+  def setFieldsWithReverseOrder(fieldsWithReverseOrder: mutable.Set[String]): Unit
 
 }
 

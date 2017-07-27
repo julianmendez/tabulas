@@ -1,6 +1,6 @@
 package de.tudresden.inf.lat.tabulas.datatype
 
-import scala.collection.mutable.{Map, TreeMap}
+import scala.collection.mutable
 
 /**
   * This models a factory of primitive types.
@@ -8,7 +8,7 @@ import scala.collection.mutable.{Map, TreeMap}
   */
 class PrimitiveTypeFactory {
 
-  private val _map: Map[String, PrimitiveType] = new TreeMap[String, PrimitiveType]()
+  private val _map: mutable.Map[String, PrimitiveType] = new mutable.TreeMap[String, PrimitiveType]()
 
   private def add(primType: PrimitiveType): Unit = {
     this._map.put(primType.getTypeName, primType)

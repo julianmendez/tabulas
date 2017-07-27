@@ -6,7 +6,7 @@ import java.util.Objects
 import de.tudresden.inf.lat.tabulas.datatype.ParseException
 
 import scala.collection.mutable
-import scala.collection.mutable.{ArrayBuffer, Map, TreeMap}
+import scala.collection.mutable.ArrayBuffer
 
 /**
   * This models an extension that can execute other extensions.
@@ -21,7 +21,7 @@ class ExtensionManager extends Extension {
   val Space: Char = ' '
 
   private val _extensions: mutable.Buffer[Extension] = new ArrayBuffer[Extension]()
-  private val _extensionMap: Map[String, Extension] = new TreeMap[String, Extension]()
+  private val _extensionMap: mutable.Map[String, Extension] = new mutable.TreeMap[String, Extension]()
 
   /**
     * Constructs an extension manager.

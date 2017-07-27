@@ -9,7 +9,7 @@ import de.tudresden.inf.lat.tabulas.datatype._
 import de.tudresden.inf.lat.tabulas.table._
 
 import scala.collection.mutable
-import scala.collection.mutable.{ArrayBuffer, Map, Set, TreeMap, TreeSet}
+import scala.collection.mutable.ArrayBuffer
 
 /**
   * Parser of a table in simple format.
@@ -131,7 +131,7 @@ class SimpleFormatParser extends Parser {
   }
 
   private def setSortingOrder(line: String, table: TableImpl): Unit = {
-    val fieldsWithReverseOrder: Set[String] = new TreeSet[String]()
+    val fieldsWithReverseOrder: mutable.Set[String] = new mutable.TreeSet[String]()
     val list: mutable.Buffer[String] = new ArrayBuffer[String]
     val stok: StringTokenizer = new StringTokenizer(getValue(line).get)
     while (stok.hasMoreTokens()) {
@@ -258,7 +258,7 @@ class SimpleFormatParser extends Parser {
   }
 
   private def parseProperty(line: String, currentTable: TableImpl,
-                            recordIdsOfCurrentTable: Set[String], record: Record, lineCounter: Int): Unit = {
+                            recordIdsOfCurrentTable: mutable.Set[String], record: Record, lineCounter: Int): Unit = {
     if (Objects.isNull(currentTable)) {
       throw new ParseException("New record was not declared (line "
         + lineCounter + ")")
@@ -284,12 +284,12 @@ class SimpleFormatParser extends Parser {
   }
 
   def parseMap(input: BufferedReader): TableMap = {
-    val mapOfTables: Map[String, TableImpl] = new TreeMap[String, TableImpl]()
-    val mapOfRecordIdsOfTables: Map[String, Set[String]] = new TreeMap[String, Set[String]]()
+    val mapOfTables: mutable.Map[String, TableImpl] = new mutable.TreeMap[String, TableImpl]()
+    val mapOfRecordIdsOfTables: mutable.Map[String, mutable.Set[String]] = new mutable.TreeMap[String, mutable.Set[String]]()
 
     var line: String = ""
     var currentTable: TableImpl = new TableImpl()
-    var recordIdsOfCurrentTable: Set[String] = Set.empty
+    var recordIdsOfCurrentTable: mutable.Set[String] = mutable.Set.empty
     var optCurrentId: Option[String] = Option.empty
     var record: Record = new RecordImpl()
     var lineCounter: Int = 0
@@ -308,7 +308,7 @@ class SimpleFormatParser extends Parser {
             if (!mapOfTables.get(tableName).isDefined) {
               mapOfTables.put(tableName, new TableImpl(
                 new TableImpl()))
-              mapOfRecordIdsOfTables.put(tableName, new TreeSet[String]())
+              mapOfRecordIdsOfTables.put(tableName, new mutable.TreeSet[String]())
             }
             currentTable = mapOfTables.get(tableName).get
             recordIdsOfCurrentTable = mapOfRecordIdsOfTables.get(tableName).get

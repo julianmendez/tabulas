@@ -9,7 +9,7 @@ import de.tudresden.inf.lat.tabulas.parser.ParserConstant
 import de.tudresden.inf.lat.tabulas.renderer.{Renderer, UncheckedWriter, UncheckedWriterImpl}
 import de.tudresden.inf.lat.tabulas.table.{Table, TableMap}
 
-import scala.collection.mutable.Buffer
+import scala.collection.mutable
 
 /**
   * Renderer of tables in comma-separated values format.
@@ -81,7 +81,7 @@ class CsvRenderer extends Renderer {
     return result
   }
 
-  def render(output: UncheckedWriter, record: Record, fields: Buffer[String]): Unit = {
+  def render(output: UncheckedWriter, record: Record, fields: mutable.Buffer[String]): Unit = {
     var first: Boolean = true
     for (field: String <- fields) {
       if (first) {
@@ -113,7 +113,7 @@ class CsvRenderer extends Renderer {
   }
 
   def renderAllRecords(output: UncheckedWriter, table: Table): Unit = {
-    val list: Buffer[Record] = table.getRecords
+    val list: mutable.Buffer[Record] = table.getRecords
     list.foreach(record => {
       render(output, record, table.getType.getFields)
     })

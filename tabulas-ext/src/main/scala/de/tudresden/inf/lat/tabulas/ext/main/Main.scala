@@ -5,7 +5,8 @@ import de.tudresden.inf.lat.tabulas.ext.renderer.{CsvExtension, HtmlExtension, S
 import de.tudresden.inf.lat.tabulas.extension.{DefaultExtension, Extension, NormalizationExtension}
 import de.tudresden.inf.lat.tabulas.main.ConsoleStarter
 
-import scala.collection.mutable.{ArrayBuffer, Buffer}
+import scala.collection.mutable
+import scala.collection.mutable.ArrayBuffer
 
 
 /**
@@ -20,7 +21,7 @@ object Main {
     * console arguments
     */
   def main(args: Array[String]): Unit = {
-    val extensions: Buffer[Extension] = new ArrayBuffer[Extension]()
+    val extensions: mutable.Buffer[Extension] = new ArrayBuffer[Extension]()
     extensions += new DefaultExtension()
     extensions += new CsvParserExtension()
     extensions += new CalendarParserExtension()

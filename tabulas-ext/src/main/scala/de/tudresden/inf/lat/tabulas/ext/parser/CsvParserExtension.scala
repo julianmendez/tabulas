@@ -7,7 +7,7 @@ import de.tudresden.inf.lat.tabulas.extension.Extension
 import de.tudresden.inf.lat.tabulas.renderer.SimpleFormatRenderer
 import de.tudresden.inf.lat.tabulas.table.TableMap
 
-import scala.collection.mutable.Buffer
+import scala.collection.mutable
 
 /**
   * This models an extension that reads comma-separated values and writes them
@@ -20,7 +20,7 @@ class CsvParserExtension extends Extension {
   val Help: String = "(input) (output) : create output file with a simple text format parsing a comma-separated values (CSV) file"
   val RequiredArguments: Int = 2
 
-  override def process(arguments: Buffer[String]): Boolean = {
+  override def process(arguments: mutable.Buffer[String]): Boolean = {
     var result: Boolean = false
     if (Objects.isNull(arguments) || arguments.size != RequiredArguments) {
       result = false

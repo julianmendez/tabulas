@@ -8,7 +8,7 @@ import de.tudresden.inf.lat.tabulas.datatype._
 import de.tudresden.inf.lat.tabulas.renderer.{Renderer, UncheckedWriter, UncheckedWriterImpl}
 import de.tudresden.inf.lat.tabulas.table.{Table, TableMap}
 
-import scala.collection.mutable.{Buffer, Map}
+import scala.collection.mutable
 
 /**
   * Renderer of a table that creates an HTML document.
@@ -94,7 +94,7 @@ class HtmlRenderer extends Renderer {
     return result
   }
 
-  def render(output: UncheckedWriter, record: Record, fields: Buffer[String]): Unit = {
+  def render(output: UncheckedWriter, record: Record, fields: mutable.Buffer[String]): Unit = {
     fields.foreach(field => {
       val optValue: Option[PrimitiveTypeValue] = record.get(field)
       if (optValue.isDefined) {
@@ -126,7 +126,7 @@ class HtmlRenderer extends Renderer {
   }
 
   def renderAllRecords(output: UncheckedWriter, table: Table): Unit = {
-    val list: Buffer[Record] = table.getRecords
+    val list: mutable.Buffer[Record] = table.getRecords
     output.write("<table summary=\"\">\n")
     list.foreach(record => {
       output.write("<tr>\n")
@@ -136,7 +136,7 @@ class HtmlRenderer extends Renderer {
     output.write("</table>\n")
   }
 
-  def renderMap(output: UncheckedWriter, map: Map[String, String]): Unit = {
+  def renderMap(output: UncheckedWriter, map: mutable.Map[String, String]): Unit = {
     output.write("<table summary=\"\" border=\"1\">\n")
     map.keySet.foreach(key => {
       val value: String = map.get(key).get

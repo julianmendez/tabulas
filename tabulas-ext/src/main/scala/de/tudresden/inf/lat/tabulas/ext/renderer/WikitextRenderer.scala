@@ -9,7 +9,7 @@ import de.tudresden.inf.lat.tabulas.parser.ParserConstant
 import de.tudresden.inf.lat.tabulas.renderer.{Renderer, UncheckedWriter, UncheckedWriterImpl}
 import de.tudresden.inf.lat.tabulas.table.{Table, TableMap}
 
-import scala.collection.mutable.{Buffer, Map}
+import scala.collection.mutable
 
 /**
   * Renderer of a table.
@@ -76,7 +76,7 @@ class WikitextRenderer extends Renderer {
     return result
   }
 
-  def render(output: UncheckedWriter, record: Record, fields: Buffer[String]): Unit = {
+  def render(output: UncheckedWriter, record: Record, fields: mutable.Buffer[String]): Unit = {
     fields.foreach(field => {
       val optValue: Option[PrimitiveTypeValue] = record.get(field)
       output.write("|")
@@ -103,7 +103,7 @@ class WikitextRenderer extends Renderer {
   }
 
   def renderAllRecords(output: UncheckedWriter, table: CompositeTypeValue): Unit = {
-    val list: Buffer[Record] = table.getRecords
+    val list: mutable.Buffer[Record] = table.getRecords
     output.write("{|\n")
     output.write("|-\n")
     list.foreach(record => {
@@ -113,7 +113,7 @@ class WikitextRenderer extends Renderer {
     output.write("|}\n")
   }
 
-  def renderMap(output: UncheckedWriter, map: Map[String, String]): Unit = {
+  def renderMap(output: UncheckedWriter, map: mutable.Map[String, String]): Unit = {
     output.write("{| border=\"1\"\n")
     output.write("|-\n")
     map.keySet.foreach(key => {

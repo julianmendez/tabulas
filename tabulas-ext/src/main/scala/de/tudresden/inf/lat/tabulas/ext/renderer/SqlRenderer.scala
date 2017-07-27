@@ -9,7 +9,7 @@ import de.tudresden.inf.lat.tabulas.parser.ParserConstant
 import de.tudresden.inf.lat.tabulas.renderer.{Renderer, UncheckedWriter, UncheckedWriterImpl}
 import de.tudresden.inf.lat.tabulas.table.{Table, TableMap}
 
-import scala.collection.mutable.Buffer
+import scala.collection.mutable
 
 /**
   * Renderer of tables in SQL format.
@@ -97,7 +97,7 @@ class SqlRenderer extends Renderer {
     return result
   }
 
-  def render(output: UncheckedWriter, tableName: String, record: Record, fields: Buffer[String]): Unit = {
+  def render(output: UncheckedWriter, tableName: String, record: Record, fields: mutable.Buffer[String]): Unit = {
     output.write(ParserConstant.NewLine)
     output.write(InsertInto)
     output.write(ParserConstant.Space)
@@ -142,7 +142,7 @@ class SqlRenderer extends Renderer {
   }
 
   def renderAllRecords(output: UncheckedWriter, tableName: String, table: CompositeTypeValue): Unit = {
-    val list: Buffer[Record] = table.getRecords
+    val list: mutable.Buffer[Record] = table.getRecords
     output.write(ParserConstant.NewLine)
     list.foreach(record => {
       render(output, tableName, record, table.getType.getFields)

@@ -7,7 +7,8 @@ import de.tudresden.inf.lat.tabulas.datatype._
 import de.tudresden.inf.lat.tabulas.parser.Parser
 import de.tudresden.inf.lat.tabulas.table.{RecordImpl, TableImpl, TableMap, TableMapImpl}
 
-import scala.collection.mutable.{ArrayBuffer, Buffer, Map, TreeMap}
+import scala.collection.mutable
+import scala.collection.mutable.ArrayBuffer
 
 /**
   * Parser of a calendar.
@@ -170,8 +171,8 @@ class CalendarParser extends Parser {
     return result
   }
 
-  private def preload(input: BufferedReader): Buffer[Pair] = {
-    val result: Buffer[Pair] = new ArrayBuffer[Pair]()
+  private def preload(input: BufferedReader): mutable.Buffer[Pair] = {
+    val result: mutable.Buffer[Pair] = new ArrayBuffer[Pair]()
     var sbuf: StringBuffer = new StringBuffer()
     var finish: Boolean = false
     var lineCounter: Int = 0
@@ -208,7 +209,7 @@ class CalendarParser extends Parser {
     }
   }
 
-  def getGeneratedId(generatedIds: Buffer[Int], level: Int): String = {
+  def getGeneratedId(generatedIds: mutable.Buffer[Int], level: Int): String = {
     while (level >= generatedIds.size) {
       generatedIds += FirstGeneratedIndex
     }
@@ -233,7 +234,7 @@ class CalendarParser extends Parser {
   }
 
   def parseMap(input: BufferedReader): TableMap = {
-    val map: Map[String, TableImpl] = new TreeMap[String, TableImpl]()
+    val map: mutable.Map[String, TableImpl] = new mutable.TreeMap[String, TableImpl]()
 
     map.put(CalendarTypeLabel, new TableImpl(new SimplifiedCompositeType(
       CalendarTypeFields)))
@@ -255,9 +256,9 @@ class CalendarParser extends Parser {
     val tableIdStack: MyStack[String] = new MyStack[String]()
     val recordStack: MyStack[Record] = new MyStack[Record]()
     val tableStack: MyStack[TableImpl] = new MyStack[TableImpl]()
-    val generatedIds: Buffer[Int] = new ArrayBuffer[Int]()
+    val generatedIds: mutable.Buffer[Int] = new ArrayBuffer[Int]()
 
-    val lines: Buffer[Pair] = preload(input)
+    val lines: mutable.Buffer[Pair] = preload(input)
     var lineCounter: Int = 0
     var firstTime: Boolean = true
     for (pair: Pair <- lines) {

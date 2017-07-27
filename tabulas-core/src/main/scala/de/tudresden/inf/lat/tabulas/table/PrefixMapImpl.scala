@@ -3,7 +3,7 @@ package de.tudresden.inf.lat.tabulas.table
 import java.net.URI
 
 import scala.collection.mutable
-import scala.collection.mutable.{ArrayBuffer, Map, TreeMap}
+import scala.collection.mutable.ArrayBuffer
 
 /**
   * An object of this class is a map of URI prefixes.
@@ -12,7 +12,7 @@ import scala.collection.mutable.{ArrayBuffer, Map, TreeMap}
   */
 class PrefixMapImpl extends PrefixMap {
 
-  private val _prefixMap: Map[URI, URI] = new TreeMap[URI, URI]
+  private val _prefixMap: mutable.Map[URI, URI] = new mutable.TreeMap[URI, URI]
   private val _keyList: mutable.Buffer[URI] = new ArrayBuffer[URI]
 
   override def isEmpty(): Boolean = {
