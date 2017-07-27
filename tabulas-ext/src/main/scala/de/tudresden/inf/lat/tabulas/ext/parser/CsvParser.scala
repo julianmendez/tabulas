@@ -160,7 +160,7 @@ class CsvParser extends Parser {
   }
 
   override def parse(): TableMap = {
-    var result: TableMap = null
+    var result: TableMap = new TableMapImpl()
     try {
       result = parseMap(new BufferedReader(this._input))
 

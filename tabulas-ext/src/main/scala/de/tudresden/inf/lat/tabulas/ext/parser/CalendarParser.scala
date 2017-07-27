@@ -79,7 +79,7 @@ class CalendarParser extends Parser {
     SubItemsFieldName, "ACTION", "DESCRIPTION", "SUMMARY", "ATTENDEE",
     "TRIGGER")
 
-  var EventTyp: SimplifiedCompositeType = null
+  var EventTyp: SimplifiedCompositeType = new SimplifiedCompositeType()
 
   val UnderscoreChar: Char = '_'
   val CommaChar: Char = ','
@@ -250,9 +250,9 @@ class CalendarParser extends Parser {
     map.put(AlarmTypeLabel, new TableImpl(new SimplifiedCompositeType(
       AlarmTypeFields)))
 
-    var currentTable: TableImpl = null
-    var currentRecord: Record = null
-    var currentTableId: String = null
+    var currentTable: TableImpl = new TableImpl()
+    var currentRecord: Record = new RecordImpl()
+    var currentTableId: String = ""
 
     val tableIdStack: MyStack[String] = new MyStack[String]()
     val recordStack: MyStack[Record] = new MyStack[Record]()
@@ -339,7 +339,7 @@ class CalendarParser extends Parser {
   }
 
   override def parse(): TableMap = {
-    var result: TableMap = null
+    var result: TableMap = new TableMapImpl()
     try {
       result = parseMap(new BufferedReader(this.input))
 

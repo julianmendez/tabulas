@@ -57,7 +57,7 @@ class URIValue extends PrimitiveTypeValue {
   }
 
   def createURI(uriStr: String): URI = {
-    var result: URI = null
+    var result: URI = URI.create("")
     try {
       result = new URI(uriStr)
     } catch {

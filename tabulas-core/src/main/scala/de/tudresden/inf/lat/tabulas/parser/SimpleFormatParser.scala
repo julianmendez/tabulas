@@ -102,7 +102,7 @@ class SimpleFormatParser extends Parser {
   }
 
   private def asUri(uriStr: String, lineCounter: Int): URI = {
-    var result: URI = null
+    var result: URI = URI.create("")
     try {
       result = new URI(uriStr)
     } catch {
@@ -208,8 +208,8 @@ class SimpleFormatParser extends Parser {
   }
 
   def readMultiLine(input: BufferedReader, lineCounter0: Int): Pair = {
-    var result: Pair = null
     var lineCounter: Int = lineCounter0
+    var result: Pair = new Pair(lineCounter, null)
     var line: String = input.readLine()
     if (Objects.isNull(line)) {
       result = new Pair(lineCounter, null)
@@ -363,7 +363,7 @@ class SimpleFormatParser extends Parser {
   }
 
   override def parse(): TableMap = {
-    var result: TableMap = null
+    var result: TableMap = new TableMapImpl()
     try {
       result = parseMap(new BufferedReader(this._input))
 
