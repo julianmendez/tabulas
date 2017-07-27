@@ -15,7 +15,7 @@ class ConsoleStarter {
   private val ErrorPrefix: String = "ERROR: "
 
   private var _help: String = "\nusage: java -jar (jarname) (extension) (input) (output)\n" + //
-    "\nIf the extension is ommitted, the '" + (new NormalizationExtension()).Name + "' extension is executed." + //
+    "\nIf the extension is omitted, the '" + (new NormalizationExtension()).Name + "' extension is executed." + //
     "\n\nThe available extensions are:" + "\n"
 
   private var _manager: ExtensionManager = _
