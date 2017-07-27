@@ -17,11 +17,11 @@ import scala.collection.mutable.Buffer
   */
 class CalendarParserExtension extends Extension {
 
-  def Name: String = "parsecalendar"
+  val Name: String = "parsecalendar"
 
-  def Help: String = "(input) (output) : create output file with a simple text format parsing a calendar file"
+  val Help: String = "(input) (output) : create output file with a simple text format parsing a calendar file"
 
-  def RequiredArguments: Int = 2
+  val RequiredArguments: Int = 2
 
   override def process(arguments: Buffer[String]): Boolean = {
     var result: Boolean = false

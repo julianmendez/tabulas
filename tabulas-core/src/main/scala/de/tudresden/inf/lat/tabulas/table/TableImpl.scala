@@ -101,7 +101,8 @@ class TableImpl extends Table {
   }
 
   override def hashCode(): Int = {
-    return this._tableType.hashCode() + 0x1F * (this._prefixMap.hashCode() + 0x1F * (this._sortingOrder.hashCode() + 0x1F * (this._fieldsWithReverseOrder.hashCode() + 0x1F * this._list.hashCode())))
+    return this._tableType.hashCode() + 0x1F * (this._prefixMap.hashCode() + 0x1F * (this._sortingOrder.hashCode() +
+      0x1F * (this._fieldsWithReverseOrder.hashCode() + 0x1F * this._list.hashCode())))
   }
 
   override def equals(obj: Any): Boolean = {
@@ -119,7 +120,8 @@ class TableImpl extends Table {
   }
 
   override def toString: String = {
-    return this._tableType.toString + " " + this._prefixMap.toString + " " + this._sortingOrder.toString + " " + this._fieldsWithReverseOrder.toString + " " + this._list.toString
+    return this._tableType.toString + " " + this._prefixMap.toString + " " + this._sortingOrder.toString + " " +
+      this._fieldsWithReverseOrder.toString + " " + this._list.toString
   }
 
 }
