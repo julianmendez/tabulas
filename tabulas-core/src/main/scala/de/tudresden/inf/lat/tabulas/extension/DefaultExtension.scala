@@ -36,9 +36,7 @@ class DefaultExtension extends Extension {
         return true
 
       } catch {
-        case e: IOException => {
-          throw new RuntimeException(e)
-        }
+        case e: IOException => throw new RuntimeException(e)
       }
     }
   }

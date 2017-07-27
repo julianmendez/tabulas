@@ -30,9 +30,7 @@ class DecimalValue extends PrimitiveTypeValue {
     try {
       this._number = new BigDecimal(str)
     } catch {
-      case e: NumberFormatException => {
-        throw new ParseException(e.getMessage, e)
-      }
+      case e: NumberFormatException => throw new ParseException(e.getMessage, e)
     }
   }
 

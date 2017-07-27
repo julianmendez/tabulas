@@ -64,9 +64,8 @@ class ExtensionManager extends Extension {
         try {
           return optExtension.get.process(newArguments)
         } catch {
-          case e@(_: ParseException | _: UncheckedIOException | _: IOException) => {
+          case e@(_: ParseException | _: UncheckedIOException | _: IOException) =>
             throw new ExtensionException(e.toString, e)
-          }
         }
       }
     }

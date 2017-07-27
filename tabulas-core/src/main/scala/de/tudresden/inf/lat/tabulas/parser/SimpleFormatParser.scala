@@ -106,9 +106,7 @@ class SimpleFormatParser extends Parser {
     try {
       result = new URI(uriStr)
     } catch {
-      case e: URISyntaxException => {
-        throw new ParseException("String '" + uriStr + "' is not a valid URI. (line " + lineCounter + ")")
-      }
+      case e: URISyntaxException => throw new ParseException("String '" + uriStr + "' is not a valid URI. (line " + lineCounter + ")")
     }
 
     return result
@@ -181,10 +179,8 @@ class SimpleFormatParser extends Parser {
           throw new ParseException("Key '" + key + "' has an undefined type.")
         }
       } catch {
-        case e: ParseException => {
-          throw new ParseException(e.getMessage + " (line "
-            + lineCounter + ")", e.getCause)
-        }
+        case e: ParseException => throw new ParseException(e.getMessage + " (line "
+          + lineCounter + ")", e.getCause)
       }
     }
 
@@ -368,9 +364,7 @@ class SimpleFormatParser extends Parser {
       result = parseMap(new BufferedReader(this._input))
 
     } catch {
-      case e: IOException => {
-        throw new RuntimeException(e)
-      }
+      case e: IOException => throw new RuntimeException(e)
     }
 
     return result

@@ -36,9 +36,7 @@ class NormalizationExtension extends Extension {
         return true
 
       } catch {
-        case e: IOException => {
-          throw new ExtensionException(e.toString, e)
-        }
+        case e: IOException => throw new ExtensionException(e.toString, e)
       }
     }
   }

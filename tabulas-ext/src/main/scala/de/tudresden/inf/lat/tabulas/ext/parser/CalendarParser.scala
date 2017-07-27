@@ -162,10 +162,8 @@ class CalendarParser extends Parser {
           throw new ParseException("Key '" + key + "' has an undefined type.")
         }
       } catch {
-        case e: IOException => {
-          throw new ParseException(e.getMessage + " (line "
-            + lineCounter + ")", e.getCause)
-        }
+        case e: IOException => throw new ParseException(e.getMessage + " (line "
+          + lineCounter + ")", e.getCause)
       }
     }
 
@@ -344,9 +342,7 @@ class CalendarParser extends Parser {
       result = parseMap(new BufferedReader(this.input))
 
     } catch {
-      case e: IOException => {
-        throw new RuntimeException(e)
-      }
+      case e: IOException => throw new RuntimeException(e)
     }
 
     return result

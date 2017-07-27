@@ -41,9 +41,7 @@ class CalendarParserExtension extends Extension {
         result = true
 
       } catch {
-        case e: IOException => {
-          throw new RuntimeException(e)
-        }
+        case e: IOException => throw new RuntimeException(e)
       }
     }
 

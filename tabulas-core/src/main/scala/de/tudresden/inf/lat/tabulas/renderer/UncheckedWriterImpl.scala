@@ -29,9 +29,7 @@ class UncheckedWriterImpl extends UncheckedWriter {
     try {
       this._writer.write(character)
     } catch {
-      case e: IOException => {
-        throw new UncheckedIOException(e)
-      }
+      case e: IOException => throw new UncheckedIOException(e)
     }
   }
 
@@ -39,9 +37,7 @@ class UncheckedWriterImpl extends UncheckedWriter {
     try {
       this._writer.write(charBuffer)
     } catch {
-      case e: IOException => {
-        throw new UncheckedIOException(e)
-      }
+      case e: IOException => throw new UncheckedIOException(e)
     }
   }
 
@@ -49,9 +45,7 @@ class UncheckedWriterImpl extends UncheckedWriter {
     try {
       this._writer.write(charBuffer, offset, length)
     } catch {
-      case e: IOException => {
-        throw new UncheckedIOException(e)
-      }
+      case e: IOException => throw new UncheckedIOException(e)
     }
   }
 
@@ -59,9 +53,7 @@ class UncheckedWriterImpl extends UncheckedWriter {
     try {
       this._writer.write(str)
     } catch {
-      case e: IOException => {
-        throw new UncheckedIOException(e)
-      }
+      case e: IOException => throw new UncheckedIOException(e)
     }
   }
 
@@ -69,9 +61,7 @@ class UncheckedWriterImpl extends UncheckedWriter {
     try {
       this._writer.write(str, offset, length)
     } catch {
-      case e: IOException => {
-        throw new UncheckedIOException(e)
-      }
+      case e: IOException => throw new UncheckedIOException(e)
     }
   }
 
@@ -79,9 +69,7 @@ class UncheckedWriterImpl extends UncheckedWriter {
     try {
       this._writer.close()
     } catch {
-      case e: IOException => {
-        throw new UncheckedIOException(e)
-      }
+      case e: IOException => throw new UncheckedIOException(e)
     }
   }
 
@@ -89,9 +77,7 @@ class UncheckedWriterImpl extends UncheckedWriter {
     try {
       this._writer.flush()
     } catch {
-      case e: IOException => {
-        throw new UncheckedIOException(e)
-      }
+      case e: IOException => throw new UncheckedIOException(e)
     }
   }
 
@@ -99,9 +85,7 @@ class UncheckedWriterImpl extends UncheckedWriter {
     try {
       this._writer.append(character)
     } catch {
-      case e: IOException => {
-        throw new UncheckedIOException(e)
-      }
+      case e: IOException => throw new UncheckedIOException(e)
     }
     return this
   }
@@ -110,9 +94,7 @@ class UncheckedWriterImpl extends UncheckedWriter {
     try {
       this._writer.append(charSequence)
     } catch {
-      case e: IOException => {
-        throw new UncheckedIOException(e)
-      }
+      case e: IOException => throw new UncheckedIOException(e)
     }
     return this
   }
@@ -121,9 +103,7 @@ class UncheckedWriterImpl extends UncheckedWriter {
     try {
       this._writer.append(charSequence, start, end)
     } catch {
-      case e: IOException => {
-        throw new UncheckedIOException(e)
-      }
+      case e: IOException => throw new UncheckedIOException(e)
     }
     return this
   }

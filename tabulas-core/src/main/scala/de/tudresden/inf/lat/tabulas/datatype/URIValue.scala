@@ -61,9 +61,7 @@ class URIValue extends PrimitiveTypeValue {
     try {
       result = new URI(uriStr)
     } catch {
-      case e: URISyntaxException => {
-        throw new ParseException("Invalid URI '" + uriStr + "'.", e)
-      }
+      case e: URISyntaxException => throw new ParseException("Invalid URI '" + uriStr + "'.", e)
     }
 
     return result

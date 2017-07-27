@@ -30,9 +30,7 @@ class IntegerValue extends PrimitiveTypeValue {
     try {
       this._number = new BigInteger(str)
     } catch {
-      case e: NumberFormatException => {
-        throw new ParseException(e.getMessage, e)
-      }
+      case e: NumberFormatException => throw new ParseException(e.getMessage, e)
     }
   }
 

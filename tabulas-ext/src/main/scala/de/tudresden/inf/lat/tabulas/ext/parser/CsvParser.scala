@@ -165,9 +165,7 @@ class CsvParser extends Parser {
       result = parseMap(new BufferedReader(this._input))
 
     } catch {
-      case e: IOException => {
-        throw new RuntimeException(e)
-      }
+      case e: IOException => throw new RuntimeException(e)
     }
 
     return result
