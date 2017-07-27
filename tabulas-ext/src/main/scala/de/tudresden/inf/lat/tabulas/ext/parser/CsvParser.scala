@@ -47,7 +47,7 @@ class CsvParser extends Parser {
     }
     var current: StringBuffer = new StringBuffer()
     var betweenQuotes: Boolean = false
-    for (index <- 0 to (line.length() - 1)) {
+    for (index <- 0 until line.length()) {
       val ch: Char = line.charAt(index)
       if (ch == QuotesChar) {
         betweenQuotes = !betweenQuotes
