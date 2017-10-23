@@ -110,7 +110,7 @@
 						<compilerPlugins>
 							<compilerPlugin>
 								<groupId>com.typesafe.genjavadoc</groupId>
-								<artifactId>genjavadoc-plugin_${scala.version}</artifactId>
+								<artifactId>genjavadoc-plugin_${scala.version.binary}.3</artifactId>
 								<version>0.10</version>
 							</compilerPlugin>
 						</compilerPlugins>
