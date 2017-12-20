@@ -2,15 +2,16 @@ package de.tudresden.inf.lat.tabulas.main
 
 import java.io.{FileReader, StringWriter}
 
+import org.scalatest.FunSuite
+
 import de.tudresden.inf.lat.tabulas.parser.SimpleFormatParser
 import de.tudresden.inf.lat.tabulas.renderer.SimpleFormatRenderer
 import de.tudresden.inf.lat.tabulas.table.TableMap
-import org.junit.{Assert, Test}
 
 /**
   * This is a test of normalization of files.
   */
-class NormalizationTest {
+class NormalizationTest extends FunSuite {
 
   val InputFileName0: String = "example.properties"
   val ExpectedOutputFileName0: String = "example-expected.properties"
@@ -33,11 +34,10 @@ class NormalizationTest {
     val writer: StringWriter = new StringWriter()
     val renderer: SimpleFormatRenderer = new SimpleFormatRenderer(writer)
     renderer.render(tableMap)
-    Assert.assertEquals(expectedResult, writer.toString)
+    assert(expectedResult === writer.toString)
   }
 
-  @Test
-  def testNormalization(): Unit = {
+  test("testNormalization") {
     testNormalizationOfFile(InputFileName0, ExpectedOutputFileName0)
     testNormalizationOfFile(InputFileName1, ExpectedOutputFileName1)
     testNormalizationOfFile(InputFileName2, ExpectedOutputFileName2)

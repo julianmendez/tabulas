@@ -5,8 +5,6 @@ lazy val commonSettings = Seq(
   version := "0.3.0-SNAPSHOT",
   scalaVersion := "2.12.3",
   libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.3" % "test",
-  libraryDependencies += "junit" % "junit" % "4.12" % "test",
-  libraryDependencies += "com.novocode" % "junit-interface" % "0.11" % "test",
   resolvers += Resolver.mavenLocal,
   publishTo := Some(Resolver.mavenLocal)
 )

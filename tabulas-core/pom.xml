@@ -14,8 +14,8 @@
 		</dependency>
 
 		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
+			<groupId>org.scalatest</groupId>
+			<artifactId>scalatest_${scala.version.binary}</artifactId>
 		</dependency>
 
 	</dependencies>

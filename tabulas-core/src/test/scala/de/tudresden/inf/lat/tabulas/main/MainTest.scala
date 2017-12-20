@@ -3,16 +3,17 @@ package de.tudresden.inf.lat.tabulas.main
 import java.io.{BufferedReader, FileReader, StringWriter}
 import java.util.Objects
 
+import org.scalatest.FunSuite
+
 import de.tudresden.inf.lat.tabulas.datatype._
 import de.tudresden.inf.lat.tabulas.parser.SimpleFormatParser
 import de.tudresden.inf.lat.tabulas.renderer.SimpleFormatRenderer
 import de.tudresden.inf.lat.tabulas.table.{Table, TableImpl, TableMap, TableMapImpl}
-import org.junit.{Assert, Test}
 
 /**
   * This is a test of modification of a Tabula file.
   */
-class MainTest {
+class MainTest extends FunSuite {
 
   val InputFileName: String = "example.properties"
   val ExpectedOutputFileName: String = "example-expected.properties"
@@ -66,11 +67,10 @@ class MainTest {
     val expectedOutput: String = readFile(fileName)
 
     // Compare the expected output with the actual output
-    Assert.assertEquals(expectedOutput, writer.toString)
+    assert(expectedOutput === writer.toString)
   }
 
-  @Test
-  def testAddNewField(): Unit = {
+  test("testAddNewField") {
 
     // This is an example of source code where the number of authors is
     // a computed value
