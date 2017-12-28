@@ -6,7 +6,8 @@ lazy val commonSettings = Seq(
   scalaVersion := "2.12.3",
   libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.3" % "test",
   resolvers += Resolver.mavenLocal,
-  publishTo := Some(Resolver.mavenLocal)
+  publishTo := Some(Resolver.mavenLocal),
+  publishMavenStyle := true
 )
 
 lazy val core = project
