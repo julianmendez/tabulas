@@ -7,8 +7,7 @@ import java.util.Objects
 import scala.collection.mutable
 import scala.collection.mutable.ArrayBuffer
 
-/**
-  * This models a URI.
+/** This models a URI.
   *
   */
 class URIValue extends PrimitiveTypeValue {
@@ -17,8 +16,7 @@ class URIValue extends PrimitiveTypeValue {
 
   private var uri: URI = _
 
-  /**
-    * Constructs a new URI value using a string.
+  /** Constructs a new URI value using a string.
     *
     * @param uriStr
     * URI
@@ -29,8 +27,7 @@ class URIValue extends PrimitiveTypeValue {
     this.uri = createURI(uriStr)
   }
 
-  /**
-    * Constructs a new URI value using a URI.
+  /** Constructs a new URI value using a URI.
     *
     * @param uri
     * URI
@@ -41,8 +38,7 @@ class URIValue extends PrimitiveTypeValue {
     this.uri = uri
   }
 
-  /**
-    * Constructs a new URI value using another URI value.
+  /** Constructs a new URI value using another URI value.
     *
     * @param other
     * URI value

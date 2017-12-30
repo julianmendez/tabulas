@@ -11,8 +11,7 @@ import de.tudresden.inf.lat.tabulas.table._
 import scala.collection.mutable
 import scala.collection.mutable.ArrayBuffer
 
-/**
-  * Parser of a table in simple format.
+/** Parser of a table in simple format.
   *
   */
 class SimpleFormatParser extends Parser {

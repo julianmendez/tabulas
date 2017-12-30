@@ -6,8 +6,7 @@ import java.util.Objects
 import scala.collection.mutable
 import scala.collection.mutable.ArrayBuffer
 
-/**
-  * This models a list of elements with a parameterized type.
+/** This models a list of elements with a parameterized type.
   *
   */
 class ParameterizedListValue extends ArrayBuffer[PrimitiveTypeValue] with PrimitiveTypeValue {
@@ -18,8 +17,7 @@ class ParameterizedListValue extends ArrayBuffer[PrimitiveTypeValue] with Primit
 
   private var _parameter: PrimitiveType = _
 
-  /**
-    * Constructs a new parameterized list value.
+  /** Constructs a new parameterized list value.
     *
     * @param parameter
     * primitive type
@@ -30,8 +28,7 @@ class ParameterizedListValue extends ArrayBuffer[PrimitiveTypeValue] with Primit
     this._parameter = parameter
   }
 
-  /**
-    * Constructs a new parameterized list value using another parameterized
+  /** Constructs a new parameterized list value using another parameterized
     * list value.
     *
     * @param other

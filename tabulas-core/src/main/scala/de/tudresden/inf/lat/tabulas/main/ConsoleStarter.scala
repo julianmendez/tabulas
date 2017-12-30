@@ -7,8 +7,7 @@ import de.tudresden.inf.lat.tabulas.extension.{Extension, ExtensionException, Ex
 import scala.collection.mutable
 import scala.collection.mutable.ArrayBuffer
 
-/**
-  * An object of this class runs the application with the given arguments.
+/** An object of this class runs the application with the given arguments.
   */
 class ConsoleStarter {
 
@@ -20,8 +19,7 @@ class ConsoleStarter {
 
   private var _manager: ExtensionManager = _
 
-  /**
-    * Constructs a new console starter.
+  /** Constructs a new console starter.
     *
     * @param help
     * help about usage
@@ -31,8 +29,7 @@ class ConsoleStarter {
     this._help = help
   }
 
-  /**
-    * Executes the application
+  /** Executes the application
     *
     * @param extensions
     * extensions

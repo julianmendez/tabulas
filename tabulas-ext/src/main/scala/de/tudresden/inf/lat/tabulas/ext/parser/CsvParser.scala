@@ -11,8 +11,7 @@ import de.tudresden.inf.lat.tabulas.table.{RecordImpl, TableImpl, TableMap, Tabl
 import scala.collection.mutable
 import scala.collection.mutable.ArrayBuffer
 
-/**
-  * Parser of a table in comma-separated values format.
+/** Parser of a table in comma-separated values format.
   *
   */
 class CsvParser extends Parser {
@@ -27,8 +26,7 @@ class CsvParser extends Parser {
 
   private var _input: Reader = new InputStreamReader(System.in)
 
-  /**
-    * Constructs a new parser.
+  /** Constructs a new parser.
     *
     * @param input
     * input

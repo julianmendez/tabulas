@@ -7,16 +7,14 @@ import java.util.Objects
 import scala.collection.mutable
 import scala.collection.mutable.ArrayBuffer
 
-/**
-  * This models a integer value.
+/** This models a integer value.
   *
   */
 class IntegerValue extends PrimitiveTypeValue {
 
   private var _number: BigInteger = BigInteger.ZERO
 
-  /**
-    * Constructs a new integer value using a string.
+  /** Constructs a new integer value using a string.
     *
     * @param str
     * string
@@ -34,8 +32,7 @@ class IntegerValue extends PrimitiveTypeValue {
     }
   }
 
-  /**
-    * Constructs a new integer value using another integer value.
+  /** Constructs a new integer value using another integer value.
     *
     * @param other
     * an integer value

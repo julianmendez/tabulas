@@ -2,8 +2,7 @@ package de.tudresden.inf.lat.tabulas.renderer
 
 import java.io.Writer
 
-/**
-  * This models an unchecked writer. This looks like a {@link java.io.Writer}, but throws
+/** This models an unchecked writer. This looks like a {@link java.io.Writer}, but throws
   * an {@link java.io.UncheckedIOException} where a <code>Writer</code> throws an
   * {@link java.io.IOException}.
   *
@@ -12,8 +11,7 @@ import java.io.Writer
   */
 trait UncheckedWriter {
 
-  /**
-    * Writes a single character.
+  /** Writes a single character.
     *
     * @param character
     * character
@@ -22,8 +20,7 @@ trait UncheckedWriter {
     */
   def write(character: Int): Unit
 
-  /**
-    * Writes an array of characters.
+  /** Writes an array of characters.
     *
     * @param charBuffer
     * array of characters
@@ -32,8 +29,7 @@ trait UncheckedWriter {
     */
   def write(charBuffer: Array[Char]): Unit
 
-  /**
-    * Writes an array of characters.
+  /** Writes an array of characters.
     *
     * @param charBuffer
     * array of characters
@@ -46,8 +42,7 @@ trait UncheckedWriter {
     */
   def write(charBuffer: Array[Char], offset: Int, length: Int): Unit
 
-  /**
-    * Writes a string.
+  /** Writes a string.
     *
     * @param str
     * string
@@ -56,8 +51,7 @@ trait UncheckedWriter {
     */
   def write(str: String): Unit
 
-  /**
-    * Writes a string
+  /** Writes a string
     *
     * @param str
     * string
@@ -70,24 +64,21 @@ trait UncheckedWriter {
     */
   def write(str: String, offset: Int, length: Int): Unit
 
-  /**
-    * Closes the stream, flushing it first.
+  /** Closes the stream, flushing it first.
     *
     * @throws java.io.UncheckedIOException
     * if something goes wrong with input/output
     */
   def close(): Unit
 
-  /**
-    * Flushes the stream.
+  /** Flushes the stream.
     *
     * @throws java.io.UncheckedIOException
     * if something goes wrong with input/output
     */
   def flush(): Unit
 
-  /**
-    * Appends a character to this writer.
+  /** Appends a character to this writer.
     *
     * @param character
     * character
@@ -97,8 +88,7 @@ trait UncheckedWriter {
     */
   def append(character: Char): UncheckedWriter
 
-  /**
-    * Appends a character sequence to this writer.
+  /** Appends a character sequence to this writer.
     *
     * @param charSequence
     * character sequence
@@ -108,8 +98,7 @@ trait UncheckedWriter {
     */
   def append(charSequence: CharSequence): UncheckedWriter
 
-  /**
-    * Appends a character subsequence to this writer.
+  /** Appends a character subsequence to this writer.
     *
     * @param charSequence
     * character sequence
@@ -123,8 +112,7 @@ trait UncheckedWriter {
     */
   def append(charSequence: CharSequence, start: Int, end: Int): UncheckedWriter
 
-  /**
-    * Returns this as a writer.
+  /** Returns this as a writer.
     *
     * @return this as a writer
     */

@@ -3,8 +3,7 @@ package de.tudresden.inf.lat.tabulas.datatype
 
 import java.util.Objects
 
-/**
-  * This models a link.
+/** This models a link.
   *
   */
 class URIType extends PrimitiveType {

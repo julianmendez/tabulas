@@ -8,8 +8,7 @@ import de.tudresden.inf.lat.tabulas.datatype.{CompositeType, CompositeTypeImpl, 
 import scala.collection.mutable
 import scala.collection.mutable.ArrayBuffer
 
-/**
-  * This is the default implementation of a sorted table.
+/** This is the default implementation of a sorted table.
   */
 class TableImpl extends Table {
 

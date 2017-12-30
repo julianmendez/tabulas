@@ -3,8 +3,7 @@ package de.tudresden.inf.lat.tabulas.datatype
 
 import scala.collection.mutable
 
-/**
-  * This models a simplified composite type where the fields have the same type.
+/** This models a simplified composite type where the fields have the same type.
   *
   */
 class SimplifiedCompositeType extends CompositeType {

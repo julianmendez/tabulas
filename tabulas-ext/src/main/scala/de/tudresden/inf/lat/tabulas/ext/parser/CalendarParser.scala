@@ -10,8 +10,7 @@ import de.tudresden.inf.lat.tabulas.table.{RecordImpl, TableImpl, TableMap, Tabl
 import scala.collection.mutable
 import scala.collection.mutable.ArrayBuffer
 
-/**
-  * Parser of a calendar.
+/** Parser of a calendar.
   *
   */
 class CalendarParser extends Parser {

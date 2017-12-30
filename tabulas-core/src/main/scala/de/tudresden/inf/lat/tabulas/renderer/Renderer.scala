@@ -3,8 +3,7 @@ package de.tudresden.inf.lat.tabulas.renderer
 
 import de.tudresden.inf.lat.tabulas.table.TableMap
 
-/**
-  * Renderer.
+/** Renderer.
   *
   */
 trait Renderer {

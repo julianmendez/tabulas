@@ -9,8 +9,7 @@ import de.tudresden.inf.lat.tabulas.table.TableMap
 
 import scala.collection.mutable
 
-/**
-  * Normalization extension. It reads and writes using the same file.
+/** Normalization extension. It reads and writes using the same file.
   *
   */
 class NormalizationExtension extends Extension {

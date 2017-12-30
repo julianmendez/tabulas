@@ -8,8 +8,7 @@ import de.tudresden.inf.lat.tabulas.parser.SimpleFormatParser
 import de.tudresden.inf.lat.tabulas.renderer.SimpleFormatRenderer
 import de.tudresden.inf.lat.tabulas.table.TableMap
 
-/**
-  * This is a test of normalization of files.
+/** This is a test of normalization of files.
   */
 class NormalizationTest extends FunSuite {
 

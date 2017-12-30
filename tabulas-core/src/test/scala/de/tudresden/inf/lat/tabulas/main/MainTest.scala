@@ -10,8 +10,7 @@ import de.tudresden.inf.lat.tabulas.parser.SimpleFormatParser
 import de.tudresden.inf.lat.tabulas.renderer.SimpleFormatRenderer
 import de.tudresden.inf.lat.tabulas.table.{Table, TableImpl, TableMap, TableMapImpl}
 
-/**
-  * This is a test of modification of a Tabula file.
+/** This is a test of modification of a Tabula file.
   */
 class MainTest extends FunSuite {
 

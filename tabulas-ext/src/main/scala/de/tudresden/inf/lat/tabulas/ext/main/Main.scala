@@ -9,13 +9,11 @@ import scala.collection.mutable
 import scala.collection.mutable.ArrayBuffer
 
 
-/**
-  * This is the main class.
+/** This is the main class.
   */
 object Main {
 
-  /**
-    * Entry point for the console.
+  /** Entry point for the console.
     *
     * @param args
     * console arguments

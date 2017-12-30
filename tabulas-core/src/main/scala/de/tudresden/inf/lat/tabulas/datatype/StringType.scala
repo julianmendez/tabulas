@@ -1,8 +1,7 @@
 
 package de.tudresden.inf.lat.tabulas.datatype
 
-/**
-  * This models the primitive data type String.
+/** This models the primitive data type String.
   *
   */
 class StringType extends PrimitiveType {

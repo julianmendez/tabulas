@@ -3,8 +3,7 @@ package de.tudresden.inf.lat.tabulas.renderer
 import java.io.{IOException, UncheckedIOException, Writer}
 import java.util.Objects
 
-/**
-  * This is the default implementation of {@link UncheckedWriter}.
+/** This is the default implementation of {@link UncheckedWriter}.
   *
   * @author Julian Mendez
   *
@@ -13,8 +12,7 @@ class UncheckedWriterImpl extends UncheckedWriter {
 
   private var _writer: Writer = _
 
-  /**
-    * Constructs a new unchecked writer.
+  /** Constructs a new unchecked writer.
     *
     * @param writer
     * writer

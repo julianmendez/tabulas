@@ -9,8 +9,7 @@ import de.tudresden.inf.lat.tabulas.table.TableMap
 
 import scala.collection.mutable
 
-/**
-  * Default extension. It reads and writes using the default format.
+/** Default extension. It reads and writes using the default format.
   *
   */
 class DefaultExtension extends Extension {

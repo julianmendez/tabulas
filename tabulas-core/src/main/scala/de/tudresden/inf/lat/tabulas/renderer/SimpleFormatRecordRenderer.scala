@@ -11,8 +11,7 @@ import de.tudresden.inf.lat.tabulas.table.{PrefixMap, PrefixMapImpl}
 
 import scala.collection.mutable
 
-/**
-  * Renderer of a table in simple format.
+/** Renderer of a table in simple format.
   */
 class SimpleFormatRecordRenderer extends RecordRenderer {
 

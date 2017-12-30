@@ -4,8 +4,7 @@ package de.tudresden.inf.lat.tabulas.datatype
 import scala.collection.mutable
 import scala.collection.mutable.ArrayBuffer
 
-/**
-  * This models a empty value.
+/** This models a empty value.
   *
   */
 class EmptyValue extends PrimitiveTypeValue {

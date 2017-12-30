@@ -8,8 +8,7 @@ import de.tudresden.inf.lat.tabulas.datatype.ParseException
 import scala.collection.mutable
 import scala.collection.mutable.ArrayBuffer
 
-/**
-  * This models an extension that can execute other extensions.
+/** This models an extension that can execute other extensions.
   *
   */
 class ExtensionManager extends Extension {
@@ -23,8 +22,7 @@ class ExtensionManager extends Extension {
   private val _extensions: mutable.Buffer[Extension] = new ArrayBuffer[Extension]()
   private val _extensionMap: mutable.Map[String, Extension] = new mutable.TreeMap[String, Extension]()
 
-  /**
-    * Constructs an extension manager.
+  /** Constructs an extension manager.
     *
     * @param extensions
     * list of extensions

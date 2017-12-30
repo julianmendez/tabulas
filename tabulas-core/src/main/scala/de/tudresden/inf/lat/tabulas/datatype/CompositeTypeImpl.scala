@@ -6,8 +6,7 @@ import java.util.Objects
 import scala.collection.mutable
 import scala.collection.mutable.ArrayBuffer
 
-/**
-  * Default implementation of a composite type.
+/** Default implementation of a composite type.
   *
   */
 class CompositeTypeImpl extends CompositeType {
@@ -15,8 +14,7 @@ class CompositeTypeImpl extends CompositeType {
   private val _fields: mutable.Buffer[String] = new ArrayBuffer[String]
   private val _fieldType: mutable.Map[String, String] = new mutable.TreeMap[String, String]
 
-  /**
-    * Constructs a new composite type using another one.
+  /** Constructs a new composite type using another one.
     *
     * @param otherType
     * other type
@@ -36,8 +34,7 @@ class CompositeTypeImpl extends CompositeType {
     this._fieldType.get(field)
   }
 
-  /**
-    * Declares a field.
+  /** Declares a field.
     *
     * @param field
     * field name

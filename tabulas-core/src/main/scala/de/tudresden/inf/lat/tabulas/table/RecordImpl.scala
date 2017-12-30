@@ -8,16 +8,14 @@ import de.tudresden.inf.lat.tabulas.datatype.{PrimitiveTypeValue, Record}
 import scala.collection.mutable
 import scala.collection.mutable.ArrayBuffer
 
-/**
-  * This is the default implementation of a record.
+/** This is the default implementation of a record.
   *
   */
 class RecordImpl extends Record {
 
   private val _map: mutable.Map[String, PrimitiveTypeValue] = new mutable.TreeMap[String, PrimitiveTypeValue]()
 
-  /**
-    * Constructs a new record using another one.
+  /** Constructs a new record using another one.
     *
     * @param otherRecord
     * other record

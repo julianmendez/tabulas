@@ -9,8 +9,7 @@ import de.tudresden.inf.lat.tabulas.table.TableMap
 
 import scala.collection.mutable
 
-/**
-  * This models an extension that writes the output in Wikitext.
+/** This models an extension that writes the output in Wikitext.
   *
   */
 class WikitextExtension extends Extension {

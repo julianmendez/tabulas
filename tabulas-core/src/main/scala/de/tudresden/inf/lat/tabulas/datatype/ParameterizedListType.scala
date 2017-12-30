@@ -3,8 +3,7 @@ package de.tudresden.inf.lat.tabulas.datatype
 
 import java.util.{Objects, StringTokenizer}
 
-/**
-  * This models the type of a list of elements with a parameterized type.
+/** This models the type of a list of elements with a parameterized type.
   *
   */
 class ParameterizedListType extends PrimitiveType {

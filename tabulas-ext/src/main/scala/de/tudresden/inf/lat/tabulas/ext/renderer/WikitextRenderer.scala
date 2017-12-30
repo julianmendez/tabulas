@@ -11,8 +11,7 @@ import de.tudresden.inf.lat.tabulas.table.{Table, TableMap}
 
 import scala.collection.mutable
 
-/**
-  * Renderer of a table.
+/** Renderer of a table.
   */
 class WikitextRenderer extends Renderer {
 

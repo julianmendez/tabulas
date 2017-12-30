@@ -1,8 +1,7 @@
 
 package de.tudresden.inf.lat.tabulas.datatype
 
-/**
-  * This models the primitive data type Empty.
+/** This models the primitive data type Empty.
   *
   */
 class EmptyType extends PrimitiveType {

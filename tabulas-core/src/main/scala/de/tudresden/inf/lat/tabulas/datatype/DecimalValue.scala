@@ -7,16 +7,14 @@ import java.util.Objects
 import scala.collection.mutable
 import scala.collection.mutable.ArrayBuffer
 
-/**
-  * This models a decimal value.
+/** This models a decimal value.
   *
   */
 class DecimalValue extends PrimitiveTypeValue {
 
   private var _number: BigDecimal = BigDecimal.ZERO
 
-  /**
-    * Constructs a new decimal value using a string.
+  /** Constructs a new decimal value using a string.
     *
     * @param str
     * string
@@ -34,8 +32,7 @@ class DecimalValue extends PrimitiveTypeValue {
     }
   }
 
-  /**
-    * Constructs a new decimal value using another decimal value.
+  /** Constructs a new decimal value using another decimal value.
     *
     * @param other
     * a decimal value

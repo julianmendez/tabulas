@@ -2,8 +2,7 @@ package de.tudresden.inf.lat.tabulas.datatype
 
 import scala.collection.mutable
 
-/**
-  * This models a factory of primitive types.
+/** This models a factory of primitive types.
   *
   */
 class PrimitiveTypeFactory {
@@ -14,8 +13,7 @@ class PrimitiveTypeFactory {
     this._map.put(primType.getTypeName, primType)
   }
 
-  /**
-    * Constructs a new primitive type factory.
+  /** Constructs a new primitive type factory.
     */
   {
     add(new EmptyType())
@@ -29,8 +27,7 @@ class PrimitiveTypeFactory {
     add(new ParameterizedListType(new DecimalType()))
   }
 
-  /**
-    * Tells whether this factory contains the given primitive type.
+  /** Tells whether this factory contains the given primitive type.
     *
     * @param primType
     * primitive type
@@ -41,8 +38,7 @@ class PrimitiveTypeFactory {
     return this._map.get(primType).isDefined
   }
 
-  /**
-    * Returns a new value of the specified type.
+  /** Returns a new value of the specified type.
     *
     * @param typeName
     * type name

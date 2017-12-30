@@ -11,8 +11,7 @@ import de.tudresden.inf.lat.tabulas.table.{Table, TableMap}
 
 import scala.collection.mutable
 
-/**
-  * Renderer of tables in SQL format.
+/** Renderer of tables in SQL format.
   */
 class SqlRenderer extends Renderer {
 

@@ -3,14 +3,12 @@ package de.tudresden.inf.lat.tabulas.datatype
 
 import scala.collection.mutable
 
-/**
-  * This models a record.
+/** This models a record.
   *
   */
 trait Record {
 
-  /**
-    * Returns an optional containing the value of a given property, if this
+  /** Returns an optional containing the value of a given property, if this
     * value is present, or an empty optional otherwise.
     *
     * @param key
@@ -20,8 +18,7 @@ trait Record {
     */
   def get(key: String): Option[PrimitiveTypeValue]
 
-  /**
-    * Sets the value of a given property.
+  /** Sets the value of a given property.
     *
     * @param key
     * property name
@@ -30,8 +27,7 @@ trait Record {
     */
   def set(key: String, value: PrimitiveTypeValue): Unit
 
-  /**
-    * Returns the property names.
+  /** Returns the property names.
     *
     * @return the property names
     */

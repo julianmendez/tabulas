@@ -5,8 +5,7 @@ import java.net.URI
 import scala.collection.mutable
 import scala.collection.mutable.ArrayBuffer
 
-/**
-  * An object of this class is a map of URI prefixes.
+/** An object of this class is a map of URI prefixes.
   * This implementation iterates on the keys keeping the order in which they were added for the first time.
   *
   */

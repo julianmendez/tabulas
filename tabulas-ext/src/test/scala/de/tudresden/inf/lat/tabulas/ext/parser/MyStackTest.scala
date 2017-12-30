@@ -2,8 +2,7 @@ package de.tudresden.inf.lat.tabulas.ext.parser
 
 import org.scalatest.FunSuite
 
-/**
-  * Test class of MyStack[A]
+/** Test class of MyStack[A]
   */
 class MyStackTest extends FunSuite {
 

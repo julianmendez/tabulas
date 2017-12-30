@@ -6,16 +6,14 @@ import java.util.Objects
 import scala.collection.mutable
 import scala.collection.mutable.ArrayBuffer
 
-/**
-  * This models a string value.
+/** This models a string value.
   *
   */
 class StringValue extends PrimitiveTypeValue {
 
   private var _str: String = ""
 
-  /**
-    * Constructs a new string value using a string.
+  /** Constructs a new string value using a string.
     *
     * @param str
     * string
@@ -29,8 +27,7 @@ class StringValue extends PrimitiveTypeValue {
     }
   }
 
-  /**
-    * Constructs a new string value using another string value.
+  /** Constructs a new string value using another string value.
     *
     * @param other
     * a string value

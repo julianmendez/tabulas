@@ -3,21 +3,18 @@ package de.tudresden.inf.lat.tabulas.table
 
 import scala.collection.mutable
 
-/**
-  * This models a collection of tables with identifiers.
+/** This models a collection of tables with identifiers.
   *
   */
 trait TableMap {
 
-  /**
-    * Returns the identifiers of the stored tables.
+  /** Returns the identifiers of the stored tables.
     *
     * @return the identifiers of the stored tables
     */
   def getTableIds: mutable.Buffer[String]
 
-  /**
-    * Stores a table with the given identifier.
+  /** Stores a table with the given identifier.
     *
     * @param id
     * identifier
@@ -28,8 +25,7 @@ trait TableMap {
     */
   def put(id: String, table: Table): Option[Table]
 
-  /**
-    * Returns an optional containing the value associated to the given key, or
+  /** Returns an optional containing the value associated to the given key, or
     * an empty optional if there is no association.
     *
     * @param id

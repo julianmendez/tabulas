@@ -8,8 +8,7 @@ import de.tudresden.inf.lat.tabulas.datatype.{PrimitiveTypeValue, Record}
 import scala.collection.mutable
 import scala.collection.mutable.ArrayBuffer
 
-/**
-  * Comparator for records.
+/** Comparator for records.
   *
   */
 class RecordComparator extends Comparator[Record] {

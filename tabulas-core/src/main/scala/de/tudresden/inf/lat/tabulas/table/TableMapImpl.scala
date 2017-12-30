@@ -4,16 +4,14 @@ package de.tudresden.inf.lat.tabulas.table
 import scala.collection.mutable
 import scala.collection.mutable.ArrayBuffer
 
-/**
-  * This is the default implementation of a table map.
+/** This is the default implementation of a table map.
   *
   */
 class TableMapImpl extends TableMap {
 
   private val _map: mutable.Map[String, Table] = new mutable.TreeMap[String, Table]()
 
-  /**
-    * Constructs a new table map using another one.
+  /** Constructs a new table map using another one.
     *
     * @param otherTableMap
     * other table map

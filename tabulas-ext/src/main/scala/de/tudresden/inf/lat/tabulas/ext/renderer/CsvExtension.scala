@@ -9,8 +9,7 @@ import de.tudresden.inf.lat.tabulas.table.TableMap
 
 import scala.collection.mutable
 
-/**
-  * This models an extension that writes the output in comma-separated values.
+/** This models an extension that writes the output in comma-separated values.
   *
   */
 class CsvExtension extends Extension {
