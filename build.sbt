@@ -10,41 +10,41 @@ lazy val commonSettings = Seq(
   publishMavenStyle := true
 )
 
-lazy val core = project
+lazy val tabulas_core = project
+  .withId("tabulas-core")
   .in(file("tabulas-core"))
   .settings(
-    commonSettings,
-    name := "tabulas-core"
+    commonSettings
   )
 
-lazy val ext = project
+lazy val tabulas_ext = project
+  .withId("tabulas-ext")
   .in(file("tabulas-ext"))
-  .aggregate(core)
-  .dependsOn(core)
+  .aggregate(tabulas_core)
+  .dependsOn(tabulas_core)
   .settings(
-    commonSettings,
-    name := "tabulas-ext"
+    commonSettings
   )
 
-lazy val dist = project
+lazy val tabulas_distribution = project
+  .withId("tabulas-distribution")
   .in(file("tabulas-distribution"))
-  .aggregate(core, ext)
-  .dependsOn(core, ext)
+  .aggregate(tabulas_core, tabulas_ext)
+  .dependsOn(tabulas_core, tabulas_ext)
   .settings(
     commonSettings,
-    name := "tabulas-distribution",
     mainClass in assembly := Some("de.tudresden.inf.lat.tabulas.ext.main.Main"),
     assemblyJarName in assembly := "tabulas-" + version.value + ".jar"
   )
 
 lazy val root = project
+  .withId("tabulas-parent")
   .in(file("."))
-  .aggregate(dist)
-  .dependsOn(dist)
+  .aggregate(tabulas_distribution)
+  .dependsOn(tabulas_distribution)
   .settings(
     commonSettings,
-    name := "tabulas-parent",
-    mainClass in (Compile,run) := Some("de.tudresden.inf.lat.tabulas.ext.main.Main")
+    mainClass in(Compile, run) := Some("de.tudresden.inf.lat.tabulas.ext.main.Main")
   )
 
 
