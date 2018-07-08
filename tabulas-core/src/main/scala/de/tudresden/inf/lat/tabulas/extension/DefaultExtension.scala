@@ -19,8 +19,8 @@ class DefaultExtension extends Extension {
   val RequiredArguments: Int = 2
 
   override def process(arguments: mutable.Buffer[String]): Boolean = {
-    if (Objects.isNull(arguments) || arguments.size != RequiredArguments) {
-      return false
+    val result: Boolean = if (Objects.isNull(arguments) || arguments.size != RequiredArguments) {
+      false
     } else {
       try {
 
@@ -32,12 +32,14 @@ class DefaultExtension extends Extension {
           outputFileName))
         val renderer: SimpleFormatRenderer = new SimpleFormatRenderer(output)
         renderer.render(tableMap)
-        return true
+        true
 
       } catch {
         case e: IOException => throw new RuntimeException(e)
       }
     }
+
+    return result
   }
 
   override def getExtensionName: String = {

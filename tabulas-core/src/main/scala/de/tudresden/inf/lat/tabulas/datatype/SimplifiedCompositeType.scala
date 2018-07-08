@@ -30,10 +30,14 @@ class SimplifiedCompositeType extends CompositeType {
   }
 
   override def equals(obj: Any): Boolean = {
-    obj match {
-      case other: SimplifiedCompositeType => return this._dataType.equals(other._dataType)
-      case _ => return false
+    val result: Boolean = obj match {
+      case other: SimplifiedCompositeType =>
+        this._dataType.equals(other._dataType)
+      case _ =>
+        false
     }
+
+    return result
   }
 
   override def toString: String = {

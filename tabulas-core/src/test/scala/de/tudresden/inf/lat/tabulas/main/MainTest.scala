@@ -42,7 +42,9 @@ class MainTest extends FunSuite {
     } else {
       value.renderAsList().size
     }
-    return new StringValue("" + size)
+    val result: StringValue = new StringValue("" + size)
+
+    return result
   }
 
   def readFile(fileName: String): String = {
@@ -53,7 +55,9 @@ class MainTest extends FunSuite {
       sb.append(line + NewLine)
     })
     reader.close()
-    return sb.toString
+    val result: String = sb.toString
+
+    return result
   }
 
   def assertContent(tableMap: TableMap, fileName: String): Unit = {

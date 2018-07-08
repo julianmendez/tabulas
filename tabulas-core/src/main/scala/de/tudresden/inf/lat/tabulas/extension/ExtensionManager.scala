@@ -45,7 +45,7 @@ class ExtensionManager extends Extension {
 
   override def process(arguments: mutable.Buffer[String]): Boolean = {
     Objects.requireNonNull(arguments)
-    if (arguments.size < RequiredArguments) {
+    val result: Boolean = if (arguments.size < RequiredArguments) {
       throw new ExtensionException("No extension name was given.")
     } else {
       val command: String = arguments(0)
@@ -60,13 +60,16 @@ class ExtensionManager extends Extension {
         throw new ExtensionException("Insufficient number of arguments for extension '" + command + "'.")
       } else {
         try {
-          return optExtension.get.process(newArguments)
+          optExtension.get.process(newArguments)
+
         } catch {
           case e@(_: ParseException | _: UncheckedIOException | _: IOException) =>
             throw new ExtensionException(e.toString, e)
         }
       }
     }
+
+    return result
   }
 
   override def getExtensionName: String = {

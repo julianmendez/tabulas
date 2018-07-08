@@ -34,7 +34,7 @@ class SimpleFormatRecordRenderer extends RecordRenderer {
 
 
   def writeIfNotEmpty(output: UncheckedWriter, field: String, value: PrimitiveTypeValue): Boolean = {
-    if (Objects.nonNull(field) && !field.trim().isEmpty && Objects.nonNull(value) && !value.isEmpty) {
+   val result: Boolean = if (Objects.nonNull(field) && !field.trim().isEmpty && Objects.nonNull(value) && !value.isEmpty) {
       output.write(ParserConstant.NewLine)
       output.write(field)
       output.write(ParserConstant.Space + ParserConstant.EqualsSign)
@@ -64,10 +64,12 @@ class SimpleFormatRecordRenderer extends RecordRenderer {
           output.write(value.toString)
         }
       }
-      return true
+      true
     } else {
-      return false
+      false
     }
+
+    return result
   }
 
   def render(output: UncheckedWriter, record: Record, fields: mutable.Buffer[String]): Unit = {

@@ -32,10 +32,12 @@ class URIType extends PrimitiveType {
   }
 
   override def equals(obj: Any): Boolean = {
-    obj match {
-      case other: URIType => return true
-      case _ => return false
+    val result: Boolean = obj match {
+      case other: URIType => true
+      case _ => false
     }
+
+    return result
   }
 
   override def toString: String = {

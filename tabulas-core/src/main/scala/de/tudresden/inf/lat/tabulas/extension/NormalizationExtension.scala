@@ -19,8 +19,9 @@ class NormalizationExtension extends Extension {
   val RequiredArguments: Int = 1
 
   override def process(arguments: mutable.Buffer[String]): Boolean = {
-    if (Objects.isNull(arguments) || arguments.size != RequiredArguments) {
-      return false
+    val result: Boolean = if (Objects.isNull(arguments) || arguments.size != RequiredArguments) {
+      false
+
     } else {
       try {
 
@@ -32,12 +33,14 @@ class NormalizationExtension extends Extension {
           outputFileName))
         val renderer: SimpleFormatRenderer = new SimpleFormatRenderer(output)
         renderer.render(tableMap)
-        return true
+        true
 
       } catch {
         case e: IOException => throw new ExtensionException(e.toString, e)
       }
     }
+
+    return result
   }
 
   override def getExtensionName: String = {

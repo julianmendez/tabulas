@@ -29,10 +29,11 @@ class DecimalType extends PrimitiveType {
   }
 
   override def equals(obj: Any): Boolean = {
-    obj match {
-      case other: DecimalType => return true
-      case _ => return false
+    val result: Boolean = obj match {
+      case other: DecimalType => true
+      case _ => false
     }
+    return result
   }
 
   override def toString: String = {
