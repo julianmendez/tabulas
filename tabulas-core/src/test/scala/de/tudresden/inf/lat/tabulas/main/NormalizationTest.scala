@@ -23,9 +23,7 @@ class NormalizationTest extends FunSuite {
 
   val NewLine: String = "\n"
 
-  def getPath(fileName: String): String = {
-    return getClass.getClassLoader.getResource(fileName).getFile
-  }
+  def getPath(fileName: String): String = { getClass.getClassLoader.getResource(fileName).getFile }
 
   def testNormalizationOfFile(inputFileName: String, expectedFileName: String): Unit = {
     val tableMap: TableMap = new SimpleFormatParser(new FileReader(getPath(inputFileName))).parse()

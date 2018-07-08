@@ -36,17 +36,13 @@ class TableImpl extends Table {
     }
   }
 
-  override def getType: CompositeType = {
-    return this._tableType
-  }
+  override def getType: CompositeType = { this._tableType }
 
   override def setType(newType: CompositeType): Unit = {
     this._tableType = newType
   }
 
-  override def getPrefixMap: PrefixMap = {
-    return this._prefixMap
-  }
+  override def getPrefixMap: PrefixMap = { this._prefixMap }
 
   override def setPrefixMap(newPrefixMap: PrefixMap): Unit = {
     this._prefixMap.clear()
@@ -61,12 +57,10 @@ class TableImpl extends Table {
       this._list += record
       result = true
     }
-    return result
+    result
   }
 
-  override def getSortingOrder: mutable.Buffer[String] = {
-    return this._sortingOrder
-  }
+  override def getSortingOrder: mutable.Buffer[String] = { this._sortingOrder }
 
   override def setSortingOrder(sortingOrder: mutable.Buffer[String]): Unit = {
     this._sortingOrder.clear()
@@ -75,9 +69,7 @@ class TableImpl extends Table {
     }
   }
 
-  override def getFieldsWithReverseOrder: mutable.Set[String] = {
-    return this._fieldsWithReverseOrder
-  }
+  override def getFieldsWithReverseOrder: mutable.Set[String] = { this._fieldsWithReverseOrder }
 
   override def setFieldsWithReverseOrder(fieldsWithReverseOrder: mutable.Set[String]): Unit = {
     this._fieldsWithReverseOrder.clear()
@@ -91,8 +83,7 @@ class TableImpl extends Table {
     val ret: mutable.Buffer[Record] = new ArrayBuffer[Record]
     ret ++= this._list
     val result = ret.sortWith((record0, record1) => comparator.compare(record0, record1) < 0)
-
-    return result
+    result
   }
 
   override def clear(): Unit = {
@@ -100,8 +91,9 @@ class TableImpl extends Table {
   }
 
   override def hashCode(): Int = {
-    return this._tableType.hashCode() + 0x1F * (this._prefixMap.hashCode() + 0x1F * (this._sortingOrder.hashCode() +
+    val result = this._tableType.hashCode() + 0x1F * (this._prefixMap.hashCode() + 0x1F * (this._sortingOrder.hashCode() +
       0x1F * (this._fieldsWithReverseOrder.hashCode() + 0x1F * this._list.hashCode())))
+    result
   }
 
   override def equals(obj: Any): Boolean = {
@@ -114,13 +106,13 @@ class TableImpl extends Table {
         getRecords.equals(other.getRecords)
       case _ => result = false
     }
-
-    return result
+    result
   }
 
   override def toString: String = {
-    return this._tableType.toString + " " + this._prefixMap.toString + " " + this._sortingOrder.toString + " " +
+    val result = this._tableType.toString + " " + this._prefixMap.toString + " " + this._sortingOrder.toString + " " +
       this._fieldsWithReverseOrder.toString + " " + this._list.toString
+    result
   }
 
 }

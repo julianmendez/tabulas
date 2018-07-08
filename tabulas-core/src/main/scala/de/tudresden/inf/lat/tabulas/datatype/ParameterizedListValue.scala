@@ -40,9 +40,7 @@ class ParameterizedListValue extends ArrayBuffer[PrimitiveTypeValue] with Primit
     this._parameter = other.getParameter
   }
 
-  override def getType: PrimitiveType = {
-    return new ParameterizedListType(this._parameter)
-  }
+  override def getType: PrimitiveType = { new ParameterizedListType(this._parameter) }
 
   def add(str: String): Unit = {
     this += this._parameter.parse(str)
@@ -61,16 +59,14 @@ class ParameterizedListValue extends ArrayBuffer[PrimitiveTypeValue] with Primit
       sbuf.append(str)
     }
     val result: String = sbuf.toString
-
-    return result
+    result
   }
 
   override def renderAsList(): mutable.Buffer[String] = {
     val list: mutable.Buffer[String] = new ArrayBuffer[String]()
     this.foreach(elem => list += elem.render())
     val result: mutable.Buffer[String] = list // @FIXME this should be immutable
-
-    return result
+    result
   }
 
   override def compareTo(obj: PrimitiveTypeValue): Int = {
@@ -84,13 +80,10 @@ class ParameterizedListValue extends ArrayBuffer[PrimitiveTypeValue] with Primit
     } else {
       result = toString.compareTo(obj.toString)
     }
-
-    return result
+    result
   }
 
-  def getParameter: PrimitiveType = {
-    return this._parameter
-  }
+  def getParameter: PrimitiveType = { this._parameter }
 
 }
 

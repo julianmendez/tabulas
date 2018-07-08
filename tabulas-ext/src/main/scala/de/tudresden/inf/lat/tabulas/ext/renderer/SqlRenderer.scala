@@ -42,9 +42,7 @@ class SqlRenderer extends Renderer {
     this._output = output
   }
 
-  def sanitize(str: String): String = {
-    return str.replace(Apostrophe, ApostropheReplacement)
-  }
+  def sanitize(str: String): String = { str.replace(Apostrophe, ApostropheReplacement) }
 
   def writeAsStringIfNotEmpty(output: UncheckedWriter, field: String, value: PrimitiveTypeValue): Boolean = {
     var result: Boolean = false
@@ -58,8 +56,7 @@ class SqlRenderer extends Renderer {
       output.write(Null)
       result = false
     }
-
-    return result
+    result
   }
 
   def writeParameterizedListIfNotEmpty(output: UncheckedWriter, field: String, list: ParameterizedListValue): Boolean = {
@@ -76,8 +73,7 @@ class SqlRenderer extends Renderer {
       output.write(Null)
       result = false
     }
-
-    return result
+    result
   }
 
   def writeLinkIfNotEmpty(output: UncheckedWriter, prefix: String, link: URIValue): Boolean = {
@@ -92,8 +88,7 @@ class SqlRenderer extends Renderer {
       output.write(Null)
       result = false
     }
-
-    return result
+    result
   }
 
   def render(output: UncheckedWriter, tableName: String, record: Record, fields: mutable.Buffer[String]): Unit = {

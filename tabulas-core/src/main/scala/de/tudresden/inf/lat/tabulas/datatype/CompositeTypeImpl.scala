@@ -26,7 +26,7 @@ class CompositeTypeImpl extends CompositeType {
   }
 
   override def getFields: mutable.Buffer[String] = {
-    return this._fields // @FIXME this should be immutable
+    this._fields // @FIXME this should be immutable
   }
 
   override def getFieldType(field: String): Option[String] = {
@@ -50,9 +50,7 @@ class CompositeTypeImpl extends CompositeType {
     }
   }
 
-  override def hashCode(): Int = {
-    return this._fields.hashCode() + (0x1F * this._fieldType.hashCode())
-  }
+  override def hashCode(): Int = { this._fields.hashCode() + (0x1F * this._fieldType.hashCode()) }
 
   override def equals(obj: Any): Boolean = {
     var result: Boolean = false
@@ -66,16 +64,14 @@ class CompositeTypeImpl extends CompositeType {
       }
       case _ => result = false
     }
-
-    return result
+    result
   }
 
   override def toString: String = {
     val sbuf: StringBuffer = new StringBuffer()
     this._fields.foreach(field => sbuf.append(field + ":" + this._fieldType.get(field) + " "))
     val result: String = sbuf.toString
-
-    return result
+    result
   }
 
 }

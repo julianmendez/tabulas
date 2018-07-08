@@ -37,33 +37,22 @@ class StringValue extends PrimitiveTypeValue {
     this._str = other._str
   }
 
-  override def getType: PrimitiveType = {
-    return new StringType()
-  }
+  override def getType: PrimitiveType = { new StringType() }
 
-  override def isEmpty: Boolean = {
-    return _str.trim().isEmpty
-  }
+  override def isEmpty: Boolean = { this._str.trim().isEmpty }
 
-  override def render(): String = {
-    return _str
-  }
+  override def render(): String = { this._str }
 
   override def renderAsList(): mutable.Buffer[String] = {
     val list: mutable.Buffer[String] = new ArrayBuffer[String]()
     list += render()
     val result: mutable.Buffer[String] = list // @FIXME this should be immutable
-
-    return result
+    result
   }
 
-  override def compareTo(other: PrimitiveTypeValue): Int = {
-    return toString.compareTo(other.toString)
-  }
+  override def compareTo(other: PrimitiveTypeValue): Int = { toString.compareTo(other.toString) }
 
-  override def hashCode(): Int = {
-    return this._str.hashCode()
-  }
+  override def hashCode(): Int = { this._str.hashCode() }
 
   override def equals(obj: Any): Boolean = {
     var result: Boolean  = false
@@ -71,13 +60,10 @@ class StringValue extends PrimitiveTypeValue {
       case other: StringValue => result = this._str.equals(other._str)
       case _ => result = false
     }
-
-    return result
+    result
   }
 
-  override def toString: String = {
-    return this._str
-  }
+  override def toString: String = { this._str }
 
 }
 

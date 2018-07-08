@@ -8,38 +8,25 @@ class StringType extends PrimitiveType {
 
   val TypeName: String = "String"
 
-  override def getTypeName: String = {
-    return TypeName
-  }
+  override def getTypeName: String = { TypeName }
 
-  override def isList: Boolean = {
-    return false
-  }
+  override def isList: Boolean = { false }
 
-  override def parse(str: String): StringValue = {
-    return new StringValue(str)
-  }
+  override def parse(str: String): StringValue = { new StringValue(str) }
 
-  def castInstance(value: PrimitiveTypeValue): StringValue = {
-    return parse(value.render())
-  }
+  def castInstance(value: PrimitiveTypeValue): StringValue = { parse(value.render()) }
 
-  override def hashCode(): Int = {
-    return getTypeName.hashCode()
-  }
+  override def hashCode(): Int = { getTypeName.hashCode() }
 
   override def equals(obj: Any): Boolean = {
     val result: Boolean = obj match {
       case other: StringType => true
       case _ => false
     }
-
-    return result
+    result
   }
 
-  override def toString: String = {
-    return getTypeName
-  }
+  override def toString: String = { getTypeName }
 
 }
 

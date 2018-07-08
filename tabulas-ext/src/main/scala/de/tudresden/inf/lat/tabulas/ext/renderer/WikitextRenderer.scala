@@ -32,8 +32,7 @@ class WikitextRenderer extends Renderer {
     } else {
       result = false
     }
-
-    return result
+    result
   }
 
   def writeParameterizedListIfNotEmpty(output: UncheckedWriter, prefix: String, list: ParameterizedListValue): Boolean = {
@@ -53,8 +52,7 @@ class WikitextRenderer extends Renderer {
     } else {
       result = false
     }
-
-    return result
+    result
   }
 
   def writeLinkIfNotEmpty(output: UncheckedWriter, prefix: String, link: URIValue): Boolean = {
@@ -71,8 +69,7 @@ class WikitextRenderer extends Renderer {
     } else {
       result = false
     }
-
-    return result
+    result
   }
 
   def render(output: UncheckedWriter, record: Record, fields: mutable.Buffer[String]): Unit = {

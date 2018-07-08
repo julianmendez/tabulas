@@ -52,8 +52,7 @@ class HtmlRenderer extends Renderer {
     } else {
       result = false
     }
-
-    return result
+    result
   }
 
   def writeParameterizedListIfNotEmpty(output: UncheckedWriter, list: ParameterizedListValue): Boolean = {
@@ -72,8 +71,7 @@ class HtmlRenderer extends Renderer {
     } else {
       result = false
     }
-
-    return result
+    result
   }
 
   def writeLinkIfNotEmpty(output: UncheckedWriter, link: URIValue): Boolean = {
@@ -89,8 +87,7 @@ class HtmlRenderer extends Renderer {
     } else {
       result = false
     }
-
-    return result
+    result
   }
 
   def render(output: UncheckedWriter, record: Record, fields: mutable.Buffer[String]): Unit = {

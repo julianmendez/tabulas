@@ -24,21 +24,14 @@ class TableMapImpl extends TableMap {
   override def getTableIds: mutable.Buffer[String] = {
     val result: mutable.Buffer[String] = new ArrayBuffer[String]()
     result ++= this._map.keySet
-
-    return result
+    result
   }
 
-  override def put(id: String, table: Table): Option[Table] = {
-    return this._map.put(id, table)
-  }
+  override def put(id: String, table: Table): Option[Table] = { this._map.put(id, table) }
 
-  override def getTable(id: String): Option[Table] = {
-    return this._map.get(id)
-  }
+  override def getTable(id: String): Option[Table] = { this._map.get(id) }
 
-  override def hashCode(): Int = {
-    return this._map.hashCode()
-  }
+  override def hashCode(): Int = { this._map.hashCode() }
 
   override def equals(obj: Any): Boolean = {
     var result: Boolean = false
@@ -50,8 +43,7 @@ class TableMapImpl extends TableMap {
       }
       case _ => result = false
     }
-
-    return result
+    result
   }
 
   override def toString: String = {
@@ -64,8 +56,7 @@ class TableMapImpl extends TableMap {
       sbuf.append("\n")
     })
     val result: String = sbuf.toString
-
-    return result
+    result
   }
 
 }

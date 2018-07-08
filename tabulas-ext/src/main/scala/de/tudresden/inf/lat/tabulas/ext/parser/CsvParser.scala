@@ -60,7 +60,7 @@ class CsvParser extends Parser {
       result += current.toString
     }
 
-    return result
+    result
   }
 
   private def createSortedTable(fields: mutable.Buffer[String]): TableImpl = {
@@ -69,8 +69,7 @@ class CsvParser extends Parser {
 
     val result: TableImpl = new TableImpl()
     result.setType(tableType)
-
-    return result
+    result
   }
 
   def normalize(fieldName: String): String = {
@@ -94,8 +93,7 @@ class CsvParser extends Parser {
       ret.append(ch)
     })
     val result = ret.toString
-
-    return result
+    result
   }
 
   def normalizeHeaders(headers: mutable.Buffer[String], lineCounter: Int): mutable.Buffer[String] = {
@@ -115,8 +113,7 @@ class CsvParser extends Parser {
         result += fieldName
       }
     }
-
-    return result
+    result
   }
 
   def parseMap(input: BufferedReader): TableMap = {
@@ -154,8 +151,7 @@ class CsvParser extends Parser {
 
     val result: TableMapImpl = new TableMapImpl()
     result.put(DefaultTableName, currentTable)
-
-    return result
+    result
   }
 
   override def parse(): TableMap = {
@@ -166,8 +162,7 @@ class CsvParser extends Parser {
     } catch {
       case e: IOException => throw new RuntimeException(e)
     }
-
-    return result
+    result
   }
 
 }

@@ -34,9 +34,7 @@ class PrimitiveTypeFactory {
     * @return <code>true</code> if and only if this factory contains the given
     *         primitive type
     */
-  def contains(primType: String): Boolean = {
-    return this._map.get(primType).isDefined
-  }
+  def contains(primType: String): Boolean = { this._map.get(primType).isDefined }
 
   /** Returns a new value of the specified type.
     *
@@ -48,11 +46,12 @@ class PrimitiveTypeFactory {
     */
   def newInstance(typeName: String, value: String): PrimitiveTypeValue = {
     val optPrimType: Option[PrimitiveType] = this._map.get(typeName)
-    if (optPrimType.isEmpty) {
+    val result: PrimitiveTypeValue = if (optPrimType.isEmpty) {
       throw new ParseException("Type '" + typeName + "' is undefined.")
     } else {
-      return optPrimType.get.parse(value)
+      optPrimType.get.parse(value)
     }
+    result
   }
 
 }

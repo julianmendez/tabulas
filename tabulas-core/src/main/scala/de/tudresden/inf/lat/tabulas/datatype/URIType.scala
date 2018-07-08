@@ -10,39 +10,29 @@ class URIType extends PrimitiveType {
 
   val TypeName: String = "URI"
 
-  override def getTypeName: String = {
-    return TypeName
-  }
+  override def getTypeName: String = { TypeName }
 
-  override def isList: Boolean = {
-    return false
-  }
+  override def isList: Boolean = { false }
 
-  override def parse(str: String): URIValue = {
-    return new URIValue(str)
-  }
+  override def parse(str: String): URIValue = { new URIValue(str) }
 
   def castInstance(value: PrimitiveTypeValue): URIValue = {
     Objects.requireNonNull(value)
-    return parse(value.render())
+    val result = parse(value.render())
+    result
   }
 
-  override def hashCode(): Int = {
-    return getTypeName.hashCode()
-  }
+  override def hashCode(): Int = { getTypeName.hashCode() }
 
   override def equals(obj: Any): Boolean = {
     val result: Boolean = obj match {
       case other: URIType => true
       case _ => false
     }
-
-    return result
+    result
   }
 
-  override def toString: String = {
-    return getTypeName
-  }
+  override def toString: String = { getTypeName }
 
 }
 

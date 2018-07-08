@@ -68,13 +68,10 @@ class ExtensionManager extends Extension {
         }
       }
     }
-
-    return result
+    result
   }
 
-  override def getExtensionName: String = {
-    return Name
-  }
+  override def getExtensionName: String = { Name }
 
   override def getHelp: String = {
     val sbuf: StringBuffer = new StringBuffer()
@@ -84,11 +81,10 @@ class ExtensionManager extends Extension {
       sbuf.append(extension.getHelp)
       sbuf.append(NewLine)
     })
-    return sbuf.toString
+    val result: String = sbuf.toString
+    result
   }
 
-  override def getRequiredArguments: Int = {
-    return RequiredArguments
-  }
+  override def getRequiredArguments: Int = { RequiredArguments }
 
 }

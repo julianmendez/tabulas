@@ -23,13 +23,9 @@ class SimpleFormatParser extends Parser {
     private val _line: String = line0
     private val _lineCounter: Int = lineCounter0
 
-    def getLine: String = {
-      return this._line
-    }
+    def getLine: String = { this._line }
 
-    def getLineCounter: Int = {
-      return this._lineCounter
-    }
+    def getLineCounter: Int = { this._lineCounter }
 
   }
 
@@ -50,15 +46,13 @@ class SimpleFormatParser extends Parser {
         result = Option.apply(line.substring(0, pos).trim())
       }
     }
-
-    return result
+    result
   }
 
   def hasKey(line: String, key: String): Boolean = {
     val optKey: Option[String] = getKey(line)
     val result: Boolean = (optKey.isDefined && (optKey.get == key))
-
-    return result
+    result
   }
 
   def getValue(line: String): Option[String] = {
@@ -73,8 +67,7 @@ class SimpleFormatParser extends Parser {
         result = Option.apply(line.substring(pos + ParserConstant.EqualsSign.length(), line.length()).trim())
       }
     }
-
-    return result
+    result
   }
 
   def parseTypes(line: String, lineCounter: Int): CompositeTypeImpl = {
@@ -96,8 +89,7 @@ class SimpleFormatParser extends Parser {
         }
       }
     }
-
-    return result
+    result
   }
 
   private def asUri(uriStr: String, lineCounter: Int): URI = {
@@ -107,8 +99,7 @@ class SimpleFormatParser extends Parser {
     } catch {
       case e: URISyntaxException => throw new ParseException("String '" + uriStr + "' is not a valid URI. (line " + lineCounter + ")")
     }
-
-    return result
+    result
   }
 
   def parsePrefixMap(line: String, lineCounter: Int): PrefixMap = {
@@ -125,8 +116,7 @@ class SimpleFormatParser extends Parser {
         result.put(asUri(key, lineCounter), asUri(value, lineCounter))
       }
     }
-
-    return result
+    result
   }
 
   private def setSortingOrder(line: String, table: TableImpl): Unit = {
@@ -182,13 +172,10 @@ class SimpleFormatParser extends Parser {
           + lineCounter + ")", e.getCause)
       }
     }
-
-    return result
+    result
   }
 
-  def isMultiLine(line: String): Boolean = {
-    return line.trim().endsWith(ParserConstant.LineContinuationSymbol)
-  }
+  def isMultiLine(line: String): Boolean = { line.trim().endsWith(ParserConstant.LineContinuationSymbol) }
 
   def getCleanLine(line: String): String = {
     val trimmedLine: String = line.trim()
@@ -198,8 +185,7 @@ class SimpleFormatParser extends Parser {
     } else {
       result = trimmedLine
     }
-
-    return result
+    result
   }
 
   def readMultiLine(input: BufferedReader, lineCounter0: Int): Pair = {
@@ -227,8 +213,7 @@ class SimpleFormatParser extends Parser {
         result = new Pair(lineCounter, sb.toString)
       }
     }
-
-    return result
+    result
   }
 
   private def isIdProperty(line: String): Boolean = {
@@ -239,8 +224,7 @@ class SimpleFormatParser extends Parser {
     } else {
       result = false
     }
-
-    return result
+    result
   }
 
   private def getIdProperty(line: String): Option[String] = {
@@ -252,8 +236,7 @@ class SimpleFormatParser extends Parser {
     } else {
       result = Option.empty
     }
-
-    return result
+    result
   }
 
   private def parseProperty(line: String, currentTable: TableImpl,
@@ -353,8 +336,7 @@ class SimpleFormatParser extends Parser {
 
     val result: TableMapImpl = new TableMapImpl()
     mapOfTables.keySet.foreach(key => result.put(key, mapOfTables.get(key).get))
-
-    return result
+    result
   }
 
   override def parse(): TableMap = {
@@ -365,8 +347,7 @@ class SimpleFormatParser extends Parser {
     } catch {
       case e: IOException => throw new RuntimeException(e)
     }
-
-    return result
+    result
   }
 
 }

@@ -39,20 +39,13 @@ class WikitextExtension extends Extension {
         case e: IOException => throw new RuntimeException(e)
       }
     }
-
-    return result
+    result
   }
 
-  override def getExtensionName: String = {
-    return Name
-  }
+  override def getExtensionName: String = { Name }
 
-  override def getHelp: String = {
-    return Help
-  }
+  override def getHelp: String = { Help }
 
-  override def getRequiredArguments: Int = {
-    return RequiredArguments
-  }
+  override def getRequiredArguments: Int = { RequiredArguments }
 
 }

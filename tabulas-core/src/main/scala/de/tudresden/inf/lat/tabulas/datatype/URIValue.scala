@@ -48,9 +48,7 @@ class URIValue extends PrimitiveTypeValue {
     this.uri = other.getUri
   }
 
-  override def getType: PrimitiveType = {
-    return new URIType()
-  }
+  override def getType: PrimitiveType = { new URIType() }
 
   def createURI(uriStr: String): URI = {
     var result: URI = URI.create("")
@@ -59,13 +57,10 @@ class URIValue extends PrimitiveTypeValue {
     } catch {
       case e: URISyntaxException => throw new ParseException("Invalid URI '" + uriStr + "'.", e)
     }
-
-    return result
+    result
   }
 
-  def getUri: URI = {
-    return this.uri
-  }
+  def getUri: URI = { this.uri }
 
   def getUriNoLabel: URI = {
     val uriStr: String = this.uri.toASCIIString
@@ -76,8 +71,7 @@ class URIValue extends PrimitiveTypeValue {
     } else {
       result = createURI(uriStr.substring(0, pos))
     }
-
-    return result
+    result
   }
 
   def getLabel: String = {
@@ -89,33 +83,23 @@ class URIValue extends PrimitiveTypeValue {
     } else {
       result = uriStr.substring(pos + SpecialSymbol.length())
     }
-
-    return result
+    result
   }
 
-  override def isEmpty: Boolean = {
-    return getUri.toASCIIString.trim().isEmpty
-  }
+  override def isEmpty: Boolean = { getUri.toASCIIString.trim().isEmpty }
 
-  override def render(): String = {
-    return this.uri.toASCIIString
-  }
+  override def render(): String = { this.uri.toASCIIString }
 
   override def renderAsList(): mutable.Buffer[String] = {
     val list: mutable.Buffer[String] = new ArrayBuffer[String]()
     list += render()
     val result: mutable.Buffer[String] = list // @FIXME this should be immutable
-
-    return result
+    result
   }
 
-  override def compareTo(other: PrimitiveTypeValue): Int = {
-    return toString.compareTo(other.toString)
-  }
+  override def compareTo(other: PrimitiveTypeValue): Int = { toString.compareTo(other.toString) }
 
-  override def hashCode(): Int = {
-    return this.uri.hashCode()
-  }
+  override def hashCode(): Int = { this.uri.hashCode() }
 
   override def equals(obj: Any): Boolean = {
     var result: Boolean = false
@@ -123,13 +107,10 @@ class URIValue extends PrimitiveTypeValue {
       case other: URIValue => result = getUri.equals(other.getUri)
       case _ => result = false
     }
-
-    return result
+    result
   }
 
-  override def toString: String = {
-    return render()
-  }
+  override def toString: String = { render() }
 
 }
 

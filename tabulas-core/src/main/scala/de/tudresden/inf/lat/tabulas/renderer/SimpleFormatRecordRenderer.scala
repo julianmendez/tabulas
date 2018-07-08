@@ -68,8 +68,7 @@ class SimpleFormatRecordRenderer extends RecordRenderer {
     } else {
       false
     }
-
-    return result
+    result
   }
 
   def render(output: UncheckedWriter, record: Record, fields: mutable.Buffer[String]): Unit = {

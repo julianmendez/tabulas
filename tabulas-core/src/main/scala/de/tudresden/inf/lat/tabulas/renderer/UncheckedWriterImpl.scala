@@ -3,7 +3,7 @@ package de.tudresden.inf.lat.tabulas.renderer
 import java.io.{IOException, UncheckedIOException, Writer}
 import java.util.Objects
 
-/** This is the default implementation of {@link UncheckedWriter}.
+/** This is the default implementation of UncheckedWriter.
   *
   * @author Julian Mendez
   *
@@ -85,7 +85,7 @@ class UncheckedWriterImpl extends UncheckedWriter {
     } catch {
       case e: IOException => throw new UncheckedIOException(e)
     }
-    return this
+    this
   }
 
   override def append(charSequence: CharSequence): UncheckedWriter = {
@@ -94,7 +94,7 @@ class UncheckedWriterImpl extends UncheckedWriter {
     } catch {
       case e: IOException => throw new UncheckedIOException(e)
     }
-    return this
+    this
   }
 
   override def append(charSequence: CharSequence, start: Int, end: Int): UncheckedWriter = {
@@ -103,26 +103,23 @@ class UncheckedWriterImpl extends UncheckedWriter {
     } catch {
       case e: IOException => throw new UncheckedIOException(e)
     }
-    return this
+    this
   }
 
-  override def asWriter(): Writer = {
-    return this._writer
-  }
+  override def asWriter(): Writer = { this._writer }
 
-  override def hashCode(): Int = {
-    return this._writer.hashCode()
-  }
+  override def hashCode(): Int = { this._writer.hashCode() }
 
   override def equals(obj: Any): Boolean = {
-    obj match {
-      case other: UncheckedWriter => return asWriter().equals(other.asWriter())
-      case _ => return false
+    val result: Boolean = obj match {
+      case other: UncheckedWriter =>
+        asWriter().equals(other.asWriter())
+      case _ =>
+        false
     }
+    result
   }
 
-  override def toString: String = {
-    return this._writer.toString
-  }
+  override def toString: String = { this._writer.toString }
 
 }

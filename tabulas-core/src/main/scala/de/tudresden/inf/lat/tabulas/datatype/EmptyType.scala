@@ -8,38 +8,25 @@ class EmptyType extends PrimitiveType {
 
   val TypeName: String = "Empty"
 
-  override def getTypeName: String = {
-    return TypeName
-  }
+  override def getTypeName: String = { TypeName }
 
-  override def isList: Boolean = {
-    return false
-  }
+  override def isList: Boolean = { false }
 
-  override def parse(str: String): EmptyValue = {
-    return new EmptyValue()
-  }
+  override def parse(str: String): EmptyValue = { new EmptyValue() }
 
-  def castInstance(value: PrimitiveTypeValue): EmptyValue = {
-    return parse(value.render())
-  }
+  def castInstance(value: PrimitiveTypeValue): EmptyValue = { parse(value.render()) }
 
-  override def hashCode(): Int = {
-    return getTypeName.hashCode()
-  }
+  override def hashCode(): Int = { getTypeName.hashCode() }
 
   override def equals(obj: Any): Boolean = {
     val result: Boolean = obj match {
       case other: EmptyType => true
       case _ => false
     }
-
-    return result
+    result
   }
 
-  override def toString: String = {
-    return getTypeName
-  }
+  override def toString: String = { getTypeName }
 
 }
 

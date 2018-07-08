@@ -24,9 +24,7 @@ class MainTest extends FunSuite {
   val TypeOfNumberOfAuthors: String = "String"
   val NewLine: String = "\n"
 
-  def getPath(fileName: String): String = {
-    return getClass.getClassLoader.getResource(fileName).getFile
-  }
+  def getPath(fileName: String): String = { getClass.getClassLoader.getResource(fileName).getFile }
 
   /**
     * Returns the number of authors for a given record.
@@ -43,8 +41,7 @@ class MainTest extends FunSuite {
       value.renderAsList().size
     }
     val result: StringValue = new StringValue("" + size)
-
-    return result
+    result
   }
 
   def readFile(fileName: String): String = {
@@ -56,8 +53,7 @@ class MainTest extends FunSuite {
     })
     reader.close()
     val result: String = sb.toString
-
-    return result
+    result
   }
 
   def assertContent(tableMap: TableMap, fileName: String): Unit = {

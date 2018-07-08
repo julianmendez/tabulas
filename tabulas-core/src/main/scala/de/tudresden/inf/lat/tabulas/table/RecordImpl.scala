@@ -32,8 +32,7 @@ class RecordImpl extends Record {
     } else {
       result = this._map.get(key)
     }
-
-    return result
+    result
   }
 
   override def set(key: String, value: PrimitiveTypeValue): Unit = {
@@ -44,9 +43,8 @@ class RecordImpl extends Record {
 
   override def getProperties: mutable.Buffer[String] = {
     val result: mutable.Buffer[String] = new ArrayBuffer[String]
-    result ++= _map.keySet
-
-    return result
+    result ++= this._map.keySet
+    result
   }
 
   override def equals(obj: Any): Boolean = {
@@ -58,17 +56,12 @@ class RecordImpl extends Record {
       }
       case _ => result = false
     }
-
-    return result
+    result
   }
 
-  override def hashCode(): Int = {
-    return this._map.hashCode()
-  }
+  override def hashCode(): Int = { this._map.hashCode() }
 
-  override def toString: String = {
-    return this._map.toString
-  }
+  override def toString: String = { this._map.toString }
 
 }
 

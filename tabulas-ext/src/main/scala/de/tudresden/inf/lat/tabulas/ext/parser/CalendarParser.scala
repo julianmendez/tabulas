@@ -20,13 +20,9 @@ class CalendarParser extends Parser {
     private val _line: String = line0
     private val _lineCounter: Int = lineCounter0
 
-    def getLine: String = {
-      return this._line
-    }
+    def getLine: String = { this._line }
 
-    def getLineCounter: Int = {
-      return this._lineCounter
-    }
+    def getLineCounter: Int = { this._lineCounter }
 
   }
 
@@ -34,15 +30,13 @@ class CalendarParser extends Parser {
 
     def push(elem: A): MyStack[A] = {
       insert(0, elem)
-
-      return this
+      this
     }
 
     def pop(): A = {
       iterator.next() // this throws an NoSuchElementException in an empty stack
       val result: A = remove(0)
-
-      return result
+      result
     }
 
   }
@@ -120,8 +114,7 @@ class CalendarParser extends Parser {
         result = Option.apply(line.substring(0, pos).trim())
       }
     }
-
-    return result
+    result
   }
 
   def getValue(line: String): Option[String] = {
@@ -136,17 +129,12 @@ class CalendarParser extends Parser {
         result = Option.apply(line.substring(pos + 1, line.length()).trim())
       }
     }
-
-    return result
+    result
   }
 
-  def isBeginLine(line: String): Boolean = {
-    return Objects.nonNull(line) && line.trim().startsWith(BeginKeyword)
-  }
+  def isBeginLine(line: String): Boolean = { Objects.nonNull(line) && line.trim().startsWith(BeginKeyword) }
 
-  def isEndLine(line: String): Boolean = {
-    return Objects.nonNull(line) && line.trim().startsWith(EndKeyword)
-  }
+  def isEndLine(line: String): Boolean = { Objects.nonNull(line) && line.trim().startsWith(EndKeyword) }
 
   private def getTypedValue(key: String, value: String,
                             type0: CompositeType, lineCounter: Int): PrimitiveTypeValue = {
@@ -166,8 +154,7 @@ class CalendarParser extends Parser {
           + lineCounter + ")", e.getCause)
       }
     }
-
-    return result
+    result
   }
 
   private def preload(input: BufferedReader): mutable.Buffer[Pair] = {
@@ -186,8 +173,7 @@ class CalendarParser extends Parser {
       }
       lineCounter += 1
     })
-
-    return result
+    result
   }
 
   private def parseProperty(line: String, currentTable: TableImpl,
@@ -228,8 +214,7 @@ class CalendarParser extends Parser {
       sbuf.append(counter)
     }
     val result: String = sbuf.toString
-
-    return result
+    result
   }
 
   def parseMap(input: BufferedReader): TableMap = {
@@ -332,8 +317,7 @@ class CalendarParser extends Parser {
 
     val result: TableMapImpl = new TableMapImpl()
     map.keySet.foreach(key => result.put(key, map.get(key).get))
-
-    return result
+    result
   }
 
   override def parse(): TableMap = {
@@ -344,8 +328,7 @@ class CalendarParser extends Parser {
     } catch {
       case e: IOException => throw new RuntimeException(e)
     }
-
-    return result
+    result
   }
 
 }

@@ -42,24 +42,17 @@ class DecimalValue extends PrimitiveTypeValue {
     this._number = other._number
   }
 
-  override def getType: PrimitiveType = {
-    return new DecimalType()
-  }
+  override def getType: PrimitiveType = { new DecimalType() }
 
-  override def isEmpty: Boolean = {
-    return false
-  }
+  override def isEmpty: Boolean = { false }
 
-  override def render(): String = {
-    return this._number.toString
-  }
+  override def render(): String = { this._number.toString }
 
   override def renderAsList(): mutable.Buffer[String] = {
     val list: mutable.Buffer[String] = new ArrayBuffer[String]()
     list += render()
     val result = list // @FIXME this should be immutable
-
-    return result
+    result
   }
 
   override def compareTo(other: PrimitiveTypeValue): Int = {
@@ -70,13 +63,10 @@ class DecimalValue extends PrimitiveTypeValue {
     } else {
       result = render().compareTo(other.render())
     }
-
-    return result
+    result
   }
 
-  override def hashCode(): Int = {
-    return this._number.hashCode()
-  }
+  override def hashCode(): Int = { this._number.hashCode() }
 
   override def equals(obj: Any): Boolean = {
     var result: Boolean = false
@@ -84,13 +74,10 @@ class DecimalValue extends PrimitiveTypeValue {
       case other: DecimalValue => result = this._number.equals(other._number)
       case _ => result = false
     }
-
-    return result
+    result
   }
 
-  override def toString: String = {
-    return this._number.toString
-  }
+  override def toString: String = { this._number.toString }
 
 }
 

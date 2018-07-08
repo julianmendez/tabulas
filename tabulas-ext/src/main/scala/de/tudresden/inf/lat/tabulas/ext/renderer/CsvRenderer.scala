@@ -27,9 +27,7 @@ class CsvRenderer extends Renderer {
     this._output = output
   }
 
-  def sanitize(str: String): String = {
-    return str.replace(Quotes, QuotesReplacement)
-  }
+  def sanitize(str: String): String = { str.replace(Quotes, QuotesReplacement) }
 
   def writeAsStringIfNotEmpty(output: UncheckedWriter, field: String, value: PrimitiveTypeValue): Boolean = {
     var result: Boolean = false
@@ -43,8 +41,7 @@ class CsvRenderer extends Renderer {
       output.write(Null)
       result = false
     }
-
-    return result
+    result
   }
 
   def writeParameterizedListIfNotEmpty(output: UncheckedWriter, field: String, list: ParameterizedListValue): Boolean = {
@@ -61,8 +58,7 @@ class CsvRenderer extends Renderer {
       output.write(Null)
       result = false
     }
-
-    return result
+    result
   }
 
   def writeLinkIfNotEmpty(output: UncheckedWriter, field: String, link: URIValue): Boolean = {
@@ -76,8 +72,7 @@ class CsvRenderer extends Renderer {
       output.write(Null)
       result = false
     }
-
-    return result
+    result
   }
 
   def render(output: UncheckedWriter, record: Record, fields: mutable.Buffer[String]): Unit = {

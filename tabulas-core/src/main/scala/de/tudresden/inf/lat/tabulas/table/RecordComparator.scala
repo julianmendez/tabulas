@@ -27,13 +27,9 @@ class RecordComparator extends Comparator[Record] {
     this._fieldsWithReverseOrder ++= fieldsWithReverseOrder
   }
 
-  def getSortingOrder: mutable.Buffer[String] = {
-    return this._sortingOrder
-  }
+  def getSortingOrder: mutable.Buffer[String] = { this._sortingOrder }
 
-  def getFieldsWithReverseOrder: mutable.Set[String] = {
-    return this._fieldsWithReverseOrder
-  }
+  def getFieldsWithReverseOrder: mutable.Set[String] = { this._fieldsWithReverseOrder }
 
   override def compare(record0: Record, record1: Record): Int = {
     var result: Int = 0
@@ -55,8 +51,7 @@ class RecordComparator extends Comparator[Record] {
         }
       }
     }
-
-    return result
+    result
   }
 
   def compareValues(optValue0: Option[PrimitiveTypeValue], optValue1: Option[PrimitiveTypeValue], hasReverseOrder: Boolean): Int = {
@@ -78,8 +73,7 @@ class RecordComparator extends Comparator[Record] {
         }
       }
     }
-
-    return result
+    result
   }
 
   override def equals(obj: Any): Boolean = {
@@ -88,17 +82,12 @@ class RecordComparator extends Comparator[Record] {
       case other: RecordComparator => result = this._sortingOrder.equals(other._sortingOrder)
       case _ => result = false
     }
-
-    return result
+    result
   }
 
-  override def hashCode(): Int = {
-    return this._sortingOrder.hashCode()
-  }
+  override def hashCode(): Int = { this._sortingOrder.hashCode() }
 
-  override def toString: String = {
-    return this._sortingOrder.toString
-  }
+  override def toString: String = { this._sortingOrder.toString }
 
 }
 
