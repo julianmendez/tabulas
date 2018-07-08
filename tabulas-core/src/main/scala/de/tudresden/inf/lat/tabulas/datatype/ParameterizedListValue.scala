@@ -70,15 +70,16 @@ class ParameterizedListValue extends ArrayBuffer[PrimitiveTypeValue] with Primit
   }
 
   override def compareTo(obj: PrimitiveTypeValue): Int = {
-    var result: Int = 0
-    if (obj.isInstanceOf[ParameterizedListValue]) {
-      val other: ParameterizedListValue = obj.asInstanceOf[ParameterizedListValue]
-      result = size - other.size
-      if (result == 0) {
-        result = toString.compareTo(other.toString)
-      }
-    } else {
-      result = toString.compareTo(obj.toString)
+    var result: Int = obj match {
+      case other: ParameterizedListValue =>
+        val diff: Int = size - other.size
+        if (diff == 0) {
+          toString.compareTo(other.toString)
+        } else {
+          diff
+        }
+      case _ =>
+        toString.compareTo(obj.toString)
     }
     result
   }

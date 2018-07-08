@@ -56,12 +56,11 @@ class DecimalValue extends PrimitiveTypeValue {
   }
 
   override def compareTo(other: PrimitiveTypeValue): Int = {
-    var result: Int = 0
-    if (other.isInstanceOf[DecimalValue]) {
-      val otherValue: DecimalValue = other.asInstanceOf[DecimalValue]
-      result = this._number.compareTo(otherValue._number)
-    } else {
-      result = render().compareTo(other.render())
+    val result: Int = other match {
+      case otherValue: DecimalValue =>
+        this._number.compareTo(otherValue._number)
+      case _ =>
+        render().compareTo(other.render())
     }
     result
   }

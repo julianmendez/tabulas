@@ -79,17 +79,13 @@ class WikitextRenderer extends Renderer {
       if (optValue.isDefined) {
         val value: PrimitiveTypeValue = optValue.get
         val prefix = field + ParserConstant.EqualsSign
-        if (value.isInstanceOf[ParameterizedListValue]) {
-          val list: ParameterizedListValue = value.asInstanceOf[ParameterizedListValue]
-          writeParameterizedListIfNotEmpty(output, prefix, list)
-
-        } else if (value.isInstanceOf[URIValue]) {
-          val link: URIValue = value.asInstanceOf[URIValue]
-          writeLinkIfNotEmpty(output, prefix, link)
-
-        } else {
-          writeAsStringIfNotEmpty(output, prefix, value)
-
+        value match {
+          case list: ParameterizedListValue =>
+            writeParameterizedListIfNotEmpty(output, prefix, list)
+          case link: URIValue =>
+            writeLinkIfNotEmpty(output, prefix, link)
+          case _ =>
+            writeAsStringIfNotEmpty(output, prefix, value)
         }
 
       } else {

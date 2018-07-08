@@ -27,12 +27,12 @@ class TableImpl extends Table {
     this()
     this._tableType = other.getType
     this._list ++= other.getRecords
-    if (other.isInstanceOf[Table]) {
-      val otherTable: Table = other.asInstanceOf[Table]
-      val otherMap: PrefixMap = otherTable.getPrefixMap
-      otherMap.getKeysAsStream.foreach(key => this._prefixMap.put(key, otherMap.get(key).get))
-      this._sortingOrder ++= otherTable.getSortingOrder
-      this._fieldsWithReverseOrder ++= otherTable.getFieldsWithReverseOrder
+    other match {
+      case otherTable: Table =>
+        val otherMap: PrefixMap = otherTable.getPrefixMap
+        otherMap.getKeysAsStream.foreach(key => this._prefixMap.put(key, otherMap.get(key).get))
+        this._sortingOrder ++= otherTable.getSortingOrder
+        this._fieldsWithReverseOrder ++= otherTable.getFieldsWithReverseOrder
     }
   }
 

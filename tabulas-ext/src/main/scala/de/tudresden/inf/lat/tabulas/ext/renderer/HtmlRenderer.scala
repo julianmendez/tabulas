@@ -95,23 +95,19 @@ class HtmlRenderer extends Renderer {
       val optValue: Option[PrimitiveTypeValue] = record.get(field)
       if (optValue.isDefined) {
         val value: PrimitiveTypeValue = optValue.get
-        if (value.isInstanceOf[ParameterizedListValue]) {
-          output.write("<td> ")
-          val list: ParameterizedListValue = value.asInstanceOf[ParameterizedListValue]
-          writeParameterizedListIfNotEmpty(output, list)
-          output.write(" </td>\n")
-
-        } else if (value.isInstanceOf[URIValue]) {
-          output.write("<td> ")
-          val link: URIValue = value.asInstanceOf[URIValue]
-          writeLinkIfNotEmpty(output, link)
-          output.write(" </td>\n")
-
-        } else {
-          output.write("<td> ")
-          writeAsStringIfNotEmpty(output, value)
-          output.write(" </td>\n")
-
+        value match {
+          case list: ParameterizedListValue=>
+            output.write("<td> ")
+            writeParameterizedListIfNotEmpty(output, list)
+            output.write(" </td>\n")
+          case link: URIValue =>
+            output.write("<td> ")
+            writeLinkIfNotEmpty(output, link)
+            output.write(" </td>\n")
+          case _ =>
+            output.write("<td> ")
+            writeAsStringIfNotEmpty(output, value)
+            output.write(" </td>\n")
         }
 
       } else {

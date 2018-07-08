@@ -86,17 +86,13 @@ class CsvRenderer extends Renderer {
       val optValue: Option[PrimitiveTypeValue] = record.get(field)
       if (optValue.isDefined) {
         val value: PrimitiveTypeValue = optValue.get
-        if (value.isInstanceOf[ParameterizedListValue]) {
-          val list: ParameterizedListValue = value.asInstanceOf[ParameterizedListValue]
-          writeParameterizedListIfNotEmpty(output, field, list)
-
-        } else if (value.isInstanceOf[URIValue]) {
-          val link: URIValue = value.asInstanceOf[URIValue]
-          writeLinkIfNotEmpty(output, field, link)
-
-        } else {
-          writeAsStringIfNotEmpty(output, field, value)
-
+        value match {
+          case list: ParameterizedListValue =>
+            writeParameterizedListIfNotEmpty(output, field, list)
+          case link: URIValue =>
+            writeLinkIfNotEmpty(output, field, link)
+          case _ =>
+            writeAsStringIfNotEmpty(output, field, value)
         }
 
       } else {

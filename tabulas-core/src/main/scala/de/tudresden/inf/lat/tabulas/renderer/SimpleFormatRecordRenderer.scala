@@ -39,9 +39,11 @@ class SimpleFormatRecordRenderer extends RecordRenderer {
       output.write(field)
       output.write(ParserConstant.Space + ParserConstant.EqualsSign)
       if (value.getType.isList) {
-        var hasUris: Boolean = false
-        if (value.isInstanceOf[ParameterizedListValue]) {
-          hasUris = value.asInstanceOf[ParameterizedListValue].getParameter.equals(new URIType())
+        val hasUris: Boolean = value match {
+          case list: ParameterizedListValue =>
+            list.getParameter.equals(new URIType())
+          case _ =>
+            false
         }
         value.getType
         val list: mutable.Buffer[String] = value.renderAsList()
