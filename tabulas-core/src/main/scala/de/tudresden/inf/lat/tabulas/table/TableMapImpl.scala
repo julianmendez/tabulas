@@ -36,11 +36,10 @@ class TableMapImpl extends TableMap {
   override def equals(obj: Any): Boolean = {
     var result: Boolean = false
     obj match {
-      case other: TableMap => {
+      case other: TableMap =>
         result = getTableIds.equals(other.getTableIds)
         val tableIds: mutable.Buffer[String] = getTableIds
         result = result && tableIds.forall(tableId => getTable(tableId).equals(other.getTable(tableId)))
-      }
       case _ => result = false
     }
     result

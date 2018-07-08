@@ -50,10 +50,9 @@ class RecordImpl extends Record {
   override def equals(obj: Any): Boolean = {
     var result: Boolean = false
     obj match {
-      case other: Record => {
+      case other: Record =>
         result = getProperties.equals(other.getProperties)
         result = result && getProperties.forall(property => get(property).equals(other.get(property)))
-      }
       case _ => result = false
     }
     result
