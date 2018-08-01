@@ -6,7 +6,6 @@ import java.util.Objects
 import de.tudresden.inf.lat.tabulas.datatype.ParseException
 
 import scala.collection.mutable
-import scala.collection.mutable.ArrayBuffer
 
 /** This models an extension that can execute other extensions.
   *
@@ -19,7 +18,7 @@ class ExtensionManager extends Extension {
   val NewLine: Char = '\n'
   val Space: Char = ' '
 
-  private val _extensions = new ArrayBuffer[Extension]()
+  private val _extensions = new mutable.ArrayBuffer[Extension]()
   private val _extensionMap = new mutable.TreeMap[String, Extension]()
 
   /** Constructs an extension manager.
@@ -49,7 +48,7 @@ class ExtensionManager extends Extension {
       throw new ExtensionException("No extension name was given.")
     } else {
       val command: String = arguments(0)
-      val newArguments = new ArrayBuffer[String]()
+      val newArguments = new mutable.ArrayBuffer[String]()
       newArguments ++= arguments
       newArguments.remove(0)
       val optExtension: Option[Extension] = this._extensionMap.get(command)

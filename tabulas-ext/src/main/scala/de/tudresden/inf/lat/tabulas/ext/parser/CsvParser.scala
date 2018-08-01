@@ -9,7 +9,6 @@ import de.tudresden.inf.lat.tabulas.parser.{Parser, ParserConstant}
 import de.tudresden.inf.lat.tabulas.table.{RecordImpl, TableImpl, TableMap, TableMapImpl}
 
 import scala.collection.mutable
-import scala.collection.mutable.ArrayBuffer
 
 /** Parser of a table in comma-separated values format.
   *
@@ -37,7 +36,7 @@ class CsvParser extends Parser {
   }
 
   def getColumns(line0: String): Seq[String] = {
-    val result = new ArrayBuffer[String]()
+    val result = new mutable.ArrayBuffer[String]()
     val line: String = if (Objects.isNull(line0)) {
       ""
     } else {
@@ -97,7 +96,7 @@ class CsvParser extends Parser {
   }
 
   def normalizeHeaders(headers: Seq[String], lineCounter: Int): Seq[String] = {
-    val result = new ArrayBuffer[String]()
+    val result = new mutable.ArrayBuffer[String]()
     var idCount: Int = 0
     for (header: String <- headers) {
       val fieldName: String = normalize(header)

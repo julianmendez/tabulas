@@ -6,14 +6,13 @@ import java.util.{Comparator, Objects}
 import de.tudresden.inf.lat.tabulas.datatype.{PrimitiveTypeValue, Record}
 
 import scala.collection.mutable
-import scala.collection.mutable.ArrayBuffer
 
 /** Comparator for records.
   *
   */
 class RecordComparator extends Comparator[Record] {
 
-  private val _sortingOrder = new ArrayBuffer[String]
+  private val _sortingOrder = new mutable.ArrayBuffer[String]
   private val _fieldsWithReverseOrder = new mutable.TreeSet[String]()
 
   def this(sortingOrder: Seq[String]) = {

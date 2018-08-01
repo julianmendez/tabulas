@@ -6,7 +6,6 @@ import java.util.Objects
 import de.tudresden.inf.lat.tabulas.datatype.{PrimitiveTypeValue, Record}
 
 import scala.collection.mutable
-import scala.collection.mutable.ArrayBuffer
 
 /** This is the default implementation of a record.
   *
@@ -42,7 +41,7 @@ class RecordImpl extends Record {
   }
 
   override def getProperties: Seq[String] = {
-    val result = new ArrayBuffer[String]
+    val result = new mutable.ArrayBuffer[String]
     result ++= this._map.keySet
     result
   }

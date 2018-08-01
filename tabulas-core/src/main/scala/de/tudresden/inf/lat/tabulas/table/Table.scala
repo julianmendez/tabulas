@@ -3,8 +3,6 @@ package de.tudresden.inf.lat.tabulas.table
 
 import de.tudresden.inf.lat.tabulas.datatype.CompositeTypeValue
 
-import scala.collection.mutable
-
 
 /** This models a sorted table with a map of URI prefixes.
   *

@@ -6,16 +6,15 @@ import java.util.Objects
 import de.tudresden.inf.lat.tabulas.datatype.{CompositeType, CompositeTypeImpl, Record}
 
 import scala.collection.mutable
-import scala.collection.mutable.ArrayBuffer
 
 /** This is the default implementation of a sorted table.
   */
 class TableImpl extends Table {
 
   private var _tableType: CompositeType = new CompositeTypeImpl()
-  private val _list = new ArrayBuffer[Record]
+  private val _list = new mutable.ArrayBuffer[Record]
   private val _prefixMap: PrefixMap = new PrefixMapImpl()
-  private val _sortingOrder = new ArrayBuffer[String]
+  private val _sortingOrder = new mutable.ArrayBuffer[String]
   private val _fieldsWithReverseOrder = new mutable.TreeSet[String]()
 
   def this(newType: CompositeType) = {
@@ -80,7 +79,7 @@ class TableImpl extends Table {
 
   override def getRecords: Seq[Record] = {
     val comparator = new RecordComparator(this._sortingOrder, this._fieldsWithReverseOrder.toSet)
-    val ret = new ArrayBuffer[Record]
+    val ret = new mutable.ArrayBuffer[Record]
     ret ++= this._list
     val result = ret.sortWith((record0, record1) => comparator.compare(record0, record1) < 0)
     result

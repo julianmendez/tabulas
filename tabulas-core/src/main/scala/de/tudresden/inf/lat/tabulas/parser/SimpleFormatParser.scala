@@ -9,7 +9,6 @@ import de.tudresden.inf.lat.tabulas.datatype._
 import de.tudresden.inf.lat.tabulas.table._
 
 import scala.collection.mutable
-import scala.collection.mutable.ArrayBuffer
 
 /** Parser of a table in simple format.
   *
@@ -121,7 +120,7 @@ class SimpleFormatParser extends Parser {
 
   private def setSortingOrder(line: String, table: TableImpl): Unit = {
     val fieldsWithReverseOrder = new mutable.TreeSet[String]()
-    val list = new ArrayBuffer[String]
+    val list = new mutable.ArrayBuffer[String]
     val stok: StringTokenizer = new StringTokenizer(getValue(line).get)
     while (stok.hasMoreTokens) {
       var token: String = stok.nextToken()

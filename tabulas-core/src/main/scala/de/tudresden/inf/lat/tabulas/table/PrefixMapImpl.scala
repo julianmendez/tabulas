@@ -3,7 +3,6 @@ package de.tudresden.inf.lat.tabulas.table
 import java.net.URI
 
 import scala.collection.mutable
-import scala.collection.mutable.ArrayBuffer
 
 /** An object of this class is a map of URI prefixes.
   * This implementation iterates on the keys keeping the order in which they were added for the first time.
@@ -12,7 +11,7 @@ import scala.collection.mutable.ArrayBuffer
 class PrefixMapImpl extends PrefixMap {
 
   private val _prefixMap = new mutable.TreeMap[URI, URI]
-  private val _keyList = new ArrayBuffer[URI]
+  private val _keyList = new mutable.ArrayBuffer[URI]
 
   override def isEmpty: Boolean = { this._prefixMap.isEmpty }
 

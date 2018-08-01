@@ -5,7 +5,6 @@ import java.math.BigDecimal
 import java.util.Objects
 
 import scala.collection.mutable
-import scala.collection.mutable.ArrayBuffer
 
 /** This models a decimal value.
   *
@@ -49,9 +48,9 @@ class DecimalValue extends PrimitiveTypeValue {
   override def render(): String = { this._number.toString }
 
   override def renderAsList(): Seq[String] = {
-    val list = new ArrayBuffer[String]()
+    val list = new mutable.ArrayBuffer[String]()
     list += render()
-    val result = list // @FIXME this should be immutable
+    val result = list.toList
     result
   }
 

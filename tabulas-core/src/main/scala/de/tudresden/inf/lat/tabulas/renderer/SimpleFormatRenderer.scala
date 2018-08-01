@@ -7,8 +7,6 @@ import de.tudresden.inf.lat.tabulas.datatype.Record
 import de.tudresden.inf.lat.tabulas.parser.ParserConstant
 import de.tudresden.inf.lat.tabulas.table.{Table, TableMap}
 
-import scala.collection.mutable
-
 /** Renderer of a table in simple format.
   */
 class SimpleFormatRenderer extends Renderer {

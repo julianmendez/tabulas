@@ -8,8 +8,6 @@ import de.tudresden.inf.lat.tabulas.datatype._
 import de.tudresden.inf.lat.tabulas.renderer.{Renderer, UncheckedWriter, UncheckedWriterImpl}
 import de.tudresden.inf.lat.tabulas.table.{Table, TableMap}
 
-import scala.collection.mutable
-
 /** Renderer of a table that creates an HTML document.
   */
 class HtmlRenderer extends Renderer {

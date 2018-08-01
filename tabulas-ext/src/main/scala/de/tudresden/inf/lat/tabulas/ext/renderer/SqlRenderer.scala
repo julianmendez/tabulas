@@ -9,8 +9,6 @@ import de.tudresden.inf.lat.tabulas.parser.ParserConstant
 import de.tudresden.inf.lat.tabulas.renderer.{Renderer, UncheckedWriter, UncheckedWriterImpl}
 import de.tudresden.inf.lat.tabulas.table.{Table, TableMap}
 
-import scala.collection.mutable
-
 /** Renderer of tables in SQL format.
   */
 class SqlRenderer extends Renderer {

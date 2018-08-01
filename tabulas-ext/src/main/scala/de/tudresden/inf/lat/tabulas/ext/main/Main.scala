@@ -6,7 +6,6 @@ import de.tudresden.inf.lat.tabulas.extension.{DefaultExtension, Extension, Norm
 import de.tudresden.inf.lat.tabulas.main.ConsoleStarter
 
 import scala.collection.mutable
-import scala.collection.mutable.ArrayBuffer
 
 
 /** This is the main class.
@@ -19,7 +18,7 @@ object Main {
     * console arguments
     */
   def main(args: Array[String]): Unit = {
-    val extensions = new ArrayBuffer[Extension]()
+    val extensions = new mutable.ArrayBuffer[Extension]()
     extensions += new DefaultExtension()
     extensions += new CsvParserExtension()
     extensions += new CalendarParserExtension()

@@ -1,8 +1,6 @@
 
 package de.tudresden.inf.lat.tabulas.datatype
 
-import scala.collection.mutable
-
 /** This models a value of a primitive type.
   *
   */

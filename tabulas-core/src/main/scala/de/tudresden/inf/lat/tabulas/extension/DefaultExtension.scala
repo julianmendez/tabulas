@@ -7,8 +7,6 @@ import de.tudresden.inf.lat.tabulas.parser.SimpleFormatParser
 import de.tudresden.inf.lat.tabulas.renderer.SimpleFormatRenderer
 import de.tudresden.inf.lat.tabulas.table.TableMap
 
-import scala.collection.mutable
-
 /** Default extension. It reads and writes using the default format.
   *
   */

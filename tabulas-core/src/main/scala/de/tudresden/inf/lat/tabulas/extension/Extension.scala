@@ -1,7 +1,5 @@
 package de.tudresden.inf.lat.tabulas.extension
 
-import scala.collection.mutable
-
 /** This models an extension.
   *
   */

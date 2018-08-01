@@ -7,8 +7,6 @@ import de.tudresden.inf.lat.tabulas.extension.Extension
 import de.tudresden.inf.lat.tabulas.parser.SimpleFormatParser
 import de.tudresden.inf.lat.tabulas.table.TableMap
 
-import scala.collection.mutable
-
 /** This models an extension that writes the output in SQL.
   *
   */

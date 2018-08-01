@@ -7,8 +7,6 @@ import de.tudresden.inf.lat.tabulas.parser.SimpleFormatParser
 import de.tudresden.inf.lat.tabulas.renderer.SimpleFormatRenderer
 import de.tudresden.inf.lat.tabulas.table.TableMap
 
-import scala.collection.mutable
-
 /** Normalization extension. It reads and writes using the same file.
   *
   */

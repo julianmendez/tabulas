@@ -8,7 +8,6 @@ import de.tudresden.inf.lat.tabulas.parser.Parser
 import de.tudresden.inf.lat.tabulas.table.{RecordImpl, TableImpl, TableMap, TableMapImpl}
 
 import scala.collection.mutable
-import scala.collection.mutable.ArrayBuffer
 
 /** Parser of a calendar.
   *
@@ -26,7 +25,7 @@ class CalendarParser extends Parser {
 
   }
 
-  class MyStack[A] extends ArrayBuffer[A] {
+  class MyStack[A] extends mutable.ArrayBuffer[A] {
 
     def push(elem: A): MyStack[A] = {
       insert(0, elem)
@@ -158,7 +157,7 @@ class CalendarParser extends Parser {
   }
 
   private def preload(input: BufferedReader): Seq[Pair] = {
-    val result = new ArrayBuffer[Pair]()
+    val result = new mutable.ArrayBuffer[Pair]()
     var sbuf: StringBuffer = new StringBuffer()
     var finish: Boolean = false
     var lineCounter: Int = 0
@@ -195,7 +194,7 @@ class CalendarParser extends Parser {
   }
 
   def getGeneratedId(generatedIds: Seq[Int], level: Int): String = {
-    val auxGeneratedIds = new ArrayBuffer[Int]
+    val auxGeneratedIds = new mutable.ArrayBuffer[Int]
     auxGeneratedIds ++= generatedIds
     while (level >= auxGeneratedIds.size) {
       auxGeneratedIds += FirstGeneratedIndex
@@ -242,7 +241,7 @@ class CalendarParser extends Parser {
     val tableIdStack: MyStack[String] = new MyStack[String]()
     val recordStack: MyStack[Record] = new MyStack[Record]()
     val tableStack: MyStack[TableImpl] = new MyStack[TableImpl]()
-    val generatedIds: Seq[Int] = new ArrayBuffer[Int]()
+    val generatedIds: Seq[Int] = new mutable.ArrayBuffer[Int]()
 
     val lines: Seq[Pair] = preload(input)
     var lineCounter: Int = 0

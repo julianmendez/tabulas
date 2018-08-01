@@ -4,14 +4,13 @@ package de.tudresden.inf.lat.tabulas.datatype
 import java.util.Objects
 
 import scala.collection.mutable
-import scala.collection.mutable.ArrayBuffer
 
 /** Default implementation of a composite type.
   *
   */
 class CompositeTypeImpl extends CompositeType {
 
-  private val _fields = new ArrayBuffer[String]
+  private val _fields = new mutable.ArrayBuffer[String]
   private val _fieldType = new mutable.TreeMap[String, String]
 
   /** Constructs a new composite type using another one.
@@ -26,7 +25,7 @@ class CompositeTypeImpl extends CompositeType {
   }
 
   override def getFields: Seq[String] = {
-    this._fields // @FIXME this should be immutable
+    this._fields.toList
   }
 
   override def getFieldType(field: String): Option[String] = {

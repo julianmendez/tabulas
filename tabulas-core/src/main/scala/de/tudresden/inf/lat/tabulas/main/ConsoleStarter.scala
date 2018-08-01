@@ -5,7 +5,6 @@ import java.util.Objects
 import de.tudresden.inf.lat.tabulas.extension.{Extension, ExtensionException, ExtensionManager, NormalizationExtension}
 
 import scala.collection.mutable
-import scala.collection.mutable.ArrayBuffer
 
 /** An object of this class runs the application with the given arguments.
   */
@@ -40,7 +39,7 @@ class ConsoleStarter {
     Objects.requireNonNull(extensions)
     Objects.requireNonNull(args)
 
-    val arguments = new ArrayBuffer[String]()
+    val arguments = new mutable.ArrayBuffer[String]()
     if (args.length == 1) {
       arguments += (new NormalizationExtension()).Name
     }

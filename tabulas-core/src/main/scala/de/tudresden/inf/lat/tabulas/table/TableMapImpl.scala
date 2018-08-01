@@ -2,7 +2,6 @@
 package de.tudresden.inf.lat.tabulas.table
 
 import scala.collection.mutable
-import scala.collection.mutable.ArrayBuffer
 
 /** This is the default implementation of a table map.
   *
@@ -22,7 +21,7 @@ class TableMapImpl extends TableMap {
   }
 
   override def getTableIds: Seq[String] = {
-    val result = new ArrayBuffer[String]()
+    val result = new mutable.ArrayBuffer[String]()
     result ++= this._map.keySet
     result
   }
