@@ -41,14 +41,14 @@ trait Table extends CompositeTypeValue {
     *
     * @return the fields that are supposed to be sorted in reverse order
     */
-  def getFieldsWithReverseOrder: mutable.Set[String]
+  def getFieldsWithReverseOrder: Set[String]
 
   /** Sets the fields that are supposed to be sorted in reverse order.
     *
     * @param fieldsWithReverseOrder
     * fields with reverse order
     */
-  def setFieldsWithReverseOrder(fieldsWithReverseOrder: mutable.Set[String]): Unit
+  def setFieldsWithReverseOrder(fieldsWithReverseOrder: Set[String]): Unit
 
 }
 

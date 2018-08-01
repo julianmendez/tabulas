@@ -14,14 +14,14 @@ import scala.collection.mutable.ArrayBuffer
 class RecordComparator extends Comparator[Record] {
 
   private val _sortingOrder = new ArrayBuffer[String]
-  private val _fieldsWithReverseOrder: mutable.Set[String] = new mutable.TreeSet[String]()
+  private val _fieldsWithReverseOrder = new mutable.TreeSet[String]()
 
   def this(sortingOrder: Seq[String]) = {
     this()
     this._sortingOrder ++= sortingOrder
   }
 
-  def this(sortingOrder: Seq[String], fieldsWithReverseOrder: mutable.Set[String]) = {
+  def this(sortingOrder: Seq[String], fieldsWithReverseOrder: Set[String]) = {
     this()
     this._sortingOrder ++= sortingOrder
     this._fieldsWithReverseOrder ++= fieldsWithReverseOrder
@@ -29,7 +29,7 @@ class RecordComparator extends Comparator[Record] {
 
   def getSortingOrder: Seq[String] = { this._sortingOrder }
 
-  def getFieldsWithReverseOrder: mutable.Set[String] = { this._fieldsWithReverseOrder }
+  def getFieldsWithReverseOrder: Set[String] = { this._fieldsWithReverseOrder.toSet }
 
   override def compare(record0: Record, record1: Record): Int = {
     var result: Int = 0

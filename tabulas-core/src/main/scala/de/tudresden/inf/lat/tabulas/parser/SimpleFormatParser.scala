@@ -120,7 +120,7 @@ class SimpleFormatParser extends Parser {
   }
 
   private def setSortingOrder(line: String, table: TableImpl): Unit = {
-    val fieldsWithReverseOrder: mutable.Set[String] = new mutable.TreeSet[String]()
+    val fieldsWithReverseOrder = new mutable.TreeSet[String]()
     val list = new ArrayBuffer[String]
     val stok: StringTokenizer = new StringTokenizer(getValue(line).get)
     while (stok.hasMoreTokens) {
@@ -136,7 +136,7 @@ class SimpleFormatParser extends Parser {
       list += token
     }
     table.setSortingOrder(list)
-    table.setFieldsWithReverseOrder(fieldsWithReverseOrder)
+    table.setFieldsWithReverseOrder(fieldsWithReverseOrder.toSet)
   }
 
   def getTypedValue(key: String, value: String, type0: CompositeType, prefixMap: PrefixMap, lineCounter: Int): PrimitiveTypeValue = {
@@ -240,7 +240,7 @@ class SimpleFormatParser extends Parser {
   }
 
   private def parseProperty(line: String, currentTable: TableImpl,
-                            recordIdsOfCurrentTable: mutable.Set[String], record: Record, lineCounter: Int): Unit = {
+                            recordIdsOfCurrentTable: mutable.TreeSet[String], record: Record, lineCounter: Int): Unit = {
     if (Objects.isNull(currentTable)) {
       throw new ParseException("New record was not declared (line "
         + lineCounter + ")")
@@ -267,11 +267,11 @@ class SimpleFormatParser extends Parser {
 
   def parseMap(input: BufferedReader): TableMap = {
     val mapOfTables = new mutable.TreeMap[String, TableImpl]()
-    val mapOfRecordIdsOfTables = new mutable.TreeMap[String, mutable.Set[String]]()
+    val mapOfRecordIdsOfTables = new mutable.TreeMap[String, mutable.TreeSet[String]]()
 
     var line: String = ""
     var currentTable: TableImpl = new TableImpl()
-    var recordIdsOfCurrentTable: mutable.Set[String] = mutable.Set.empty
+    var recordIdsOfCurrentTable: mutable.TreeSet[String] = mutable.TreeSet.empty
     var optCurrentId: Option[String] = Option.empty
     var record: Record = new RecordImpl()
     var lineCounter: Int = 0

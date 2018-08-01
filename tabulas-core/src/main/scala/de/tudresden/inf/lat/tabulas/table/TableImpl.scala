@@ -16,7 +16,7 @@ class TableImpl extends Table {
   private val _list = new ArrayBuffer[Record]
   private val _prefixMap: PrefixMap = new PrefixMapImpl()
   private val _sortingOrder = new ArrayBuffer[String]
-  private val _fieldsWithReverseOrder: mutable.Set[String] = new mutable.TreeSet[String]()
+  private val _fieldsWithReverseOrder = new mutable.TreeSet[String]()
 
   def this(newType: CompositeType) = {
     this()
@@ -69,9 +69,9 @@ class TableImpl extends Table {
     }
   }
 
-  override def getFieldsWithReverseOrder: mutable.Set[String] = { this._fieldsWithReverseOrder }
+  override def getFieldsWithReverseOrder: Set[String] = { this._fieldsWithReverseOrder.toSet }
 
-  override def setFieldsWithReverseOrder(fieldsWithReverseOrder: mutable.Set[String]): Unit = {
+  override def setFieldsWithReverseOrder(fieldsWithReverseOrder: Set[String]): Unit = {
     this._fieldsWithReverseOrder.clear()
     if (Objects.nonNull(fieldsWithReverseOrder)) {
       this._fieldsWithReverseOrder ++= fieldsWithReverseOrder
@@ -79,7 +79,7 @@ class TableImpl extends Table {
   }
 
   override def getRecords: Seq[Record] = {
-    val comparator = new RecordComparator(this._sortingOrder, this._fieldsWithReverseOrder)
+    val comparator = new RecordComparator(this._sortingOrder, this._fieldsWithReverseOrder.toSet)
     val ret = new ArrayBuffer[Record]
     ret ++= this._list
     val result = ret.sortWith((record0, record1) => comparator.compare(record0, record1) < 0)
