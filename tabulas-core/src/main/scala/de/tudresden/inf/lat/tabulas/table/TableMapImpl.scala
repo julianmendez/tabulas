@@ -9,7 +9,7 @@ import scala.collection.mutable.ArrayBuffer
   */
 class TableMapImpl extends TableMap {
 
-  private val _map: mutable.Map[String, Table] = new mutable.TreeMap[String, Table]()
+  private val _map = new mutable.TreeMap[String, Table]()
 
   /** Constructs a new table map using another one.
     *

@@ -20,7 +20,7 @@ class ExtensionManager extends Extension {
   val Space: Char = ' '
 
   private val _extensions = new ArrayBuffer[Extension]()
-  private val _extensionMap: mutable.Map[String, Extension] = new mutable.TreeMap[String, Extension]()
+  private val _extensionMap = new mutable.TreeMap[String, Extension]()
 
   /** Constructs an extension manager.
     *

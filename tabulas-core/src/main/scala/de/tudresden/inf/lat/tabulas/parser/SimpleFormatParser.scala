@@ -266,8 +266,8 @@ class SimpleFormatParser extends Parser {
   }
 
   def parseMap(input: BufferedReader): TableMap = {
-    val mapOfTables: mutable.Map[String, TableImpl] = new mutable.TreeMap[String, TableImpl]()
-    val mapOfRecordIdsOfTables: mutable.Map[String, mutable.Set[String]] = new mutable.TreeMap[String, mutable.Set[String]]()
+    val mapOfTables = new mutable.TreeMap[String, TableImpl]()
+    val mapOfRecordIdsOfTables = new mutable.TreeMap[String, mutable.Set[String]]()
 
     var line: String = ""
     var currentTable: TableImpl = new TableImpl()

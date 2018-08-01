@@ -11,7 +11,7 @@ import scala.collection.mutable.ArrayBuffer
   */
 class PrefixMapImpl extends PrefixMap {
 
-  private val _prefixMap: mutable.Map[URI, URI] = new mutable.TreeMap[URI, URI]
+  private val _prefixMap = new mutable.TreeMap[URI, URI]
   private val _keyList = new ArrayBuffer[URI]
 
   override def isEmpty: Boolean = { this._prefixMap.isEmpty }

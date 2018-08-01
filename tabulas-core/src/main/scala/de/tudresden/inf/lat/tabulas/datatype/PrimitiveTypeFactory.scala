@@ -7,7 +7,7 @@ import scala.collection.mutable
   */
 class PrimitiveTypeFactory {
 
-  private val _map: mutable.Map[String, PrimitiveType] = new mutable.TreeMap[String, PrimitiveType]()
+  private val _map = new mutable.TreeMap[String, PrimitiveType]()
 
   private def add(primType: PrimitiveType): Unit = {
     this._map.put(primType.getTypeName, primType)

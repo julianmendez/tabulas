@@ -128,7 +128,7 @@ class HtmlRenderer extends Renderer {
     output.write("</table>\n")
   }
 
-  def renderMap(output: UncheckedWriter, map: mutable.Map[String, String]): Unit = {
+  def renderMap(output: UncheckedWriter, map: Map[String, String]): Unit = {
     output.write("<table summary=\"\" border=\"1\">\n")
     map.keySet.foreach(key => {
       val value: String = map.get(key).get

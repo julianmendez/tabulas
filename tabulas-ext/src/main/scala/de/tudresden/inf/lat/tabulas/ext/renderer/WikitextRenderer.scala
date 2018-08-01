@@ -105,7 +105,7 @@ class WikitextRenderer extends Renderer {
     output.write("|}\n")
   }
 
-  def renderMap(output: UncheckedWriter, map: mutable.Map[String, String]): Unit = {
+  def renderMap(output: UncheckedWriter, map: Map[String, String]): Unit = {
     output.write("{| border=\"1\"\n")
     output.write("|-\n")
     map.keySet.foreach(key => {

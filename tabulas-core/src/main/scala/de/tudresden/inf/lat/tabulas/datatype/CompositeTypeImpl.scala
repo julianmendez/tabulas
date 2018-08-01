@@ -12,7 +12,7 @@ import scala.collection.mutable.ArrayBuffer
 class CompositeTypeImpl extends CompositeType {
 
   private val _fields = new ArrayBuffer[String]
-  private val _fieldType: mutable.Map[String, String] = new mutable.TreeMap[String, String]
+  private val _fieldType = new mutable.TreeMap[String, String]
 
   /** Constructs a new composite type using another one.
     *

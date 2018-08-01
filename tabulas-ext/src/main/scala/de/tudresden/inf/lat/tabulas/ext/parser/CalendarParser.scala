@@ -220,7 +220,7 @@ class CalendarParser extends Parser {
   }
 
   def parseMap(input: BufferedReader): TableMap = {
-    val map: mutable.Map[String, TableImpl] = new mutable.TreeMap[String, TableImpl]()
+    val map = new mutable.TreeMap[String, TableImpl]()
 
     map.put(CalendarTypeLabel, new TableImpl(new SimplifiedCompositeType(
       CalendarTypeFields)))

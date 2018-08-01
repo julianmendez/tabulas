@@ -13,7 +13,7 @@ import scala.collection.mutable.ArrayBuffer
   */
 class RecordImpl extends Record {
 
-  private val _map: mutable.Map[String, PrimitiveTypeValue] = new mutable.TreeMap[String, PrimitiveTypeValue]()
+  private val _map = new mutable.TreeMap[String, PrimitiveTypeValue]()
 
   /** Constructs a new record using another one.
     *
