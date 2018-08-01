@@ -48,8 +48,8 @@ class DecimalValue extends PrimitiveTypeValue {
 
   override def render(): String = { this._number.toString }
 
-  override def renderAsList(): mutable.Buffer[String] = {
-    val list: mutable.Buffer[String] = new ArrayBuffer[String]()
+  override def renderAsList(): Seq[String] = {
+    val list = new ArrayBuffer[String]()
     list += render()
     val result = list // @FIXME this should be immutable
     result

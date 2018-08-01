@@ -11,7 +11,7 @@ import scala.collection.mutable.ArrayBuffer
   */
 class CompositeTypeImpl extends CompositeType {
 
-  private val _fields: mutable.Buffer[String] = new ArrayBuffer[String]
+  private val _fields = new ArrayBuffer[String]
   private val _fieldType: mutable.Map[String, String] = new mutable.TreeMap[String, String]
 
   /** Constructs a new composite type using another one.
@@ -25,7 +25,7 @@ class CompositeTypeImpl extends CompositeType {
     otherType.getFields.foreach(field => declareField(field, otherType.getFieldType(field).get))
   }
 
-  override def getFields: mutable.Buffer[String] = {
+  override def getFields: Seq[String] = {
     this._fields // @FIXME this should be immutable
   }
 
@@ -58,7 +58,7 @@ class CompositeTypeImpl extends CompositeType {
       case other: CompositeType =>
         result = getFields.equals(other.getFields)
         if (result) {
-          val fields: mutable.Buffer[String] = getFields
+          val fields: Seq[String] = getFields
           result = result && fields.forall(field => getFieldType(field).equals(other.getFieldType(field)))
         }
       case _ => result = false

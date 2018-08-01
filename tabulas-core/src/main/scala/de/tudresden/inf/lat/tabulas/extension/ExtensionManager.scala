@@ -19,7 +19,7 @@ class ExtensionManager extends Extension {
   val NewLine: Char = '\n'
   val Space: Char = ' '
 
-  private val _extensions: mutable.Buffer[Extension] = new ArrayBuffer[Extension]()
+  private val _extensions = new ArrayBuffer[Extension]()
   private val _extensionMap: mutable.Map[String, Extension] = new mutable.TreeMap[String, Extension]()
 
   /** Constructs an extension manager.
@@ -27,7 +27,7 @@ class ExtensionManager extends Extension {
     * @param extensions
     * list of extensions
     */
-  def this(extensions: mutable.Buffer[Extension]) = {
+  def this(extensions: Seq[Extension]) = {
     this()
     if (Objects.nonNull(extensions)) {
       this._extensions ++= extensions
@@ -43,13 +43,13 @@ class ExtensionManager extends Extension {
     }
   }
 
-  override def process(arguments: mutable.Buffer[String]): Boolean = {
+  override def process(arguments: Seq[String]): Boolean = {
     Objects.requireNonNull(arguments)
     val result: Boolean = if (arguments.size < RequiredArguments) {
       throw new ExtensionException("No extension name was given.")
     } else {
       val command: String = arguments(0)
-      val newArguments: mutable.Buffer[String] = new ArrayBuffer[String]()
+      val newArguments = new ArrayBuffer[String]()
       newArguments ++= arguments
       newArguments.remove(0)
       val optExtension: Option[Extension] = this._extensionMap.get(command)

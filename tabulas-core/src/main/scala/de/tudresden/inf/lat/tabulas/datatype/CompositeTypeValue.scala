@@ -25,7 +25,7 @@ trait CompositeTypeValue {
     *
     * @return all the records
     */
-  def getRecords: mutable.Buffer[Record]
+  def getRecords: Seq[Record]
 
   /** Adds a record. Returns <code>true</code> if and only if this composite
     * type value changed as a result of the call.

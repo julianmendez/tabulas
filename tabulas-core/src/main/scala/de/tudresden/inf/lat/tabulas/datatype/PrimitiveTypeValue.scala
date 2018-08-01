@@ -24,7 +24,7 @@ trait PrimitiveTypeValue extends Comparable[PrimitiveTypeValue] {
     *
     * @return a list of strings representing this value
     */
-  def renderAsList(): mutable.Buffer[String]
+  def renderAsList(): Seq[String]
 
   /** Tell whether this value represents an empty value.
     *

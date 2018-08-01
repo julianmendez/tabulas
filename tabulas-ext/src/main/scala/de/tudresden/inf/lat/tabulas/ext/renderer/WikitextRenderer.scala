@@ -72,7 +72,7 @@ class WikitextRenderer extends Renderer {
     result
   }
 
-  def render(output: UncheckedWriter, record: Record, fields: mutable.Buffer[String]): Unit = {
+  def render(output: UncheckedWriter, record: Record, fields: Seq[String]): Unit = {
     fields.foreach(field => {
       val optValue: Option[PrimitiveTypeValue] = record.get(field)
       output.write("|")
@@ -95,7 +95,7 @@ class WikitextRenderer extends Renderer {
   }
 
   def renderAllRecords(output: UncheckedWriter, table: CompositeTypeValue): Unit = {
-    val list: mutable.Buffer[Record] = table.getRecords
+    val list: Seq[Record] = table.getRecords
     output.write("{|\n")
     output.write("|-\n")
     list.foreach(record => {

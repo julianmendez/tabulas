@@ -12,7 +12,7 @@ trait CompositeType extends DataType {
     *
     * @return all the fields
     */
-  def getFields: mutable.Buffer[String]
+  def getFields: Seq[String]
 
   /** Returns an optional containing the type of the given field, if the field
     * is present, or an empty optional otherwise.

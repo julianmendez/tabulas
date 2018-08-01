@@ -19,7 +19,7 @@ object Main {
     * console arguments
     */
   def main(args: Array[String]): Unit = {
-    val extensions: mutable.Buffer[Extension] = new ArrayBuffer[Extension]()
+    val extensions = new ArrayBuffer[Extension]()
     extensions += new DefaultExtension()
     extensions += new CsvParserExtension()
     extensions += new CalendarParserExtension()

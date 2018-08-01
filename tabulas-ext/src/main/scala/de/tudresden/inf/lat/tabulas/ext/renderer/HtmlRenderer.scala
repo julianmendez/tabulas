@@ -90,7 +90,7 @@ class HtmlRenderer extends Renderer {
     result
   }
 
-  def render(output: UncheckedWriter, record: Record, fields: mutable.Buffer[String]): Unit = {
+  def render(output: UncheckedWriter, record: Record, fields: Seq[String]): Unit = {
     fields.foreach(field => {
       val optValue: Option[PrimitiveTypeValue] = record.get(field)
       if (optValue.isDefined) {
@@ -118,7 +118,7 @@ class HtmlRenderer extends Renderer {
   }
 
   def renderAllRecords(output: UncheckedWriter, table: Table): Unit = {
-    val list: mutable.Buffer[Record] = table.getRecords
+    val list: Seq[Record] = table.getRecords
     output.write("<table summary=\"\">\n")
     list.foreach(record => {
       output.write("<tr>\n")

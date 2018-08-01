@@ -28,14 +28,14 @@ trait Table extends CompositeTypeValue {
     *
     * @return the sorting order for the fields
     */
-  def getSortingOrder: mutable.Buffer[String]
+  def getSortingOrder: Seq[String]
 
   /** Sets the sorting order for the fields.
     *
     * @param sortingOrder
     * sorting order
     */
-  def setSortingOrder(sortingOrder: mutable.Buffer[String]): Unit
+  def setSortingOrder(sortingOrder: Seq[String]): Unit
 
   /** Returns the fields that are supposed to be sorted in reverse order.
     *

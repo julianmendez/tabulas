@@ -90,10 +90,10 @@ class URIValue extends PrimitiveTypeValue {
 
   override def render(): String = { this.uri.toASCIIString }
 
-  override def renderAsList(): mutable.Buffer[String] = {
-    val list: mutable.Buffer[String] = new ArrayBuffer[String]()
+  override def renderAsList(): Seq[String] = {
+    val list = new ArrayBuffer[String]()
     list += render()
-    val result: mutable.Buffer[String] = list // @FIXME this should be immutable
+    val result: Seq[String] = list // @FIXME this should be immutable
     result
   }
 

@@ -21,8 +21,8 @@ class TableMapImpl extends TableMap {
     otherTableMap.getTableIds.foreach(tableId => put(tableId, otherTableMap.getTable(tableId).get))
   }
 
-  override def getTableIds: mutable.Buffer[String] = {
-    val result: mutable.Buffer[String] = new ArrayBuffer[String]()
+  override def getTableIds: Seq[String] = {
+    val result = new ArrayBuffer[String]()
     result ++= this._map.keySet
     result
   }
@@ -38,7 +38,7 @@ class TableMapImpl extends TableMap {
     obj match {
       case other: TableMap =>
         result = getTableIds.equals(other.getTableIds)
-        val tableIds: mutable.Buffer[String] = getTableIds
+        val tableIds: Seq[String] = getTableIds
         result = result && tableIds.forall(tableId => getTable(tableId).equals(other.getTable(tableId)))
       case _ => result = false
     }
@@ -47,7 +47,7 @@ class TableMapImpl extends TableMap {
 
   override def toString: String = {
     val sbuf: StringBuffer = new StringBuffer()
-    val tableIds: mutable.Buffer[String] = getTableIds
+    val tableIds: Seq[String] = getTableIds
     tableIds.foreach(tableId => {
       sbuf.append(tableId)
       sbuf.append("=")

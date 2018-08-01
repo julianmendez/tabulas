@@ -17,7 +17,7 @@ class EmptyValue extends PrimitiveTypeValue {
 
   override def render(): String = { Value }
 
-  override def renderAsList(): mutable.Buffer[String] = {
+  override def renderAsList(): Seq[String] = {
     new ArrayBuffer[String]() // @FIXME this should be immutable
   }
 

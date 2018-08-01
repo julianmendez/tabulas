@@ -48,7 +48,7 @@ class ParameterizedListValue extends ArrayBuffer[PrimitiveTypeValue] with Primit
 
   override def render(): String = {
     val sbuf: StringBuffer = new StringBuffer()
-    val list: mutable.Buffer[String] = renderAsList()
+    val list: Seq[String] = renderAsList()
     var first: Boolean = true
     for (str: String <- list) {
       if (first) {
@@ -62,10 +62,10 @@ class ParameterizedListValue extends ArrayBuffer[PrimitiveTypeValue] with Primit
     result
   }
 
-  override def renderAsList(): mutable.Buffer[String] = {
-    val list: mutable.Buffer[String] = new ArrayBuffer[String]()
+  override def renderAsList(): Seq[String] = {
+    val list = new ArrayBuffer[String]()
     this.foreach(elem => list += elem.render())
-    val result: mutable.Buffer[String] = list // @FIXME this should be immutable
+    val result: Seq[String] = list // @FIXME this should be immutable
     result
   }
 

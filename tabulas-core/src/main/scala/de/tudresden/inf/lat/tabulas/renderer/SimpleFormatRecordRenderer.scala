@@ -46,7 +46,7 @@ class SimpleFormatRecordRenderer extends RecordRenderer {
             false
         }
         value.getType
-        val list: mutable.Buffer[String] = value.renderAsList()
+        val list: Seq[String] = value.renderAsList()
         list.foreach(elem => {
           output.write(ParserConstant.Space + ParserConstant.LineContinuationSymbol)
           output.write(ParserConstant.NewLine)
@@ -73,7 +73,7 @@ class SimpleFormatRecordRenderer extends RecordRenderer {
     result
   }
 
-  def render(output: UncheckedWriter, record: Record, fields: mutable.Buffer[String]): Unit = {
+  def render(output: UncheckedWriter, record: Record, fields: Seq[String]): Unit = {
     output.write(ParserConstant.NewLine)
     output.write(ParserConstant.NewRecordToken + ParserConstant.Space)
     output.write(ParserConstant.EqualsSign + ParserConstant.Space)
@@ -89,7 +89,7 @@ class SimpleFormatRecordRenderer extends RecordRenderer {
     output.flush()
   }
 
-  override def render(record: Record, fields: mutable.Buffer[String]): Unit = {
+  override def render(record: Record, fields: Seq[String]): Unit = {
     render(new UncheckedWriterImpl(this._output), record, fields)
   }
 

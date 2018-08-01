@@ -75,7 +75,7 @@ class CsvRenderer extends Renderer {
     result
   }
 
-  def render(output: UncheckedWriter, record: Record, fields: mutable.Buffer[String]): Unit = {
+  def render(output: UncheckedWriter, record: Record, fields: Seq[String]): Unit = {
     var first: Boolean = true
     for (field: String <- fields) {
       if (first) {
@@ -103,7 +103,7 @@ class CsvRenderer extends Renderer {
   }
 
   def renderAllRecords(output: UncheckedWriter, table: Table): Unit = {
-    val list: mutable.Buffer[Record] = table.getRecords
+    val list: Seq[Record] = table.getRecords
     list.foreach(record => {
       render(output, record, table.getType.getFields)
     })

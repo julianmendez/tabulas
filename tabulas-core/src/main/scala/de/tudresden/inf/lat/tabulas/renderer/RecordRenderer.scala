@@ -10,7 +10,7 @@ import scala.collection.mutable
   */
 trait RecordRenderer {
 
-  def render(record: Record, fields: mutable.Buffer[String]): Unit
+  def render(record: Record, fields: Seq[String]): Unit
 
 }
 

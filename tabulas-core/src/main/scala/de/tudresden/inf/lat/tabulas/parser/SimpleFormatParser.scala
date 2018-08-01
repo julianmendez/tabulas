@@ -121,7 +121,7 @@ class SimpleFormatParser extends Parser {
 
   private def setSortingOrder(line: String, table: TableImpl): Unit = {
     val fieldsWithReverseOrder: mutable.Set[String] = new mutable.TreeSet[String]()
-    val list: mutable.Buffer[String] = new ArrayBuffer[String]
+    val list = new ArrayBuffer[String]
     val stok: StringTokenizer = new StringTokenizer(getValue(line).get)
     while (stok.hasMoreTokens) {
       var token: String = stok.nextToken()

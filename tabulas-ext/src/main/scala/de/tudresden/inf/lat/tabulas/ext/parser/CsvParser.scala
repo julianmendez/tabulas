@@ -36,8 +36,8 @@ class CsvParser extends Parser {
     this._input = input
   }
 
-  def getColumns(line0: String): mutable.Buffer[String] = {
-    val result: mutable.Buffer[String] = new ArrayBuffer[String]()
+  def getColumns(line0: String): Seq[String] = {
+    val result = new ArrayBuffer[String]()
     val line: String = if (Objects.isNull(line0)) {
       ""
     } else {
@@ -63,7 +63,7 @@ class CsvParser extends Parser {
     result
   }
 
-  private def createSortedTable(fields: mutable.Buffer[String]): TableImpl = {
+  private def createSortedTable(fields: Seq[String]): TableImpl = {
     val tableType: CompositeTypeImpl = new CompositeTypeImpl()
     fields.foreach(fieldName => tableType.declareField(fieldName, DefaultFieldType))
 
@@ -96,8 +96,8 @@ class CsvParser extends Parser {
     result
   }
 
-  def normalizeHeaders(headers: mutable.Buffer[String], lineCounter: Int): mutable.Buffer[String] = {
-    val result: mutable.Buffer[String] = new ArrayBuffer[String]()
+  def normalizeHeaders(headers: Seq[String], lineCounter: Int): Seq[String] = {
+    val result = new ArrayBuffer[String]()
     var idCount: Int = 0
     for (header: String <- headers) {
       val fieldName: String = normalize(header)
@@ -120,15 +120,15 @@ class CsvParser extends Parser {
     var lineCounter: Int = 0
     var line: String = input.readLine()
     lineCounter += 1
-    val headers: mutable.Buffer[String] = getColumns(line)
-    val fieldNames: mutable.Buffer[String] = normalizeHeaders(headers, lineCounter)
+    val headers: Seq[String] = getColumns(line)
+    val fieldNames: Seq[String] = normalizeHeaders(headers, lineCounter)
     val currentTable: TableImpl = createSortedTable(fieldNames)
 
     while (Objects.nonNull(line)) {
       line = input.readLine()
       lineCounter += 1
       if (Objects.nonNull(line) && !line.trim().isEmpty) {
-        val columns: mutable.Buffer[String] = getColumns(line)
+        val columns: Seq[String] = getColumns(line)
         if (columns.size > fieldNames.size) {
           throw new ParseException("Too many fields in line: "
             + columns.size + " instead of "

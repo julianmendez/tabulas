@@ -13,21 +13,21 @@ import scala.collection.mutable.ArrayBuffer
   */
 class RecordComparator extends Comparator[Record] {
 
-  private val _sortingOrder: mutable.Buffer[String] = new ArrayBuffer[String]
+  private val _sortingOrder = new ArrayBuffer[String]
   private val _fieldsWithReverseOrder: mutable.Set[String] = new mutable.TreeSet[String]()
 
-  def this(sortingOrder: mutable.Buffer[String]) = {
+  def this(sortingOrder: Seq[String]) = {
     this()
     this._sortingOrder ++= sortingOrder
   }
 
-  def this(sortingOrder: mutable.Buffer[String], fieldsWithReverseOrder: mutable.Set[String]) = {
+  def this(sortingOrder: Seq[String], fieldsWithReverseOrder: mutable.Set[String]) = {
     this()
     this._sortingOrder ++= sortingOrder
     this._fieldsWithReverseOrder ++= fieldsWithReverseOrder
   }
 
-  def getSortingOrder: mutable.Buffer[String] = { this._sortingOrder }
+  def getSortingOrder: Seq[String] = { this._sortingOrder }
 
   def getFieldsWithReverseOrder: mutable.Set[String] = { this._fieldsWithReverseOrder }
 

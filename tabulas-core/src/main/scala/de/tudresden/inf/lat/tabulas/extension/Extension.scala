@@ -12,7 +12,7 @@ trait Extension {
     * @param arguments arguments
     * @return <code>true</code> if the extension was successfully executed
     */
-  def process(arguments: mutable.Buffer[String]): Boolean
+  def process(arguments: Seq[String]): Boolean
 
   /** Returns a name for this extension.
     *

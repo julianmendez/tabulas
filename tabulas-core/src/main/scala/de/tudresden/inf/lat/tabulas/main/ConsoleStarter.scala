@@ -36,11 +36,11 @@ class ConsoleStarter {
     * @param args
     * console arguments
     */
-  def run(extensions: mutable.Buffer[Extension], args: Array[String]): Unit = {
+  def run(extensions: Seq[Extension], args: Array[String]): Unit = {
     Objects.requireNonNull(extensions)
     Objects.requireNonNull(args)
 
-    val arguments: mutable.Buffer[String] = new ArrayBuffer[String]()
+    val arguments = new ArrayBuffer[String]()
     if (args.length == 1) {
       arguments += (new NormalizationExtension()).Name
     }

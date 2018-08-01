@@ -13,9 +13,9 @@ import scala.collection.mutable.ArrayBuffer
 class TableImpl extends Table {
 
   private var _tableType: CompositeType = new CompositeTypeImpl()
-  private val _list: mutable.Buffer[Record] = new ArrayBuffer[Record]
+  private val _list = new ArrayBuffer[Record]
   private val _prefixMap: PrefixMap = new PrefixMapImpl()
-  private val _sortingOrder: mutable.Buffer[String] = new ArrayBuffer[String]
+  private val _sortingOrder = new ArrayBuffer[String]
   private val _fieldsWithReverseOrder: mutable.Set[String] = new mutable.TreeSet[String]()
 
   def this(newType: CompositeType) = {
@@ -60,9 +60,9 @@ class TableImpl extends Table {
     result
   }
 
-  override def getSortingOrder: mutable.Buffer[String] = { this._sortingOrder }
+  override def getSortingOrder: Seq[String] = { this._sortingOrder }
 
-  override def setSortingOrder(sortingOrder: mutable.Buffer[String]): Unit = {
+  override def setSortingOrder(sortingOrder: Seq[String]): Unit = {
     this._sortingOrder.clear()
     if (Objects.nonNull(sortingOrder)) {
       this._sortingOrder ++= sortingOrder
@@ -78,9 +78,9 @@ class TableImpl extends Table {
     }
   }
 
-  override def getRecords: mutable.Buffer[Record] = {
+  override def getRecords: Seq[Record] = {
     val comparator = new RecordComparator(this._sortingOrder, this._fieldsWithReverseOrder)
-    val ret: mutable.Buffer[Record] = new ArrayBuffer[Record]
+    val ret = new ArrayBuffer[Record]
     ret ++= this._list
     val result = ret.sortWith((record0, record1) => comparator.compare(record0, record1) < 0)
     result

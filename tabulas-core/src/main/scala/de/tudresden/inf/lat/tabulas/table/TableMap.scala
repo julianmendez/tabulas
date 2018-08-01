@@ -12,7 +12,7 @@ trait TableMap {
     *
     * @return the identifiers of the stored tables
     */
-  def getTableIds: mutable.Buffer[String]
+  def getTableIds: Seq[String]
 
   /** Stores a table with the given identifier.
     *

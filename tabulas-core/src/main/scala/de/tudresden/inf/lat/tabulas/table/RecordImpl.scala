@@ -41,8 +41,8 @@ class RecordImpl extends Record {
     }
   }
 
-  override def getProperties: mutable.Buffer[String] = {
-    val result: mutable.Buffer[String] = new ArrayBuffer[String]
+  override def getProperties: Seq[String] = {
+    val result = new ArrayBuffer[String]
     result ++= this._map.keySet
     result
   }

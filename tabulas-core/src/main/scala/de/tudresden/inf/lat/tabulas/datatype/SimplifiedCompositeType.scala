@@ -17,7 +17,7 @@ class SimplifiedCompositeType extends CompositeType {
     knownFields.foreach(field => this._dataType.declareField(field, DefaultFieldType))
   }
 
-  override def getFields: mutable.Buffer[String] = { this._dataType.getFields }
+  override def getFields: Seq[String] = { this._dataType.getFields }
 
   override def getFieldType(field: String): Option[String] = { this._dataType.getFieldType(field) }
 

@@ -157,8 +157,8 @@ class CalendarParser extends Parser {
     result
   }
 
-  private def preload(input: BufferedReader): mutable.Buffer[Pair] = {
-    val result: mutable.Buffer[Pair] = new ArrayBuffer[Pair]()
+  private def preload(input: BufferedReader): Seq[Pair] = {
+    val result = new ArrayBuffer[Pair]()
     var sbuf: StringBuffer = new StringBuffer()
     var finish: Boolean = false
     var lineCounter: Int = 0
@@ -194,18 +194,20 @@ class CalendarParser extends Parser {
     }
   }
 
-  def getGeneratedId(generatedIds: mutable.Buffer[Int], level: Int): String = {
-    while (level >= generatedIds.size) {
-      generatedIds += FirstGeneratedIndex
+  def getGeneratedId(generatedIds: Seq[Int], level: Int): String = {
+    val auxGeneratedIds = new ArrayBuffer[Int]
+    auxGeneratedIds ++= generatedIds
+    while (level >= auxGeneratedIds.size) {
+      auxGeneratedIds += FirstGeneratedIndex
     }
     val newValue: Int = generatedIds(level) + 1
-    while (level < generatedIds.size) {
-      generatedIds.remove(generatedIds.size - 1)
+    while (level < auxGeneratedIds.size) {
+      auxGeneratedIds.remove(auxGeneratedIds.size - 1)
     }
-    generatedIds += newValue
+    auxGeneratedIds += newValue
     val sbuf: StringBuffer = new StringBuffer()
     var firstTime: Boolean = true
-    for (counter: Int <- generatedIds) {
+    for (counter: Int <- auxGeneratedIds) {
       if (firstTime) {
         firstTime = false
       } else {
@@ -240,9 +242,9 @@ class CalendarParser extends Parser {
     val tableIdStack: MyStack[String] = new MyStack[String]()
     val recordStack: MyStack[Record] = new MyStack[Record]()
     val tableStack: MyStack[TableImpl] = new MyStack[TableImpl]()
-    val generatedIds: mutable.Buffer[Int] = new ArrayBuffer[Int]()
+    val generatedIds: Seq[Int] = new ArrayBuffer[Int]()
 
-    val lines: mutable.Buffer[Pair] = preload(input)
+    val lines: Seq[Pair] = preload(input)
     var lineCounter: Int = 0
     var firstTime: Boolean = true
     for (pair: Pair <- lines) {

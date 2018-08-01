@@ -18,7 +18,7 @@ class SqlExtension extends Extension {
   val Help: String = "(input) (output) : create output as SQL dump file"
   val RequiredArguments: Int = 2
 
-  override def process(arguments: mutable.Buffer[String]): Boolean = {
+  override def process(arguments: Seq[String]): Boolean = {
     var result: Boolean = false
     if (Objects.isNull(arguments) || arguments.size != RequiredArguments) {
       result = false

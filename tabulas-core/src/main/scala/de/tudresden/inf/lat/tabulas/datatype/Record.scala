@@ -31,7 +31,7 @@ trait Record {
     *
     * @return the property names
     */
-  def getProperties: mutable.Buffer[String]
+  def getProperties: Seq[String]
 
 }
 
