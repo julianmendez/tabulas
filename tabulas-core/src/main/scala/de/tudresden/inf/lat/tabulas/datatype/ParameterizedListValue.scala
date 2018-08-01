@@ -4,12 +4,11 @@ package de.tudresden.inf.lat.tabulas.datatype
 import java.util.Objects
 
 import scala.collection.mutable
-import scala.collection.mutable.ArrayBuffer
 
 /** This models a list of elements with a parameterized type.
   *
   */
-class ParameterizedListValue extends ArrayBuffer[PrimitiveTypeValue] with PrimitiveTypeValue {
+class ParameterizedListValue extends mutable.ArrayBuffer[PrimitiveTypeValue] with PrimitiveTypeValue {
 
   val serialVersionUID: Long = -8983139857000842808L
 
@@ -63,9 +62,9 @@ class ParameterizedListValue extends ArrayBuffer[PrimitiveTypeValue] with Primit
   }
 
   override def renderAsList(): Seq[String] = {
-    val list = new ArrayBuffer[String]()
+    val list = new mutable.ArrayBuffer[String]()
     this.foreach(elem => list += elem.render())
-    val result: Seq[String] = list // @FIXME this should be immutable
+    val result: Seq[String] = list.toList
     result
   }
 

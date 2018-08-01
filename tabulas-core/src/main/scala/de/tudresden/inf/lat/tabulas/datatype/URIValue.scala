@@ -5,7 +5,6 @@ import java.net.{URI, URISyntaxException}
 import java.util.Objects
 
 import scala.collection.mutable
-import scala.collection.mutable.ArrayBuffer
 
 /** This models a URI.
   *
@@ -91,9 +90,9 @@ class URIValue extends PrimitiveTypeValue {
   override def render(): String = { this.uri.toASCIIString }
 
   override def renderAsList(): Seq[String] = {
-    val list = new ArrayBuffer[String]()
+    val list = new mutable.ArrayBuffer[String]()
     list += render()
-    val result: Seq[String] = list // @FIXME this should be immutable
+    val result: Seq[String] = list.toList
     result
   }
 

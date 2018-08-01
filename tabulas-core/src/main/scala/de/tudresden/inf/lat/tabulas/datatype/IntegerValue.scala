@@ -5,7 +5,6 @@ import java.math.BigInteger
 import java.util.Objects
 
 import scala.collection.mutable
-import scala.collection.mutable.ArrayBuffer
 
 /** This models a integer value.
   *
@@ -49,9 +48,9 @@ class IntegerValue extends PrimitiveTypeValue {
   override def render(): String = { this._number.toString }
 
   override def renderAsList(): Seq[String] = {
-    val list = new ArrayBuffer[String]()
+    val list = new mutable.ArrayBuffer[String]()
     list += render()
-    val result: Seq[String] = list // @FIXME this should be immutable
+    val result: Seq[String] = list.toList
     result
   }
 
