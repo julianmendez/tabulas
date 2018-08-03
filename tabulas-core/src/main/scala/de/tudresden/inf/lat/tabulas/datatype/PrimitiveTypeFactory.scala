@@ -55,3 +55,9 @@ class PrimitiveTypeFactory {
   }
 
 }
+
+object PrimitiveTypeFactory {
+
+  def apply(): PrimitiveTypeFactory = new PrimitiveTypeFactory
+
+}

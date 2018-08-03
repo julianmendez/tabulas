@@ -35,3 +35,8 @@ class SimplifiedCompositeType extends CompositeType {
 
 }
 
+object SimplifiedCompositeType {
+
+  def apply(): SimplifiedCompositeType = new SimplifiedCompositeType
+
+}

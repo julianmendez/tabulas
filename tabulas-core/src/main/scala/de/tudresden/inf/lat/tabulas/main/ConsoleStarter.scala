@@ -56,3 +56,9 @@ class ConsoleStarter {
   }
 
 }
+
+object ConsoleStarter {
+
+  def apply(): ConsoleStarter = new ConsoleStarter
+
+}

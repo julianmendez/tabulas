@@ -123,3 +123,9 @@ class UncheckedWriterImpl extends UncheckedWriter {
   override def toString: String = { this._writer.toString }
 
 }
+
+object UncheckedWriterImpl {
+
+  def apply(): UncheckedWriterImpl = new UncheckedWriterImpl
+
+}

@@ -139,3 +139,8 @@ class WikitextRenderer extends Renderer {
 
 }
 
+object WikitextRenderer {
+
+  def apply(): WikitextRenderer = new WikitextRenderer
+
+}

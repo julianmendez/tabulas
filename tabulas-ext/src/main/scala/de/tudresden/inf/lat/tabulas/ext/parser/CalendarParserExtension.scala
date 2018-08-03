@@ -51,3 +51,9 @@ class CalendarParserExtension extends Extension {
   override def getRequiredArguments: Int = { RequiredArguments }
 
 }
+
+object CalendarParserExtension {
+
+  def apply(): CalendarParserExtension = new CalendarParserExtension
+
+}

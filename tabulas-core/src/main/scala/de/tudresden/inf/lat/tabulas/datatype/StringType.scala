@@ -30,3 +30,8 @@ class StringType extends PrimitiveType {
 
 }
 
+object StringType {
+
+  def apply(): StringType = new StringType
+
+}

@@ -150,3 +150,8 @@ class CsvRenderer extends Renderer {
 
 }
 
+object CsvRenderer {
+
+  def apply(): CsvRenderer = new CsvRenderer
+
+}

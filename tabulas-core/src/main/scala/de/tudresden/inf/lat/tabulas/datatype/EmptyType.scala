@@ -30,3 +30,8 @@ class EmptyType extends PrimitiveType {
 
 }
 
+object EmptyType {
+
+  def apply(): EmptyType = new EmptyType
+
+}

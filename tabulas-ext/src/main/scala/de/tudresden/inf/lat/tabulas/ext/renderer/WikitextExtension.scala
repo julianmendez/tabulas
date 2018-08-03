@@ -47,3 +47,9 @@ class WikitextExtension extends Extension {
   override def getRequiredArguments: Int = { RequiredArguments }
 
 }
+
+object WikitextExtension {
+
+  def apply(): WikitextExtension = new WikitextExtension
+
+}

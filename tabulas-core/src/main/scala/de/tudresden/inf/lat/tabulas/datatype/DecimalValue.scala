@@ -79,3 +79,8 @@ class DecimalValue extends PrimitiveTypeValue {
 
 }
 
+object DecimalValue {
+
+  def apply(): DecimalValue = new DecimalValue
+
+}

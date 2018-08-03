@@ -48,3 +48,9 @@ class MyStackTest extends FunSuite {
   }
 
 }
+
+object MyStackTest {
+
+  def apply(): MyStackTest = new MyStackTest
+
+}

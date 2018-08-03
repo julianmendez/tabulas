@@ -47,3 +47,9 @@ class NormalizationExtension extends Extension {
   override def getRequiredArguments: Int = { RequiredArguments }
 
 }
+
+object NormalizationExtension {
+
+  def apply(): NormalizationExtension = new NormalizationExtension
+
+}

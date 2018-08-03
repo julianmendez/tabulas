@@ -87,3 +87,8 @@ class ParameterizedListValue extends mutable.ArrayBuffer[PrimitiveTypeValue] wit
 
 }
 
+object ParameterizedListValue {
+
+  def apply(): ParameterizedListValue = new ParameterizedListValue
+
+}

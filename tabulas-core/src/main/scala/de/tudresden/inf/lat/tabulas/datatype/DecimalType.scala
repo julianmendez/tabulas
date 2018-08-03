@@ -30,3 +30,8 @@ class DecimalType extends PrimitiveType {
 
 }
 
+object DecimalType {
+
+  def apply(): DecimalType = new DecimalType
+
+}

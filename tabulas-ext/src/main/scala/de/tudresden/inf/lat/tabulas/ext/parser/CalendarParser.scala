@@ -333,3 +333,9 @@ class CalendarParser extends Parser {
   }
 
 }
+
+object CalendarParser {
+
+  def apply(): CalendarParser = new CalendarParser
+
+}

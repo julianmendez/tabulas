@@ -36,3 +36,8 @@ class URIType extends PrimitiveType {
 
 }
 
+object URIType {
+
+  def apply(): URIType = new URIType
+
+}

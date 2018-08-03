@@ -119,3 +119,9 @@ class MainTest extends FunSuite {
   }
 
 }
+
+object MainTest {
+
+  def apply(): MainTest = new MainTest
+
+}

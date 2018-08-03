@@ -31,3 +31,8 @@ class IntegerType extends PrimitiveType {
 
 }
 
+object IntegerType {
+
+  def apply(): IntegerType = new IntegerType
+
+}

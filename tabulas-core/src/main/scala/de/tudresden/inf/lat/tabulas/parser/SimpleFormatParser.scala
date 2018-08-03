@@ -351,3 +351,8 @@ class SimpleFormatParser extends Parser {
 
 }
 
+object SimpleFormatParser {
+
+  def apply(): SimpleFormatParser = new SimpleFormatParser
+
+}

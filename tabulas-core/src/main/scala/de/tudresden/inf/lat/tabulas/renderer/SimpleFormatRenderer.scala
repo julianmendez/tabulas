@@ -113,3 +113,8 @@ class SimpleFormatRenderer extends Renderer {
 
 }
 
+object SimpleFormatRenderer {
+
+  def apply(): SimpleFormatRecordRenderer = new SimpleFormatRecordRenderer
+
+}

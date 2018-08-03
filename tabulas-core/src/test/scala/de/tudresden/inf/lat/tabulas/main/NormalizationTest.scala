@@ -41,3 +41,9 @@ class NormalizationTest extends FunSuite {
   }
 
 }
+
+object NormalizationTest {
+
+  def apply(): NormalizationTest = new NormalizationTest
+
+}

@@ -165,3 +165,9 @@ class CsvParser extends Parser {
   }
 
 }
+
+object CsvParser {
+
+  def apply(): CsvParser = new CsvParser
+
+}

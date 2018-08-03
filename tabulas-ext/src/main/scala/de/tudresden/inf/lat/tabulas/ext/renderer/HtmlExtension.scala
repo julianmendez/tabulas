@@ -47,3 +47,9 @@ class HtmlExtension extends Extension {
   override def getRequiredArguments: Int = { RequiredArguments }
 
 }
+
+object HtmlExtension {
+
+  def apply(): HtmlExtension = new HtmlExtension
+
+}

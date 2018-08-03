@@ -37,3 +37,8 @@ class EmptyValue extends PrimitiveTypeValue {
 
 }
 
+object EmptyValue {
+
+  def apply(): EmptyValue = new EmptyValue
+
+}

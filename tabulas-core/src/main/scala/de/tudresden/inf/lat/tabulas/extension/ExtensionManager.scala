@@ -87,3 +87,9 @@ class ExtensionManager extends Extension {
   override def getRequiredArguments: Int = { RequiredArguments }
 
 }
+
+object ExtensionManager {
+
+  def apply(): ExtensionManager = new ExtensionManager
+
+}

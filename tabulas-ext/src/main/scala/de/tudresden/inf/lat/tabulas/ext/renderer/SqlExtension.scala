@@ -47,3 +47,9 @@ class SqlExtension extends Extension {
   override def getRequiredArguments: Int = { RequiredArguments }
 
 }
+
+object SqlExtension {
+
+  def apply(): SqlExtension = new SqlExtension
+
+}

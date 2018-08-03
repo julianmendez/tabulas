@@ -116,3 +116,8 @@ class TableImpl extends Table {
 
 }
 
+object TableImpl {
+
+  def apply(): TableImpl = new TableImpl
+
+}

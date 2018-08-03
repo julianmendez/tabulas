@@ -113,3 +113,8 @@ class URIValue extends PrimitiveTypeValue {
 
 }
 
+object URIValue {
+
+  def apply(): URIValue = new URIValue
+
+}

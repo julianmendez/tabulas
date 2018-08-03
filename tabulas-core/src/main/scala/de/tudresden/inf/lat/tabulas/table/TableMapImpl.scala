@@ -59,3 +59,8 @@ class TableMapImpl extends TableMap {
 
 }
 
+object TableMapImpl {
+
+  def apply(): TableMapImpl = new TableMapImpl
+
+}

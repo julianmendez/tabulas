@@ -222,3 +222,8 @@ class SqlRenderer extends Renderer {
 
 }
 
+object SqlRenderer {
+
+  def apply(): SqlRenderer = new SqlRenderer
+
+}

@@ -74,3 +74,8 @@ class CompositeTypeImpl extends CompositeType {
 
 }
 
+object CompositeTypeImpl {
+
+  def apply(): CompositeTypeImpl = new CompositeTypeImpl
+
+}

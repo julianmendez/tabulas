@@ -79,3 +79,8 @@ class IntegerValue extends PrimitiveTypeValue {
 
 }
 
+object IntegerValue {
+
+  def apply(): IntegerValue = new IntegerValue
+
+}

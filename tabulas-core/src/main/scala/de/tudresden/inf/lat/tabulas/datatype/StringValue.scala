@@ -66,3 +66,8 @@ class StringValue extends PrimitiveTypeValue {
 
 }
 
+object StringValue {
+
+  def apply(): StringValue = new StringValue
+
+}

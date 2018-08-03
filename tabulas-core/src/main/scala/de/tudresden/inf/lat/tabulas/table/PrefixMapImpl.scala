@@ -75,3 +75,9 @@ class PrefixMapImpl extends PrefixMap {
   }
 
 }
+
+object PrefixMapImpl {
+
+  def apply(): PrefixMapImpl = new PrefixMapImpl
+
+}

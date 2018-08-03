@@ -51,3 +51,8 @@ class ParameterizedListType extends PrimitiveType {
 
 }
 
+object ParameterizedListType {
+
+  def apply(): ParameterizedListType = new ParameterizedListType
+
+}

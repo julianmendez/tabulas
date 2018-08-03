@@ -46,3 +46,9 @@ class DefaultExtension extends Extension {
   override def getRequiredArguments: Int = { RequiredArguments }
 
 }
+
+object DefaultExtension {
+
+  def apply(): DefaultExtension = new DefaultExtension
+
+}

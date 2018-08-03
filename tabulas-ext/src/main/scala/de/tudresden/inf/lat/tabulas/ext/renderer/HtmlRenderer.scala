@@ -161,3 +161,8 @@ class HtmlRenderer extends Renderer {
 
 }
 
+object HtmlRenderer {
+
+  def apply(): HtmlRenderer = new HtmlRenderer
+
+}

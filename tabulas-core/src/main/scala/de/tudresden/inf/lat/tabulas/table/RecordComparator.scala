@@ -90,3 +90,8 @@ class RecordComparator extends Comparator[Record] {
 
 }
 
+object RecordComparator {
+
+  def apply(): RecordComparator = new RecordComparator
+
+}

@@ -47,3 +47,9 @@ class CsvExtension extends Extension {
   override def getRequiredArguments: Int = { RequiredArguments }
 
 }
+
+object CsvExtension {
+
+  def apply(): CsvExtension = new CsvExtension
+
+}

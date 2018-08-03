@@ -63,3 +63,8 @@ class RecordImpl extends Record {
 
 }
 
+object RecordImpl {
+
+  def apply(): RecordImpl = new RecordImpl
+
+}
