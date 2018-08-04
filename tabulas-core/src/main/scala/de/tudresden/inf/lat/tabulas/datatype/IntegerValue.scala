@@ -9,46 +9,20 @@ import scala.collection.mutable
 /** This models a integer value.
   *
   */
-class IntegerValue extends PrimitiveTypeValue {
-
-  private var _number: BigInteger = BigInteger.ZERO
-
-  /** Constructs a new integer value using a string.
-    *
-    * @param str string
-    * @throws ParseException
-    * <code>str</code> is not a valid representation of an integer
-    * value.
-    */
-  def this(str: String) = {
-    this()
-    Objects.requireNonNull(str)
-    try {
-      this._number = new BigInteger(str)
-    } catch {
-      case e: NumberFormatException => throw new ParseException(e.getMessage, e)
-    }
-  }
-
-  /** Constructs a new integer value using another integer value.
-    *
-    * @param other an integer value
-    */
-  def this(other: IntegerValue) = {
-    this()
-    this._number = other._number
-  }
+class IntegerValue(number: BigInteger) extends PrimitiveTypeValue {
 
   override def getType: PrimitiveType = {
     new IntegerType()
   }
+
+  def getValue: BigInteger = number
 
   override def isEmpty: Boolean = {
     false
   }
 
   override def render(): String = {
-    this._number.toString
+    this.number.toString
   }
 
   override def renderAsList(): Seq[String] = {
@@ -61,7 +35,7 @@ class IntegerValue extends PrimitiveTypeValue {
   override def compareTo(other: PrimitiveTypeValue): Int = {
     val result: Int = other match {
       case otherValue: IntegerValue =>
-        this._number.compareTo(otherValue._number)
+        this.number.compareTo(otherValue.getValue)
       case _ =>
         render().compareTo(other.render())
     }
@@ -69,26 +43,50 @@ class IntegerValue extends PrimitiveTypeValue {
   }
 
   override def hashCode(): Int = {
-    this._number.hashCode()
+    this.number.hashCode()
   }
 
   override def equals(obj: Any): Boolean = {
     var result: Boolean = false
     obj match {
-      case other: IntegerValue => result = this._number.equals(other._number)
+      case other: IntegerValue => result = this.number.equals(other.getValue)
       case _ => result = false
     }
     result
   }
 
   override def toString: String = {
-    this._number.toString
+    this.number.toString
   }
 
 }
 
 object IntegerValue {
 
-  def apply(): IntegerValue = new IntegerValue
+  def apply(): IntegerValue = new IntegerValue(BigInteger.ZERO)
+
+  /** Constructs a new integer value using a string.
+    *
+    * @param str string
+    * @throws ParseException
+    * <code>str</code> is not a valid representation of an integer
+    * value.
+    */
+  def apply(str: String): IntegerValue = {
+    Objects.requireNonNull(str)
+    try {
+      new IntegerValue(new BigInteger(str))
+    } catch {
+      case e: NumberFormatException => throw new ParseException(e.getMessage, e)
+    }
+  }
+
+  /** Constructs a new integer value using another integer value.
+    *
+    * @param other an integer value
+    */
+  def apply(other: IntegerValue): IntegerValue = {
+    new IntegerValue(other.getValue)
+  }
 
 }

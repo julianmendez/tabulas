@@ -13,16 +13,6 @@ class CompositeTypeImpl extends CompositeType {
   private val _fields = new mutable.ArrayBuffer[String]
   private val _fieldType = new mutable.TreeMap[String, String]
 
-  /** Constructs a new composite type using another one.
-    *
-    * @param otherType other type
-    */
-  def this(otherType: CompositeType) = {
-    this()
-    Objects.requireNonNull(otherType)
-    otherType.getFields.foreach(field => declareField(field, otherType.getFieldType(field).get))
-  }
-
   override def getFields: Seq[String] = {
     this._fields.toList
   }
@@ -78,5 +68,18 @@ class CompositeTypeImpl extends CompositeType {
 object CompositeTypeImpl {
 
   def apply(): CompositeTypeImpl = new CompositeTypeImpl
+
+  /** Constructs a new composite type using another one.
+    *
+    * @param otherType
+    * other type
+    */
+  def apply(otherType: CompositeType): CompositeTypeImpl = {
+    Objects.requireNonNull(otherType)
+    val result = new CompositeTypeImpl
+    otherType.getFields
+      .foreach(field => result.declareField(field, otherType.getFieldType(field).get))
+    result
+  }
 
 }

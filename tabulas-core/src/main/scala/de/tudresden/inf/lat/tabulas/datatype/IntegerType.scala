@@ -17,7 +17,7 @@ class IntegerType extends PrimitiveType {
   }
 
   override def parse(str: String): IntegerValue = {
-    new IntegerValue(str)
+    IntegerValue(str)
   }
 
   def castInstance(value: PrimitiveTypeValue): IntegerValue = {

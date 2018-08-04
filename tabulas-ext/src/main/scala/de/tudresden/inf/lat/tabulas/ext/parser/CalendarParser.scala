@@ -76,7 +76,7 @@ class CalendarParser extends Parser {
     SubItemsFieldName, "ACTION", "DESCRIPTION", "SUMMARY", "ATTENDEE",
     "TRIGGER")
 
-  var EventTyp: SimplifiedCompositeType = new SimplifiedCompositeType()
+  var EventTyp: SimplifiedCompositeType = SimplifiedCompositeType()
 
   val UnderscoreChar: Char = '_'
   val CommaChar: Char = ','
@@ -145,14 +145,14 @@ class CalendarParser extends Parser {
 
   private def getTypedValue(key: String, value: String,
                             type0: CompositeType, lineCounter: Int): PrimitiveTypeValue = {
-    var result: PrimitiveTypeValue = new StringValue()
+    var result: PrimitiveTypeValue = StringValue()
     if (Objects.isNull(key)) {
-      result = new StringValue()
+      result = StringValue()
     } else {
       try {
         val optTypeStr: Option[String] = type0.getFieldType(key)
         if (optTypeStr.isDefined) {
-          result = (new PrimitiveTypeFactory()).newInstance(optTypeStr.get, value)
+          result = PrimitiveTypeFactory().newInstance(optTypeStr.get, value)
         } else {
           throw new ParseException("Key '" + key + "' has an undefined type.")
         }
@@ -229,18 +229,12 @@ class CalendarParser extends Parser {
   def parseMap(input: BufferedReader): TableMap = {
     val map = new mutable.TreeMap[String, TableImpl]()
 
-    map.put(CalendarTypeLabel, new TableImpl(new SimplifiedCompositeType(
-      CalendarTypeFields)))
-    map.put(TimeZoneTypeLabel, new TableImpl(new SimplifiedCompositeType(
-      TimeZoneTypeFields)))
-    map.put(DaylightTypeLabel, new TableImpl(new SimplifiedCompositeType(
-      DaylightTypeFields)))
-    map.put(StandardTypeLabel, new TableImpl(new SimplifiedCompositeType(
-      StandardTypeFields)))
-    map.put(EventTypeLabel, new TableImpl(new SimplifiedCompositeType(
-      EventTypeFields)))
-    map.put(AlarmTypeLabel, new TableImpl(new SimplifiedCompositeType(
-      AlarmTypeFields)))
+    map.put(CalendarTypeLabel, new TableImpl(SimplifiedCompositeType(CalendarTypeFields)))
+    map.put(TimeZoneTypeLabel, new TableImpl(SimplifiedCompositeType(TimeZoneTypeFields)))
+    map.put(DaylightTypeLabel, new TableImpl(SimplifiedCompositeType(DaylightTypeFields)))
+    map.put(StandardTypeLabel, new TableImpl(SimplifiedCompositeType(StandardTypeFields)))
+    map.put(EventTypeLabel, new TableImpl(SimplifiedCompositeType(EventTypeFields)))
+    map.put(AlarmTypeLabel, new TableImpl(SimplifiedCompositeType(AlarmTypeFields)))
 
     var currentTable: TableImpl = new TableImpl()
     var currentRecord: Record = new RecordImpl()

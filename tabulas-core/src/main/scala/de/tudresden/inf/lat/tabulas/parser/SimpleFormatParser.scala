@@ -76,7 +76,7 @@ class SimpleFormatParser extends Parser {
   def parseTypes(line: String, lineCounter: Int): CompositeTypeImpl = {
     val result: CompositeTypeImpl = new CompositeTypeImpl()
     val stok: StringTokenizer = new StringTokenizer(getValue(line).get)
-    val factory: PrimitiveTypeFactory = new PrimitiveTypeFactory()
+    val factory: PrimitiveTypeFactory = PrimitiveTypeFactory()
     while (stok.hasMoreTokens) {
       val token: String = stok.nextToken()
       val pos: Int = token.indexOf(ParserConstant.TypeSign)
@@ -143,15 +143,15 @@ class SimpleFormatParser extends Parser {
   }
 
   def getTypedValue(key: String, value: String, type0: CompositeType, prefixMap: PrefixMap, lineCounter: Int): PrimitiveTypeValue = {
-    var result: PrimitiveTypeValue = new StringValue()
+    var result: PrimitiveTypeValue = StringValue()
     if (Objects.isNull(key)) {
-      result = new StringValue()
+      result = StringValue()
     } else {
       try {
         val optTypeStr: Option[String] = type0.getFieldType(key)
         if (optTypeStr.isDefined) {
           val typeStr: String = optTypeStr.get
-          result = (new PrimitiveTypeFactory()).newInstance(typeStr, value)
+          result = PrimitiveTypeFactory().newInstance(typeStr, value)
           if (result.getType.equals(new URIType())) {
             val uri: URIValue = result.asInstanceOf[URIValue]
             result = new URIValue(prefixMap.getWithoutPrefix(uri.getUri))

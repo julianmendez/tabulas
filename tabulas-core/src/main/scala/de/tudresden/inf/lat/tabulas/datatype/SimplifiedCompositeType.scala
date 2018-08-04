@@ -4,33 +4,26 @@ package de.tudresden.inf.lat.tabulas.datatype
 /** This models a simplified composite type where the fields have the same type.
   *
   */
-class SimplifiedCompositeType extends CompositeType {
-
-  val DefaultFieldType: String = "String"
-
-  private val _dataType: CompositeTypeImpl = new CompositeTypeImpl()
-
-  def this(knownFields: Array[String]) {
-    this()
-    knownFields.foreach(field => this._dataType.declareField(field, DefaultFieldType))
-  }
+class SimplifiedCompositeType(dataType: CompositeTypeImpl) extends CompositeType {
 
   override def getFields: Seq[String] = {
-    this._dataType.getFields
+    this.dataType.getFields
   }
 
+  def getDataType: CompositeTypeImpl = dataType
+
   override def getFieldType(field: String): Option[String] = {
-    this._dataType.getFieldType(field)
+    this.dataType.getFieldType(field)
   }
 
   override def hashCode(): Int = {
-    this._dataType.hashCode()
+    this.dataType.hashCode()
   }
 
   override def equals(obj: Any): Boolean = {
     val result: Boolean = obj match {
       case other: SimplifiedCompositeType =>
-        this._dataType.equals(other._dataType)
+        this.dataType.equals(other.getDataType)
       case _ =>
         false
     }
@@ -38,13 +31,21 @@ class SimplifiedCompositeType extends CompositeType {
   }
 
   override def toString: String = {
-    this._dataType.toString
+    this.dataType.toString
   }
 
 }
 
 object SimplifiedCompositeType {
 
-  def apply(): SimplifiedCompositeType = new SimplifiedCompositeType
+  val DefaultFieldType: String = "String"
+
+  def apply(): SimplifiedCompositeType = new SimplifiedCompositeType(new CompositeTypeImpl())
+
+  def apply(knownFields: Array[String]): SimplifiedCompositeType = {
+    val compType = new CompositeTypeImpl()
+    knownFields.foreach(field => compType.declareField(field, DefaultFieldType))
+    new SimplifiedCompositeType(compType)
+  }
 
 }

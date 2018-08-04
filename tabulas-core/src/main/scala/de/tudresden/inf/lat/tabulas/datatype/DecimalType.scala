@@ -17,7 +17,7 @@ class DecimalType extends PrimitiveType {
   }
 
   override def parse(str: String): DecimalValue = {
-    new DecimalValue(str)
+    DecimalValue(str)
   }
 
   def castInstance(value: PrimitiveTypeValue): DecimalValue = {

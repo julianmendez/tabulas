@@ -9,53 +9,12 @@ import scala.collection.mutable
 /** This models a URI.
   *
   */
-class URIValue extends PrimitiveTypeValue {
+class URIValue(uri: URI) extends PrimitiveTypeValue {
 
   val SpecialSymbol: String = "#"
 
-  private var uri: URI = _
-
-  /** Constructs a new URI value using a string.
-    *
-    * @param uriStr URI
-    */
-  def this(uriStr: String) = {
-    this()
-    Objects.requireNonNull(uriStr)
-    this.uri = createURI(uriStr)
-  }
-
-  /** Constructs a new URI value using a URI.
-    *
-    * @param uri URI
-    */
-  def this(uri: URI) = {
-    this()
-    Objects.requireNonNull(uri)
-    this.uri = uri
-  }
-
-  /** Constructs a new URI value using another URI value.
-    *
-    * @param other URI value
-    */
-  def this(other: URIValue) {
-    this()
-    this.uri = other.getUri
-  }
-
   override def getType: PrimitiveType = {
     new URIType()
-  }
-
-  def createURI(uriStr: String): URI = {
-    var result: URI = URI.create("")
-    try {
-      result = new URI(uriStr)
-    } catch {
-      case e: URISyntaxException => throw new ParseException("Invalid URI '" + uriStr + "'.", e)
-    }
-    result
   }
 
   def getUri: URI = {
@@ -69,7 +28,7 @@ class URIValue extends PrimitiveTypeValue {
     if (pos == -1) {
       result = this.uri
     } else {
-      result = createURI(uriStr.substring(0, pos))
+      result = URIValue.createURI(uriStr.substring(0, pos))
     }
     result
   }
@@ -126,6 +85,44 @@ class URIValue extends PrimitiveTypeValue {
 
 object URIValue {
 
-  def apply(): URIValue = new URIValue
+  def apply(): URIValue = {
+    new URIValue(createURI(""))
+  }
+
+  /** Constructs a new URI value using a string.
+    *
+    * @param uriStr URI
+    */
+  def apply(uriStr: String): URIValue = {
+    Objects.requireNonNull(uriStr)
+    new URIValue(createURI(uriStr))
+  }
+
+  /** Constructs a new URI value using a URI.
+    *
+    * @param uri URI
+    */
+  def apply(uri: URI): URIValue = {
+    Objects.requireNonNull(uri)
+    new URIValue(uri)
+  }
+
+  /** Constructs a new URI value using another URI value.
+    *
+    * @param other URI value
+    */
+  def apply(other: URIValue): URIValue = {
+    new URIValue(other.getUri)
+  }
+
+  def createURI(uriStr: String): URI = {
+    var result: URI = URI.create("")
+    try {
+      result = new URI(uriStr)
+    } catch {
+      case e: URISyntaxException => throw new ParseException("Invalid URI '" + uriStr + "'.", e)
+    }
+    result
+  }
 
 }

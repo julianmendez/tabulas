@@ -19,7 +19,7 @@ class URIType extends PrimitiveType {
   }
 
   override def parse(str: String): URIValue = {
-    new URIValue(str)
+    URIValue(str)
   }
 
   def castInstance(value: PrimitiveTypeValue): URIValue = {

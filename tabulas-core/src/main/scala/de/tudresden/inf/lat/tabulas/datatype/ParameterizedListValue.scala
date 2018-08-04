@@ -8,39 +8,17 @@ import scala.collection.mutable
 /** This models a list of elements with a parameterized type.
   *
   */
-class ParameterizedListValue extends mutable.ArrayBuffer[PrimitiveTypeValue] with PrimitiveTypeValue {
+class ParameterizedListValue(parameter: PrimitiveType)
+  extends mutable.ArrayBuffer[PrimitiveTypeValue] with PrimitiveTypeValue {
 
   val serialVersionUID: Long = -8983139857000842808L
 
   val Separator: String = " "
 
-  private var _parameter: PrimitiveType = _
-
-  /** Constructs a new parameterized list value.
-    *
-    * @param parameter primitive type
-    */
-  def this(parameter: PrimitiveType) = {
-    this()
-    Objects.requireNonNull(parameter)
-    this._parameter = parameter
-  }
-
-  /** Constructs a new parameterized list value using another parameterized
-    * list value.
-    *
-    * @param other parameterized list value
-    */
-  def this(other: ParameterizedListValue) = {
-    this()
-    Objects.requireNonNull(other)
-    this._parameter = other.getParameter
-  }
-
-  override def getType: PrimitiveType = { new ParameterizedListType(this._parameter) }
+  override def getType: PrimitiveType = { new ParameterizedListType(this.parameter) }
 
   def add(str: String): Unit = {
-    this += this._parameter.parse(str)
+    this += this.parameter.parse(str)
   }
 
   override def render(): String = {
@@ -81,12 +59,29 @@ class ParameterizedListValue extends mutable.ArrayBuffer[PrimitiveTypeValue] wit
     result
   }
 
-  def getParameter: PrimitiveType = { this._parameter }
+  def getParameter: PrimitiveType = { this.parameter }
 
 }
 
 object ParameterizedListValue {
 
-  def apply(): ParameterizedListValue = new ParameterizedListValue
+  /** Constructs a new parameterized list value.
+    *
+    * @param parameter primitive type
+    */
+  def apply(parameter: PrimitiveType): ParameterizedListValue = {
+    Objects.requireNonNull(parameter)
+    new ParameterizedListValue(parameter)
+  }
+
+  /** Constructs a new parameterized list value using another parameterized
+    * list value.
+    *
+    * @param other parameterized list value
+    */
+  def apply(other: ParameterizedListValue): ParameterizedListValue = {
+    Objects.requireNonNull(other)
+    new ParameterizedListValue(other.getParameter)
+  }
 
 }
