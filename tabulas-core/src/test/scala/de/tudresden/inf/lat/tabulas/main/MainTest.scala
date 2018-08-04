@@ -3,12 +3,11 @@ package de.tudresden.inf.lat.tabulas.main
 import java.io.{BufferedReader, FileReader, StringWriter}
 import java.util.Objects
 
-import org.scalatest.FunSuite
-
 import de.tudresden.inf.lat.tabulas.datatype._
 import de.tudresden.inf.lat.tabulas.parser.SimpleFormatParser
 import de.tudresden.inf.lat.tabulas.renderer.SimpleFormatRenderer
 import de.tudresden.inf.lat.tabulas.table.{Table, TableImpl, TableMap, TableMapImpl}
+import org.scalatest.FunSuite
 
 /** This is a test of modification of a Tabula file.
   */
@@ -29,8 +28,7 @@ class MainTest extends FunSuite {
   /**
     * Returns the number of authors for a given record.
     *
-    * @param record
-    * record
+    * @param record record
     * @return the number of authors for a given record
     */
   def computeFieldValue(record: Record): StringValue = {

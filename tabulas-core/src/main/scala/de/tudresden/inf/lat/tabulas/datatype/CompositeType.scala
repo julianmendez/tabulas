@@ -15,8 +15,7 @@ trait CompositeType extends DataType {
   /** Returns an optional containing the type of the given field, if the field
     * is present, or an empty optional otherwise.
     *
-    * @param field
-    * field
+    * @param field field
     * @return an optional containing the type of the given field, if the field
     *         is present, or an empty optional otherwise
     */

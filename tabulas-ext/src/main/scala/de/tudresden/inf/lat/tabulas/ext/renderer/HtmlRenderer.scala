@@ -94,7 +94,7 @@ class HtmlRenderer extends Renderer {
       if (optValue.isDefined) {
         val value: PrimitiveTypeValue = optValue.get
         value match {
-          case list: ParameterizedListValue=>
+          case list: ParameterizedListValue =>
             output.write("<td> ")
             writeParameterizedListIfNotEmpty(output, list)
             output.write(" </td>\n")

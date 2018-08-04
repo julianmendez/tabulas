@@ -25,7 +25,9 @@ class CsvRenderer extends Renderer {
     this._output = output
   }
 
-  def sanitize(str: String): String = { str.replace(Quotes, QuotesReplacement) }
+  def sanitize(str: String): String = {
+    str.replace(Quotes, QuotesReplacement)
+  }
 
   def writeAsStringIfNotEmpty(output: UncheckedWriter, field: String, value: PrimitiveTypeValue): Boolean = {
     var result: Boolean = false

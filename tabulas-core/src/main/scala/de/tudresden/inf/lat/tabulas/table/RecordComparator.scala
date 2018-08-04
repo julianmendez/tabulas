@@ -26,9 +26,13 @@ class RecordComparator extends Comparator[Record] {
     this._fieldsWithReverseOrder ++= fieldsWithReverseOrder
   }
 
-  def getSortingOrder: Seq[String] = { this._sortingOrder }
+  def getSortingOrder: Seq[String] = {
+    this._sortingOrder
+  }
 
-  def getFieldsWithReverseOrder: Set[String] = { this._fieldsWithReverseOrder.toSet }
+  def getFieldsWithReverseOrder: Set[String] = {
+    this._fieldsWithReverseOrder.toSet
+  }
 
   override def compare(record0: Record, record1: Record): Int = {
     var result: Int = 0
@@ -84,9 +88,13 @@ class RecordComparator extends Comparator[Record] {
     result
   }
 
-  override def hashCode(): Int = { this._sortingOrder.hashCode() }
+  override def hashCode(): Int = {
+    this._sortingOrder.hashCode()
+  }
 
-  override def toString: String = { this._sortingOrder.toString }
+  override def toString: String = {
+    this._sortingOrder.toString
+  }
 
 }
 

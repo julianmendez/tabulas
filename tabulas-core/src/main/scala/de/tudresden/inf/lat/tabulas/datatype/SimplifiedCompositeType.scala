@@ -15,11 +15,17 @@ class SimplifiedCompositeType extends CompositeType {
     knownFields.foreach(field => this._dataType.declareField(field, DefaultFieldType))
   }
 
-  override def getFields: Seq[String] = { this._dataType.getFields }
+  override def getFields: Seq[String] = {
+    this._dataType.getFields
+  }
 
-  override def getFieldType(field: String): Option[String] = { this._dataType.getFieldType(field) }
+  override def getFieldType(field: String): Option[String] = {
+    this._dataType.getFieldType(field)
+  }
 
-  override def hashCode(): Int = { this._dataType.hashCode() }
+  override def hashCode(): Int = {
+    this._dataType.hashCode()
+  }
 
   override def equals(obj: Any): Boolean = {
     val result: Boolean = obj match {
@@ -31,7 +37,9 @@ class SimplifiedCompositeType extends CompositeType {
     result
   }
 
-  override def toString: String = { this._dataType.toString }
+  override def toString: String = {
+    this._dataType.toString
+  }
 
 }
 

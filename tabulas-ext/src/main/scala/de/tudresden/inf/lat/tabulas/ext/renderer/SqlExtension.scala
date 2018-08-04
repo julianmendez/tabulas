@@ -40,11 +40,17 @@ class SqlExtension extends Extension {
     result
   }
 
-  override def getExtensionName: String = { Name }
+  override def getExtensionName: String = {
+    Name
+  }
 
-  override def getHelp: String = { Help }
+  override def getHelp: String = {
+    Help
+  }
 
-  override def getRequiredArguments: Int = { RequiredArguments }
+  override def getRequiredArguments: Int = {
+    RequiredArguments
+  }
 
 }
 

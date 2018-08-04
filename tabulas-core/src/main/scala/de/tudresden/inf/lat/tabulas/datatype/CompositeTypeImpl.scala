@@ -15,8 +15,7 @@ class CompositeTypeImpl extends CompositeType {
 
   /** Constructs a new composite type using another one.
     *
-    * @param otherType
-    * other type
+    * @param otherType other type
     */
   def this(otherType: CompositeType) = {
     this()
@@ -49,7 +48,9 @@ class CompositeTypeImpl extends CompositeType {
     }
   }
 
-  override def hashCode(): Int = { this._fields.hashCode() + (0x1F * this._fieldType.hashCode()) }
+  override def hashCode(): Int = {
+    this._fields.hashCode() + (0x1F * this._fieldType.hashCode())
+  }
 
   override def equals(obj: Any): Boolean = {
     var result: Boolean = false

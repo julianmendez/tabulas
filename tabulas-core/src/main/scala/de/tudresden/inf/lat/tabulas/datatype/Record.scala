@@ -9,8 +9,7 @@ trait Record {
   /** Returns an optional containing the value of a given property, if this
     * value is present, or an empty optional otherwise.
     *
-    * @param key
-    * property name
+    * @param key property name
     * @return an optional containing the value of a given property, if this
     *         value is present, or an empty optional otherwise
     */
@@ -18,10 +17,8 @@ trait Record {
 
   /** Sets the value of a given property.
     *
-    * @param key
-    * property name
-    * @param value
-    * value
+    * @param key   property name
+    * @param value value
     */
   def set(key: String, value: PrimitiveTypeValue): Unit
 

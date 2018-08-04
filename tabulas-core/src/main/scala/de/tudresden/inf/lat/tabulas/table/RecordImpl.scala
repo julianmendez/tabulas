@@ -57,9 +57,13 @@ class RecordImpl extends Record {
     result
   }
 
-  override def hashCode(): Int = { this._map.hashCode() }
+  override def hashCode(): Int = {
+    this._map.hashCode()
+  }
 
-  override def toString: String = { this._map.toString }
+  override def toString: String = {
+    this._map.toString
+  }
 
 }
 

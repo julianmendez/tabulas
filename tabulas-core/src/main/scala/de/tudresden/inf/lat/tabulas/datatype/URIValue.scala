@@ -17,8 +17,7 @@ class URIValue extends PrimitiveTypeValue {
 
   /** Constructs a new URI value using a string.
     *
-    * @param uriStr
-    * URI
+    * @param uriStr URI
     */
   def this(uriStr: String) = {
     this()
@@ -28,8 +27,7 @@ class URIValue extends PrimitiveTypeValue {
 
   /** Constructs a new URI value using a URI.
     *
-    * @param uri
-    * URI
+    * @param uri URI
     */
   def this(uri: URI) = {
     this()
@@ -39,15 +37,16 @@ class URIValue extends PrimitiveTypeValue {
 
   /** Constructs a new URI value using another URI value.
     *
-    * @param other
-    * URI value
+    * @param other URI value
     */
   def this(other: URIValue) {
     this()
     this.uri = other.getUri
   }
 
-  override def getType: PrimitiveType = { new URIType() }
+  override def getType: PrimitiveType = {
+    new URIType()
+  }
 
   def createURI(uriStr: String): URI = {
     var result: URI = URI.create("")
@@ -59,7 +58,9 @@ class URIValue extends PrimitiveTypeValue {
     result
   }
 
-  def getUri: URI = { this.uri }
+  def getUri: URI = {
+    this.uri
+  }
 
   def getUriNoLabel: URI = {
     val uriStr: String = this.uri.toASCIIString
@@ -85,9 +86,13 @@ class URIValue extends PrimitiveTypeValue {
     result
   }
 
-  override def isEmpty: Boolean = { getUri.toASCIIString.trim().isEmpty }
+  override def isEmpty: Boolean = {
+    getUri.toASCIIString.trim().isEmpty
+  }
 
-  override def render(): String = { this.uri.toASCIIString }
+  override def render(): String = {
+    this.uri.toASCIIString
+  }
 
   override def renderAsList(): Seq[String] = {
     val list = new mutable.ArrayBuffer[String]()
@@ -96,9 +101,13 @@ class URIValue extends PrimitiveTypeValue {
     result
   }
 
-  override def compareTo(other: PrimitiveTypeValue): Int = { toString.compareTo(other.toString) }
+  override def compareTo(other: PrimitiveTypeValue): Int = {
+    toString.compareTo(other.toString)
+  }
 
-  override def hashCode(): Int = { this.uri.hashCode() }
+  override def hashCode(): Int = {
+    this.uri.hashCode()
+  }
 
   override def equals(obj: Any): Boolean = {
     var result: Boolean = false
@@ -109,7 +118,9 @@ class URIValue extends PrimitiveTypeValue {
     result
   }
 
-  override def toString: String = { render() }
+  override def toString: String = {
+    render()
+  }
 
 }
 

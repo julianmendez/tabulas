@@ -20,8 +20,7 @@ trait PrimitiveType extends DataType {
 
   /** Returns a value based on the given string.
     *
-    * @param str
-    * string
+    * @param str string
     * @return a value based on the given string
     */
   def parse(str: String): PrimitiveTypeValue

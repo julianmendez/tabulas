@@ -8,15 +8,25 @@ class IntegerType extends PrimitiveType {
 
   val TypeName: String = "Integer"
 
-  override def getTypeName: String = { TypeName }
+  override def getTypeName: String = {
+    TypeName
+  }
 
-  override def isList: Boolean = { false }
+  override def isList: Boolean = {
+    false
+  }
 
-  override def parse(str: String): IntegerValue = { new IntegerValue(str) }
+  override def parse(str: String): IntegerValue = {
+    new IntegerValue(str)
+  }
 
-  def castInstance(value: PrimitiveTypeValue): IntegerValue = { parse(value.render()) }
+  def castInstance(value: PrimitiveTypeValue): IntegerValue = {
+    parse(value.render())
+  }
 
-  override def hashCode(): Int = { getTypeName.hashCode() }
+  override def hashCode(): Int = {
+    getTypeName.hashCode()
+  }
 
   override def equals(obj: Any): Boolean = {
     var result = false
@@ -27,7 +37,9 @@ class IntegerType extends PrimitiveType {
     result
   }
 
-  override def toString: String = { getTypeName }
+  override def toString: String = {
+    getTypeName
+  }
 
 }
 

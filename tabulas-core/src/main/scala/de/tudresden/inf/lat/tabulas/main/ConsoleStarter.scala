@@ -20,8 +20,7 @@ class ConsoleStarter {
 
   /** Constructs a new console starter.
     *
-    * @param help
-    * help about usage
+    * @param help help about usage
     */
   def this(help: String) = {
     this()
@@ -30,10 +29,8 @@ class ConsoleStarter {
 
   /** Executes the application
     *
-    * @param extensions
-    * extensions
-    * @param args
-    * console arguments
+    * @param extensions extensions
+    * @param args       console arguments
     */
   def run(extensions: Seq[Extension], args: Array[String]): Unit = {
     Objects.requireNonNull(extensions)

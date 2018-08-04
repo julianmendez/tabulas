@@ -17,8 +17,7 @@ trait Table extends CompositeTypeValue {
 
   /** Sets the map of URI prefixes
     *
-    * @param prefixMap
-    * map of URI prefixes
+    * @param prefixMap map of URI prefixes
     */
   def setPrefixMap(prefixMap: PrefixMap): Unit
 
@@ -30,8 +29,7 @@ trait Table extends CompositeTypeValue {
 
   /** Sets the sorting order for the fields.
     *
-    * @param sortingOrder
-    * sorting order
+    * @param sortingOrder sorting order
     */
   def setSortingOrder(sortingOrder: Seq[String]): Unit
 
@@ -43,8 +41,7 @@ trait Table extends CompositeTypeValue {
 
   /** Sets the fields that are supposed to be sorted in reverse order.
     *
-    * @param fieldsWithReverseOrder
-    * fields with reverse order
+    * @param fieldsWithReverseOrder fields with reverse order
     */
   def setFieldsWithReverseOrder(fieldsWithReverseOrder: Set[String]): Unit
 

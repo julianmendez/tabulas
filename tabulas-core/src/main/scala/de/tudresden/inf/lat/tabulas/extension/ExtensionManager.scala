@@ -23,8 +23,7 @@ class ExtensionManager extends Extension {
 
   /** Constructs an extension manager.
     *
-    * @param extensions
-    * list of extensions
+    * @param extensions list of extensions
     */
   def this(extensions: Seq[Extension]) = {
     this()
@@ -70,7 +69,9 @@ class ExtensionManager extends Extension {
     result
   }
 
-  override def getExtensionName: String = { Name }
+  override def getExtensionName: String = {
+    Name
+  }
 
   override def getHelp: String = {
     val sbuf: StringBuffer = new StringBuffer()
@@ -84,7 +85,9 @@ class ExtensionManager extends Extension {
     result
   }
 
-  override def getRequiredArguments: Int = { RequiredArguments }
+  override def getRequiredArguments: Int = {
+    RequiredArguments
+  }
 
 }
 

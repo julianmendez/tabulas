@@ -2,11 +2,10 @@ package de.tudresden.inf.lat.tabulas.main
 
 import java.io.{FileReader, StringWriter}
 
-import org.scalatest.FunSuite
-
 import de.tudresden.inf.lat.tabulas.parser.SimpleFormatParser
 import de.tudresden.inf.lat.tabulas.renderer.SimpleFormatRenderer
 import de.tudresden.inf.lat.tabulas.table.TableMap
+import org.scalatest.FunSuite
 
 /** This is a test of normalization of files.
   */
@@ -23,7 +22,9 @@ class NormalizationTest extends FunSuite {
 
   val NewLine: String = "\n"
 
-  def getPath(fileName: String): String = { getClass.getClassLoader.getResource(fileName).getFile }
+  def getPath(fileName: String): String = {
+    getClass.getClassLoader.getResource(fileName).getFile
+  }
 
   def testNormalizationOfFile(inputFileName: String, expectedFileName: String): Unit = {
     val tableMap: TableMap = new SimpleFormatParser(new FileReader(getPath(inputFileName))).parse()

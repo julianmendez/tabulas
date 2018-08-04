@@ -35,13 +35,17 @@ class TableImpl extends Table {
     }
   }
 
-  override def getType: CompositeType = { this._tableType }
+  override def getType: CompositeType = {
+    this._tableType
+  }
 
   override def setType(newType: CompositeType): Unit = {
     this._tableType = newType
   }
 
-  override def getPrefixMap: PrefixMap = { this._prefixMap }
+  override def getPrefixMap: PrefixMap = {
+    this._prefixMap
+  }
 
   override def setPrefixMap(newPrefixMap: PrefixMap): Unit = {
     this._prefixMap.clear()
@@ -59,7 +63,9 @@ class TableImpl extends Table {
     result
   }
 
-  override def getSortingOrder: Seq[String] = { this._sortingOrder }
+  override def getSortingOrder: Seq[String] = {
+    this._sortingOrder
+  }
 
   override def setSortingOrder(sortingOrder: Seq[String]): Unit = {
     this._sortingOrder.clear()
@@ -68,7 +74,9 @@ class TableImpl extends Table {
     }
   }
 
-  override def getFieldsWithReverseOrder: Set[String] = { this._fieldsWithReverseOrder.toSet }
+  override def getFieldsWithReverseOrder: Set[String] = {
+    this._fieldsWithReverseOrder.toSet
+  }
 
   override def setFieldsWithReverseOrder(fieldsWithReverseOrder: Set[String]): Unit = {
     this._fieldsWithReverseOrder.clear()

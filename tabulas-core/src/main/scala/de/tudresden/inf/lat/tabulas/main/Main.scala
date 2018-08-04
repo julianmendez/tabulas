@@ -10,8 +10,7 @@ object Main {
 
   /** Entry point for the console.
     *
-    * @param args
-    * console arguments
+    * @param args console arguments
     */
   def main(args: Array[String]): Unit = {
     val extensions = new mutable.ArrayBuffer[Extension]()

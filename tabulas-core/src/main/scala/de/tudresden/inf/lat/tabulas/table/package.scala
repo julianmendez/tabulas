@@ -1,5 +1,5 @@
 /** Tabulas
- * table
- */
+  * table
+  */
 package de.tudresden.inf.lat.tabulas.table
 

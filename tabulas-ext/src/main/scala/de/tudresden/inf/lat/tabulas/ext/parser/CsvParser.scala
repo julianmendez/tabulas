@@ -27,8 +27,7 @@ class CsvParser extends Parser {
 
   /** Constructs a new parser.
     *
-    * @param input
-    * input
+    * @param input input
     */
   def this(input: Reader) = {
     this()

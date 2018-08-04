@@ -14,8 +14,7 @@ class StringValue extends PrimitiveTypeValue {
 
   /** Constructs a new string value using a string.
     *
-    * @param str
-    * string
+    * @param str string
     */
   def this(str: String) = {
     this()
@@ -28,19 +27,24 @@ class StringValue extends PrimitiveTypeValue {
 
   /** Constructs a new string value using another string value.
     *
-    * @param other
-    * a string value
+    * @param other a string value
     */
   def this(other: StringValue) = {
     this()
     this._str = other._str
   }
 
-  override def getType: PrimitiveType = { new StringType() }
+  override def getType: PrimitiveType = {
+    new StringType()
+  }
 
-  override def isEmpty: Boolean = { this._str.trim().isEmpty }
+  override def isEmpty: Boolean = {
+    this._str.trim().isEmpty
+  }
 
-  override def render(): String = { this._str }
+  override def render(): String = {
+    this._str
+  }
 
   override def renderAsList(): Seq[String] = {
     val list = new mutable.ArrayBuffer[String]()
@@ -49,12 +53,16 @@ class StringValue extends PrimitiveTypeValue {
     result
   }
 
-  override def compareTo(other: PrimitiveTypeValue): Int = { toString.compareTo(other.toString) }
+  override def compareTo(other: PrimitiveTypeValue): Int = {
+    toString.compareTo(other.toString)
+  }
 
-  override def hashCode(): Int = { this._str.hashCode() }
+  override def hashCode(): Int = {
+    this._str.hashCode()
+  }
 
   override def equals(obj: Any): Boolean = {
-    var result: Boolean  = false
+    var result: Boolean = false
     obj match {
       case other: StringValue => result = this._str.equals(other._str)
       case _ => result = false
@@ -62,7 +70,9 @@ class StringValue extends PrimitiveTypeValue {
     result
   }
 
-  override def toString: String = { this._str }
+  override def toString: String = {
+    this._str
+  }
 
 }
 

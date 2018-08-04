@@ -13,11 +13,17 @@ class PrefixMapImpl extends PrefixMap {
   private val _prefixMap = new mutable.TreeMap[URI, URI]
   private val _keyList = new mutable.ArrayBuffer[URI]
 
-  override def isEmpty: Boolean = { this._prefixMap.isEmpty }
+  override def isEmpty: Boolean = {
+    this._prefixMap.isEmpty
+  }
 
-  override def size(): Int = { this._prefixMap.size }
+  override def size(): Int = {
+    this._prefixMap.size
+  }
 
-  override def get(key: URI): Option[URI] = { this._prefixMap.get(key) }
+  override def get(key: URI): Option[URI] = {
+    this._prefixMap.get(key)
+  }
 
   override def put(key: URI, value: URI): Option[URI] = {
     if (!this._prefixMap.contains(key)) {
@@ -67,7 +73,9 @@ class PrefixMapImpl extends PrefixMap {
     result
   }
 
-  override def getKeysAsStream: Stream[URI] = { this._keyList.toStream }
+  override def getKeysAsStream: Stream[URI] = {
+    this._keyList.toStream
+  }
 
   override def clear(): Unit = {
     this._prefixMap.clear()

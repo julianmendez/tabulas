@@ -15,8 +15,7 @@ class IntegerValue extends PrimitiveTypeValue {
 
   /** Constructs a new integer value using a string.
     *
-    * @param str
-    * string
+    * @param str string
     * @throws ParseException
     * <code>str</code> is not a valid representation of an integer
     * value.
@@ -33,19 +32,24 @@ class IntegerValue extends PrimitiveTypeValue {
 
   /** Constructs a new integer value using another integer value.
     *
-    * @param other
-    * an integer value
+    * @param other an integer value
     */
   def this(other: IntegerValue) = {
     this()
     this._number = other._number
   }
 
-  override def getType: PrimitiveType = { new IntegerType() }
+  override def getType: PrimitiveType = {
+    new IntegerType()
+  }
 
-  override def isEmpty: Boolean = { false }
+  override def isEmpty: Boolean = {
+    false
+  }
 
-  override def render(): String = { this._number.toString }
+  override def render(): String = {
+    this._number.toString
+  }
 
   override def renderAsList(): Seq[String] = {
     val list = new mutable.ArrayBuffer[String]()
@@ -64,7 +68,9 @@ class IntegerValue extends PrimitiveTypeValue {
     result
   }
 
-  override def hashCode(): Int = { this._number.hashCode() }
+  override def hashCode(): Int = {
+    this._number.hashCode()
+  }
 
   override def equals(obj: Any): Boolean = {
     var result: Boolean = false
@@ -75,7 +81,9 @@ class IntegerValue extends PrimitiveTypeValue {
     result
   }
 
-  override def toString: String = { this._number.toString }
+  override def toString: String = {
+    this._number.toString
+  }
 
 }
 

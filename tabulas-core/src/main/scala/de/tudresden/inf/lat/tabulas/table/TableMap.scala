@@ -14,10 +14,8 @@ trait TableMap {
 
   /** Stores a table with the given identifier.
     *
-    * @param id
-    * identifier
-    * @param table
-    * table
+    * @param id    identifier
+    * @param table table
     * @return an optional containing the previous value associated to the given
     *         key, or an empty optional if there was no association before
     */
@@ -26,8 +24,7 @@ trait TableMap {
   /** Returns an optional containing the value associated to the given key, or
     * an empty optional if there is no association.
     *
-    * @param id
-    * identifier
+    * @param id identifier
     * @return an optional containing the value associated to the given key, or
     *         an empty optional if there is no association
     */

@@ -40,7 +40,9 @@ class SqlRenderer extends Renderer {
     this._output = output
   }
 
-  def sanitize(str: String): String = { str.replace(Apostrophe, ApostropheReplacement) }
+  def sanitize(str: String): String = {
+    str.replace(Apostrophe, ApostropheReplacement)
+  }
 
   def writeAsStringIfNotEmpty(output: UncheckedWriter, field: String, value: PrimitiveTypeValue): Boolean = {
     var result: Boolean = false

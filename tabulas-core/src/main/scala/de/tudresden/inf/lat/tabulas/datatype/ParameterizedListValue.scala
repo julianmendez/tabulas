@@ -18,8 +18,7 @@ class ParameterizedListValue extends mutable.ArrayBuffer[PrimitiveTypeValue] wit
 
   /** Constructs a new parameterized list value.
     *
-    * @param parameter
-    * primitive type
+    * @param parameter primitive type
     */
   def this(parameter: PrimitiveType) = {
     this()
@@ -30,8 +29,7 @@ class ParameterizedListValue extends mutable.ArrayBuffer[PrimitiveTypeValue] wit
   /** Constructs a new parameterized list value using another parameterized
     * list value.
     *
-    * @param other
-    * parameterized list value
+    * @param other parameterized list value
     */
   def this(other: ParameterizedListValue) = {
     this()

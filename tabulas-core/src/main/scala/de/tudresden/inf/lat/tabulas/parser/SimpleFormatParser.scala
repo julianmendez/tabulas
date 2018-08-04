@@ -22,9 +22,13 @@ class SimpleFormatParser extends Parser {
     private val _line: String = line0
     private val _lineCounter: Int = lineCounter0
 
-    def getLine: String = { this._line }
+    def getLine: String = {
+      this._line
+    }
 
-    def getLineCounter: Int = { this._lineCounter }
+    def getLineCounter: Int = {
+      this._lineCounter
+    }
 
   }
 
@@ -174,7 +178,9 @@ class SimpleFormatParser extends Parser {
     result
   }
 
-  def isMultiLine(line: String): Boolean = { line.trim().endsWith(ParserConstant.LineContinuationSymbol) }
+  def isMultiLine(line: String): Boolean = {
+    line.trim().endsWith(ParserConstant.LineContinuationSymbol)
+  }
 
   def getCleanLine(line: String): String = {
     val trimmedLine: String = line.trim()

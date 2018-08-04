@@ -106,9 +106,13 @@ class UncheckedWriterImpl extends UncheckedWriter {
     this
   }
 
-  override def asWriter(): Writer = { this._writer }
+  override def asWriter(): Writer = {
+    this._writer
+  }
 
-  override def hashCode(): Int = { this._writer.hashCode() }
+  override def hashCode(): Int = {
+    this._writer.hashCode()
+  }
 
   override def equals(obj: Any): Boolean = {
     val result: Boolean = obj match {
@@ -120,7 +124,9 @@ class UncheckedWriterImpl extends UncheckedWriter {
     result
   }
 
-  override def toString: String = { this._writer.toString }
+  override def toString: String = {
+    this._writer.toString
+  }
 
 }
 

@@ -8,15 +8,25 @@ class DecimalType extends PrimitiveType {
 
   val TypeName: String = "Decimal"
 
-  override def getTypeName: String = { TypeName }
+  override def getTypeName: String = {
+    TypeName
+  }
 
-  override def isList: Boolean = { false }
+  override def isList: Boolean = {
+    false
+  }
 
-  override def parse(str: String): DecimalValue = { new DecimalValue(str) }
+  override def parse(str: String): DecimalValue = {
+    new DecimalValue(str)
+  }
 
-  def castInstance(value: PrimitiveTypeValue): DecimalValue = { parse(value.render()) }
+  def castInstance(value: PrimitiveTypeValue): DecimalValue = {
+    parse(value.render())
+  }
 
-  override def hashCode(): Int = { getTypeName.hashCode() }
+  override def hashCode(): Int = {
+    getTypeName.hashCode()
+  }
 
   override def equals(obj: Any): Boolean = {
     val result: Boolean = obj match {
@@ -26,7 +36,9 @@ class DecimalType extends PrimitiveType {
     result
   }
 
-  override def toString: String = { getTypeName }
+  override def toString: String = {
+    getTypeName
+  }
 
 }
 

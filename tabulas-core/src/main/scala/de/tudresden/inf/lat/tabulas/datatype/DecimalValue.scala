@@ -15,8 +15,7 @@ class DecimalValue extends PrimitiveTypeValue {
 
   /** Constructs a new decimal value using a string.
     *
-    * @param str
-    * string
+    * @param str string
     * @throws ParseException
     * <code>str</code> is not a valid representation of a decimal
     * value.
@@ -33,19 +32,24 @@ class DecimalValue extends PrimitiveTypeValue {
 
   /** Constructs a new decimal value using another decimal value.
     *
-    * @param other
-    * a decimal value
+    * @param other a decimal value
     */
   def this(other: DecimalValue) = {
     this()
     this._number = other._number
   }
 
-  override def getType: PrimitiveType = { new DecimalType() }
+  override def getType: PrimitiveType = {
+    new DecimalType()
+  }
 
-  override def isEmpty: Boolean = { false }
+  override def isEmpty: Boolean = {
+    false
+  }
 
-  override def render(): String = { this._number.toString }
+  override def render(): String = {
+    this._number.toString
+  }
 
   override def renderAsList(): Seq[String] = {
     val list = new mutable.ArrayBuffer[String]()
@@ -64,7 +68,9 @@ class DecimalValue extends PrimitiveTypeValue {
     result
   }
 
-  override def hashCode(): Int = { this._number.hashCode() }
+  override def hashCode(): Int = {
+    this._number.hashCode()
+  }
 
   override def equals(obj: Any): Boolean = {
     var result: Boolean = false
@@ -75,7 +81,9 @@ class DecimalValue extends PrimitiveTypeValue {
     result
   }
 
-  override def toString: String = { this._number.toString }
+  override def toString: String = {
+    this._number.toString
+  }
 
 }
 

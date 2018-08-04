@@ -29,19 +29,18 @@ class PrimitiveTypeFactory {
 
   /** Tells whether this factory contains the given primitive type.
     *
-    * @param primType
-    * primitive type
+    * @param primType primitive type
     * @return <code>true</code> if and only if this factory contains the given
     *         primitive type
     */
-  def contains(primType: String): Boolean = { this._map.get(primType).isDefined }
+  def contains(primType: String): Boolean = {
+    this._map.get(primType).isDefined
+  }
 
   /** Returns a new value of the specified type.
     *
-    * @param typeName
-    * type name
-    * @param value
-    * value
+    * @param typeName type name
+    * @param value    value
     * @return a new value of the specified type
     */
   def newInstance(typeName: String, value: String): PrimitiveTypeValue = {

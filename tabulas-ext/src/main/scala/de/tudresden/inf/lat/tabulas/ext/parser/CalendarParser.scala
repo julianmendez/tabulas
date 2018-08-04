@@ -19,9 +19,13 @@ class CalendarParser extends Parser {
     private val _line: String = line0
     private val _lineCounter: Int = lineCounter0
 
-    def getLine: String = { this._line }
+    def getLine: String = {
+      this._line
+    }
 
-    def getLineCounter: Int = { this._lineCounter }
+    def getLineCounter: Int = {
+      this._lineCounter
+    }
 
   }
 
@@ -131,9 +135,13 @@ class CalendarParser extends Parser {
     result
   }
 
-  def isBeginLine(line: String): Boolean = { Objects.nonNull(line) && line.trim().startsWith(BeginKeyword) }
+  def isBeginLine(line: String): Boolean = {
+    Objects.nonNull(line) && line.trim().startsWith(BeginKeyword)
+  }
 
-  def isEndLine(line: String): Boolean = { Objects.nonNull(line) && line.trim().startsWith(EndKeyword) }
+  def isEndLine(line: String): Boolean = {
+    Objects.nonNull(line) && line.trim().startsWith(EndKeyword)
+  }
 
   private def getTypedValue(key: String, value: String,
                             type0: CompositeType, lineCounter: Int): PrimitiveTypeValue = {
