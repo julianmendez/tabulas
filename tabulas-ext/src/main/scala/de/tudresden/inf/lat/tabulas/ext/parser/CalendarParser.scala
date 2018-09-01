@@ -76,7 +76,7 @@ class CalendarParser extends Parser {
     SubItemsFieldName, "ACTION", "DESCRIPTION", "SUMMARY", "ATTENDEE",
     "TRIGGER")
 
-  var EventTyp: SimplifiedCompositeType = SimplifiedCompositeType()
+  val EventTyp: SimplifiedCompositeType = SimplifiedCompositeType()
 
   val UnderscoreChar: Char = '_'
   val CommaChar: Char = ','
@@ -102,35 +102,37 @@ class CalendarParser extends Parser {
   }
 
   def getKey(line: String): Option[String] = {
-    var result: Option[String] = Option.empty
-    if (Objects.isNull(line)) {
-      result = Option.empty
+    val result = if (Objects.isNull(line)) {
+      Option.empty
     } else {
-      var pos: Int = line.indexOf(ColonChar)
-      if (pos == -1) {
-        result = Option.apply(line)
+      val pos: Int = line.indexOf(ColonChar)
+      val res = if (pos == -1) {
+        Option.apply(line)
       } else {
         val pos2: Int = line.indexOf(SemicolonChar)
-        if (pos2 >= 0 && pos2 < pos) {
-          pos = pos2
+        val lastPos = if (pos2 >= 0 && pos2 < pos) {
+          pos2
+        } else {
+          pos
         }
-        result = Option.apply(line.substring(0, pos).trim())
+        Option.apply(line.substring(0, lastPos).trim())
       }
+      res
     }
     result
   }
 
   def getValue(line: String): Option[String] = {
-    var result: Option[String] = Option.empty
-    if (Objects.isNull(line)) {
-      result = Option.empty
+    var result = if (Objects.isNull(line)) {
+      Option.empty
     } else {
       val pos: Int = line.indexOf(ColonChar)
-      if (pos == -1) {
-        result = Option.apply("")
+      val res = if (pos == -1) {
+        Option.apply("")
       } else {
-        result = Option.apply(line.substring(pos + 1, line.length()).trim())
+        Option.apply(line.substring(pos + 1, line.length()).trim())
       }
+      res
     }
     result
   }
@@ -145,17 +147,17 @@ class CalendarParser extends Parser {
 
   private def getTypedValue(key: String, value: String,
                             type0: CompositeType, lineCounter: Int): PrimitiveTypeValue = {
-    var result: PrimitiveTypeValue = StringValue()
-    if (Objects.isNull(key)) {
-      result = StringValue()
+    val result = if (Objects.isNull(key)) {
+      StringValue()
     } else {
       try {
         val optTypeStr: Option[String] = type0.getFieldType(key)
-        if (optTypeStr.isDefined) {
-          result = PrimitiveTypeFactory().newInstance(optTypeStr.get, value)
+        val res = if (optTypeStr.isDefined) {
+          PrimitiveTypeFactory().newInstance(optTypeStr.get, value)
         } else {
           throw new ParseException("Key '" + key + "' has an undefined type.")
         }
+        res
       } catch {
         case e: IOException => throw new ParseException(e.getMessage + " (line "
           + lineCounter + ")", e.getCause)
@@ -324,9 +326,8 @@ class CalendarParser extends Parser {
   }
 
   override def parse(): TableMap = {
-    var result: TableMap = new TableMapImpl()
-    try {
-      result = parseMap(new BufferedReader(this.input))
+    val result  = try {
+      parseMap(new BufferedReader(this.input))
 
     } catch {
       case e: IOException => throw new RuntimeException(e)

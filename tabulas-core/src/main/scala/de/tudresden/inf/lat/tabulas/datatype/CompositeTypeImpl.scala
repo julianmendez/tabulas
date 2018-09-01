@@ -43,15 +43,11 @@ class CompositeTypeImpl extends CompositeType {
   }
 
   override def equals(obj: Any): Boolean = {
-    var result: Boolean = false
-    obj match {
+    val result = obj match {
       case other: CompositeType =>
-        result = getFields.equals(other.getFields)
-        if (result) {
-          val fields: Seq[String] = getFields
-          result = result && fields.forall(field => getFieldType(field).equals(other.getFieldType(field)))
-        }
-      case _ => result = false
+        getFields.equals(other.getFields) &&
+          getFields.forall(field => getFieldType(field).equals(other.getFieldType(field)))
+      case _ => false
     }
     result
   }

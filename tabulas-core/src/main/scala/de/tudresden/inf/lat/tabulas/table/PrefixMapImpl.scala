@@ -56,19 +56,21 @@ class PrefixMapImpl extends PrefixMap {
   }
 
   override def getWithPrefix(uri: URI): URI = {
-    var result: URI = uri
     val optPrefix: Option[URI] = getPrefixFor(uri)
-    if (optPrefix.isDefined) {
+    val result = if (optPrefix.isDefined) {
       val uriStr = uri.toASCIIString
       val key: URI = optPrefix.get
       val keyStr: String = key.toASCIIString
       val optExpansion: Option[URI] = get(key)
       val expansionStr = optExpansion.get.toASCIIString
-      if (keyStr.isEmpty) {
-        result = URI.create(uriStr.substring(expansionStr.length))
+      val res = if (keyStr.isEmpty) {
+        URI.create(uriStr.substring(expansionStr.length))
       } else {
-        result = URI.create(PrefixAmpersand + keyStr + PrefixSemicolon + uriStr.substring(expansionStr.length))
+        URI.create(PrefixAmpersand + keyStr + PrefixSemicolon + uriStr.substring(expansionStr.length))
       }
+      res
+    } else {
+      uri
     }
     result
   }

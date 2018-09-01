@@ -33,13 +33,11 @@ class TableMapImpl extends TableMap {
   override def hashCode(): Int = { this._map.hashCode() }
 
   override def equals(obj: Any): Boolean = {
-    var result: Boolean = false
-    obj match {
+    val result = obj match {
       case other: TableMap =>
-        result = getTableIds.equals(other.getTableIds)
-        val tableIds: Seq[String] = getTableIds
-        result = result && tableIds.forall(tableId => getTable(tableId).equals(other.getTable(tableId)))
-      case _ => result = false
+        getTableIds.equals(other.getTableIds) &&
+          getTableIds.forall(tableId => getTable(tableId).equals(other.getTable(tableId)))
+      case _ => false
     }
     result
   }

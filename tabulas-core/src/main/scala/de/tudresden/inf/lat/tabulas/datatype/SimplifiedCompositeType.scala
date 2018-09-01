@@ -10,7 +10,9 @@ class SimplifiedCompositeType(dataType: CompositeTypeImpl) extends CompositeType
     this.dataType.getFields
   }
 
-  def getDataType: CompositeTypeImpl = dataType
+  def getDataType: CompositeTypeImpl = {
+    dataType
+  }
 
   override def getFieldType(field: String): Option[String] = {
     this.dataType.getFieldType(field)

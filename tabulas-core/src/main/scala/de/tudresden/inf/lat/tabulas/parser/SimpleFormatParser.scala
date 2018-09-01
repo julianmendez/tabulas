@@ -38,37 +38,37 @@ class SimpleFormatParser extends Parser {
   }
 
   def getKey(line: String): Option[String] = {
-    var result: Option[String] = Option.empty
-    if (Objects.isNull(line)) {
-      result = Option.empty
+    val result = if (Objects.isNull(line)) {
+      Option.empty
     } else {
       val pos: Int = line.indexOf(ParserConstant.EqualsSign)
-      if (pos == -1) {
-        result = Option.apply(line)
+      val res = if (pos == -1) {
+        Option.apply(line)
       } else {
-        result = Option.apply(line.substring(0, pos).trim())
+        Option.apply(line.substring(0, pos).trim())
       }
+      res
     }
     result
   }
 
   def hasKey(line: String, key: String): Boolean = {
     val optKey: Option[String] = getKey(line)
-    val result: Boolean = (optKey.isDefined && (optKey.get == key))
+    val result: Boolean = optKey.isDefined && (optKey.get == key)
     result
   }
 
   def getValue(line: String): Option[String] = {
-    var result: Option[String] = Option.empty
-    if (Objects.isNull(line)) {
-      result = Option.empty
+    val result = if (Objects.isNull(line)) {
+      Option.empty
     } else {
       val pos: Int = line.indexOf(ParserConstant.EqualsSign)
-      if (pos == -1) {
-        result = Option.apply("")
+      val res = if (pos == -1) {
+        Option.apply("")
       } else {
-        result = Option.apply(line.substring(pos + ParserConstant.EqualsSign.length(), line.length()).trim())
+        Option.apply(line.substring(pos + ParserConstant.EqualsSign.length(), line.length()).trim())
       }
+      res
     }
     result
   }
@@ -96,9 +96,8 @@ class SimpleFormatParser extends Parser {
   }
 
   private def asUri(uriStr: String, lineCounter: Int): URI = {
-    var result: URI = URI.create("")
-    try {
-      result = new URI(uriStr)
+    val result: URI = try {
+      new URI(uriStr)
     } catch {
       case e: URISyntaxException => throw new ParseException("String '" + uriStr + "' is not a valid URI. (line " + lineCounter + ")")
     }
@@ -184,11 +183,10 @@ class SimpleFormatParser extends Parser {
 
   def getCleanLine(line: String): String = {
     val trimmedLine: String = line.trim()
-    var result = trimmedLine
-    if (isMultiLine(line)) {
-      result = trimmedLine.substring(0, trimmedLine.length() - ParserConstant.LineContinuationSymbol.length()).trim()
+    val result = if (isMultiLine(line)) {
+      trimmedLine.substring(0, trimmedLine.length() - ParserConstant.LineContinuationSymbol.length()).trim()
     } else {
-      result = trimmedLine
+      trimmedLine
     }
     result
   }
@@ -222,24 +220,22 @@ class SimpleFormatParser extends Parser {
   }
 
   private def isIdProperty(line: String): Boolean = {
-    var result: Boolean = false
     val optKey: Option[String] = getKey(line)
-    if (optKey.isDefined) {
-      result = optKey.get.equals(ParserConstant.IdKeyword)
+    val result = if (optKey.isDefined) {
+      optKey.get.equals(ParserConstant.IdKeyword)
     } else {
-      result = false
+      false
     }
     result
   }
 
   private def getIdProperty(line: String): Option[String] = {
-    var result: Option[String] = Option.empty
     val optKey: Option[String] = getKey(line)
     val optValueStr: Option[String] = getValue(line)
-    if (optKey.isDefined && optValueStr.isDefined && optKey.get.equals(ParserConstant.IdKeyword)) {
-      result = Option.apply(optValueStr.get)
+    val result = if (optKey.isDefined && optValueStr.isDefined && optKey.get.equals(ParserConstant.IdKeyword)) {
+      Option.apply(optValueStr.get)
     } else {
-      result = Option.empty
+      Option.empty
     }
     result
   }
@@ -319,12 +315,15 @@ class SimpleFormatParser extends Parser {
         } else {
           parseProperty(line, currentTable, recordIdsOfCurrentTable, record, lineCounter)
           if (isIdProperty(line)) {
-            var successful: Boolean = false
-            if (optCurrentId.isEmpty) {
+            val successful = if (optCurrentId.isEmpty) {
               optCurrentId = getIdProperty(line)
               if (optCurrentId.isDefined) {
-                successful = recordIdsOfCurrentTable.add(optCurrentId.get)
+                recordIdsOfCurrentTable.add(optCurrentId.get)
+              } else {
+                false
               }
+            } else {
+              false
             }
             if (!successful) {
               throw new ParseException(
@@ -345,9 +344,8 @@ class SimpleFormatParser extends Parser {
   }
 
   override def parse(): TableMap = {
-    var result: TableMap = new TableMapImpl()
-    try {
-      result = parseMap(new BufferedReader(this._input))
+    val result = try {
+      parseMap(new BufferedReader(this._input))
 
     } catch {
       case e: IOException => throw new RuntimeException(e)

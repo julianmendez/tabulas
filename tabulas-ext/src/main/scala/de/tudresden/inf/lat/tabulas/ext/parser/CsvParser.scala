@@ -84,11 +84,13 @@ class CsvParser extends Parser {
 
     val ret: StringBuffer = new StringBuffer()
     Range(0, name.length()).foreach(index => {
-      var ch: Char = name.charAt(index)
-      if (!Character.isLetterOrDigit(ch)) {
-        ch = UnderscoreChar
+      val ch: Char = name.charAt(index)
+      val ch2 = if (Character.isLetterOrDigit(ch)) {
+        ch
+      } else {
+        UnderscoreChar
       }
-      ret.append(ch)
+      ret.append(ch2)
     })
     val result = ret.toString
     result
@@ -153,9 +155,8 @@ class CsvParser extends Parser {
   }
 
   override def parse(): TableMap = {
-    var result: TableMap = new TableMapImpl()
-    try {
-      result = parseMap(new BufferedReader(this._input))
+    val result: TableMap = try {
+      parseMap(new BufferedReader(this._input))
 
     } catch {
       case e: IOException => throw new RuntimeException(e)

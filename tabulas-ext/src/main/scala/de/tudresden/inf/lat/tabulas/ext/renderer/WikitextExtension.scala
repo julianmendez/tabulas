@@ -17,11 +17,10 @@ class WikitextExtension extends Extension {
   val RequiredArguments: Int = 2
 
   override def process(arguments: Seq[String]): Boolean = {
-    var result: Boolean = false
-    if (Objects.isNull(arguments) || arguments.size != RequiredArguments) {
-      result = false
+    val result = if (Objects.isNull(arguments) || arguments.size != RequiredArguments) {
+      false
     } else {
-      try {
+      val res = try {
 
         val inputFileName: String = arguments(0)
         val outputFileName: String = arguments(1)
@@ -31,11 +30,12 @@ class WikitextExtension extends Extension {
           outputFileName))
         val renderer: WikitextRenderer = new WikitextRenderer(output)
         renderer.render(tableMap)
-        result = true
+        true
 
       } catch {
         case e: IOException => throw new RuntimeException(e)
       }
+      res
     }
     result
   }

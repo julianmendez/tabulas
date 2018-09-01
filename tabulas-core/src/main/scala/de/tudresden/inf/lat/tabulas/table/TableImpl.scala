@@ -53,12 +53,11 @@ class TableImpl extends Table {
   }
 
   override def add(record: Record): Boolean = {
-    var result: Boolean = false
-    if (Objects.isNull(record)) {
-      result = false
+    val result = if (Objects.isNull(record)) {
+      false
     } else {
       this._list += record
-      result = true
+      true
     }
     result
   }
@@ -104,14 +103,13 @@ class TableImpl extends Table {
   }
 
   override def equals(obj: Any): Boolean = {
-    var result: Boolean = false
-    obj match {
-      case other: Table => result = getType.equals(other.getType) &&
+    val result = obj match {
+      case other: Table => getType.equals(other.getType) &&
         getPrefixMap.equals(other.getPrefixMap) &&
         getSortingOrder.equals(other.getSortingOrder) &&
         getFieldsWithReverseOrder.equals(other.getFieldsWithReverseOrder) &&
         getRecords.equals(other.getRecords)
-      case _ => result = false
+      case _ => false
     }
     result
   }

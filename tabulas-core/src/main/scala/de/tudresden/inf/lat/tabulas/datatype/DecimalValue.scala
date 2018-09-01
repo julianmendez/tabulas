@@ -26,10 +26,7 @@ class DecimalValue(number: BigDecimal) extends PrimitiveTypeValue {
   }
 
   override def renderAsList(): Seq[String] = {
-    val list = new mutable.ArrayBuffer[String]()
-    list += render()
-    val result = list.toList
-    result
+    List(render())
   }
 
   override def compareTo(other: PrimitiveTypeValue): Int = {
@@ -47,10 +44,9 @@ class DecimalValue(number: BigDecimal) extends PrimitiveTypeValue {
   }
 
   override def equals(obj: Any): Boolean = {
-    var result: Boolean = false
-    obj match {
-      case other: DecimalValue => result = this.number.equals(other.getValue)
-      case _ => result = false
+    val result = obj match {
+      case other: DecimalValue => this.number.equals(other.getValue)
+      case _ => false
     }
     result
   }

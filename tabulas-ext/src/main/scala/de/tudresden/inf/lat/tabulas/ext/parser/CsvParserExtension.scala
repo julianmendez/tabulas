@@ -18,9 +18,8 @@ class CsvParserExtension extends Extension {
   val RequiredArguments: Int = 2
 
   override def process(arguments: Seq[String]): Boolean = {
-    var result: Boolean = false
-    if (Objects.isNull(arguments) || arguments.size != RequiredArguments) {
-      result = false
+    val result = if (Objects.isNull(arguments) || arguments.size != RequiredArguments) {
+      false
     } else {
       try {
 
@@ -32,7 +31,7 @@ class CsvParserExtension extends Extension {
           outputFileName))
         val renderer: SimpleFormatRenderer = new SimpleFormatRenderer(output)
         renderer.render(tableMap)
-        result = true
+        true
 
       } catch {
         case e: IOException => throw new RuntimeException(e)

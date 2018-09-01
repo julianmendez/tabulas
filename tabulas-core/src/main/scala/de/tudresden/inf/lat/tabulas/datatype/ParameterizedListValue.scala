@@ -15,7 +15,9 @@ class ParameterizedListValue(parameter: PrimitiveType)
 
   val Separator: String = " "
 
-  override def getType: PrimitiveType = { new ParameterizedListType(this.parameter) }
+  override def getType: PrimitiveType = {
+    new ParameterizedListType(this.parameter)
+  }
 
   def add(str: String): Unit = {
     this += this.parameter.parse(str)
@@ -40,12 +42,12 @@ class ParameterizedListValue(parameter: PrimitiveType)
   override def renderAsList(): Seq[String] = {
     val list = new mutable.ArrayBuffer[String]()
     this.foreach(elem => list += elem.render())
-    val result: Seq[String] = list.toList
+    val result = list.toList
     result
   }
 
   override def compareTo(obj: PrimitiveTypeValue): Int = {
-    var result: Int = obj match {
+    val result: Int = obj match {
       case other: ParameterizedListValue =>
         val diff: Int = size - other.size
         if (diff == 0) {
@@ -59,7 +61,9 @@ class ParameterizedListValue(parameter: PrimitiveType)
     result
   }
 
-  def getParameter: PrimitiveType = { this.parameter }
+  def getParameter: PrimitiveType = {
+    this.parameter
+  }
 
 }
 

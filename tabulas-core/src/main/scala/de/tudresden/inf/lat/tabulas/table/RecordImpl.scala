@@ -25,11 +25,10 @@ class RecordImpl extends Record {
   }
 
   override def get(key: String): Option[PrimitiveTypeValue] = {
-    var result: Option[PrimitiveTypeValue] = Option.empty
-    if (Objects.isNull(key)) {
-      result = Option.empty
+    val result = if (Objects.isNull(key)) {
+      Option.empty
     } else {
-      result = this._map.get(key)
+      this._map.get(key)
     }
     result
   }
@@ -47,12 +46,11 @@ class RecordImpl extends Record {
   }
 
   override def equals(obj: Any): Boolean = {
-    var result: Boolean = false
-    obj match {
+    val result = obj match {
       case other: Record =>
-        result = getProperties.equals(other.getProperties)
-        result = result && getProperties.forall(property => get(property).equals(other.get(property)))
-      case _ => result = false
+        getProperties.equals(other.getProperties) &&
+          getProperties.forall(property => get(property).equals(other.get(property)))
+      case _ => false
     }
     result
   }

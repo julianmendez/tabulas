@@ -4,8 +4,6 @@ package de.tudresden.inf.lat.tabulas.datatype
 import java.net.{URI, URISyntaxException}
 import java.util.Objects
 
-import scala.collection.mutable
-
 /** This models a URI.
   *
   */
@@ -18,17 +16,16 @@ class URIValue(uri: URI) extends PrimitiveTypeValue {
   }
 
   def getUri: URI = {
-    this.uri
+    uri
   }
 
   def getUriNoLabel: URI = {
     val uriStr: String = this.uri.toASCIIString
     val pos: Int = uriStr.lastIndexOf(SpecialSymbol)
-    var result: URI = this.uri
-    if (pos == -1) {
-      result = this.uri
+    val result: URI = if (pos == -1) {
+      uri
     } else {
-      result = URIValue.createURI(uriStr.substring(0, pos))
+      URIValue.createURI(uriStr.substring(0, pos))
     }
     result
   }
@@ -36,11 +33,10 @@ class URIValue(uri: URI) extends PrimitiveTypeValue {
   def getLabel: String = {
     val uriStr: String = this.uri.toASCIIString
     val pos: Int = uriStr.lastIndexOf(SpecialSymbol)
-    var result: String = ""
-    if (pos == -1) {
-      result = ""
+    val result: String = if (pos == -1) {
+      ""
     } else {
-      result = uriStr.substring(pos + SpecialSymbol.length())
+      uriStr.substring(pos + SpecialSymbol.length())
     }
     result
   }
@@ -50,14 +46,11 @@ class URIValue(uri: URI) extends PrimitiveTypeValue {
   }
 
   override def render(): String = {
-    this.uri.toASCIIString
+    uri.toASCIIString
   }
 
   override def renderAsList(): Seq[String] = {
-    val list = new mutable.ArrayBuffer[String]()
-    list += render()
-    val result: Seq[String] = list.toList
-    result
+    List(render())
   }
 
   override def compareTo(other: PrimitiveTypeValue): Int = {
@@ -65,14 +58,13 @@ class URIValue(uri: URI) extends PrimitiveTypeValue {
   }
 
   override def hashCode(): Int = {
-    this.uri.hashCode()
+    uri.hashCode()
   }
 
   override def equals(obj: Any): Boolean = {
-    var result: Boolean = false
-    obj match {
-      case other: URIValue => result = getUri.equals(other.getUri)
-      case _ => result = false
+    val result = obj match {
+      case other: URIValue => getUri.equals(other.getUri)
+      case _ => false
     }
     result
   }
@@ -116,9 +108,8 @@ object URIValue {
   }
 
   def createURI(uriStr: String): URI = {
-    var result: URI = URI.create("")
-    try {
-      result = new URI(uriStr)
+    val result: URI = try {
+      new URI(uriStr)
     } catch {
       case e: URISyntaxException => throw new ParseException("Invalid URI '" + uriStr + "'.", e)
     }

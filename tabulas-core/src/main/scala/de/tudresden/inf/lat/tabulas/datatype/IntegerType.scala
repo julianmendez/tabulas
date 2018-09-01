@@ -29,10 +29,9 @@ class IntegerType extends PrimitiveType {
   }
 
   override def equals(obj: Any): Boolean = {
-    var result = false
-    obj match {
-      case other: IntegerType => result = true
-      case _ => result = false
+    val result = obj match {
+      case other: IntegerType => true
+      case _ => false
     }
     result
   }

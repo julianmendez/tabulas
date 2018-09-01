@@ -48,11 +48,10 @@ class ParameterizedListType extends PrimitiveType {
   }
 
   override def equals(obj: Any): Boolean = {
-    var result: Boolean = false
-    obj match {
+    val result = obj match {
       case other: ParameterizedListType =>
-        result = this._parameter.equals(other._parameter)
-      case _ => result = false
+        this._parameter.equals(other._parameter)
+      case _ => false
     }
     result
   }

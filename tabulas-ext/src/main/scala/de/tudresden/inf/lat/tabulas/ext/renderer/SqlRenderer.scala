@@ -45,48 +45,45 @@ class SqlRenderer extends Renderer {
   }
 
   def writeAsStringIfNotEmpty(output: UncheckedWriter, field: String, value: PrimitiveTypeValue): Boolean = {
-    var result: Boolean = false
-    if (Objects.nonNull(field) && !field.trim().isEmpty && Objects.nonNull(value)
+    val result = if (Objects.nonNull(field) && !field.trim().isEmpty && Objects.nonNull(value)
       && !value.toString.trim().isEmpty) {
       output.write(Apostrophe)
       output.write(sanitize(value.toString))
       output.write(Apostrophe)
-      result = true
+      true
     } else {
       output.write(Null)
-      result = false
+      false
     }
     result
   }
 
   def writeParameterizedListIfNotEmpty(output: UncheckedWriter, field: String, list: ParameterizedListValue): Boolean = {
-    var result: Boolean = false
-    if (Objects.nonNull(list) && !list.isEmpty) {
+    val result = if (Objects.nonNull(list) && !list.isEmpty) {
       output.write(Apostrophe)
       list.foreach(value => {
         output.write(sanitize(value.toString))
         output.write(ParserConstant.Space)
       })
       output.write(Apostrophe)
-      result = true
+      true
     } else {
       output.write(Null)
-      result = false
+      false
     }
     result
   }
 
   def writeLinkIfNotEmpty(output: UncheckedWriter, prefix: String, link: URIValue): Boolean = {
-    var result: Boolean = false
-    if (Objects.nonNull(link) && !link.isEmpty) {
+    val result = if (Objects.nonNull(link) && !link.isEmpty) {
       output.write(prefix)
       output.write(Apostrophe)
       output.write(sanitize(link.toString))
       output.write(Apostrophe)
-      result = true
+      true
     } else {
       output.write(Null)
-      result = false
+      false
     }
     result
   }
