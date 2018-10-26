@@ -238,9 +238,9 @@ class CalendarParser extends Parser {
     map.put(EventTypeLabel, new TableImpl(SimplifiedCompositeType(EventTypeFields)))
     map.put(AlarmTypeLabel, new TableImpl(SimplifiedCompositeType(AlarmTypeFields)))
 
-    var currentTable: TableImpl = new TableImpl()
+    var currentTable = new TableImpl()
     var currentRecord: Record = new RecordImpl()
-    var currentTableId: String = ""
+    var currentTableId = ""
 
     val tableIdStack: MyStack[String] = new MyStack[String]()
     val recordStack: MyStack[Record] = new MyStack[Record]()

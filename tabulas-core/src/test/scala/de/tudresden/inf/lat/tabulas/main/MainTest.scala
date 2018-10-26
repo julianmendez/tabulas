@@ -38,26 +38,26 @@ class MainTest extends FunSuite {
     } else {
       value.renderAsList().size
     }
-    val result: StringValue = new StringValue("" + size)
+    val result = new StringValue("" + size)
     result
   }
 
   def readFile(fileName: String): String = {
-    val sb: StringBuilder = new StringBuilder()
-    val reader: BufferedReader = new BufferedReader(new FileReader(getPath(fileName)))
+    val sb = new StringBuilder()
+    val reader = new BufferedReader(new FileReader(getPath(fileName)))
     reader.lines().toArray().foreach(obj => {
       val line = obj.asInstanceOf[String]
       sb.append(line + NewLine)
     })
     reader.close()
-    val result: String = sb.toString
+    val result = sb.toString
     result
   }
 
   def assertContent(tableMap: TableMap, fileName: String): Unit = {
     // Store the table map
-    val writer: StringWriter = new StringWriter()
-    val renderer: SimpleFormatRenderer = new SimpleFormatRenderer(writer)
+    val writer = new StringWriter()
+    val renderer = new SimpleFormatRenderer(writer)
     renderer.render(tableMap)
 
     // Read the expected output

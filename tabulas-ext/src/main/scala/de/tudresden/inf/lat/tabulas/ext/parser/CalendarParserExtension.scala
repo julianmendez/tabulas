@@ -26,13 +26,13 @@ class CalendarParserExtension extends Extension {
     } else {
       try {
 
-        val inputFileName: String = arguments(0)
-        val outputFileName: String = arguments(1)
+        val inputFileName = arguments(0)
+        val outputFileName = arguments(1)
         val tableMap: TableMap = new CalendarParser(new FileReader(
           inputFileName)).parse()
         val output: BufferedWriter = new BufferedWriter(new FileWriter(
           outputFileName))
-        val renderer: SimpleFormatRenderer = new SimpleFormatRenderer(output)
+        val renderer = new SimpleFormatRenderer(output)
         renderer.render(tableMap)
         true
 

@@ -42,7 +42,7 @@ class ConsoleStarter {
     }
     arguments ++= args.toList
 
-    val manager: ExtensionManager = new ExtensionManager(extensions)
+    val manager = new ExtensionManager(extensions)
     try {
       manager.process(arguments)
     } catch {

@@ -53,7 +53,7 @@ class CompositeTypeImpl extends CompositeType {
   }
 
   override def toString: String = {
-    val sbuf: StringBuffer = new StringBuffer()
+    val sbuf = new StringBuffer()
     this._fields.foreach(field => sbuf.append(field + ":" + this._fieldType.get(field) + " "))
     val result: String = sbuf.toString
     result

@@ -43,7 +43,7 @@ class ExtensionManager extends Extension {
 
   override def process(arguments: Seq[String]): Boolean = {
     Objects.requireNonNull(arguments)
-    val result: Boolean = if (arguments.size < RequiredArguments) {
+    val result = if (arguments.size < RequiredArguments) {
       throw new ExtensionException("No extension name was given.")
     } else {
       val command: String = arguments(0)

@@ -115,7 +115,7 @@ class UncheckedWriterImpl extends UncheckedWriter {
   }
 
   override def equals(obj: Any): Boolean = {
-    val result: Boolean = obj match {
+    val result = obj match {
       case other: UncheckedWriter =>
         asWriter().equals(other.asWriter())
       case _ =>

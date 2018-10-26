@@ -30,7 +30,7 @@ class IntegerValue(number: BigInteger) extends PrimitiveTypeValue {
   }
 
   override def compareTo(other: PrimitiveTypeValue): Int = {
-    val result: Int = other match {
+    val result = other match {
       case otherValue: IntegerValue =>
         this.number.compareTo(otherValue.getValue)
       case _ =>

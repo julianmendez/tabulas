@@ -20,9 +20,9 @@ class URIValue(uri: URI) extends PrimitiveTypeValue {
   }
 
   def getUriNoLabel: URI = {
-    val uriStr: String = this.uri.toASCIIString
+    val uriStr = this.uri.toASCIIString
     val pos: Int = uriStr.lastIndexOf(SpecialSymbol)
-    val result: URI = if (pos == -1) {
+    val result = if (pos == -1) {
       uri
     } else {
       URIValue.createURI(uriStr.substring(0, pos))
@@ -31,7 +31,7 @@ class URIValue(uri: URI) extends PrimitiveTypeValue {
   }
 
   def getLabel: String = {
-    val uriStr: String = this.uri.toASCIIString
+    val uriStr = this.uri.toASCIIString
     val pos: Int = uriStr.lastIndexOf(SpecialSymbol)
     val result: String = if (pos == -1) {
       ""
@@ -108,7 +108,7 @@ object URIValue {
   }
 
   def createURI(uriStr: String): URI = {
-    val result: URI = try {
+    val result = try {
       new URI(uriStr)
     } catch {
       case e: URISyntaxException => throw new ParseException("Invalid URI '" + uriStr + "'.", e)

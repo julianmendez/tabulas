@@ -30,7 +30,7 @@ class DecimalValue(number: BigDecimal) extends PrimitiveTypeValue {
   }
 
   override def compareTo(other: PrimitiveTypeValue): Int = {
-    val result: Int = other match {
+    val result = other match {
       case otherValue: DecimalValue =>
         this.number.compareTo(otherValue.getValue)
       case _ =>

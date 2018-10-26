@@ -29,8 +29,8 @@ class NormalizationTest extends FunSuite {
   def testNormalizationOfFile(inputFileName: String, expectedFileName: String): Unit = {
     val tableMap: TableMap = new SimpleFormatParser(new FileReader(getPath(inputFileName))).parse()
     val expectedResult: String = (new MainTest()).readFile(expectedFileName)
-    val writer: StringWriter = new StringWriter()
-    val renderer: SimpleFormatRenderer = new SimpleFormatRenderer(writer)
+    val writer = new StringWriter()
+    val renderer = new SimpleFormatRenderer(writer)
     renderer.render(tableMap)
     assert(expectedResult === writer.toString)
   }

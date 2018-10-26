@@ -74,8 +74,8 @@ class CsvRenderer extends Renderer {
   }
 
   def render(output: UncheckedWriter, record: Record, fields: Seq[String]): Unit = {
-    var first: Boolean = true
-    for (field: String <- fields) {
+    var first = true
+    fields.foreach(field => {
       if (first) {
         first = false
       } else {
@@ -96,7 +96,7 @@ class CsvRenderer extends Renderer {
       } else {
         output.write(Null)
       }
-    }
+    })
     output.write(ParserConstant.NewLine)
   }
 
@@ -120,8 +120,8 @@ class CsvRenderer extends Renderer {
   }
 
   def renderTypeDefinition(output: UncheckedWriter, table: Table): Unit = {
-    var first: Boolean = true
-    for (field: String <- table.getType.getFields) {
+    var first = true
+    table.getType.getFields.foreach(field => {
       if (first) {
         first = false
       } else {
@@ -130,7 +130,7 @@ class CsvRenderer extends Renderer {
       output.write(Quotes)
       output.write(field)
       output.write(Quotes)
-    }
+    })
     output.write(ParserConstant.NewLine)
   }
 

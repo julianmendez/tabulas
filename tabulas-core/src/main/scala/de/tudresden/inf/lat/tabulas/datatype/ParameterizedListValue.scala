@@ -24,18 +24,18 @@ class ParameterizedListValue(parameter: PrimitiveType)
   }
 
   override def render(): String = {
-    val sbuf: StringBuffer = new StringBuffer()
-    val list: Seq[String] = renderAsList()
-    var first: Boolean = true
-    for (str: String <- list) {
+    val sbuf= new StringBuffer()
+    val list = renderAsList()
+    var first= true
+    list.foreach(str => {
       if (first) {
         first = false
       } else {
         sbuf.append(Separator)
       }
       sbuf.append(str)
-    }
-    val result: String = sbuf.toString
+    })
+    val result = sbuf.toString
     result
   }
 
@@ -47,7 +47,7 @@ class ParameterizedListValue(parameter: PrimitiveType)
   }
 
   override def compareTo(obj: PrimitiveTypeValue): Int = {
-    val result: Int = obj match {
+    val result = obj match {
       case other: ParameterizedListValue =>
         val diff: Int = size - other.size
         if (diff == 0) {

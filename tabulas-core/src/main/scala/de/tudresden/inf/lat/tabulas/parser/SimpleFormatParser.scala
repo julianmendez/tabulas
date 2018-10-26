@@ -182,7 +182,7 @@ class SimpleFormatParser extends Parser {
   }
 
   def getCleanLine(line: String): String = {
-    val trimmedLine: String = line.trim()
+    val trimmedLine = line.trim()
     val result = if (isMultiLine(line)) {
       trimmedLine.substring(0, trimmedLine.length() - ParserConstant.LineContinuationSymbol.length()).trim()
     } else {
@@ -271,8 +271,8 @@ class SimpleFormatParser extends Parser {
     val mapOfRecordIdsOfTables = new mutable.TreeMap[String, mutable.TreeSet[String]]()
 
     var line: String = ""
-    var currentTable: TableImpl = new TableImpl()
-    var recordIdsOfCurrentTable: mutable.TreeSet[String] = mutable.TreeSet.empty
+    var currentTable = new TableImpl()
+    var recordIdsOfCurrentTable = mutable.TreeSet.empty
     var optCurrentId: Option[String] = Option.empty
     var record: Record = new RecordImpl()
     var lineCounter: Int = 0
@@ -338,7 +338,7 @@ class SimpleFormatParser extends Parser {
 
     }
 
-    val result: TableMapImpl = new TableMapImpl()
+    val result = new TableMapImpl()
     mapOfTables.keySet.foreach(key => result.put(key, mapOfTables.get(key).get))
     result
   }

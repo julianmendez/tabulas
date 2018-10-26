@@ -22,8 +22,8 @@ class DefaultExtension extends Extension {
     } else {
       try {
 
-        val inputFileName: String = arguments(0)
-        val outputFileName: String = arguments(1)
+        val inputFileName= arguments(0)
+        val outputFileName = arguments(1)
         val tableMap: TableMap = new SimpleFormatParser(new FileReader(
           inputFileName)).parse()
         val output: BufferedWriter = new BufferedWriter(new FileWriter(

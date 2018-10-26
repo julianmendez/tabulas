@@ -34,13 +34,13 @@ class PrefixMapImpl extends PrefixMap {
   }
 
   override def getPrefixFor(uri: URI): Option[URI] = {
-    val uriStr: String = uri.toASCIIString
+    val uriStr = uri.toASCIIString
     val result: Option[URI] = _prefixMap.keySet.find(e => uriStr.startsWith(_prefixMap.get(e).get.toASCIIString))
     result
   }
 
   override def getWithoutPrefix(uri: URI): URI = {
-    var result: URI = uri
+    var result = uri
     val uriStr = uri.toASCIIString
     if (uriStr.startsWith(PrefixAmpersand)) {
       val pos = uriStr.indexOf(PrefixSemicolon, PrefixAmpersand.length())

@@ -27,8 +27,8 @@ class ParameterizedListType extends PrimitiveType {
   }
 
   override def parse(str: String): ParameterizedListValue = {
-    val result: ParameterizedListValue = new ParameterizedListValue(this._parameter)
-    val stok: StringTokenizer = new StringTokenizer(str)
+    val result = new ParameterizedListValue(this._parameter)
+    val stok = new StringTokenizer(str)
     while (stok.hasMoreTokens) {
       result += this._parameter.parse(stok.nextToken())
     }

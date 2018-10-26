@@ -29,7 +29,7 @@ class StringType extends PrimitiveType {
   }
 
   override def equals(obj: Any): Boolean = {
-    val result: Boolean = obj match {
+    val result = obj match {
       case other: StringType => true
       case _ => false
     }

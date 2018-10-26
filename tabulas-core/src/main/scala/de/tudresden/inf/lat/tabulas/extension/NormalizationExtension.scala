@@ -23,8 +23,8 @@ class NormalizationExtension extends Extension {
     } else {
       try {
 
-        val inputFileName: String = arguments(0)
-        val outputFileName: String = inputFileName
+        val inputFileName = arguments(0)
+        val outputFileName = inputFileName
         val tableMap: TableMap = new SimpleFormatParser(new FileReader(
           inputFileName)).parse()
         val output: BufferedWriter = new BufferedWriter(new FileWriter(
