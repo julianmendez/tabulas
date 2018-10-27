@@ -104,11 +104,11 @@ class CalendarParser extends Parser {
 
   def getKey(line: String): Option[String] = {
     val result = if (Objects.isNull(line)) {
-      Option.empty
+      None
     } else {
       val pos: Int = line.indexOf(ColonChar)
       val res = if (pos == -1) {
-        Option.apply(line)
+        Some(line)
       } else {
         val pos2: Int = line.indexOf(SemicolonChar)
         val lastPos = if (pos2 >= 0 && pos2 < pos) {
@@ -116,7 +116,7 @@ class CalendarParser extends Parser {
         } else {
           pos
         }
-        Option.apply(line.substring(0, lastPos).trim())
+        Some(line.substring(0, lastPos).trim())
       }
       res
     }
@@ -125,13 +125,13 @@ class CalendarParser extends Parser {
 
   def getValue(line: String): Option[String] = {
     var result = if (Objects.isNull(line)) {
-      Option.empty
+      None
     } else {
       val pos: Int = line.indexOf(ColonChar)
       val res = if (pos == -1) {
-        Option.apply("")
+        Some("")
       } else {
-        Option.apply(line.substring(pos + 1, line.length()).trim())
+        Some(line.substring(pos + 1, line.length()).trim())
       }
       res
     }

@@ -40,13 +40,13 @@ class SimpleFormatParser extends Parser {
 
   def getKey(line: String): Option[String] = {
     val result = if (Objects.isNull(line)) {
-      Option.empty
+      None
     } else {
       val pos: Int = line.indexOf(ParserConstant.EqualsSign)
       val res = if (pos == -1) {
-        Option.apply(line)
+        Some(line)
       } else {
-        Option.apply(line.substring(0, pos).trim())
+        Some(line.substring(0, pos).trim())
       }
       res
     }
@@ -61,13 +61,13 @@ class SimpleFormatParser extends Parser {
 
   def getValue(line: String): Option[String] = {
     val result = if (Objects.isNull(line)) {
-      Option.empty
+      None
     } else {
       val pos: Int = line.indexOf(ParserConstant.EqualsSign)
       val res = if (pos == -1) {
-        Option.apply("")
+        Some("")
       } else {
-        Option.apply(line.substring(pos + ParserConstant.EqualsSign.length(), line.length()).trim())
+        Some(line.substring(pos + ParserConstant.EqualsSign.length(), line.length()).trim())
       }
       res
     }
@@ -234,9 +234,9 @@ class SimpleFormatParser extends Parser {
     val optKey: Option[String] = getKey(line)
     val optValueStr: Option[String] = getValue(line)
     val result = if (optKey.isDefined && optValueStr.isDefined && optKey.get.equals(ParserConstant.IdKeyword)) {
-      Option.apply(optValueStr.get)
+      Some(optValueStr.get)
     } else {
-      Option.empty
+      None
     }
     result
   }
@@ -274,7 +274,7 @@ class SimpleFormatParser extends Parser {
     var line: String = ""
     var currentTable = new TableImpl()
     var recordIdsOfCurrentTable = mutable.TreeSet.empty
-    var optCurrentId: Option[String] = Option.empty
+    var optCurrentId: Option[String] = None
     var record: Record = new RecordImpl()
     var lineCounter: Int = 0
     var isDefiningType: Boolean = false
@@ -311,7 +311,7 @@ class SimpleFormatParser extends Parser {
           isDefiningType = false
           record = new RecordImpl()
           currentTable.add(record)
-          optCurrentId = Option.empty
+          optCurrentId = None
 
         } else {
           parseProperty(line, currentTable, recordIdsOfCurrentTable, record, lineCounter)

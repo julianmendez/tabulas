@@ -26,7 +26,7 @@ class RecordImpl extends Record {
 
   override def get(key: String): Option[PrimitiveTypeValue] = {
     val result = if (Objects.isNull(key)) {
-      Option.empty
+      None
     } else {
       this._map.get(key)
     }
