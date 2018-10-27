@@ -3,7 +3,6 @@ package de.tudresden.inf.lat.tabulas.renderer
 
 import java.io.{OutputStreamWriter, Writer}
 
-import de.tudresden.inf.lat.tabulas.datatype.Record
 import de.tudresden.inf.lat.tabulas.parser.ParserConstant
 import de.tudresden.inf.lat.tabulas.table.{Table, TableMap}
 

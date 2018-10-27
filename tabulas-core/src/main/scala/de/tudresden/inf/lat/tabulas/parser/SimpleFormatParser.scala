@@ -5,8 +5,9 @@ import java.io.{BufferedReader, IOException, InputStreamReader, Reader}
 import java.net.{URI, URISyntaxException}
 import java.util.{Objects, StringTokenizer}
 
-import de.tudresden.inf.lat.tabulas.datatype._
-import de.tudresden.inf.lat.tabulas.table._
+import de.tudresden.inf.lat.tabulas.datatype.{CompositeType, CompositeTypeImpl, ParameterizedListValue, ParseException}
+import de.tudresden.inf.lat.tabulas.datatype.{PrimitiveTypeFactory, PrimitiveTypeValue, Record, StringValue, URIType, URIValue}
+import de.tudresden.inf.lat.tabulas.table.{PrefixMap, PrefixMapImpl, RecordImpl, TableImpl, TableMap, TableMapImpl}
 
 import scala.collection.mutable
 

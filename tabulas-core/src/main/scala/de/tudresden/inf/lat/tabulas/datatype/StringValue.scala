@@ -4,7 +4,6 @@ package de.tudresden.inf.lat.tabulas.datatype
 /** This models a string value.
   *
   */
-
 class StringValue(str: String) extends PrimitiveTypeValue {
 
   override def getType: PrimitiveType = {

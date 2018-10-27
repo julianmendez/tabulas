@@ -4,7 +4,8 @@ package de.tudresden.inf.lat.tabulas.ext.renderer
 import java.io.{OutputStreamWriter, Writer}
 import java.util.Objects
 
-import de.tudresden.inf.lat.tabulas.datatype._
+import de.tudresden.inf.lat.tabulas.datatype.{ParameterizedListValue, PrimitiveTypeValue, Record, StringType, StringValue}
+import de.tudresden.inf.lat.tabulas.datatype.{URIType, URIValue}
 import de.tudresden.inf.lat.tabulas.renderer.{Renderer, UncheckedWriter, UncheckedWriterImpl}
 import de.tudresden.inf.lat.tabulas.table.{Table, TableMap}
 

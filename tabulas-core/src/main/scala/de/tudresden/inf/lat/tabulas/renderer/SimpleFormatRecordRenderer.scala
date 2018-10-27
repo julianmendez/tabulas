@@ -5,7 +5,7 @@ import java.io.{OutputStreamWriter, Writer}
 import java.net.URI
 import java.util.Objects
 
-import de.tudresden.inf.lat.tabulas.datatype._
+import de.tudresden.inf.lat.tabulas.datatype.{ParameterizedListValue, PrimitiveTypeValue, Record, URIType}
 import de.tudresden.inf.lat.tabulas.parser.ParserConstant
 import de.tudresden.inf.lat.tabulas.table.{PrefixMap, PrefixMapImpl}
 

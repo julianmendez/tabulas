@@ -3,7 +3,8 @@ package de.tudresden.inf.lat.tabulas.ext.parser
 import java.io.{BufferedReader, IOException, InputStreamReader, Reader}
 import java.util.Objects
 
-import de.tudresden.inf.lat.tabulas.datatype._
+import de.tudresden.inf.lat.tabulas.datatype.{CompositeType, ParseException, PrimitiveTypeFactory, PrimitiveTypeValue}
+import de.tudresden.inf.lat.tabulas.datatype.{Record, SimplifiedCompositeType, StringValue}
 import de.tudresden.inf.lat.tabulas.parser.Parser
 import de.tudresden.inf.lat.tabulas.table.{RecordImpl, TableImpl, TableMap, TableMapImpl}
 
