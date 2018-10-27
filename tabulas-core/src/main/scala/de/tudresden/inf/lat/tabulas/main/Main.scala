@@ -1,8 +1,6 @@
 package de.tudresden.inf.lat.tabulas.main
 
-import de.tudresden.inf.lat.tabulas.extension.{DefaultExtension, Extension, NormalizationExtension}
-
-import scala.collection.mutable
+import de.tudresden.inf.lat.tabulas.extension.{DefaultExtension, NormalizationExtension}
 
 /** This is the main class.
   */
@@ -13,9 +11,10 @@ object Main {
     * @param args console arguments
     */
   def main(args: Array[String]): Unit = {
-    val extensions = new mutable.ArrayBuffer[Extension]()
-    extensions += new DefaultExtension()
-    extensions += new NormalizationExtension()
+    val extensions = Seq(
+      DefaultExtension(),
+      NormalizationExtension()
+    )
 
     val instance: ConsoleStarter = new ConsoleStarter()
     instance.run(extensions, args)

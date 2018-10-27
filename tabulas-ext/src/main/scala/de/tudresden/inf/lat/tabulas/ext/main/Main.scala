@@ -2,10 +2,8 @@ package de.tudresden.inf.lat.tabulas.ext.main
 
 import de.tudresden.inf.lat.tabulas.ext.parser.{CalendarParserExtension, CsvParserExtension}
 import de.tudresden.inf.lat.tabulas.ext.renderer.{CsvExtension, HtmlExtension, SqlExtension, WikitextExtension}
-import de.tudresden.inf.lat.tabulas.extension.{DefaultExtension, Extension, NormalizationExtension}
+import de.tudresden.inf.lat.tabulas.extension.{DefaultExtension, NormalizationExtension}
 import de.tudresden.inf.lat.tabulas.main.ConsoleStarter
-
-import scala.collection.mutable
 
 
 /** This is the main class.
@@ -17,15 +15,16 @@ object Main {
     * @param args console arguments
     */
   def main(args: Array[String]): Unit = {
-    val extensions = new mutable.ArrayBuffer[Extension]()
-    extensions += new DefaultExtension()
-    extensions += new CsvParserExtension()
-    extensions += new CalendarParserExtension()
-    extensions += new WikitextExtension()
-    extensions += new SqlExtension()
-    extensions += new CsvExtension()
-    extensions += new HtmlExtension()
-    extensions += new NormalizationExtension()
+    val extensions = Seq(
+      DefaultExtension(),
+      CsvParserExtension(),
+      CalendarParserExtension(),
+      WikitextExtension(),
+      SqlExtension(),
+      CsvExtension(),
+      HtmlExtension(),
+      NormalizationExtension()
+    )
 
     val instance: ConsoleStarter = new ConsoleStarter()
     instance.run(extensions, args)
