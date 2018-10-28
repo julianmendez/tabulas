@@ -55,7 +55,7 @@ class HtmlRenderer extends Renderer {
 
   def writeParameterizedListIfNotEmpty(output: UncheckedWriter, list: ParameterizedListValue): Boolean = {
     val result = if (Objects.nonNull(list)) {
-      list.foreach(value => {
+      list.getList.foreach(value => {
         if (value.getType.equals(new URIType())) {
           val link: URIValue = (new URIType()).castInstance(value)
           writeLinkIfNotEmpty(output, link)

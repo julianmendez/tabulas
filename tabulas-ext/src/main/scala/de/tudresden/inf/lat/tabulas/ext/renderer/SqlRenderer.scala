@@ -61,7 +61,7 @@ class SqlRenderer extends Renderer {
   def writeParameterizedListIfNotEmpty(output: UncheckedWriter, field: String, list: ParameterizedListValue): Boolean = {
     val result = if (Objects.nonNull(list) && !list.isEmpty) {
       output.write(Apostrophe)
-      list.foreach(value => {
+      list.getList.foreach(value => {
         output.write(sanitize(value.toString))
         output.write(ParserConstant.Space)
       })

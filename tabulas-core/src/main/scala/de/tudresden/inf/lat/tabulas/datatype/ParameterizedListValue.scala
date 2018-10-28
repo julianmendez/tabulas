@@ -3,15 +3,11 @@ package de.tudresden.inf.lat.tabulas.datatype
 
 import java.util.Objects
 
-import scala.collection.mutable
-
 /** This models a list of elements with a parameterized type.
   *
   */
-class ParameterizedListValue(parameter: PrimitiveType)
-  extends mutable.ArrayBuffer[PrimitiveTypeValue] with PrimitiveTypeValue {
-
-  val serialVersionUID: Long = -8983139857000842808L
+class ParameterizedListValue(parameter: PrimitiveType, list: Seq[PrimitiveTypeValue])
+  extends PrimitiveTypeValue {
 
   val Separator: String = " "
 
@@ -19,37 +15,18 @@ class ParameterizedListValue(parameter: PrimitiveType)
     new ParameterizedListType(this.parameter)
   }
 
-  def add(str: String): Unit = {
-    this += this.parameter.parse(str)
-  }
-
   override def render(): String = {
-    val sbuf= new StringBuffer()
-    val list = renderAsList()
-    var first= true
-    list.foreach(str => {
-      if (first) {
-        first = false
-      } else {
-        sbuf.append(Separator)
-      }
-      sbuf.append(str)
-    })
-    val result = sbuf.toString
-    result
+    renderAsList().mkString(Separator)
   }
 
   override def renderAsList(): Seq[String] = {
-    val list = new mutable.ArrayBuffer[String]()
-    this.foreach(elem => list += elem.render())
-    val result = list.toList
-    result
+    list.map(_.render())
   }
 
   override def compareTo(obj: PrimitiveTypeValue): Int = {
     val result = obj match {
       case other: ParameterizedListValue =>
-        val diff: Int = size - other.size
+        val diff = getList.length - other.getList.length
         if (diff == 0) {
           toString.compareTo(other.toString)
         } else {
@@ -61,8 +38,16 @@ class ParameterizedListValue(parameter: PrimitiveType)
     result
   }
 
+  override def isEmpty: Boolean = {
+    getList.isEmpty
+  }
+
   def getParameter: PrimitiveType = {
-    this.parameter
+    parameter
+  }
+
+  def getList: Seq[PrimitiveTypeValue] = {
+    list
   }
 
 }
@@ -75,7 +60,17 @@ object ParameterizedListValue {
     */
   def apply(parameter: PrimitiveType): ParameterizedListValue = {
     Objects.requireNonNull(parameter)
-    new ParameterizedListValue(parameter)
+    new ParameterizedListValue(parameter, Seq())
+  }
+
+  /** Constructs a new parameterized list value.
+    *
+    * @param parameter primitive type
+    * @param list      list
+    */
+  def apply(parameter: PrimitiveType, list: Seq[PrimitiveTypeValue]): ParameterizedListValue = {
+    Objects.requireNonNull(parameter)
+    new ParameterizedListValue(parameter, list)
   }
 
   /** Constructs a new parameterized list value using another parameterized
@@ -85,7 +80,7 @@ object ParameterizedListValue {
     */
   def apply(other: ParameterizedListValue): ParameterizedListValue = {
     Objects.requireNonNull(other)
-    new ParameterizedListValue(other.getParameter)
+    new ParameterizedListValue(other.getParameter, other.getList)
   }
 
 }

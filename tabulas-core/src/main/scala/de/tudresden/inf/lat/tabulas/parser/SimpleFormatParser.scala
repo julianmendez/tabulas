@@ -158,12 +158,11 @@ class SimpleFormatParser extends Parser {
           } else if (result.isInstanceOf[ParameterizedListValue]) {
             val list: ParameterizedListValue = result.asInstanceOf[ParameterizedListValue]
             if (list.getParameter.equals(new URIType())) {
-              val newList = new ParameterizedListValue(new URIType())
-              list.foreach(elem => {
+              val newList = list.getList.map(elem => {
                 val uri: URIValue = elem.asInstanceOf[URIValue]
-                newList += new URIValue(prefixMap.getWithoutPrefix(uri.getUri))
+                new URIValue(prefixMap.getWithoutPrefix(uri.getUri))
               })
-              result = newList
+              result = ParameterizedListValue(new URIType(), newList)
             }
           }
 

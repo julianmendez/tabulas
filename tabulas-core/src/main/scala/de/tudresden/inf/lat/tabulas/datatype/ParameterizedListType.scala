@@ -18,11 +18,9 @@ class ParameterizedListType(parameter: PrimitiveType) extends PrimitiveType {
   }
 
   override def parse(str: String): ParameterizedListValue = {
-    val elements = str.split("\\s+")
+    val list = str.split("\\s+")
       .map(part => parameter.parse(part))
-    val result = new ParameterizedListValue(parameter)
-    elements.foreach(element => result += element)
-    result
+    ParameterizedListValue(parameter, list)
   }
 
   def getParameter: PrimitiveType = {
