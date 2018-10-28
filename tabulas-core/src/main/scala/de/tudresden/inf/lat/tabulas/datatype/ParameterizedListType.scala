@@ -1,25 +1,16 @@
 
 package de.tudresden.inf.lat.tabulas.datatype
 
-import java.util.{Objects, StringTokenizer}
-
 /** This models the type of a list of elements with a parameterized type.
   *
   */
-class ParameterizedListType extends PrimitiveType {
+class ParameterizedListType(parameter: PrimitiveType) extends PrimitiveType {
 
   val TypePrefix: String = "List_"
 
-  private var _parameter: PrimitiveType = _
-
-  def this(parameter: PrimitiveType) = {
-    this()
-    Objects.requireNonNull(parameter)
-    this._parameter = parameter
-  }
 
   override def getTypeName: String = {
-    TypePrefix + this._parameter.getTypeName
+    TypePrefix + parameter.getTypeName
   }
 
   override def isList: Boolean = {
@@ -27,16 +18,15 @@ class ParameterizedListType extends PrimitiveType {
   }
 
   override def parse(str: String): ParameterizedListValue = {
-    val result = new ParameterizedListValue(this._parameter)
-    val stok = new StringTokenizer(str)
-    while (stok.hasMoreTokens) {
-      result += this._parameter.parse(stok.nextToken())
-    }
+    val elements = str.split("\\s+")
+      .map(part => parameter.parse(part))
+    val result = new ParameterizedListValue(parameter)
+    elements.foreach(element => result += element)
     result
   }
 
   def getParameter: PrimitiveType = {
-    this._parameter
+    parameter
   }
 
   def castInstance(value: PrimitiveTypeValue): ParameterizedListValue = {
@@ -44,13 +34,12 @@ class ParameterizedListType extends PrimitiveType {
   }
 
   override def hashCode(): Int = {
-    this._parameter.hashCode()
+    parameter.hashCode()
   }
 
   override def equals(obj: Any): Boolean = {
     val result = obj match {
-      case other: ParameterizedListType =>
-        this._parameter.equals(other._parameter)
+      case other: ParameterizedListType => getParameter.equals(other.getParameter)
       case _ => false
     }
     result
@@ -59,11 +48,5 @@ class ParameterizedListType extends PrimitiveType {
   override def toString: String = {
     getTypeName
   }
-
-}
-
-object ParameterizedListType {
-
-  def apply(): ParameterizedListType = new ParameterizedListType
 
 }
