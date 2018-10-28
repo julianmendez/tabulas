@@ -1,5 +1,9 @@
+
+package de.tudresden.inf.lat.tabulas
+
 /** Tabulas
   * parser
   */
-package de.tudresden.inf.lat.tabulas.parser
+package object parser {
+}
 

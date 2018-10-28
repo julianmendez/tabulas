@@ -1,5 +1,9 @@
+
+package de.tudresden.inf.lat.tabulas
+
 /** Tabulas
   * main
   */
-package de.tudresden.inf.lat.tabulas.main
+package object main {
+}
 

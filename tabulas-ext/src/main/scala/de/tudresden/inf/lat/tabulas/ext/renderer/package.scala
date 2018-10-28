@@ -1,5 +1,9 @@
+
+package de.tudresden.inf.lat.tabulas.ext
+
 /** Tabulas
   * renderer
   */
-package de.tudresden.inf.lat.tabulas.ext.renderer
+package object renderer {
+}
 

@@ -1,4 +1,8 @@
+
+package de.tudresden.inf.lat
+
 /** Tabulas
   */
-package de.tudresden.inf.lat.tabulas
+package object tabulas {
+}
 

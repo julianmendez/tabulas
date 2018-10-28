@@ -1,5 +1,9 @@
+
+package de.tudresden.inf.lat.tabulas
+
 /** Tabulas
   * data types
   */
-package de.tudresden.inf.lat.tabulas.datatype
+package object datatype {
+}
 
