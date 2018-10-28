@@ -32,7 +32,7 @@ class ExtensionManager extends Extension {
       extensions.foreach(extension => {
         val key: String = extension.getExtensionName
         if (this._extensionMap.get(key).isDefined) {
-          throw new ExtensionException(
+          throw ExtensionException(
             "Only one implementation is allowed for each extension, and '"
               + key + "' was at least twice.")
         }
@@ -44,7 +44,7 @@ class ExtensionManager extends Extension {
   override def process(arguments: Seq[String]): Boolean = {
     Objects.requireNonNull(arguments)
     val result = if (arguments.size < RequiredArguments) {
-      throw new ExtensionException("No extension name was given.")
+      throw ExtensionException("No extension name was given.")
     } else {
       val command: String = arguments(0)
       val newArguments = new mutable.ArrayBuffer[String]()
@@ -52,10 +52,9 @@ class ExtensionManager extends Extension {
       newArguments.remove(0)
       val optExtension: Option[Extension] = this._extensionMap.get(command)
       if (optExtension.isEmpty) {
-        throw new ExtensionException("Extension '" + command
-          + "' was not found.")
+        throw ExtensionException("Extension '" + command + "' was not found.")
       } else if (newArguments.size < optExtension.get.getRequiredArguments) {
-        throw new ExtensionException("Insufficient number of arguments for extension '" + command + "'.")
+        throw ExtensionException("Insufficient number of arguments for extension '" + command + "'.")
       } else {
         try {
           optExtension.get.process(newArguments)
