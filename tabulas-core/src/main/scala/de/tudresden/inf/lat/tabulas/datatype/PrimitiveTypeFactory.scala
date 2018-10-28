@@ -38,28 +38,21 @@ class PrimitiveTypeFactory(map: Map[String, PrimitiveType]) {
 object PrimitiveTypeFactory {
 
   def apply(): PrimitiveTypeFactory = {
+    val map = Seq(
+      new EmptyType(),
+      new StringType(),
+      new ParameterizedListType(new StringType()),
+      new URIType(),
+      new ParameterizedListType(new URIType()),
+      new IntegerType(),
+      new ParameterizedListType(new IntegerType()),
+      new DecimalType(),
+      new ParameterizedListType(new DecimalType())
+    )
+      .map(primType => (primType.getTypeName, primType))
+      .toMap
 
-    val map = new mutable.TreeMap[String, PrimitiveType]()
-
-    def add(primType: PrimitiveType): Unit = {
-      map.put(primType.getTypeName, primType)
-    }
-
-    /** Constructs a new primitive type factory.
-      */
-    {
-      add(new EmptyType())
-      add(new StringType())
-      add(new ParameterizedListType(new StringType()))
-      add(new URIType())
-      add(new ParameterizedListType(new URIType()))
-      add(new IntegerType())
-      add(new ParameterizedListType(new IntegerType()))
-      add(new DecimalType())
-      add(new ParameterizedListType(new DecimalType()))
-    }
-
-    new PrimitiveTypeFactory(map.toMap)
+    new PrimitiveTypeFactory(map)
   }
 
 }
