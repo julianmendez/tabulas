@@ -26,7 +26,7 @@ class PrimitiveTypeFactory(map: Map[String, PrimitiveType]) {
   def newInstance(typeName: String, value: String): PrimitiveTypeValue = {
     val optPrimType: Option[PrimitiveType] = this.map.get(typeName)
     val result: PrimitiveTypeValue = if (optPrimType.isEmpty) {
-      throw new ParseException("Type '" + typeName + "' is undefined.")
+      throw ParseException("Type '" + typeName + "' is undefined.")
     } else {
       optPrimType.get.parse(value)
     }

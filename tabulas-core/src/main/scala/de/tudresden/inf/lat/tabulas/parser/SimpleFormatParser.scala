@@ -82,14 +82,14 @@ class SimpleFormatParser extends Parser {
       val token: String = stok.nextToken()
       val pos: Int = token.indexOf(ParserConstant.TypeSign)
       if (pos == -1) {
-        throw new ParseException("Field '" + line + "' does not have a type. (line " + lineCounter + ")")
+        throw ParseException("Field '" + line + "' does not have a type. (line " + lineCounter + ")")
       } else {
         val key: String = token.substring(0, pos)
         val value: String = token.substring(pos + ParserConstant.TypeSign.length(), token.length())
         if (factory.contains(value)) {
           result = result.declareField(key, value).get
         } else {
-          throw new ParseException("Type '" + value + "' is undefined. (line " + lineCounter + ")")
+          throw ParseException("Type '" + value + "' is undefined. (line " + lineCounter + ")")
         }
       }
     }
@@ -100,7 +100,7 @@ class SimpleFormatParser extends Parser {
     val result: URI = try {
       new URI(uriStr)
     } catch {
-      case e: URISyntaxException => throw new ParseException("String '" + uriStr + "' is not a valid URI. (line " + lineCounter + ")")
+      case e: URISyntaxException => throw ParseException("String '" + uriStr + "' is not a valid URI. (line " + lineCounter + ")")
     }
     result
   }
@@ -112,7 +112,7 @@ class SimpleFormatParser extends Parser {
       val token: String = stok.nextToken()
       val pos: Int = token.indexOf(ParserConstant.PrefixSign)
       if (pos == -1) {
-        throw new ParseException("Prefix '" + line + "' does not have a definition. (line " + lineCounter + ")")
+        throw ParseException("Prefix '" + line + "' does not have a definition. (line " + lineCounter + ")")
       } else {
         val key: String = token.substring(0, pos)
         val value: String = token.substring(pos + ParserConstant.PrefixSign.length(), token.length())
@@ -168,7 +168,7 @@ class SimpleFormatParser extends Parser {
           }
 
         } else {
-          throw new ParseException("Key '" + key + "' has an undefined type.")
+          throw ParseException("Key '" + key + "' has an undefined type.")
         }
       } catch {
         case e: ParseException => throw new ParseException(e.getMessage + " (line "
@@ -244,7 +244,7 @@ class SimpleFormatParser extends Parser {
   private def parseProperty(line: String, currentTable: TableImpl,
                             recordIdsOfCurrentTable: mutable.TreeSet[String], record: Record, lineCounter: Int): Unit = {
     if (Objects.isNull(currentTable)) {
-      throw new ParseException("New record was not declared (line "
+      throw ParseException("New record was not declared (line "
         + lineCounter + ")")
     }
 
@@ -256,7 +256,7 @@ class SimpleFormatParser extends Parser {
       val value: PrimitiveTypeValue = getTypedValue(key, valueStr, currentTable.getType, currentTable.getPrefixMap, lineCounter)
       if (key.equals(ParserConstant.IdKeyword)) {
         if (recordIdsOfCurrentTable.contains(valueStr)) {
-          throw new ParseException("Identifier '"
+          throw ParseException("Identifier '"
             + ParserConstant.IdKeyword + ParserConstant.Space
             + ParserConstant.EqualsSign + ParserConstant.Space
             + valueStr + "' is duplicated (line " + lineCounter
@@ -327,7 +327,7 @@ class SimpleFormatParser extends Parser {
               false
             }
             if (!successful) {
-              throw new ParseException(
+              throw ParseException(
                 "Identifier has been already defined ('"
                   + optCurrentId.get + "') (line "
                   + lineCounter + ")")

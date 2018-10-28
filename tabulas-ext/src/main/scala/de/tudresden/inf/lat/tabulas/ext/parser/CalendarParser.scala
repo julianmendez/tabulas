@@ -156,7 +156,7 @@ class CalendarParser extends Parser {
         val res = if (optTypeStr.isDefined) {
           PrimitiveTypeFactory().newInstance(optTypeStr.get, value)
         } else {
-          throw new ParseException("Key '" + key + "' has an undefined type.")
+          throw ParseException("Key '" + key + "' has an undefined type.")
         }
         res
       } catch {
@@ -189,7 +189,7 @@ class CalendarParser extends Parser {
   private def parseProperty(line: String, currentTable: TableImpl,
                             record: Record, lineCounter: Int): Unit = {
     if (Objects.isNull(currentTable)) {
-      throw new ParseException("New record was not declared (line "
+      throw ParseException("New record was not declared (line "
         + lineCounter + ")")
     }
 
@@ -270,7 +270,7 @@ class CalendarParser extends Parser {
           currentTableId = value
           val optCurrentTable: Option[TableImpl] = map.get(value)
           if (optCurrentTable.isEmpty) {
-            throw new ParseException("Unknown type '" + value
+            throw ParseException("Unknown type '" + value
               + "' (line " + lineCounter + ").")
           }
           currentTable = optCurrentTable.get
@@ -281,15 +281,15 @@ class CalendarParser extends Parser {
           currentTable.add(currentRecord)
           val value: String = getValue(line).get
           if (Objects.isNull(map.get(value))) {
-            throw new ParseException("Unknown type '" + value
+            throw ParseException("Unknown type '" + value
               + "' (line " + lineCounter + ").")
           }
           if (!value.equals(currentTableId)) {
-            throw new ParseException("Closing wrong type '" + value
+            throw ParseException("Closing wrong type '" + value
               + "' (line " + lineCounter + ").")
           }
           if (tableStack.isEmpty) {
-            throw new ParseException("Too many " + EndKeyword
+            throw ParseException("Too many " + EndKeyword
               + " keywords  (line " + lineCounter + ").")
           }
           currentTableId = tableIdStack.pop()
@@ -317,7 +317,7 @@ class CalendarParser extends Parser {
     }
 
     if (!tableStack.isEmpty) {
-      throw new ParseException("Too few " + EndKeyword
+      throw ParseException("Too few " + EndKeyword
         + " keywords  (line " + lineCounter + ").")
     }
 

@@ -2,5 +2,11 @@ package de.tudresden.inf.lat.tabulas.datatype
 
 /** Parse exception.
   */
-class ParseException(message: String = "", cause: Throwable = null) extends RuntimeException(message, cause)
+case class ParseException(message: String, cause: Throwable) extends RuntimeException(message, cause)
+
+object ParseException {
+
+  def apply(message: String = ""): ParseException = ParseException(message, None.orNull)
+
+}
 

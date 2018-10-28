@@ -105,7 +105,7 @@ class CsvParser extends Parser {
         idCount += 1
       }
       if (idCount > 1) {
-        throw new ParseException(
+        throw ParseException(
           "This cannot have two identifiers (field '"
             + ParserConstant.IdKeyword + "') (line "
             + lineCounter + ")")
@@ -130,7 +130,7 @@ class CsvParser extends Parser {
       if (Objects.nonNull(line) && !line.trim().isEmpty) {
         val columns: Seq[String] = getColumns(line)
         if (columns.size > fieldNames.size) {
-          throw new ParseException("Too many fields in line: "
+          throw ParseException("Too many fields in line: "
             + columns.size + " instead of "
             + fieldNames.size + " (line " + lineCounter
             + ")")

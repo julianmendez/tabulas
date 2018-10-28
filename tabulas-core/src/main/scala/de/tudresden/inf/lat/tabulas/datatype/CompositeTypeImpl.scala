@@ -21,7 +21,7 @@ class CompositeTypeImpl(fields: Seq[String], fieldType: Map[String, String]) ext
     */
   def declareField(field: String, typeStr: String): Try[CompositeTypeImpl] = Try {
     if (getFields.contains(field)) {
-      throw new ParseException("Field '" + field + "' has been already defined.")
+      throw ParseException("Field '" + field + "' has been already defined.")
     } else {
       val list = fields ++ Seq(field)
       val map = fieldType + (field -> typeStr)
