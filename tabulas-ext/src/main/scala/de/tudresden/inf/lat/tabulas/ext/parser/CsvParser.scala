@@ -62,8 +62,8 @@ class CsvParser extends Parser {
   }
 
   private def createSortedTable(fields: Seq[String]): TableImpl = {
-    val tableType: CompositeTypeImpl = new CompositeTypeImpl()
-    fields.foreach(fieldName => tableType.declareField(fieldName, DefaultFieldType))
+    val tableType = fields
+      .foldLeft(CompositeTypeImpl())((compType, field) => compType.declareField(field, DefaultFieldType).get)
 
     val result: TableImpl = new TableImpl()
     result.setType(tableType)

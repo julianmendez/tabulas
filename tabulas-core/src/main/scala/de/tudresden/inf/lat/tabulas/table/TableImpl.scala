@@ -11,7 +11,7 @@ import scala.collection.mutable
   */
 class TableImpl extends Table {
 
-  private var _tableType: CompositeType = new CompositeTypeImpl()
+  private var _tableType: CompositeType = CompositeTypeImpl()
   private val _list = new mutable.ArrayBuffer[Record]
   private val _prefixMap: PrefixMap = new PrefixMapImpl()
   private val _sortingOrder = new mutable.ArrayBuffer[String]

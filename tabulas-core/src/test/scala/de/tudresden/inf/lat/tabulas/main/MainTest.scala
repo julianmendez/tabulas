@@ -96,12 +96,12 @@ class MainTest extends FunSuite {
 
     // Make a copy of type
     // val newType: CompositeTypeImpl = new CompositeTypeImpl(oldType)
-    val newType: CompositeTypeImpl = new CompositeTypeImpl()
-    oldType.getFields.foreach(field => newType.declareField(field, oldType.getFieldType(field).get))
+    var newType = oldType.getFields
+      .foldLeft(CompositeTypeImpl())((compType, field) => compType.declareField(field, oldType.getFieldType(field).get).get)
 
     // Add new declaration with number of authors
     if (!newType.getFields.contains(FieldNameNumberOfAuthors)) {
-      newType.declareField(FieldNameNumberOfAuthors, TypeOfNumberOfAuthors)
+      newType = newType.declareField(FieldNameNumberOfAuthors, TypeOfNumberOfAuthors).get
     }
 
     // Update type of table

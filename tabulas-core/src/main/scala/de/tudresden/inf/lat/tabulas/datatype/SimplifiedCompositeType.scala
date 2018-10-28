@@ -41,12 +41,12 @@ object SimplifiedCompositeType {
 
   val DefaultFieldType: String = "String"
 
-  def apply(): SimplifiedCompositeType = new SimplifiedCompositeType(new CompositeTypeImpl())
+  def apply(): SimplifiedCompositeType = new SimplifiedCompositeType(CompositeTypeImpl())
 
   def apply(knownFields: Array[String]): SimplifiedCompositeType = {
-    val compType = new CompositeTypeImpl()
-    knownFields.foreach(field => compType.declareField(field, DefaultFieldType))
-    new SimplifiedCompositeType(compType)
+    val compositeType = knownFields
+      .foldLeft(CompositeTypeImpl())((compType, field) => compType.declareField(field, DefaultFieldType).get)
+    new SimplifiedCompositeType(compositeType)
   }
 
 }

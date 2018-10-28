@@ -75,7 +75,7 @@ class SimpleFormatParser extends Parser {
   }
 
   def parseTypes(line: String, lineCounter: Int): CompositeTypeImpl = {
-    val result: CompositeTypeImpl = new CompositeTypeImpl()
+    var result: CompositeTypeImpl = CompositeTypeImpl()
     val stok: StringTokenizer = new StringTokenizer(getValue(line).get)
     val factory: PrimitiveTypeFactory = PrimitiveTypeFactory()
     while (stok.hasMoreTokens) {
@@ -85,9 +85,9 @@ class SimpleFormatParser extends Parser {
         throw new ParseException("Field '" + line + "' does not have a type. (line " + lineCounter + ")")
       } else {
         val key: String = token.substring(0, pos)
-        val value: String = token.substring((pos + ParserConstant.TypeSign.length()), token.length())
+        val value: String = token.substring(pos + ParserConstant.TypeSign.length(), token.length())
         if (factory.contains(value)) {
-          result.declareField(key, value)
+          result = result.declareField(key, value).get
         } else {
           throw new ParseException("Type '" + value + "' is undefined. (line " + lineCounter + ")")
         }
@@ -115,7 +115,7 @@ class SimpleFormatParser extends Parser {
         throw new ParseException("Prefix '" + line + "' does not have a definition. (line " + lineCounter + ")")
       } else {
         val key: String = token.substring(0, pos)
-        val value: String = token.substring((pos + ParserConstant.PrefixSign.length()), token.length())
+        val value: String = token.substring(pos + ParserConstant.PrefixSign.length(), token.length())
         result.put(asUri(key, lineCounter), asUri(value, lineCounter))
       }
     }
