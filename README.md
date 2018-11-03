@@ -8,7 +8,7 @@
 *System to manage human-readable tables using files*
 
 
-Tabulas is a system to manage human-readable tables using files. Tabulas is an experimental semi-automatic [Scala](https://www.scala-lang.org/) reimplementation of [Tabula](https://github.com/julianmendez/tabula), which is implemented in Java.
+Tabulas is a system to manage human-readable tables using files. Tabulas is a [Scala](https://www.scala-lang.org/) reimplementation of [Tabula](https://github.com/julianmendez/tabula), which is implemented in Java.
 It uses a specific type of file format that is similar to a [Java Properties](https://docs.oracle.com/javase/8/docs/api/java/util/Properties.html#load-java.io.Reader-) file, but allows defining the same property for different objects.
 
 
