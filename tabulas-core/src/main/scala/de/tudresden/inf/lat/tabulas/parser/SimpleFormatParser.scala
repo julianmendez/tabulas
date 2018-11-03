@@ -14,28 +14,14 @@ import scala.collection.mutable
 /** Parser of a table in simple format.
   *
   */
-class SimpleFormatParser extends Parser {
+class SimpleFormatParser(input: Reader) extends Parser {
 
-  private var _input: Reader = new InputStreamReader(System.in)
+  case class Pair(lineCounter: Int, line: String) {
 
-  class Pair(lineCounter0: Int, line0: String) {
+    def getLine: String = line
 
-    private val _line: String = line0
-    private val _lineCounter: Int = lineCounter0
+    def getLineCounter: Int = lineCounter
 
-    def getLine: String = {
-      this._line
-    }
-
-    def getLineCounter: Int = {
-      this._lineCounter
-    }
-
-  }
-
-  def this(input: Reader) = {
-    this()
-    this._input = input
   }
 
   def getKey(line: String): Option[String] = {
@@ -266,13 +252,14 @@ class SimpleFormatParser extends Parser {
     }
   }
 
+  // scalastyle:off
   def parseMap(input: BufferedReader): TableMap = {
     val mapOfTables = new mutable.TreeMap[String, TableImpl]()
     val mapOfRecordIdsOfTables = new mutable.TreeMap[String, mutable.TreeSet[String]]()
 
     var line: String = ""
     var currentTable = new TableImpl()
-    var recordIdsOfCurrentTable = mutable.TreeSet.empty
+    var recordIdsOfCurrentTable = mutable.TreeSet[String]()
     var optCurrentId: Option[String] = None
     var record: Record = new RecordImpl()
     var lineCounter: Int = 0
@@ -342,10 +329,11 @@ class SimpleFormatParser extends Parser {
     mapOfTables.keySet.foreach(key => result.put(key, mapOfTables.get(key).get))
     result
   }
+  // scalastyle:on
 
   override def parse(): TableMap = {
     val result = try {
-      parseMap(new BufferedReader(this._input))
+      parseMap(new BufferedReader(this.input))
 
     } catch {
       case e: IOException => throw new RuntimeException(e)
@@ -357,6 +345,6 @@ class SimpleFormatParser extends Parser {
 
 object SimpleFormatParser {
 
-  def apply(): SimpleFormatParser = new SimpleFormatParser
+  def apply(input: Reader): SimpleFormatParser = new SimpleFormatParser(input)
 
 }
