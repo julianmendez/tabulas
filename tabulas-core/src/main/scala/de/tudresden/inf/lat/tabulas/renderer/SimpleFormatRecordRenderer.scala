@@ -11,25 +11,7 @@ import de.tudresden.inf.lat.tabulas.table.{PrefixMap, PrefixMapImpl}
 
 /** Renderer of a table in simple format.
   */
-class SimpleFormatRecordRenderer extends RecordRenderer {
-
-  private var _output: Writer = new OutputStreamWriter(System.out)
-  private var _prefixMap: PrefixMap = new PrefixMapImpl()
-
-  def this(output: Writer, prefixMap: PrefixMap) = {
-    this()
-    Objects.requireNonNull(output)
-    this._output = output
-    this._prefixMap = prefixMap
-  }
-
-  def this(output: UncheckedWriter, prefixMap: PrefixMap) = {
-    this()
-    Objects.requireNonNull(output)
-    this._output = output.asWriter()
-    this._prefixMap = prefixMap
-  }
-
+class SimpleFormatRecordRenderer(output: Writer, prefixMap: PrefixMap) extends RecordRenderer {
 
   def writeIfNotEmpty(output: UncheckedWriter, field: String, value: PrimitiveTypeValue): Boolean = {
     val result: Boolean = if (Objects.nonNull(field) && !field.trim().isEmpty && Objects.nonNull(value) && !value.isEmpty) {
@@ -50,7 +32,7 @@ class SimpleFormatRecordRenderer extends RecordRenderer {
           output.write(ParserConstant.NewLine)
           output.write(ParserConstant.Space)
           if (hasUris) {
-            output.write(_prefixMap.getWithPrefix(URI.create(elem)).toASCIIString)
+            output.write(prefixMap.getWithPrefix(URI.create(elem)).toASCIIString)
           } else {
             output.write(elem.toString)
           }
@@ -59,7 +41,7 @@ class SimpleFormatRecordRenderer extends RecordRenderer {
       } else {
         output.write(ParserConstant.Space)
         if (value.getType.equals(new URIType())) {
-          output.write(_prefixMap.getWithPrefix(URI.create(value.toString)).toASCIIString)
+          output.write(prefixMap.getWithPrefix(URI.create(value.toString)).toASCIIString)
         } else {
           output.write(value.toString)
         }
@@ -88,13 +70,13 @@ class SimpleFormatRecordRenderer extends RecordRenderer {
   }
 
   override def render(record: Record, fields: Seq[String]): Unit = {
-    render(new UncheckedWriterImpl(this._output), record, fields)
+    render(new UncheckedWriterImpl(output), record, fields)
   }
 
 }
 
 object SimpleFormatRecordRenderer {
 
-  def apply(): SimpleFormatRecordRenderer = new SimpleFormatRecordRenderer
+  def apply(output: Writer, prefixMap: PrefixMap): SimpleFormatRecordRenderer = new SimpleFormatRecordRenderer(output, prefixMap)
 
 }

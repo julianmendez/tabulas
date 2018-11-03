@@ -8,20 +8,13 @@ import de.tudresden.inf.lat.tabulas.table.{Table, TableMap}
 
 /** Renderer of a table in simple format.
   */
-class SimpleFormatRenderer extends Renderer {
+class SimpleFormatRenderer(output: Writer) extends Renderer {
 
   val Prefix: String = "" +
     ParserConstant.CommentSymbol + " simple format 1.0.0" + ParserConstant.NewLine
 
-  private var _output: Writer = new OutputStreamWriter(System.out)
-
-  def this(output: Writer) = {
-    this()
-    this._output = output
-  }
-
   def renderAllRecords(output: UncheckedWriter, table: Table): Unit = {
-    val recordRenderer = new SimpleFormatRecordRenderer(output, table.getPrefixMap)
+    val recordRenderer = new SimpleFormatRecordRenderer(output.asWriter(), table.getPrefixMap)
     output.write(ParserConstant.NewLine)
     val list = table.getRecords
     list.foreach(record => {
@@ -107,13 +100,13 @@ class SimpleFormatRenderer extends Renderer {
   }
 
   override def render(tableMap: TableMap): Unit = {
-    render(new UncheckedWriterImpl(this._output), tableMap)
+    render(new UncheckedWriterImpl(this.output), tableMap)
   }
 
 }
 
 object SimpleFormatRenderer {
 
-  def apply(): SimpleFormatRecordRenderer = new SimpleFormatRecordRenderer
+  def apply(output: Writer): SimpleFormatRenderer = new SimpleFormatRenderer(output)
 
 }
