@@ -261,7 +261,7 @@ class SimpleFormatParser(input: Reader) extends Parser {
     var currentTable = new TableImpl()
     var recordIdsOfCurrentTable = mutable.TreeSet[String]()
     var optCurrentId: Option[String] = None
-    var record: Record = new RecordImpl()
+    var record: Record = RecordImpl()
     var lineCounter: Int = 0
     var isDefiningType: Boolean = false
 
@@ -295,7 +295,7 @@ class SimpleFormatParser(input: Reader) extends Parser {
 
         } else if (hasKey(line, ParserConstant.NewRecordToken)) {
           isDefiningType = false
-          record = new RecordImpl()
+          record = RecordImpl()
           currentTable.add(record)
           optCurrentId = None
 

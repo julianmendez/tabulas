@@ -240,7 +240,7 @@ class CalendarParser extends Parser {
     map.put(AlarmTypeLabel, new TableImpl(SimplifiedCompositeType(AlarmTypeFields)))
 
     var currentTable = new TableImpl()
-    var currentRecord: Record = new RecordImpl()
+    var currentRecord: Record = RecordImpl()
     var currentTableId = ""
 
     val tableIdStack: MyStack[String] = new MyStack[String]()
@@ -264,7 +264,7 @@ class CalendarParser extends Parser {
             tableStack.push(currentTable)
             recordStack.push(currentRecord)
           }
-          currentRecord = new RecordImpl()
+          currentRecord = RecordImpl()
           currentRecord.set(GeneratedIdFieldName, new StringValue(
             getGeneratedId(generatedIds, tableIdStack.size)))
           currentTableId = value

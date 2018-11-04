@@ -136,7 +136,7 @@ class CsvParser extends Parser {
             + ")")
         }
 
-        val record: RecordImpl = new RecordImpl()
+        val record: RecordImpl = RecordImpl()
         var index: Int = 0
         for (column: String <- columns) {
           val field: String = fieldNames(index)

@@ -10,38 +10,26 @@ import scala.collection.mutable
 /** This is the default implementation of a record.
   *
   */
-class RecordImpl extends Record {
-
-  private val _map = new mutable.TreeMap[String, PrimitiveTypeValue]()
-
-  /** Constructs a new record using another one.
-    *
-    * @param otherRecord
-    * other record
-    */
-  def this(otherRecord: Record) = {
-    this()
-    otherRecord.getProperties.foreach(property => set(property, otherRecord.get(property).get))
-  }
+class RecordImpl(map: mutable.Map[String, PrimitiveTypeValue]) extends Record {
 
   override def get(key: String): Option[PrimitiveTypeValue] = {
     val result = if (Objects.isNull(key)) {
       None
     } else {
-      this._map.get(key)
+      this.map.get(key)
     }
     result
   }
 
   override def set(key: String, value: PrimitiveTypeValue): Unit = {
     if (Objects.nonNull(key)) {
-      this._map.put(key, value)
+      this.map.put(key, value)
     }
   }
 
   override def getProperties: Seq[String] = {
     val result = new mutable.ArrayBuffer[String]
-    result ++= this._map.keySet
+    result ++= this.map.keySet
     result
   }
 
@@ -56,17 +44,33 @@ class RecordImpl extends Record {
   }
 
   override def hashCode(): Int = {
-    this._map.hashCode()
+    this.map.hashCode()
   }
 
   override def toString: String = {
-    this._map.toString
+    this.map.toString
   }
 
 }
 
 object RecordImpl {
 
-  def apply(): RecordImpl = new RecordImpl
+  def apply(): RecordImpl = new RecordImpl(mutable.TreeMap[String, PrimitiveTypeValue]())
+
+  def apply(map: mutable.Map[String, PrimitiveTypeValue]): RecordImpl = new RecordImpl(map)
+
+
+  /** Constructs a new record using another one.
+    *
+    * @param otherRecord
+    * other record
+    */
+  def apply(otherRecord: Record): RecordImpl = {
+    val newMap = otherRecord.getProperties
+      .map(property => (property, otherRecord.get(property).get))
+      .toMap
+    val mutableMap = mutable.TreeMap[String, PrimitiveTypeValue]() ++ newMap
+    RecordImpl(mutableMap)
+  }
 
 }
