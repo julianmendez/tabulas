@@ -13,7 +13,7 @@ import scala.collection.mutable
 /** Parser of a table in comma-separated values format.
   *
   */
-class CsvParser extends Parser {
+class CsvParser(input: Reader) extends Parser {
 
   val UnderscoreChar: Char = '_'
   val CommaChar: Char = ','
@@ -22,17 +22,6 @@ class CsvParser extends Parser {
   val DefaultTableName: String = "defaultType"
   val DefaultFieldType: String = "String"
   val Underscore: String = "" + UnderscoreChar
-
-  private var _input: Reader = new InputStreamReader(System.in)
-
-  /** Constructs a new parser.
-    *
-    * @param input input
-    */
-  def this(input: Reader) = {
-    this()
-    this._input = input
-  }
 
   def getColumns(line0: String): Seq[String] = {
     val result = new mutable.ArrayBuffer[String]()
@@ -156,7 +145,7 @@ class CsvParser extends Parser {
 
   override def parse(): TableMap = {
     val result: TableMap = try {
-      parseMap(new BufferedReader(this._input))
+      parseMap(new BufferedReader(this.input))
 
     } catch {
       case e: IOException => throw new RuntimeException(e)
@@ -168,6 +157,8 @@ class CsvParser extends Parser {
 
 object CsvParser {
 
-  def apply(): CsvParser = new CsvParser
+  def apply(): CsvParser = new CsvParser(new InputStreamReader(System.in))
+
+  def apply(input: Reader): CsvParser = new CsvParser(input)
 
 }

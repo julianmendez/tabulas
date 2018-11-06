@@ -7,7 +7,7 @@ import org.scalatest.FunSuite
 class MyStackTest extends FunSuite {
 
   test("it should push and pop values in the right order") {
-    val calPar = new CalendarParser()
+    val calPar = CalendarParser()
     val myStack = new calPar.MyStack[String]
 
     assert(myStack.size === 0)
@@ -40,7 +40,7 @@ class MyStackTest extends FunSuite {
   }
 
   test("it should throw a NoSuchElementException after popping from an empty stack") {
-    val calPar = new CalendarParser()
+    val calPar = CalendarParser()
     val myStack = new calPar.MyStack[String]
     intercept[NoSuchElementException] {
       myStack.pop()

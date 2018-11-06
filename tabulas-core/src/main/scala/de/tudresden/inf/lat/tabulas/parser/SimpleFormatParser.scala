@@ -5,8 +5,7 @@ import java.io.{BufferedReader, IOException, InputStreamReader, Reader}
 import java.net.{URI, URISyntaxException}
 import java.util.{Objects, StringTokenizer}
 
-import de.tudresden.inf.lat.tabulas.datatype.{CompositeType, CompositeTypeImpl, ParameterizedListValue, ParseException}
-import de.tudresden.inf.lat.tabulas.datatype.{PrimitiveTypeFactory, PrimitiveTypeValue, Record, StringValue, URIType, URIValue}
+import de.tudresden.inf.lat.tabulas.datatype.{CompositeType, CompositeTypeImpl, ParameterizedListValue, ParseException, PrimitiveTypeFactory, PrimitiveTypeValue, Record, StringValue, URIType, URIValue}
 import de.tudresden.inf.lat.tabulas.table.{PrefixMap, PrefixMapImpl, RecordImpl, TableImpl, TableMap, TableMapImpl}
 
 import scala.collection.mutable
@@ -344,6 +343,8 @@ class SimpleFormatParser(input: Reader) extends Parser {
 }
 
 object SimpleFormatParser {
+
+  def apply(): SimpleFormatParser = new SimpleFormatParser(new InputStreamReader(System.in))
 
   def apply(input: Reader): SimpleFormatParser = new SimpleFormatParser(input)
 

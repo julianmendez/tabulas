@@ -13,20 +13,13 @@ import scala.collection.mutable
 /** Parser of a calendar.
   *
   */
-class CalendarParser extends Parser {
+class CalendarParser(input: Reader) extends Parser {
 
-  class Pair(lineCounter0: Int, line0: String) {
+  case class Pair(lineCounter: Int, line: String) {
 
-    private val _line: String = line0
-    private val _lineCounter: Int = lineCounter0
+    def getLine: String = line
 
-    def getLine: String = {
-      this._line
-    }
-
-    def getLineCounter: Int = {
-      this._lineCounter
-    }
+    def getLineCounter: Int = lineCounter
 
   }
 
@@ -94,13 +87,6 @@ class CalendarParser extends Parser {
   val NewEvent: String = "BEGIN:" + EventTypeLabel
   val BeginKeyword: String = "BEGIN"
   val EndKeyword: String = "END"
-
-  var input: Reader = new InputStreamReader(System.in)
-
-  def this(input: Reader) = {
-    this()
-    this.input = input
-  }
 
   def getKey(line: String): Option[String] = {
     val result = if (Objects.isNull(line)) {
@@ -340,6 +326,8 @@ class CalendarParser extends Parser {
 
 object CalendarParser {
 
-  def apply(): CalendarParser = new CalendarParser
+  def apply(): CalendarParser = new CalendarParser (new InputStreamReader(System.in))
+
+  def apply(input: Reader): CalendarParser = new CalendarParser (input)
 
 }
