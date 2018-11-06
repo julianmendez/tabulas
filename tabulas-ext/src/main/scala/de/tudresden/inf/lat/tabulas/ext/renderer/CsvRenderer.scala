@@ -11,19 +11,12 @@ import de.tudresden.inf.lat.tabulas.table.{Table, TableMap}
 
 /** Renderer of tables in comma-separated values format.
   */
-class CsvRenderer extends Renderer {
+class CsvRenderer(output: Writer) extends Renderer {
 
   val Quotes: String = "\""
   val QuotesReplacement: String = "''"
   val Null: String = ""
   val Comma: String = ","
-
-  private var _output: Writer = new OutputStreamWriter(System.out)
-
-  def this(output: Writer) = {
-    this()
-    this._output = output
-  }
 
   def sanitize(str: String): String = {
     str.replace(Quotes, QuotesReplacement)
@@ -145,13 +138,15 @@ class CsvRenderer extends Renderer {
   }
 
   override def render(tableMap: TableMap): Unit = {
-    render(new UncheckedWriterImpl(this._output), tableMap)
+    render(new UncheckedWriterImpl(this.output), tableMap)
   }
 
 }
 
 object CsvRenderer {
 
-  def apply(): CsvRenderer = new CsvRenderer
+  def apply(): CsvRenderer = new CsvRenderer(new OutputStreamWriter(System.out))
+
+  def apply(output: Writer): CsvRenderer = new CsvRenderer(output)
 
 }

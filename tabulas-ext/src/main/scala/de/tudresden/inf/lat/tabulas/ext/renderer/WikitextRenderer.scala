@@ -12,14 +12,7 @@ import de.tudresden.inf.lat.tabulas.table.{Table, TableMap}
 
 /** Renderer of a table.
   */
-class WikitextRenderer extends Renderer {
-
-  private var _output: Writer = new OutputStreamWriter(System.out)
-
-  def this(output: Writer) = {
-    this()
-    this._output = output
-  }
+class WikitextRenderer(output: Writer) extends Renderer {
 
   def writeAsStringIfNotEmpty(output: UncheckedWriter, prefix: String, value: PrimitiveTypeValue): Boolean = {
     val result = if (Objects.nonNull(value) && !value.toString.trim().isEmpty) {
@@ -130,13 +123,15 @@ class WikitextRenderer extends Renderer {
   }
 
   override def render(tableMap: TableMap): Unit = {
-    render(new UncheckedWriterImpl(this._output), tableMap)
+    render(new UncheckedWriterImpl(this.output), tableMap)
   }
 
 }
 
 object WikitextRenderer {
 
-  def apply(): WikitextRenderer = new WikitextRenderer
+  def apply(): WikitextRenderer = new WikitextRenderer(new OutputStreamWriter(System.out))
+
+  def apply(output: Writer): WikitextRenderer = new WikitextRenderer(output)
 
 }

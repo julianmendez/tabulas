@@ -11,7 +11,7 @@ import de.tudresden.inf.lat.tabulas.table.{Table, TableMap}
 
 /** Renderer of tables in SQL format.
   */
-class SqlRenderer extends Renderer {
+class SqlRenderer(output: Writer) extends Renderer {
 
   val DefaultSize: Int = 0x800
   val DefaultDatabaseName: String = "tabula"
@@ -32,13 +32,6 @@ class SqlRenderer extends Renderer {
   val Desc: String = "desc"
   val SelectAllFrom: String = "select * from"
   val OrderBy: String = "order by"
-
-  private var _output: Writer = new OutputStreamWriter(System.out)
-
-  def this(output: Writer) = {
-    this()
-    this._output = output
-  }
 
   def sanitize(str: String): String = {
     str.replace(Apostrophe, ApostropheReplacement)
@@ -216,13 +209,15 @@ class SqlRenderer extends Renderer {
   }
 
   override def render(tableMap: TableMap): Unit = {
-    render(new UncheckedWriterImpl(this._output), tableMap)
+    render(new UncheckedWriterImpl(this.output), tableMap)
   }
 
 }
 
 object SqlRenderer {
 
-  def apply(): SqlRenderer = new SqlRenderer
+  def apply(): SqlRenderer = new SqlRenderer(new OutputStreamWriter(System.out))
+
+  def apply(output: Writer): SqlRenderer = new SqlRenderer(output)
 
 }

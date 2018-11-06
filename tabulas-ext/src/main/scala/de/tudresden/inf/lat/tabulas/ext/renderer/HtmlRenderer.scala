@@ -11,7 +11,7 @@ import de.tudresden.inf.lat.tabulas.table.{Table, TableMap}
 
 /** Renderer of a table that creates an HTML document.
   */
-class HtmlRenderer extends Renderer {
+class HtmlRenderer(output: Writer) extends Renderer {
 
   val Prefix: String = "<?xml version=\"1.0\" encoding=\"utf-8\"?>" +
     "\n<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.1//EN\" \"https://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd\">" +
@@ -34,13 +34,6 @@ class HtmlRenderer extends Renderer {
     "\n</body>" +
     "\n</html>" +
     "\n"
-
-  private var _output: Writer = new OutputStreamWriter(System.out)
-
-  def this(output: Writer) = {
-    this()
-    this._output = output
-  }
 
   def writeAsStringIfNotEmpty(output: UncheckedWriter, value: PrimitiveTypeValue): Boolean = {
     val result = if (Objects.nonNull(value) && !value.toString.trim().isEmpty) {
@@ -154,13 +147,15 @@ class HtmlRenderer extends Renderer {
   }
 
   override def render(tableMap: TableMap): Unit = {
-    render(new UncheckedWriterImpl(this._output), tableMap)
+    render(new UncheckedWriterImpl(this.output), tableMap)
   }
 
 }
 
 object HtmlRenderer {
 
-  def apply(): HtmlRenderer = new HtmlRenderer
+  def apply(): HtmlRenderer = new HtmlRenderer(new OutputStreamWriter(System.out))
+
+  def apply(output: Writer): HtmlRenderer = new HtmlRenderer(output)
 
 }
