@@ -321,7 +321,7 @@ class CalendarParser extends Parser {
         + " keywords  (line " + lineCounter + ").")
     }
 
-    val result: TableMapImpl = new TableMapImpl()
+    val result: TableMapImpl = TableMapImpl()
     map.keySet.foreach(key => result.put(key, map.get(key).get))
     result
   }

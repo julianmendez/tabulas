@@ -77,7 +77,7 @@ class MainTest extends FunSuite {
 
     // Make a copy of the tableMap
     // val newTableMap: TableMapImpl = new TableMapImpl(oldTableMap)
-    val newTableMap: TableMapImpl = new TableMapImpl()
+    val newTableMap: TableMapImpl = TableMapImpl()
     oldTableMap.getTableIds.foreach(tableId => newTableMap.put(tableId, oldTableMap.getTable(tableId).get))
 
     assertContent(newTableMap, ExpectedOutputFileName)

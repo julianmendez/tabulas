@@ -6,31 +6,19 @@ import scala.collection.mutable
 /** This is the default implementation of a table map.
   *
   */
-class TableMapImpl extends TableMap {
-
-  private val _map = new mutable.TreeMap[String, Table]()
-
-  /** Constructs a new table map using another one.
-    *
-    * @param otherTableMap
-    * other table map
-    */
-  def this(otherTableMap: TableMap) = {
-    this()
-    otherTableMap.getTableIds.foreach(tableId => put(tableId, otherTableMap.getTable(tableId).get))
-  }
+class TableMapImpl(map: mutable.TreeMap[String, Table]) extends TableMap {
 
   override def getTableIds: Seq[String] = {
     val result = new mutable.ArrayBuffer[String]()
-    result ++= this._map.keySet
+    result ++= this.map.keySet
     result
   }
 
-  override def put(id: String, table: Table): Option[Table] = { this._map.put(id, table) }
+  override def put(id: String, table: Table): Option[Table] = { this.map.put(id, table) }
 
-  override def getTable(id: String): Option[Table] = { this._map.get(id) }
+  override def getTable(id: String): Option[Table] = { this.map.get(id) }
 
-  override def hashCode(): Int = { this._map.hashCode() }
+  override def hashCode(): Int = { this.map.hashCode() }
 
   override def equals(obj: Any): Boolean = {
     val result = obj match {
@@ -59,6 +47,18 @@ class TableMapImpl extends TableMap {
 
 object TableMapImpl {
 
-  def apply(): TableMapImpl = new TableMapImpl
+  def apply(): TableMapImpl = new TableMapImpl(mutable.TreeMap[String, Table]())
+
+  /** Constructs a new table map using another one.
+    *
+    * @param otherTableMap
+    * other table map
+    */
+  def apply(otherTableMap: TableMap): TableMapImpl = {
+    val map = mutable.TreeMap[String, Table]()
+    otherTableMap.getTableIds
+      .foreach(tableId => map.put(tableId, otherTableMap.getTable(tableId).get))
+    new TableMapImpl(map)
+  }
 
 }

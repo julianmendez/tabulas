@@ -325,7 +325,7 @@ class SimpleFormatParser(input: Reader) extends Parser {
 
     }
 
-    val result = new TableMapImpl()
+    val result = TableMapImpl()
     mapOfTables.keySet.foreach(key => result.put(key, mapOfTables.get(key).get))
     result
   }

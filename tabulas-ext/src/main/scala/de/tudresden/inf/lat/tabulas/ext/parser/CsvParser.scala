@@ -149,7 +149,7 @@ class CsvParser extends Parser {
       }
     }
 
-    val result: TableMapImpl = new TableMapImpl()
+    val result: TableMapImpl = TableMapImpl()
     result.put(DefaultTableName, currentTable)
     result
   }
