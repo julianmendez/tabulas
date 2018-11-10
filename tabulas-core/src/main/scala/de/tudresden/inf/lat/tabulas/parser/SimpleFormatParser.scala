@@ -179,14 +179,14 @@ class SimpleFormatParser(input: Reader) extends Parser {
 
   def readMultiLine(input: BufferedReader, lineCounter0: Int): Pair = {
     var lineCounter: Int = lineCounter0
-    var result: Pair = new Pair(lineCounter, null)
+    var result: Pair = Pair(lineCounter, null)
     var line: String = input.readLine()
     if (Objects.isNull(line)) {
-      result = new Pair(lineCounter, null)
+      result = Pair(lineCounter, null)
     } else {
       lineCounter += 1
       if (line.startsWith(ParserConstant.CommentSymbol)) {
-        result = new Pair(lineCounter, "")
+        result = Pair(lineCounter, "")
       } else {
         val sb: StringBuilder = new StringBuilder()
         while (isMultiLine(line)) {
@@ -199,7 +199,7 @@ class SimpleFormatParser(input: Reader) extends Parser {
         }
         sb.append(getCleanLine(line))
 
-        result = new Pair(lineCounter, sb.toString)
+        result = Pair(lineCounter, sb.toString)
       }
     }
     result
@@ -227,7 +227,7 @@ class SimpleFormatParser(input: Reader) extends Parser {
   }
 
   private def parseProperty(line: String, currentTable: TableImpl,
-                            recordIdsOfCurrentTable: mutable.TreeSet[String], record: Record, lineCounter: Int): Unit = {
+    recordIdsOfCurrentTable: mutable.TreeSet[String], record: Record, lineCounter: Int): Unit = {
     if (Objects.isNull(currentTable)) {
       throw ParseException("New record was not declared (line "
         + lineCounter + ")")
@@ -331,6 +331,7 @@ class SimpleFormatParser(input: Reader) extends Parser {
     mapOfTables.keySet.foreach(key => result.put(key, mapOfTables.get(key).get))
     result
   }
+
   // scalastyle:on
 
   override def parse(): TableMap = {
