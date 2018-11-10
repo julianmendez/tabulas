@@ -5,7 +5,8 @@ import java.io.{BufferedReader, IOException, InputStreamReader, Reader}
 import java.net.{URI, URISyntaxException}
 import java.util.{Objects, StringTokenizer}
 
-import de.tudresden.inf.lat.tabulas.datatype.{CompositeType, CompositeTypeImpl, ParameterizedListValue, ParseException, PrimitiveTypeFactory, PrimitiveTypeValue, Record, StringValue, URIType, URIValue}
+import de.tudresden.inf.lat.tabulas.datatype.{CompositeType, CompositeTypeImpl, ParameterizedListValue, ParseException}
+import de.tudresden.inf.lat.tabulas.datatype.{PrimitiveTypeFactory, PrimitiveTypeValue, Record, StringValue, URIType, URIValue}
 import de.tudresden.inf.lat.tabulas.table.{PrefixMap, PrefixMapImpl, RecordImpl, TableImpl, TableMap, TableMapImpl}
 
 import scala.collection.mutable
@@ -257,7 +258,7 @@ class SimpleFormatParser(input: Reader) extends Parser {
     val mapOfRecordIdsOfTables = new mutable.TreeMap[String, mutable.TreeSet[String]]()
 
     var line: String = ""
-    var currentTable = new TableImpl()
+    var currentTable = TableImpl()
     var recordIdsOfCurrentTable = mutable.TreeSet[String]()
     var optCurrentId: Option[String] = None
     var record: Record = RecordImpl()
@@ -275,8 +276,7 @@ class SimpleFormatParser(input: Reader) extends Parser {
           if (optTableName.isDefined) {
             val tableName: String = optTableName.get
             if (!mapOfTables.get(tableName).isDefined) {
-              mapOfTables.put(tableName, new TableImpl(
-                new TableImpl()))
+              mapOfTables.put(tableName, TableImpl())
               mapOfRecordIdsOfTables.put(tableName, new mutable.TreeSet[String]())
             }
             currentTable = mapOfTables.get(tableName).get
@@ -284,7 +284,7 @@ class SimpleFormatParser(input: Reader) extends Parser {
           }
 
         } else if (isDefiningType && hasKey(line, ParserConstant.TypeDefinitionToken)) {
-          currentTable.setType(parseTypes(line, lineCounter))
+          currentTable = TableImpl(parseTypes(line, lineCounter))
 
         } else if (isDefiningType && hasKey(line, ParserConstant.PrefixMapToken)) {
           currentTable.setPrefixMap(parsePrefixMap(line, lineCounter))

@@ -225,7 +225,7 @@ class CalendarParser(input: Reader) extends Parser {
     map.put(EventTypeLabel, new TableImpl(SimplifiedCompositeType(EventTypeFields)))
     map.put(AlarmTypeLabel, new TableImpl(SimplifiedCompositeType(AlarmTypeFields)))
 
-    var currentTable = new TableImpl()
+    var currentTable = TableImpl()
     var currentRecord: Record = RecordImpl()
     var currentTableId = ""
 

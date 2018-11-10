@@ -54,8 +54,7 @@ class CsvParser(input: Reader) extends Parser {
     val tableType = fields
       .foldLeft(CompositeTypeImpl())((compType, field) => compType.declareField(field, DefaultFieldType).get)
 
-    val result: TableImpl = new TableImpl()
-    result.setType(tableType)
+    val result: TableImpl = new TableImpl(tableType)
     result
   }
 

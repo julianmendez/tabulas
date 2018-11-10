@@ -86,7 +86,7 @@ class MainTest extends FunSuite {
     val table: Table = newTableMap.getTable(TypeNameRecord).get
 
     // Make a copy of the main table
-    val newTable: TableImpl = new TableImpl(table)
+    val newTable: TableImpl = TableImpl(table)
 
     // Add the new table to the new table map
     newTableMap.put(TypeNameRecord, newTable)
@@ -103,9 +103,6 @@ class MainTest extends FunSuite {
     if (!newType.getFields.contains(FieldNameNumberOfAuthors)) {
       newType = newType.declareField(FieldNameNumberOfAuthors, TypeOfNumberOfAuthors).get
     }
-
-    // Update type of table
-    newTable.setType(newType)
 
     // Update the map of URI prefixes
     newTable.setPrefixMap(table.getPrefixMap)

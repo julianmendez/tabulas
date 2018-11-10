@@ -12,12 +12,6 @@ trait CompositeTypeValue {
     */
   def getType: CompositeType
 
-  /** Sets the type of this composite type value.
-    *
-    * @param newType type
-    */
-  def setType(newType: CompositeType): Unit
-
   /** Returns all the records.
     *
     * @return all the records

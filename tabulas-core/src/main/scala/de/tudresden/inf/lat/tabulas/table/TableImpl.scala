@@ -3,44 +3,29 @@ package de.tudresden.inf.lat.tabulas.table
 
 import java.util.Objects
 
-import de.tudresden.inf.lat.tabulas.datatype.{CompositeType, CompositeTypeImpl, Record}
+import de.tudresden.inf.lat.tabulas.datatype.{CompositeType, CompositeTypeImpl, DataType, Record}
 
 import scala.collection.mutable
 
+case class EmptyCompositeType() extends CompositeType {
+
+  override def getFields: Seq[String] = Seq()
+
+  override def getFieldType(field: String): Option[String] = None
+
+}
+
 /** This is the default implementation of a sorted table.
   */
-class TableImpl extends Table {
+class TableImpl(tableType: CompositeType) extends Table {
 
-  private var _tableType: CompositeType = CompositeTypeImpl()
   private val _list = new mutable.ArrayBuffer[Record]
   private val _prefixMap: PrefixMap = new PrefixMapImpl()
   private val _sortingOrder = new mutable.ArrayBuffer[String]
   private val _fieldsWithReverseOrder = new mutable.TreeSet[String]()
 
-  def this(newType: CompositeType) = {
-    this()
-    this._tableType = newType
-  }
-
-  def this(other: Table) = {
-    this()
-    this._tableType = other.getType
-    this._list ++= other.getRecords
-    other match {
-      case otherTable: Table =>
-        val otherMap: PrefixMap = otherTable.getPrefixMap
-        otherMap.getKeysAsStream.foreach(key => this._prefixMap.put(key, otherMap.get(key).get))
-        this._sortingOrder ++= otherTable.getSortingOrder
-        this._fieldsWithReverseOrder ++= otherTable.getFieldsWithReverseOrder
-    }
-  }
-
   override def getType: CompositeType = {
-    this._tableType
-  }
-
-  override def setType(newType: CompositeType): Unit = {
-    this._tableType = newType
+    this.tableType
   }
 
   override def getPrefixMap: PrefixMap = {
@@ -97,7 +82,7 @@ class TableImpl extends Table {
   }
 
   override def hashCode(): Int = {
-    val result = this._tableType.hashCode() + 0x1F * (this._prefixMap.hashCode() + 0x1F * (this._sortingOrder.hashCode() +
+    val result = this.tableType.hashCode() + 0x1F * (this._prefixMap.hashCode() + 0x1F * (this._sortingOrder.hashCode() +
       0x1F * (this._fieldsWithReverseOrder.hashCode() + 0x1F * this._list.hashCode())))
     result
   }
@@ -115,7 +100,7 @@ class TableImpl extends Table {
   }
 
   override def toString: String = {
-    val result = this._tableType.toString + " " + this._prefixMap.toString + " " + this._sortingOrder.toString + " " +
+    val result = this.tableType.toString + " " + this._prefixMap.toString + " " + this._sortingOrder.toString + " " +
       this._fieldsWithReverseOrder.toString + " " + this._list.toString
     result
   }
@@ -124,6 +109,21 @@ class TableImpl extends Table {
 
 object TableImpl {
 
-  def apply(): TableImpl = new TableImpl
+  def apply():TableImpl = new TableImpl(EmptyCompositeType())
+
+  def apply(newType: CompositeType):TableImpl = new TableImpl(newType)
+
+  def apply(other: Table): TableImpl = {
+    val result = new TableImpl(other.getType)
+    result._list ++= other.getRecords
+    other match {
+      case otherTable: Table =>
+        val otherMap: PrefixMap = otherTable.getPrefixMap
+        otherMap.getKeysAsStream.foreach(key => result._prefixMap.put(key, otherMap.get(key).get))
+        result._sortingOrder ++= otherTable.getSortingOrder
+        result._fieldsWithReverseOrder ++= otherTable.getFieldsWithReverseOrder
+    }
+    result
+  }
 
 }
