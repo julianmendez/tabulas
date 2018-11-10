@@ -258,6 +258,7 @@ class SimpleFormatParser(input: Reader) extends Parser {
     val mapOfRecordIdsOfTables = new mutable.TreeMap[String, mutable.TreeSet[String]]()
 
     var line: String = ""
+    var tableName = ""
     var currentTable = TableImpl()
     var recordIdsOfCurrentTable = mutable.TreeSet[String]()
     var optCurrentId: Option[String] = None
@@ -274,7 +275,7 @@ class SimpleFormatParser(input: Reader) extends Parser {
           isDefiningType = true
           val optTableName: Option[String] = getValue(line)
           if (optTableName.isDefined) {
-            val tableName: String = optTableName.get
+            tableName = optTableName.get
             if (!mapOfTables.get(tableName).isDefined) {
               mapOfTables.put(tableName, TableImpl())
               mapOfRecordIdsOfTables.put(tableName, new mutable.TreeSet[String]())
@@ -284,7 +285,9 @@ class SimpleFormatParser(input: Reader) extends Parser {
           }
 
         } else if (isDefiningType && hasKey(line, ParserConstant.TypeDefinitionToken)) {
-          currentTable = TableImpl(parseTypes(line, lineCounter))
+          val tableType = parseTypes(line, lineCounter)
+          currentTable = TableImpl(tableType, currentTable)
+          mapOfTables.put(tableName, currentTable)
 
         } else if (isDefiningType && hasKey(line, ParserConstant.PrefixMapToken)) {
           currentTable.setPrefixMap(parsePrefixMap(line, lineCounter))

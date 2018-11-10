@@ -84,6 +84,10 @@ class PrefixMapImpl extends PrefixMap {
     this._keyList.clear()
   }
 
+  override def toString: String = {
+    this._prefixMap.toString + " " + this._keyList.toString
+  }
+
 }
 
 object PrefixMapImpl {

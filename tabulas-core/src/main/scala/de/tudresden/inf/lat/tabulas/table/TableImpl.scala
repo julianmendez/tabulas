@@ -3,7 +3,7 @@ package de.tudresden.inf.lat.tabulas.table
 
 import java.util.Objects
 
-import de.tudresden.inf.lat.tabulas.datatype.{CompositeType, CompositeTypeImpl, DataType, Record}
+import de.tudresden.inf.lat.tabulas.datatype.{CompositeType, Record}
 
 import scala.collection.mutable
 
@@ -100,8 +100,9 @@ class TableImpl(tableType: CompositeType) extends Table {
   }
 
   override def toString: String = {
-    val result = this.tableType.toString + " " + this._prefixMap.toString + " " + this._sortingOrder.toString + " " +
-      this._fieldsWithReverseOrder.toString + " " + this._list.toString
+    val result = "\ndef = " + this.tableType.toString + "\n\nprefix = " + this._prefixMap.toString +
+      "\n\norder = " + this._sortingOrder.toString + " " +
+      "\n\nreverseorder = " + this._fieldsWithReverseOrder.toString + "\n\nlist = " + this._list.toString
     result
   }
 
@@ -109,12 +110,14 @@ class TableImpl(tableType: CompositeType) extends Table {
 
 object TableImpl {
 
-  def apply():TableImpl = new TableImpl(EmptyCompositeType())
+  def apply(): TableImpl = new TableImpl(EmptyCompositeType())
 
-  def apply(newType: CompositeType):TableImpl = new TableImpl(newType)
+  def apply(newType: CompositeType): TableImpl = new TableImpl(newType)
 
-  def apply(other: Table): TableImpl = {
-    val result = new TableImpl(other.getType)
+  def apply(other: Table): TableImpl = TableImpl(other.getType, other)
+
+  def apply(newType: CompositeType, other: Table): TableImpl = {
+    val result = new TableImpl(newType)
     result._list ++= other.getRecords
     other match {
       case otherTable: Table =>

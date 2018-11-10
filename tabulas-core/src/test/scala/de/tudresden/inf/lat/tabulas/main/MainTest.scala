@@ -86,10 +86,7 @@ class MainTest extends FunSuite {
     val table: Table = newTableMap.getTable(TypeNameRecord).get
 
     // Make a copy of the main table
-    val newTable: TableImpl = TableImpl(table)
-
-    // Add the new table to the new table map
-    newTableMap.put(TypeNameRecord, newTable)
+    var newTable: TableImpl = TableImpl(table)
 
     // Get type of main table
     val oldType: CompositeType = table.getType
@@ -104,11 +101,18 @@ class MainTest extends FunSuite {
       newType = newType.declareField(FieldNameNumberOfAuthors, TypeOfNumberOfAuthors).get
     }
 
+    // Update type of table
+    newTable = TableImpl(newType, newTable)
+
     // Update the map of URI prefixes
     newTable.setPrefixMap(table.getPrefixMap)
 
+    // Add the new table to the new table map
+    newTableMap.put(TypeNameRecord, newTable)
+
     // Compute the number of authors for each record
-    table.getRecords.foreach(record => record.set(FieldNameNumberOfAuthors, computeFieldValue(record)))
+    table.getRecords
+      .foreach(record => record.set(FieldNameNumberOfAuthors, computeFieldValue(record)))
 
     assertContent(newTableMap, ModifiedOutputFileName)
   }
