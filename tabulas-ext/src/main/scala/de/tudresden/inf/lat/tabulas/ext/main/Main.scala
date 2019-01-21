@@ -1,7 +1,7 @@
 package de.tudresden.inf.lat.tabulas.ext.main
 
 import de.tudresden.inf.lat.tabulas.ext.parser.{CalendarParserExtension, CsvParserExtension}
-import de.tudresden.inf.lat.tabulas.ext.renderer.{CsvExtension, HtmlExtension, SqlExtension, WikitextExtension}
+import de.tudresden.inf.lat.tabulas.ext.renderer.{CsvExtension, HtmlExtension, JsonExtension, SqlExtension, WikitextExtension}
 import de.tudresden.inf.lat.tabulas.extension.{DefaultExtension, NormalizationExtension}
 import de.tudresden.inf.lat.tabulas.main.ConsoleStarter
 
@@ -17,6 +17,7 @@ object Main {
   def main(args: Array[String]): Unit = {
     val extensions = Seq(
       DefaultExtension(),
+      JsonExtension(),
       CsvParserExtension(),
       CalendarParserExtension(),
       WikitextExtension(),
