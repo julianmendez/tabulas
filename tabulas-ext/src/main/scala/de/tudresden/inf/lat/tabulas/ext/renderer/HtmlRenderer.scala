@@ -49,11 +49,11 @@ class HtmlRenderer(output: Writer) extends Renderer {
   def writeParameterizedListIfNotEmpty(output: UncheckedWriter, list: ParameterizedListValue): Boolean = {
     val result = if (Objects.nonNull(list)) {
       list.getList.foreach(value => {
-        if (value.getType.equals(new URIType())) {
-          val link: URIValue = (new URIType()).castInstance(value)
+        if (value.getType.equals(URIType())) {
+          val link: URIValue = URIType().castInstance(value)
           writeLinkIfNotEmpty(output, link)
         } else {
-          val strVal: StringValue = (new StringType()).castInstance(value)
+          val strVal: StringValue = StringType().castInstance(value)
           writeAsStringIfNotEmpty(output, strVal)
         }
       })
@@ -115,23 +115,6 @@ class HtmlRenderer(output: Writer) extends Renderer {
       output.write("</tr>\n")
     })
     output.write("</table>\n")
-  }
-
-  def renderMap(output: UncheckedWriter, map: Map[String, String]): Unit = {
-    output.write("<table summary=\"\" border=\"1\">\n")
-    map.keySet.foreach(key => {
-      val value: String = map.get(key).get
-      output.write("<tr>\n")
-      output.write("<td>")
-      output.write(key)
-      output.write("</td>\n")
-      output.write("<td>")
-      output.write(value)
-      output.write("</td>\n")
-      output.write("</tr>\n")
-    })
-    output.write("</table>\n")
-    output.write("\n")
   }
 
   def render(output: UncheckedWriter, tableMap: TableMap): Unit = {
