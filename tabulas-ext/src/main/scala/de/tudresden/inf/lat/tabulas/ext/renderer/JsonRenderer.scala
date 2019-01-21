@@ -20,8 +20,43 @@ class JsonRenderer(output: Writer) extends Renderer {
   final val SpaceChar = " "
   final val CommaChar = ","
   final val HashChar = "#"
-  final val Quotes = "\""
+
+  final val QuotationMark = "\""
+  final val EscapedQuotationMark = "\\\""
+  final val Backslash = "\\"
+  final val EscapedBackslash = "\\"
+  final val Backspace = "\b"
+  final val EscapedBackspace = "\\b"
+  final val FormFeed = "\f"
+  final val EscapedFormFeed = "\\f"
   final val NewLine = "\n"
+  final val EscapedNewLine = "\\n"
+  final val CarriageReturn = "\r"
+  final val EscapedCarriageReturn = "\\r"
+  final val Tab = "\t"
+  final val EscapedTab = "\\t"
+  final val Slash = "/"
+
+  def addQuotes(str: String): String = {
+    QuotationMark + escapeString(str) + QuotationMark
+  }
+
+  def escapeString(str: String): String = {
+    val result = str.flatMap(ch => {
+      "" + ch match {
+        case QuotationMark => EscapedQuotationMark
+        case Backslash => EscapedBackslash
+        case Backspace => EscapedBackspace
+        case FormFeed => EscapedFormFeed
+        case NewLine => EscapedNewLine
+        case CarriageReturn => EscapedCarriageReturn
+        case Tab => EscapedTab
+        case Slash => Slash // slash does not need to be escaped
+        case _ => "" + ch
+      }
+    })
+    result
+  }
 
   def writeAsStringIfNotEmpty(output: UncheckedWriter, prefix: String, value: PrimitiveTypeValue): Boolean = {
     val result = if (Objects.nonNull(value) && !value.toString.trim().isEmpty) {
@@ -67,10 +102,6 @@ class JsonRenderer(output: Writer) extends Renderer {
       false
     }
     result
-  }
-
-  def addQuotes(str: String): String = {
-    Quotes + str + Quotes
   }
 
   def render(output: UncheckedWriter, record: Record, fields: Seq[String]): Unit = {
