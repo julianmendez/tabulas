@@ -73,8 +73,9 @@ class JsonRenderer(output: Writer) extends Renderer {
     val result = if (Objects.nonNull(list)) {
       output.write(prefix)
       output.write(OpenSquareBracket + NewLine)
-      list.getList.indices.foreach(index => {
-        val value = list.getList(index)
+      val newList = list.getList
+      newList.indices.foreach(index => {
+        val value = newList(index)
         if (value.getType.equals(URIType())) {
           val link: URIValue = URIType().castInstance(value)
           writeLinkIfNotEmpty(output, " ", link)
@@ -82,7 +83,7 @@ class JsonRenderer(output: Writer) extends Renderer {
           val strVal: StringValue = StringType().castInstance(value)
           writeAsStringIfNotEmpty(output, " ", strVal)
         }
-        val maybeComma = if (index < list.getList.length - 1) CommaChar else ""
+        val maybeComma = if (index < newList.length - 1) CommaChar else ""
         output.write(maybeComma + NewLine)
       })
       output.write(CloseSquareBracket)
@@ -105,25 +106,22 @@ class JsonRenderer(output: Writer) extends Renderer {
   }
 
   def render(output: UncheckedWriter, record: Record, fields: Seq[String]): Unit = {
-    fields.indices.foreach(index => {
-      val field = fields(index)
+    val newList = fields.filter(field => record.get(field).isDefined)
+    newList.indices.foreach(index => {
+      val field = newList(index)
       val optValue: Option[PrimitiveTypeValue] = record.get(field)
-      if (optValue.isDefined) {
-        val value: PrimitiveTypeValue = optValue.get
-        val prefix = addQuotes(field) + SpaceChar + ColonChar + SpaceChar
-        value match {
-          case list: ParameterizedListValue =>
-            writeParameterizedListIfNotEmpty(output, prefix, list)
-          case link: URIValue =>
-            writeLinkIfNotEmpty(output, prefix, link)
-          case _ =>
-            writeAsStringIfNotEmpty(output, prefix, value)
-        }
-        val maybeComma = if (index < fields.length - 1) CommaChar else ""
-        output.write(maybeComma + NewLine)
-      } else {
-        output.write(NewLine)
+      val value: PrimitiveTypeValue = optValue.get
+      val prefix = addQuotes(field) + SpaceChar + ColonChar + SpaceChar
+      value match {
+        case list: ParameterizedListValue =>
+          writeParameterizedListIfNotEmpty(output, prefix, list)
+        case link: URIValue =>
+          writeLinkIfNotEmpty(output, prefix, link)
+        case _ =>
+          writeAsStringIfNotEmpty(output, prefix, value)
       }
+      val maybeComma = if (index < newList.length - 1) CommaChar else ""
+      output.write(maybeComma + NewLine)
     })
   }
 
