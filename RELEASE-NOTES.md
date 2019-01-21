@@ -25,6 +25,8 @@
 * shows a warning instead of stopping when the normalization finds duplicated identifiers
 * includes a `prefix` map to shorten URIs
 * uses the Scala collections and changes its traits accordingly
+* writers (extension names between parentheses):
+  * (`json`) JSON
 * uses [ScalaTest](http://www.scalatest.org) for unit tests
 * build command:
 
