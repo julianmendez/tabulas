@@ -27,6 +27,7 @@
 * uses the Scala collections and changes its traits accordingly
 * writers (extension names between parentheses):
   * (`json`) JSON
+  * (`yaml`) YAML
 * uses [ScalaTest](http://www.scalatest.org) for unit tests
 * build command:
 
