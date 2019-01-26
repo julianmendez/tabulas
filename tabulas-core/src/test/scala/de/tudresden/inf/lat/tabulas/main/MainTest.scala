@@ -23,7 +23,9 @@ class MainTest extends FunSuite {
   val TypeOfNumberOfAuthors: String = "String"
   val NewLine: String = "\n"
 
-  def getPath(fileName: String): String = { getClass.getClassLoader.getResource(fileName).getFile }
+  def getPath(fileName: String): String = {
+    getClass.getClassLoader.getResource(fileName).getFile
+  }
 
   /**
     * Returns the number of authors for a given record.
@@ -43,14 +45,13 @@ class MainTest extends FunSuite {
   }
 
   def readFile(fileName: String): String = {
-    val sb = new StringBuilder()
     val reader = new BufferedReader(new FileReader(getPath(fileName)))
-    reader.lines().toArray().foreach(obj => {
-      val line = obj.asInstanceOf[String]
-      sb.append(line + NewLine)
-    })
+    val result = reader.lines().toArray()
+      .map(obj => {
+        val line = obj.asInstanceOf[String]
+        line + NewLine
+      }).mkString("")
     reader.close()
-    val result = sb.toString
     result
   }
 
