@@ -2,8 +2,9 @@
 package de.tudresden.inf.lat.tabulas.ext.parser
 
 import java.io.{BufferedReader, ByteArrayInputStream, IOException, InputStreamReader, Reader}
+import java.util.Objects
 
-import com.eclipsesource.json.{Json, JsonValue}
+import com.eclipsesource.json.{Json, JsonObject, JsonValue}
 import de.tudresden.inf.lat.tabulas.parser.{Parser, ParserConstant, SimpleFormatParser}
 import de.tudresden.inf.lat.tabulas.renderer.SimpleFormatRenderer
 import de.tudresden.inf.lat.tabulas.table.TableMap
@@ -34,6 +35,10 @@ class JsonParser(input: Reader) extends Parser {
     result
   }
 
+  def isMetadata(elements: JsonObject): Boolean = {
+    Objects.nonNull(elements.get(ParserConstant.TypeDefinitionToken))
+  }
+
   def transformDocument(reader: Reader): String = {
     val value = Json.parse(reader)
     val mainArray = value.asArray()
@@ -45,11 +50,11 @@ class JsonParser(input: Reader) extends Parser {
           val recordStr = elements.names().asScala
             .map(key => renderEntry(key, elements.get(key)))
             .mkString("")
-          val newRecord = if (index > 0) {
+          val newRecord = if (isMetadata(elements)) {
+            ""
+          } else {
             ParserConstant.NewLine + ParserConstant.NewLine + ParserConstant.NewRecordToken +
               ParserConstant.Space + ParserConstant.EqualsSign + ParserConstant.Space
-          } else {
-            ""
           }
           newRecord + ParserConstant.NewLine + recordStr
         }).mkString("") + ParserConstant.NewLine + ParserConstant.NewLine

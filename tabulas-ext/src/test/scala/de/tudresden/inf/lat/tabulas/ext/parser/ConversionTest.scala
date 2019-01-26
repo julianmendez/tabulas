@@ -25,8 +25,11 @@ class ConversionTest extends FunSuite {
   val InputFileName2: String = "example.json"
   val ExpectedOutputFileName2: String = "example-expected.properties"
 
-  val InputFileName3: String = "example.properties"
-  val ExpectedOutputFileName3: String = "example.yml"
+  val InputFileName3: String = "multiple_tables.json"
+  val ExpectedOutputFileName3: String = "multiple_tables-expected.properties"
+
+  val InputFileName4: String = "example.properties"
+  val ExpectedOutputFileName4: String = "example.yml"
 
   val NewLine: String = "\n"
 
@@ -63,17 +66,22 @@ class ConversionTest extends FunSuite {
   }
 
   test("parsing JSON") {
-    val tableMap: TableMap = new JsonParser(getFileReader(InputFileName2)).parse()
-    val expectedResult: String = readFile(ExpectedOutputFileName2)
-    val writer = new StringWriter()
-    val renderer = new SimpleFormatRenderer(writer)
-    renderer.render(tableMap)
-    assert(expectedResult === writer.toString)
+    Seq(
+      (InputFileName2, ExpectedOutputFileName2),
+      (InputFileName3, ExpectedOutputFileName3)
+    ).foreach(pair => {
+      val tableMap: TableMap = new JsonParser(getFileReader(pair._1)).parse()
+      val expectedResult: String = readFile(pair._2)
+      val writer = new StringWriter()
+      val renderer = new SimpleFormatRenderer(writer)
+      renderer.render(tableMap)
+      assert(expectedResult === writer.toString)
+    })
   }
 
   test("rendering YAML") {
-    val tableMap: TableMap = new SimpleFormatParser(getFileReader(InputFileName3)).parse()
-    val expectedResult: String = readFile(ExpectedOutputFileName3)
+    val tableMap: TableMap = new SimpleFormatParser(getFileReader(InputFileName4)).parse()
+    val expectedResult: String = readFile(ExpectedOutputFileName4)
     val writer = new StringWriter()
     val renderer = new YamlRenderer(writer)
     renderer.render(tableMap)
