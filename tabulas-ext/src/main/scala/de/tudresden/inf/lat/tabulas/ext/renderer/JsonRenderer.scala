@@ -133,13 +133,13 @@ class JsonRenderer(output: Writer) extends Renderer {
     output.write(CloseBrace + maybeComma + NewLine + NewLine)
   }
 
-  def renderAllRecords(output: UncheckedWriter, table: CompositeTypeValue): Unit = {
+  def renderAllRecords(output: UncheckedWriter, table: CompositeTypeValue, hasMoreTables: Boolean): Unit = {
     val list: Seq[Record] = table.getRecords
     list.indices.foreach(index => {
       output.write(NewLine + OpenBrace + NewLine)
       val record = list(index)
       render(output, record, table.getType.getFields)
-      val maybeComma = if (index < list.length - 1) CommaChar else ""
+      val maybeComma = if (index < list.length - 1 || hasMoreTables) CommaChar else ""
       output.write(CloseBrace + maybeComma + NewLine + NewLine)
     })
   }
@@ -147,10 +147,13 @@ class JsonRenderer(output: Writer) extends Renderer {
 
   def render(output: UncheckedWriter, tableMap: TableMap): Unit = {
     output.write(OpenSquareBracket + NewLine + NewLine)
-    tableMap.getTableIds.foreach(tableId => {
+    val list = tableMap.getTableIds
+    list.indices.foreach(index => {
+      val tableId = list(index)
       val table: Table = tableMap.getTable(tableId).get
       renderMetadata(output, tableId, table)
-      renderAllRecords(output, table)
+      val hasMoreTables = index < list.length - 1
+      renderAllRecords(output, table, hasMoreTables)
     })
     output.write(NewLine + CloseSquareBracket + NewLine + NewLine + NewLine)
     output.flush()
