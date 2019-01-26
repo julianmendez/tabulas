@@ -5,7 +5,7 @@ import java.io.{OutputStreamWriter, Writer}
 import java.util.Objects
 
 import de.tudresden.inf.lat.tabulas.datatype.{CompositeTypeValue, ParameterizedListValue, PrimitiveTypeValue, Record, StringType, StringValue, URIType, URIValue}
-import de.tudresden.inf.lat.tabulas.renderer.{Renderer, UncheckedWriter, UncheckedWriterImpl}
+import de.tudresden.inf.lat.tabulas.renderer.{MetadataHelper, Renderer, UncheckedWriter, UncheckedWriterImpl}
 import de.tudresden.inf.lat.tabulas.table.{Table, TableMap}
 
 /** Renderer that creates a JSON file.

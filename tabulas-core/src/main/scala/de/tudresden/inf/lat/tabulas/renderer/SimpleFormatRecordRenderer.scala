@@ -1,13 +1,13 @@
 
 package de.tudresden.inf.lat.tabulas.renderer
 
-import java.io.{OutputStreamWriter, Writer}
+import java.io.Writer
 import java.net.URI
 import java.util.Objects
 
 import de.tudresden.inf.lat.tabulas.datatype.{ParameterizedListValue, PrimitiveTypeValue, Record, URIType}
 import de.tudresden.inf.lat.tabulas.parser.ParserConstant
-import de.tudresden.inf.lat.tabulas.table.{PrefixMap, PrefixMapImpl}
+import de.tudresden.inf.lat.tabulas.table.PrefixMap
 
 /** Renderer of a table in simple format.
   */
@@ -53,11 +53,13 @@ class SimpleFormatRecordRenderer(output: Writer, prefixMap: PrefixMap) extends R
     result
   }
 
-  def render(output: UncheckedWriter, record: Record, fields: Seq[String]): Unit = {
+  def renderNew(output: UncheckedWriter): Unit = {
     output.write(ParserConstant.NewLine)
     output.write(ParserConstant.NewRecordToken + ParserConstant.Space)
     output.write(ParserConstant.EqualsSign + ParserConstant.Space)
+  }
 
+  def render(output: UncheckedWriter, record: Record, fields: Seq[String]): Unit = {
     fields.foreach(field => {
       val optValue: Option[PrimitiveTypeValue] = record.get(field)
       if (optValue.isDefined) {

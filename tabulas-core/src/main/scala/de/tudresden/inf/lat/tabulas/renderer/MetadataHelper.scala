@@ -1,4 +1,4 @@
-package de.tudresden.inf.lat.tabulas.ext.renderer
+package de.tudresden.inf.lat.tabulas.renderer
 
 import de.tudresden.inf.lat.tabulas.datatype.{ParameterizedListValue, PrimitiveTypeValue, Record, StringType, StringValue}
 import de.tudresden.inf.lat.tabulas.parser.ParserConstant
