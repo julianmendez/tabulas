@@ -125,6 +125,14 @@ class JsonRenderer(output: Writer) extends Renderer {
     })
   }
 
+  def renderMetadata(output: UncheckedWriter, typeName: String, table: Table): Unit = {
+    output.write(NewLine + OpenBrace + NewLine)
+    val record = MetadataHelper().getMetadataAsRecord(typeName, table)
+    render(output, record, MetadataHelper.MetadataTokens)
+    val maybeComma = if (table.getRecords.nonEmpty) CommaChar else ""
+    output.write(CloseBrace + maybeComma + NewLine + NewLine)
+  }
+
   def renderAllRecords(output: UncheckedWriter, table: CompositeTypeValue): Unit = {
     val list: Seq[Record] = table.getRecords
     list.indices.foreach(index => {
@@ -141,6 +149,7 @@ class JsonRenderer(output: Writer) extends Renderer {
     output.write(OpenSquareBracket + NewLine + NewLine)
     tableMap.getTableIds.foreach(tableId => {
       val table: Table = tableMap.getTable(tableId).get
+      renderMetadata(output, tableId, table)
       renderAllRecords(output, table)
     })
     output.write(NewLine + CloseSquareBracket + NewLine + NewLine + NewLine)

@@ -5,11 +5,8 @@ import java.io.{OutputStreamWriter, Writer}
 import java.util.Objects
 
 import de.tudresden.inf.lat.tabulas.datatype._
-import de.tudresden.inf.lat.tabulas.parser.ParserConstant
 import de.tudresden.inf.lat.tabulas.renderer.{Renderer, UncheckedWriter, UncheckedWriterImpl}
-import de.tudresden.inf.lat.tabulas.table.{PrefixMap, RecordImpl, Table, TableMap}
-
-import scala.collection.mutable
+import de.tudresden.inf.lat.tabulas.table.{Table, TableMap}
 
 /** Renderer that creates a YAML file.
   */
@@ -38,13 +35,6 @@ class YamlRenderer(output: Writer) extends Renderer {
   final val Tab = "\t"
   final val EscapedTab = "\\t"
   final val Slash = "/"
-
-  final val MetadataTokens = Seq(
-    ParserConstant.TypeSelectionToken,
-    ParserConstant.TypeDefinitionToken,
-    ParserConstant.PrefixMapToken,
-    ParserConstant.SortingOrderDeclarationToken
-  )
 
   def escapeString(str: String): String = {
     val result = str.flatMap(ch => {
@@ -130,70 +120,9 @@ class YamlRenderer(output: Writer) extends Renderer {
     })
   }
 
-  def singleValueRecord(key: String, value: String): Record = {
-    val map = new mutable.HashMap[String, PrimitiveTypeValue]
-    map.put(key, new StringValue(value))
-    val result = new RecordImpl(map)
-    result
-  }
-
-  def singleListRecord(key: String, value: Seq[String]): Record = {
-    val map = new mutable.HashMap[String, PrimitiveTypeValue]
-    map.put(key, new ParameterizedListValue(StringType(), value.map(x => new StringValue(x))))
-    val result = new RecordImpl(map)
-    result
-  }
-
-  def prefixMapRecord(key: String, value: PrefixMap): Record = {
-    val map = new mutable.HashMap[String, PrimitiveTypeValue]
-    value.getKeysAsStream
-      .foreach(prefixKey => map.put(prefixKey.toASCIIString, new URIValue(value.get(prefixKey).get)))
-    val result = new RecordImpl(map)
-    result
-  }
-
-
-  private def getTypeEntry(typeName: String): PrimitiveTypeValue = {
-    new StringValue(typeName)
-  }
-
-  private def getDefEntry(table: Table): PrimitiveTypeValue = {
-    val list = table.getType.getFields
-      .map(key => key + ParserConstant.TypeSign + table.getType.getFieldType(key).get)
-      .map(x => new StringValue(x))
-    new ParameterizedListValue(StringType(), list)
-  }
-
-  private def getPrefixEntry(table: Table): PrimitiveTypeValue = {
-    val list = table.getPrefixMap.getKeysAsStream
-      .map(key => key + ParserConstant.TypeSign + table.getPrefixMap.get(key).get)
-      .map(x => new StringValue(x))
-    new ParameterizedListValue(StringType(), list)
-  }
-
-  private def getOrderEntry(table: Table): PrimitiveTypeValue = {
-    val list = table.getSortingOrder
-      .map(elem => {
-        val prefix = if (table.getFieldsWithReverseOrder.contains(elem)) {
-          ParserConstant.ReverseOrderSign
-        } else {
-          ParserConstant.StandardOrderSign
-        }
-        prefix + elem
-      })
-      .map(x => StringValue(x))
-    new ParameterizedListValue(StringType(), list)
-  }
-
   def renderMetadata(output: UncheckedWriter, typeName: String, table: Table): Unit = {
-    val map = new mutable.HashMap[String, PrimitiveTypeValue]
-    map.put(ParserConstant.TypeSelectionToken, getTypeEntry(typeName))
-    map.put(ParserConstant.TypeDefinitionToken, getDefEntry(table))
-    map.put(ParserConstant.PrefixMapToken, getPrefixEntry(table))
-    map.put(ParserConstant.SortingOrderDeclarationToken, getOrderEntry(table))
-
-    val record = new RecordImpl(map)
-    render(output, record, MetadataTokens)
+    val record = MetadataHelper().getMetadataAsRecord(typeName, table)
+    render(output, record, MetadataHelper.MetadataTokens)
     output.write(NewLine + NewLine)
   }
 
