@@ -27,8 +27,8 @@ class SimpleFormatRenderer(output: Writer) extends Renderer {
 
   def render(output: UncheckedWriter, tableMap: TableMap): Unit = {
     output.write(Prefix)
-    output.write(ParserConstant.NewLine)
     tableMap.getTableIds.foreach(tableName => {
+      output.write(ParserConstant.NewLine)
       val table: Table = tableMap.getTable(tableName).get
       val record = MetadataHelper().getMetadataAsRecord(tableName, table)
       val recordRenderer = new SimpleFormatRecordRenderer(output.asWriter(), table.getPrefixMap)
