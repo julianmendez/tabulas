@@ -25,6 +25,12 @@
 			</dependency>
 
 			<dependency>
+				<groupId>com.eclipsesource.minimal-json</groupId>
+				<artifactId>minimal-json</artifactId>
+				<version>${jsonparser.version}</version>
+			</dependency>
+
+			<dependency>
 				<groupId>org.scalatest</groupId>
 				<artifactId>scalatest_${scala.version.binary}</artifactId>
 				<version>3.0.5</version>
@@ -46,6 +52,7 @@
 
 		<scala.version.binary>2.12</scala.version.binary>
 		<scala.version>2.12.8</scala.version>
+		<jsonparser.version>0.9.5</jsonparser.version>
 	</properties>
 
 	<build>

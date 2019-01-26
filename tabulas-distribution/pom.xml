@@ -124,6 +124,7 @@
 									{maven-resources}, {maven-dependencies},
 									@tabulas-core_${scala.version.binary}-${project.version}.jar,
 									@tabulas-ext_${scala.version.binary}-${project.version}.jar,
+									@minimal-json-${jsonparser.version}.jar,
 									@scala-library-${scala.version}.jar
 								</Include-Resource>
 							</instructions>

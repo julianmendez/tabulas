@@ -10,9 +10,6 @@ import de.tudresden.inf.lat.tabulas.table.{Table, TableMap}
   */
 class SimpleFormatRenderer(output: Writer) extends Renderer {
 
-  val Prefix: String = "" +
-    ParserConstant.CommentSymbol + " simple format 1.0.0" + ParserConstant.NewLine
-
   def renderAllRecords(output: UncheckedWriter, table: Table): Unit = {
     val recordRenderer = new SimpleFormatRecordRenderer(output.asWriter(), table.getPrefixMap)
     output.write(ParserConstant.NewLine)
@@ -26,7 +23,7 @@ class SimpleFormatRenderer(output: Writer) extends Renderer {
   }
 
   def render(output: UncheckedWriter, tableMap: TableMap): Unit = {
-    output.write(Prefix)
+    output.write(SimpleFormatRenderer.Prefix)
     tableMap.getTableIds.foreach(tableName => {
       output.write(ParserConstant.NewLine)
       val table: Table = tableMap.getTable(tableName).get
@@ -45,6 +42,9 @@ class SimpleFormatRenderer(output: Writer) extends Renderer {
 }
 
 object SimpleFormatRenderer {
+
+  val Prefix: String = "" +
+    ParserConstant.CommentSymbol + " simple format 1.0.0" + ParserConstant.NewLine
 
   def apply(output: Writer): SimpleFormatRenderer = new SimpleFormatRenderer(output)
 

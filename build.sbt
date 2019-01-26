@@ -23,7 +23,8 @@ lazy val tabulas_ext = project
   .aggregate(tabulas_core)
   .dependsOn(tabulas_core)
   .settings(
-    commonSettings
+    commonSettings,
+    libraryDependencies += "com.eclipsesource.minimal-json" % "minimal-json" % "0.9.5"
   )
 
 lazy val tabulas_distribution = project
