@@ -24,6 +24,8 @@
 * shows a warning instead of stopping when the normalization finds duplicated identifiers
 * includes a `prefix` map to shorten URIs
 * uses the Scala collections and changes its traits accordingly
+* includes new readers (extension names between parentheses):
+  * (`parsejson`) JSON
 * includes new writers (extension names between parentheses):
   * (`json`) JSON
   * (`yaml`) YAML

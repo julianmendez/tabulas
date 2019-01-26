@@ -29,7 +29,7 @@ It uses a specific type of file format that is similar to a [Java Properties](ht
 
 ## Format
 
-This describes the project as it is in (`master`).
+This describes the project as it is in `master`.
 
 The Tabula format has *primitive types* and *composite types*. Unless something different is stated in the [release notes](https://github.com/julianmendez/tabula/blob/master/RELEASE-NOTES.md), the primitive types are:
 
@@ -185,6 +185,29 @@ For example, the [MainTest](https://github.com/julianmendez/tabulas/blob/master/
 * compare the [expected result](https://github.com/julianmendez/tabulas/blob/master/tabulas-core/src/test/resources/example-modified.properties)
 
 This [Bash script](https://github.com/julianmendez/tabulas/blob/master/docs/examples/tabulas.sh.txt) shows how to start Tabulas from the command line.
+
+
+## Other formats
+
+This project also includes some converters from and to other formats.
+Every deserializer (parser) and serializer (renderer) is registered as an extension.
+Some serializers and some deserializers cannot map completely the content of a Tabula file.
+
+
+| serializer               | stores metadata | multiple tables |
+|:-------------------------|:----------------|:----------------|
+| [JSON](https://json.org) | yes             | yes             |
+| [YAML](https://yaml.org) | yes             | yes             |
+| HTML                     | no              | yes             |
+| [Wikitext](https://www.mediawiki.org/wiki/Specs/wikitext/1.0.0) | no | yes |
+| CSV                      | no              | no              |
+| SQL                      | no              | no              |
+
+
+| deserializer           | requires metadata | multiple tables |
+|:-----------------------|:------------------|:----------------|
+| JSON                   | yes               | yes             |
+| CSV                    | no                | no              |
 
 
 ## Source code
