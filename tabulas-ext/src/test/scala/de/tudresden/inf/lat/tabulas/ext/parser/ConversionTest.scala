@@ -1,13 +1,16 @@
 package de.tudresden.inf.lat.tabulas.ext.parser
 
 import java.io.{FileReader, StringWriter}
+import java.net.URL
+import java.nio.file.{Files, Paths}
 
 import de.tudresden.inf.lat.tabulas.ext.renderer.{JsonRenderer, YamlRenderer}
-import de.tudresden.inf.lat.tabulas.main.MainTest
 import de.tudresden.inf.lat.tabulas.parser.SimpleFormatParser
 import de.tudresden.inf.lat.tabulas.renderer.SimpleFormatRenderer
 import de.tudresden.inf.lat.tabulas.table.TableMap
 import org.scalatest.FunSuite
+
+import scala.collection.JavaConverters._
 
 /** This is a test of conversion.
   */
@@ -27,17 +30,23 @@ class ConversionTest extends FunSuite {
 
   val NewLine: String = "\n"
 
-  def getPath(fileName: String): String = {
-    getClass.getClassLoader.getResource(fileName).getFile
+  def getPath(fileName: String): URL = {
+    getClass.getClassLoader.getResource(fileName)
   }
 
   def getFileReader(inputFileName: String): FileReader = {
-    new FileReader(getPath(inputFileName))
+    new FileReader(getPath(inputFileName).getFile)
+  }
+
+  def readFile(fileName: String): String = {
+    val path = Paths.get(getPath(fileName).toURI)
+    val result = Files.readAllLines(path).asScala.mkString(NewLine) + NewLine
+    result
   }
 
   test("normalization") {
     val tableMap: TableMap = new SimpleFormatParser(getFileReader(InputFileName0)).parse()
-    val expectedResult: String = (new MainTest()).readFile(ExpectedOutputFileName0)
+    val expectedResult: String = readFile(ExpectedOutputFileName0)
     val writer = new StringWriter()
     val renderer = new SimpleFormatRenderer(writer)
     renderer.render(tableMap)
@@ -46,7 +55,7 @@ class ConversionTest extends FunSuite {
 
   test("rendering JSON") {
     val tableMap: TableMap = new SimpleFormatParser(getFileReader(InputFileName1)).parse()
-    val expectedResult: String = (new MainTest()).readFile(ExpectedOutputFileName1)
+    val expectedResult: String = readFile(ExpectedOutputFileName1)
     val writer = new StringWriter()
     val renderer = new JsonRenderer(writer)
     renderer.render(tableMap)
@@ -55,7 +64,7 @@ class ConversionTest extends FunSuite {
 
   test("parsing JSON") {
     val tableMap: TableMap = new JsonParser(getFileReader(InputFileName2)).parse()
-    val expectedResult: String = (new MainTest()).readFile(ExpectedOutputFileName2)
+    val expectedResult: String = readFile(ExpectedOutputFileName2)
     val writer = new StringWriter()
     val renderer = new SimpleFormatRenderer(writer)
     renderer.render(tableMap)
@@ -64,7 +73,7 @@ class ConversionTest extends FunSuite {
 
   test("rendering YAML") {
     val tableMap: TableMap = new SimpleFormatParser(getFileReader(InputFileName3)).parse()
-    val expectedResult: String = (new MainTest()).readFile(ExpectedOutputFileName3)
+    val expectedResult: String = readFile(ExpectedOutputFileName3)
     val writer = new StringWriter()
     val renderer = new YamlRenderer(writer)
     renderer.render(tableMap)

@@ -1,6 +1,8 @@
 package de.tudresden.inf.lat.tabulas.main
 
-import java.io.{BufferedReader, FileReader, StringWriter}
+import java.io.{FileReader, StringWriter}
+import java.net.URL
+import java.nio.file.{Files, Paths}
 import java.util.Objects
 
 import de.tudresden.inf.lat.tabulas.datatype._
@@ -8,6 +10,8 @@ import de.tudresden.inf.lat.tabulas.parser.SimpleFormatParser
 import de.tudresden.inf.lat.tabulas.renderer.SimpleFormatRenderer
 import de.tudresden.inf.lat.tabulas.table.{Table, TableImpl, TableMap, TableMapImpl}
 import org.scalatest.FunSuite
+
+import scala.collection.JavaConverters._
 
 /** This is a test of modification of a Tabula file.
   */
@@ -23,9 +27,6 @@ class MainTest extends FunSuite {
   val TypeOfNumberOfAuthors: String = "String"
   val NewLine: String = "\n"
 
-  def getPath(fileName: String): String = {
-    getClass.getClassLoader.getResource(fileName).getFile
-  }
 
   /**
     * Returns the number of authors for a given record.
@@ -44,14 +45,13 @@ class MainTest extends FunSuite {
     result
   }
 
+  def getPath(fileName: String): URL = {
+    getClass.getClassLoader.getResource(fileName)
+  }
+
   def readFile(fileName: String): String = {
-    val reader = new BufferedReader(new FileReader(getPath(fileName)))
-    val result = reader.lines().toArray()
-      .map(obj => {
-        val line = obj.asInstanceOf[String]
-        line + NewLine
-      }).mkString("")
-    reader.close()
+    val path = Paths.get(getPath(fileName).toURI)
+    val result = Files.readAllLines(path).asScala.mkString(NewLine) + NewLine
     result
   }
 
@@ -74,7 +74,7 @@ class MainTest extends FunSuite {
     // a computed value
 
     // Read the table map
-    val oldTableMap: TableMap = new SimpleFormatParser(new FileReader(getPath(InputFileName))).parse()
+    val oldTableMap: TableMap = new SimpleFormatParser(new FileReader(getPath(InputFileName).getFile)).parse()
 
     // Make a copy of the tableMap
     // val newTableMap: TableMapImpl = new TableMapImpl(oldTableMap)
