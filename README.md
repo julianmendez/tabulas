@@ -29,6 +29,8 @@ It uses a specific type of file format that is similar to a [Java Properties](ht
 
 ## Format
 
+This describes the project as it is in (`master`).
+
 The Tabula format has *primitive types* and *composite types*. Unless something different is stated in the [release notes](https://github.com/julianmendez/tabula/blob/master/RELEASE-NOTES.md), the primitive types are:
 
 * `String`: any string without any newline (`'\n'` 0x0A, `'\r'` 0x0D), and not ending in backslash (`'\'` 0x5C), neither in blanks (`'\t'` 0x08, `' '` 0x20)  
@@ -78,17 +80,17 @@ The order in which the instances are shown is defined as follows:
 
 ```properties
 order = \
- [-]FIELD_NAME_a_0 \
- [-]FIELD_NAME_a_1 \
+ ['-'|'+']FIELD_NAME_a_0 \
+ ['-'|'+']FIELD_NAME_a_1 \
  ...
- [-]FIELD_NAME_a_k
+ ['-'|'+']FIELD_NAME_a_k
 ```
 
-where the `-` is optional and used to denote reverse order. For example:
+where the `+` and the `-` are used to denote whether the reverse order should be used. For example:
 
 ```properties
 order = \
- id \
+ +id \
  -author
 ``` 
 
@@ -134,22 +136,16 @@ This is an example of a library file. Each book record contains an identifier (`
 
 
 type = record 
-
-
 def = \
  id:String \
  title:String \
  authors:List_String \
  web:URI \
  documents:List_URI
-
-
 prefix = \
  arxiv:https://arxiv.org/
-
-
 order = \
- id
+ +id
 
 
 new = 

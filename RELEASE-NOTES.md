@@ -3,7 +3,7 @@
 
 | version | release date | Scala  | Tabula |
 |:--------|:-------------|:------:|:------:|
-| v0.3.0  | (unreleased) | 2.12.8 | 0.3.0  |
+| v0.3.0  | (unreleased) | 2.12.8 |        |
 | v0.2.0  | 2016-12-12   | 2.11.0 | 0.2.0  |
 | v0.1.0  | 2015-12-21   | 2.11.0 | 0.1.0  |
 
@@ -11,7 +11,6 @@
 
 ### v0.3.0
 *(unreleased)*
-* coordinated with [Tabula 0.3.0](https://github.com/julianmendez/tabula)
 * compiled with Scala 2.12.8
 * requires `scala-library-2.12.8.jar`
 * its artifact identifiers include the Scala version as suffix (`_2.12`)
@@ -25,7 +24,7 @@
 * shows a warning instead of stopping when the normalization finds duplicated identifiers
 * includes a `prefix` map to shorten URIs
 * uses the Scala collections and changes its traits accordingly
-* writers (extension names between parentheses):
+* includes new writers (extension names between parentheses):
   * (`json`) JSON
   * (`yaml`) YAML
 * uses [ScalaTest](http://www.scalatest.org) for unit tests
