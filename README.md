@@ -251,6 +251,9 @@ The given example is converted to YAML as follows:
 
 ```
 
+A YAML file can be easily converted to a JSON file using a [Python](https://www.python.org) script like
+[yaml_to_json.py](https://github.com/julianmendez/tabulas/blob/master/tabulas-ext/src/main/python/yaml_to_json.py).
+
 
 ## Source code
 
