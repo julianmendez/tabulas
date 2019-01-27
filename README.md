@@ -135,7 +135,7 @@ This is an example of a library file. Each book record contains an identifier (`
 # simple format 1.0.0
 
 
-type = record 
+type = record
 def = \
  id:String \
  title:String \
@@ -148,7 +148,7 @@ order = \
  +id
 
 
-new = 
+new =
 id = arXiv:1412.2223
 title = A topological approach to non-Archimedean Mathematics
 authors = \
@@ -161,7 +161,7 @@ documents = \
  https://arxiv.org/format/1412.2223#other
 
 
-new = 
+new =
 id = arXiv:1412.3313
 title = Infinitary stability theory
 authors = \
