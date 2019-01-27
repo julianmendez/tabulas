@@ -236,7 +236,7 @@ The given example (as Tabula/Properties) is converted to a YAML file (i.e. Tabul
   authors : 
   - Vieri_Benci
   - Lorenzo_Luperi_Baglini
-  web : https://arxiv.org/abs/1412.2223#
+  web : https://arxiv.org/abs/1412.2223
   documents : 
   - https://arxiv.org/pdf/1412.2223#pdf
   - https://arxiv.org/ps/1412.2223#ps
@@ -247,7 +247,7 @@ The given example (as Tabula/Properties) is converted to a YAML file (i.e. Tabul
   title : Infinitary stability theory
   authors : 
   - Sebastien_Vasey
-  web : https://arxiv.org/abs/1412.3313#
+  web : https://arxiv.org/abs/1412.3313
   documents : 
   - https://arxiv.org/pdf/1412.3313#pdf
   - https://arxiv.org/ps/1412.3313#ps

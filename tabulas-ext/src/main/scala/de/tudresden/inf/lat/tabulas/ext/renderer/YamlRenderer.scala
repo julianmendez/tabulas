@@ -90,8 +90,9 @@ class YamlRenderer(output: Writer) extends Renderer {
 
   def writeLinkIfNotEmpty(output: UncheckedWriter, prefix: String, link: URIValue): Boolean = {
     val result = if (Objects.nonNull(link) && !link.isEmpty) {
+      val fragment = if (link.getLabel.isEmpty) "" else HashChar + link.getLabel
       output.write(prefix)
-      output.write(escapeString(link.getUriNoLabel.toASCIIString + HashChar + link.getLabel))
+      output.write(escapeString(link.getUriNoLabel.toASCIIString + fragment))
       true
     } else {
       false
