@@ -8,8 +8,11 @@
 *System to manage human-readable tables using files*
 
 
-Tabulas is a system to manage human-readable tables using files. Tabulas is a [Scala](https://www.scala-lang.org/) reimplementation of [Tabula](https://github.com/julianmendez/tabula), which is implemented in Java.
-It uses a specific type of file format that is similar to a [Java Properties](https://docs.oracle.com/javase/8/docs/api/java/util/Properties.html#load-java.io.Reader-) file, but allows defining the same property for different objects.
+**Tabulas** is a system to manage human-readable tables using files. Tabulas is a [Scala](https://www.scala-lang.org/) reimplementation of [Tabula](https://github.com/julianmendez/tabula), which is implemented in Java.
+Its default representation is **Tabula/Properties**, which is a type of file format that is similar to a [Java Properties](https://docs.oracle.com/javase/8/docs/api/java/util/Properties.html#load-java.io.Reader-) file,
+but allows defining the same property for different objects.
+Alternative representations are the **Tabula/JSON**, using the [JSON](https://json.org) format,
+and **Tabulas/YAML**, using the [YAML](https://yaml.org) format.
 
 
 ## Download
@@ -29,7 +32,9 @@ It uses a specific type of file format that is similar to a [Java Properties](ht
 
 ## Format
 
-This describes the project as it is in `master`.
+This describes the project as it is in the `master` branch.
+
+In this section, the Tabula format is explained using the Tabula/Properties representation.
 
 The Tabula format has *primitive types* and *composite types*. Unless something different is stated in the [release notes](https://github.com/julianmendez/tabula/blob/master/RELEASE-NOTES.md), the primitive types are:
 
@@ -174,7 +179,7 @@ documents = \
 
 ```
 
-An example like this one is used for the unit tests.
+The unit tests include an example like [this one](https://github.com/julianmendez/tabulas/blob/master/tabulas-ext/src/test/resources/miniexample.properties).
 
 For example, the [MainTest](https://github.com/julianmendez/tabulas/blob/master/tabulas-core/src/test/scala/de/tudresden/inf/lat/tabulas/main/MainTest.scala) class does the following steps:
 
@@ -193,23 +198,23 @@ Every deserializer (parser) and serializer (renderer) is registered as an extens
 Some serializers and some deserializers cannot map completely the content of a Tabula file.
 
 
-| serializer               | stores metadata | multiple tables |
-|:-------------------------|:----------------|:----------------|
-| [JSON](https://json.org) | yes             | yes             |
-| [YAML](https://yaml.org) | yes             | yes             |
-| HTML                     | no              | yes             |
+| serializer   | stores metadata   | multiple tables |
+|:-------------|:------------------|:----------------|
+| JSON         | yes               | yes             |
+| YAML         | yes               | yes             |
+| HTML         | no                | yes             |
 | [Wikitext](https://www.mediawiki.org/wiki/Specs/wikitext/1.0.0) | no | yes |
-| CSV                      | no              | no              |
-| SQL                      | no              | no              |
+| CSV          | no                | no              |
+| SQL          | no                | no              |
 
 
-| deserializer           | requires metadata | multiple tables |
-|:-----------------------|:------------------|:----------------|
-| JSON                   | yes               | yes             |
-| CSV                    | no                | no              |
+| deserializer | requires metadata | multiple tables |
+|:-------------|:------------------|:----------------|
+| JSON         | yes               | yes             |
+| CSV          | no                | no              |
 
 
-The given example is converted to YAML as follows:
+The given example (as Tabula/Properties) is converted to a YAML file (i.e. Tabula/YAML) as follows:
 ```yaml
 
 
@@ -250,6 +255,8 @@ The given example is converted to YAML as follows:
 
 
 ```
+
+The unit tests also include the [previous example](https://github.com/julianmendez/tabulas/blob/master/tabulas-ext/src/test/resources/miniexample.yml).
 
 A YAML file can be easily converted to a JSON file using a [Python](https://www.python.org) script like
 [yaml_to_json.py](https://github.com/julianmendez/tabulas/blob/master/tabulas-ext/src/main/python/yaml_to_json.py).
