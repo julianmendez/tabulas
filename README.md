@@ -41,7 +41,7 @@ The Tabula format has *primitive types* and *composite types*. Unless something 
 * `Empty`: type that ignores any given value
 
 With this format it is possible to define one or many composite *types*. Each type is defined by its *fields*. The *instances* of each type are listed just after the type definition. The type name can be any Tabula String.
-The field name can be any Tabula String that does not contain an equals sign (`'='` 0x3D), and that is not the words `type` or `new`. The field name `id` is reserved to identify instances. Thus, two instances of the same type cannot have the same identifier.
+The field name can be any Tabula String that does not contain an equals sign (`'='` 0x3D), and that is not the words `type` or `new`.
 
 Each type is defined as follows:
 
@@ -164,8 +164,7 @@ documents = \
 new =
 id = arXiv:1412.3313
 title = Infinitary stability theory
-authors = \
- Sebastien_Vasey
+authors = Sebastien_Vasey
 web = &arxiv;abs/1412.3313
 documents = \
  &arxiv;pdf/1412.3313#pdf \
@@ -210,7 +209,7 @@ Some serializers and some deserializers cannot map completely the content of a T
 | CSV                    | no                | no              |
 
 
-The given example would be converted to YAML in the following way:
+The given example is converted to YAML as follows:
 ```yaml
 
 
