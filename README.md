@@ -210,6 +210,49 @@ Some serializers and some deserializers cannot map completely the content of a T
 | CSV                    | no                | no              |
 
 
+The given example would be converted to YAML in the following way:
+```yaml
+
+
+- type : record
+  def : 
+  - id:String
+  - title:String
+  - authors:List_String
+  - web:URI
+  - documents:List_URI
+  prefix : 
+  - arxiv:https://arxiv.org/
+  order : 
+  - +id
+
+
+- id : arXiv:1412.2223
+  title : A topological approach to non-Archimedean Mathematics
+  authors : 
+  - Vieri_Benci
+  - Lorenzo_Luperi_Baglini
+  web : https://arxiv.org/abs/1412.2223#
+  documents : 
+  - https://arxiv.org/pdf/1412.2223#pdf
+  - https://arxiv.org/ps/1412.2223#ps
+  - https://arxiv.org/format/1412.2223#other
+
+
+- id : arXiv:1412.3313
+  title : Infinitary stability theory
+  authors : 
+  - Sebastien_Vasey
+  web : https://arxiv.org/abs/1412.3313#
+  documents : 
+  - https://arxiv.org/pdf/1412.3313#pdf
+  - https://arxiv.org/ps/1412.3313#ps
+  - https://arxiv.org/format/1412.3313#other
+
+
+```
+
+
 ## Source code
 
 To clone and compile the project:
