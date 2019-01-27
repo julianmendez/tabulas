@@ -34,6 +34,9 @@ class ConversionTest extends FunSuite {
   val InputFileName5: String = "example.properties"
   val ExpectedOutputFileName5: String = "example.yml"
 
+  val InputFileName6: String = "miniexample.properties"
+  val ExpectedOutputFileName6: String = "miniexample.yml"
+
   val NewLine: String = "\n"
 
   def getPath(fileName: String): URL = {
@@ -88,12 +91,17 @@ class ConversionTest extends FunSuite {
   }
 
   test("rendering YAML") {
-    val tableMap: TableMap = new SimpleFormatParser(getFileReader(InputFileName5)).parse()
-    val expectedResult: String = readFile(ExpectedOutputFileName5)
-    val writer = new StringWriter()
-    val renderer = new YamlRenderer(writer)
-    renderer.render(tableMap)
-    assert(expectedResult === writer.toString)
+    Seq(
+      (InputFileName5, ExpectedOutputFileName5),
+      (InputFileName6, ExpectedOutputFileName6)
+    ).foreach(pair => {
+      val tableMap: TableMap = new SimpleFormatParser(getFileReader(pair._1)).parse()
+      val expectedResult: String = readFile(pair._2)
+      val writer = new StringWriter()
+      val renderer = new YamlRenderer(writer)
+      renderer.render(tableMap)
+      assert(expectedResult === writer.toString)
+    })
   }
 
 }
