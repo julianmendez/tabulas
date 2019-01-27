@@ -15,6 +15,15 @@ import scala.collection.JavaConverters._
   */
 class JsonParser(input: Reader) extends Parser {
 
+  def asString(value: JsonValue): String = {
+    val result = if (value.isString) {
+      value.asString
+    } else {
+      value.toString
+    }
+    result
+  }
+
   def renderEntry(key: String, value: JsonValue): String = {
     val prefix = key + ParserConstant.Space + ParserConstant.EqualsSign
     val result = if (value.isArray) {
@@ -23,13 +32,13 @@ class JsonParser(input: Reader) extends Parser {
         .map(index => {
           val entry = array.get(index)
           ParserConstant.Space + ParserConstant.LineContinuationSymbol + ParserConstant.NewLine +
-            ParserConstant.Space + entry.asString
+            ParserConstant.Space + asString(entry)
         })
         .mkString("")
       prefix + arrayStr + ParserConstant.NewLine
 
     } else {
-      prefix + ParserConstant.Space + value.asString + ParserConstant.NewLine
+      prefix + ParserConstant.Space + asString(value) + ParserConstant.NewLine
 
     }
     result
