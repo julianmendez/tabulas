@@ -26,7 +26,10 @@ class JsonParser(input: Reader) extends Parser {
 
   def renderEntry(key: String, value: JsonValue): String = {
     val prefix = key + ParserConstant.Space + ParserConstant.EqualsSign
-    val result = if (value.isArray) {
+    val middle = if (value.isNull) {
+      ""
+
+    } else if (value.isArray) {
       val array = value.asArray()
       val arrayStr = (0 until array.size)
         .map(index => {
@@ -35,12 +38,13 @@ class JsonParser(input: Reader) extends Parser {
             ParserConstant.Space + asString(entry)
         })
         .mkString("")
-      prefix + arrayStr + ParserConstant.NewLine
+      arrayStr
 
     } else {
-      prefix + ParserConstant.Space + asString(value) + ParserConstant.NewLine
+      ParserConstant.Space + asString(value)
 
     }
+    val result = prefix + middle + ParserConstant.NewLine
     result
   }
 

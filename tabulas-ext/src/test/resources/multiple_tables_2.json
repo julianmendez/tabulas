@@ -7,8 +7,7 @@
  "id:String",
  "size:Integer"
 ],
-"prefix" : [
-],
+"prefix" : null,
 "order" : [
  "+size",
  "-id"
