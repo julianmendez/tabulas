@@ -16,32 +16,34 @@ import scala.collection.JavaConverters._
   */
 class ConversionTest extends FunSuite {
 
-  val InputFileName0: String = "example.properties"
-  val ExpectedOutputFileName0: String = "example-expected.properties"
+  val ExtPrefix = "ext/"
+  
+  val InputFileName0: String = ExtPrefix + "example.properties"
+  val ExpectedOutputFileName0: String = ExtPrefix + "example-expected.properties"
 
-  val InputFileName1: String = "example.properties"
-  val ExpectedOutputFileName1: String = "example.json"
+  val InputFileName1: String = ExtPrefix + "example.properties"
+  val ExpectedOutputFileName1: String = ExtPrefix + "example.json"
 
-  val InputFileName2: String = "multiple_tables.properties"
-  val ExpectedOutputFileName2: String = "multiple_tables.json"
+  val InputFileName2: String = ExtPrefix + "multiple_tables.properties"
+  val ExpectedOutputFileName2: String = ExtPrefix + "multiple_tables.json"
 
-  val InputFileName3: String = "miniexample.properties"
-  val ExpectedOutputFileName3: String = "miniexample.json"
+  val InputFileName3: String = ExtPrefix + "miniexample.properties"
+  val ExpectedOutputFileName3: String = ExtPrefix + "miniexample.json"
 
-  val InputFileName4: String = "example.json"
-  val ExpectedOutputFileName4: String = "example-expected.properties"
+  val InputFileName4: String = ExtPrefix + "example.json"
+  val ExpectedOutputFileName4: String = ExtPrefix + "example-expected.properties"
 
-  val InputFileName5: String = "multiple_tables.json"
-  val ExpectedOutputFileName5: String = "multiple_tables-expected.properties"
+  val InputFileName5: String = ExtPrefix + "multiple_tables.json"
+  val ExpectedOutputFileName5: String = ExtPrefix + "multiple_tables-expected.properties"
 
-  val InputFileName6: String = "multiple_tables_2.json"
-  val ExpectedOutputFileName6: String = "multiple_tables-expected.properties"
+  val InputFileName6: String = ExtPrefix + "multiple_tables_2.json"
+  val ExpectedOutputFileName6: String = ExtPrefix + "multiple_tables-expected.properties"
 
-  val InputFileName7: String = "example.properties"
-  val ExpectedOutputFileName7: String = "example.yml"
+  val InputFileName7: String = ExtPrefix + "example.properties"
+  val ExpectedOutputFileName7: String = ExtPrefix + "example.yml"
 
-  val InputFileName8: String = "miniexample.properties"
-  val ExpectedOutputFileName8: String = "miniexample.yml"
+  val InputFileName8: String = ExtPrefix + "miniexample.properties"
+  val ExpectedOutputFileName8: String = ExtPrefix + "miniexample.yml"
 
   val NewLine: String = "\n"
 

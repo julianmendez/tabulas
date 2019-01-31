@@ -183,10 +183,10 @@ The unit tests include an example like [this one](https://github.com/julianmende
 
 For example, the [MainTest](https://github.com/julianmendez/tabulas/blob/master/tabulas-core/src/test/scala/de/tudresden/inf/lat/tabulas/main/MainTest.scala) class does the following steps:
 
-* read the [example file](https://github.com/julianmendez/tabulas/blob/master/tabulas-core/src/test/resources/example.properties)
+* read the [example file](https://github.com/julianmendez/tabulas/blob/master/tabulas-core/src/test/resources/core/example.properties)
 * add a new field `numberOfAuthors`
 * add to each record the number of authors 
-* compare the [expected result](https://github.com/julianmendez/tabulas/blob/master/tabulas-core/src/test/resources/example-modified.properties)
+* compare the [expected result](https://github.com/julianmendez/tabulas/blob/master/tabulas-core/src/test/resources/core/example-modified.properties)
 
 This [Bash script](https://github.com/julianmendez/tabulas/blob/master/docs/examples/tabulas.sh.txt) shows how to start Tabulas from the command line.
 

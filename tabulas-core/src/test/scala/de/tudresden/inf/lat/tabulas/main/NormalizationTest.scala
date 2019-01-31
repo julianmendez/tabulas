@@ -11,14 +11,14 @@ import org.scalatest.FunSuite
   */
 class NormalizationTest extends FunSuite {
 
-  val InputFileName0: String = "example.properties"
-  val ExpectedOutputFileName0: String = "example-expected.properties"
+  val InputFileName0: String = "core/example.properties"
+  val ExpectedOutputFileName0: String = "core/example-expected.properties"
 
-  val InputFileName1: String = "multiple_tables.properties"
-  val ExpectedOutputFileName1: String = "multiple_tables-expected.properties"
+  val InputFileName1: String = "core/multiple_tables.properties"
+  val ExpectedOutputFileName1: String = "core/multiple_tables-expected.properties"
 
-  val InputFileName2: String = "another_example.properties"
-  val ExpectedOutputFileName2: String = "another_example-expected.properties"
+  val InputFileName2: String = "core/another_example.properties"
+  val ExpectedOutputFileName2: String = "core/another_example-expected.properties"
 
   val NewLine: String = "\n"
 

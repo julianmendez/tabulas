@@ -17,9 +17,11 @@ import scala.collection.JavaConverters._
   */
 class MainTest extends FunSuite {
 
-  val InputFileName: String = "example.properties"
-  val ExpectedOutputFileName: String = "example-expected.properties"
-  val ModifiedOutputFileName: String = "example-modified.properties"
+  val CorePrefix = "core/"
+
+  val InputFileName: String = CorePrefix + "example.properties"
+  val ExpectedOutputFileName: String = CorePrefix + "example-expected.properties"
+  val ModifiedOutputFileName: String = CorePrefix + "example-modified.properties"
 
   val TypeNameRecord: String = "record"
   val FieldNameAuthors: String = "authors"
