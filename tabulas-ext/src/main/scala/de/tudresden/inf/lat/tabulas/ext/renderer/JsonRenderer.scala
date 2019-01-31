@@ -4,7 +4,7 @@ package de.tudresden.inf.lat.tabulas.ext.renderer
 import java.io.{OutputStreamWriter, Writer}
 import java.util.Objects
 
-import de.tudresden.inf.lat.tabulas.datatype.{CompositeTypeValue, ParameterizedListValue, PrimitiveTypeValue, Record, StringType, StringValue, URIType, URIValue}
+import de.tudresden.inf.lat.tabulas.datatype.{CompositeTypeValue, IntegerType, IntegerValue, ParameterizedListValue, PrimitiveTypeValue, Record, StringType, StringValue, URIType, URIValue}
 import de.tudresden.inf.lat.tabulas.renderer.{MetadataHelper, Renderer, UncheckedWriter, UncheckedWriterImpl}
 import de.tudresden.inf.lat.tabulas.table.{Table, TableMap}
 
@@ -58,6 +58,17 @@ class JsonRenderer(output: Writer) extends Renderer {
     result
   }
 
+  def writeAsIntegerIfNotEmpty(output: UncheckedWriter, prefix: String, value: PrimitiveTypeValue): Boolean = {
+    val result = if (Objects.nonNull(value) && !value.toString.trim().isEmpty) {
+      output.write(prefix)
+      output.write(escapeString(value.toString))
+      true
+    } else {
+      false
+    }
+    result
+  }
+
   def writeAsStringIfNotEmpty(output: UncheckedWriter, prefix: String, value: PrimitiveTypeValue): Boolean = {
     val result = if (Objects.nonNull(value) && !value.toString.trim().isEmpty) {
       output.write(prefix)
@@ -79,6 +90,9 @@ class JsonRenderer(output: Writer) extends Renderer {
         if (value.getType.equals(URIType())) {
           val link: URIValue = URIType().castInstance(value)
           writeLinkIfNotEmpty(output, " ", link)
+        } else if (value.getType.equals(IntegerType())) {
+          val intVal: IntegerValue = IntegerType().castInstance(value)
+          writeAsIntegerIfNotEmpty(output, " ", intVal)
         } else {
           val strVal: StringValue = StringType().castInstance(value)
           writeAsStringIfNotEmpty(output, " ", strVal)
@@ -118,6 +132,8 @@ class JsonRenderer(output: Writer) extends Renderer {
           writeParameterizedListIfNotEmpty(output, prefix, list)
         case link: URIValue =>
           writeLinkIfNotEmpty(output, prefix, link)
+        case number: IntegerValue =>
+          writeAsIntegerIfNotEmpty(output, prefix, value)
         case _ =>
           writeAsStringIfNotEmpty(output, prefix, value)
       }

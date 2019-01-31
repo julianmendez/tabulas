@@ -18,49 +18,49 @@
 
 {
 "id" : "boolean",
-"size" : "1"
+"size" : 1
 },
 
 
 {
 "id" : "byte",
-"size" : "8"
+"size" : 8
 },
 
 
 {
 "id" : "short",
-"size" : "16"
+"size" : 16
 },
 
 
 {
 "id" : "char",
-"size" : "16"
+"size" : 16
 },
 
 
 {
 "id" : "int",
-"size" : "32"
+"size" : 32
 },
 
 
 {
 "id" : "float",
-"size" : "32"
+"size" : 32
 },
 
 
 {
 "id" : "long",
-"size" : "64"
+"size" : 64
 },
 
 
 {
 "id" : "double",
-"size" : "64"
+"size" : 64
 },
 
 

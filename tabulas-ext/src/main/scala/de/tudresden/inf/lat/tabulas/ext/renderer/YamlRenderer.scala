@@ -2,6 +2,7 @@
 package de.tudresden.inf.lat.tabulas.ext.renderer
 
 import java.io.{OutputStreamWriter, Writer}
+import java.text.SimpleDateFormat
 import java.util.Objects
 
 import de.tudresden.inf.lat.tabulas.datatype._
@@ -80,9 +81,13 @@ class YamlRenderer(output: Writer) extends Renderer {
     val isANumber = Try {
       BigDecimal(text)
     }.isSuccess
+    val isADate = Try {
+      new SimpleDateFormat("yyyy-MM-dd").format(text)
+    }.isSuccess
     val trimmedText = text.trim
     val startsWithSpecialChar = SpecialCharSeq.exists(specialChar => trimmedText.startsWith(specialChar))
-    val result = isABoolean || isANumber || startsWithSpecialChar || text.contains(ColonSpace) || text.contains(SpaceHash)
+    val result = isABoolean || isANumber || isADate ||
+      startsWithSpecialChar || text.contains(ColonSpace) || text.contains(SpaceHash)
     result
   }
 
@@ -117,6 +122,9 @@ class YamlRenderer(output: Writer) extends Renderer {
         if (value.getType.equals(URIType())) {
           val link: URIValue = URIType().castInstance(value)
           writeLinkIfNotEmpty(output, TwoSpaces + HyphenSpace, link)
+        } else if (value.getType.equals(IntegerType())) {
+          val intVal: IntegerValue = IntegerType().castInstance(value)
+          writeAsIntegerIfNotEmpty(output, TwoSpaces + HyphenSpace, intVal)
         } else {
           val strVal: StringValue = StringType().castInstance(value)
           writeAsStringIfNotEmpty(output, TwoSpaces + HyphenSpace, strVal)
