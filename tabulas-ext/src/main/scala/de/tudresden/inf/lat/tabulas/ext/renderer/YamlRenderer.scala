@@ -8,6 +8,8 @@ import de.tudresden.inf.lat.tabulas.datatype._
 import de.tudresden.inf.lat.tabulas.renderer.{MetadataHelper, Renderer, UncheckedWriter, UncheckedWriterImpl}
 import de.tudresden.inf.lat.tabulas.table.{Table, TableMap}
 
+import scala.util.Try
+
 /** Renderer that creates a YAML file.
   */
 class YamlRenderer(output: Writer) extends Renderer {
@@ -36,6 +38,13 @@ class YamlRenderer(output: Writer) extends Renderer {
   final val EscapedTab = "\\t"
   final val Slash = "/"
 
+  final val ColonSpace = ": "
+  final val SpaceHash = " #"
+
+  final val SpecialCharSeq = Seq(
+    ":", "{", "}", "[", "]", ",", "&", "*", "#", "?", "|", "-", "<", ">", "=", "!", "%", "@", "`"
+  )
+
   def escapeString(str: String): String = {
     val result = str.flatMap(ch => {
       "" + ch match {
@@ -53,10 +62,44 @@ class YamlRenderer(output: Writer) extends Renderer {
     result
   }
 
-  def writeAsStringIfNotEmpty(output: UncheckedWriter, prefix: String, value: PrimitiveTypeValue): Boolean = {
+  def writeAsIntegerIfNotEmpty(output: UncheckedWriter, prefix: String, value: PrimitiveTypeValue): Boolean = {
     val result = if (Objects.nonNull(value) && !value.toString.trim().isEmpty) {
       output.write(prefix)
       output.write(escapeString(value.toString))
+      true
+    } else {
+      false
+    }
+    result
+  }
+
+  def requiresQuotes(text: String): Boolean = {
+    val isABoolean = Try {
+      text.toBoolean
+    }.isSuccess
+    val isANumber = Try {
+      BigDecimal(text)
+    }.isSuccess
+    val trimmedText = text.trim
+    val startsWithSpecialChar = SpecialCharSeq.exists(specialChar => trimmedText.startsWith(specialChar))
+    val result = isABoolean || isANumber || startsWithSpecialChar || text.contains(ColonSpace) || text.contains(SpaceHash)
+    result
+  }
+
+  def addQuotesIfNeeded(text: String): String = {
+    val result = if (requiresQuotes(text)) {
+      QuotationMark + text + QuotationMark
+    } else {
+      text
+    }
+    result
+  }
+
+  def writeAsStringIfNotEmpty(output: UncheckedWriter, prefix: String, value: PrimitiveTypeValue): Boolean = {
+    val text = addQuotesIfNeeded(escapeString(value.toString))
+    val result = if (Objects.nonNull(value) && !value.toString.trim().isEmpty) {
+      output.write(prefix)
+      output.write(text)
       true
     } else {
       false
@@ -114,6 +157,8 @@ class YamlRenderer(output: Writer) extends Renderer {
           writeParameterizedListIfNotEmpty(output, prefix, list)
         case link: URIValue =>
           writeLinkIfNotEmpty(output, prefix, link)
+        case number: IntegerValue =>
+          writeAsIntegerIfNotEmpty(output, prefix, value)
         case _ =>
           writeAsStringIfNotEmpty(output, prefix, value)
       }

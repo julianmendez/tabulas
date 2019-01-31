@@ -8,6 +8,7 @@
   - web:URI
   - documents:List_URI
   - keywords:List_String
+  - year:String
   prefix : 
   - partarx:https://arxiv
   - arxiv:https://arxiv.org/
@@ -28,6 +29,7 @@
   keywords : 
   - topology
   - Archimedes
+  year : "2015"
 
 
 - id : arXiv:1412.2953
@@ -43,6 +45,7 @@
   keywords : 
   - Boolean_logic
   - reasoning
+  year : "2014"
 
 
 - id : arXiv:1412.3313
@@ -57,6 +60,7 @@
   keywords : 
   - infinity
   - stability_theory
+  year : "2016"
 
 
 

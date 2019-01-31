@@ -9,7 +9,8 @@
  "authors:List_URI",
  "web:URI",
  "documents:List_URI",
- "keywords:List_String"
+ "keywords:List_String",
+ "year:String"
 ],
 "prefix" : [
  "partarx:https://arxiv",
@@ -37,7 +38,8 @@
 "keywords" : [
  "topology",
  "Archimedes"
-]
+],
+"year" : "2015"
 },
 
 
@@ -57,7 +59,8 @@
 "keywords" : [
  "Boolean_logic",
  "reasoning"
-]
+],
+"year" : "2014"
 },
 
 
@@ -76,7 +79,8 @@
 "keywords" : [
  "infinity",
  "stability_theory"
-]
+],
+"year" : "2016"
 }
 
 
