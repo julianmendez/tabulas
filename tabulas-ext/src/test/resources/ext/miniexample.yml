@@ -1,16 +1,17 @@
 
 
-- type : record
-  def : 
-  - id:String
-  - title:String
-  - authors:List_String
-  - web:URI
-  - documents:List_URI
-  prefix : 
-  - arxiv:https://arxiv.org/
-  order : 
-  - +id
+- type :
+    name : record
+    def : 
+    - id:String
+    - title:String
+    - authors:List_String
+    - web:URI
+    - documents:List_URI
+    prefix : 
+    - arxiv:https://arxiv.org/
+    order : 
+    - +id
 
 
 - id : arXiv:1412.2223

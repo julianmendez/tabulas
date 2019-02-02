@@ -113,8 +113,9 @@ class YamlRenderer(output: Writer) extends Renderer {
     result
   }
 
-  def writeParameterizedListIfNotEmpty(output: UncheckedWriter, prefix: String, list: ParameterizedListValue): Boolean = {
+  def writeParameterizedListIfNotEmpty(output: UncheckedWriter, prefix: String, list: ParameterizedListValue, tabulation: String): Boolean = {
     val result = if (Objects.nonNull(list)) {
+      output.write(tabulation)
       output.write(prefix)
       output.write(NewLine)
       val newList = list.getList
@@ -122,13 +123,13 @@ class YamlRenderer(output: Writer) extends Renderer {
         val value = newList(index)
         if (value.getType.equals(URIType())) {
           val link: URIValue = URIType().castInstance(value)
-          writeLinkIfNotEmpty(output, TwoSpaces + HyphenSpace, link)
+          writeLinkIfNotEmpty(output, tabulation + TwoSpaces + HyphenSpace, link)
         } else if (value.getType.equals(IntegerType())) {
           val intVal: IntegerValue = IntegerType().castInstance(value)
-          writeAsIntegerIfNotEmpty(output, TwoSpaces + HyphenSpace, intVal)
+          writeAsIntegerIfNotEmpty(output, tabulation + TwoSpaces + HyphenSpace, intVal)
         } else {
           val strVal: StringValue = StringType().castInstance(value)
-          writeAsStringIfNotEmpty(output, TwoSpaces + HyphenSpace, strVal)
+          writeAsStringIfNotEmpty(output, tabulation + TwoSpaces + HyphenSpace, strVal)
         }
         val maybeNewLine = if (index < newList.length - 1) NewLine else ""
         output.write(maybeNewLine)
@@ -152,9 +153,9 @@ class YamlRenderer(output: Writer) extends Renderer {
     result
   }
 
-  def render(output: UncheckedWriter, record: Record, fields: Seq[String]): Unit = {
+  def render(output: UncheckedWriter, record: Record, fields: Seq[String], tabulation: String): Unit = {
     val newList = fields.filter(field => record.get(field).isDefined)
-    output.write(HyphenChar + SpaceChar)
+    output.write(tabulation)
     newList.indices.foreach(index => {
       val field = newList(index)
       val optValue: Option[PrimitiveTypeValue] = record.get(field)
@@ -163,13 +164,13 @@ class YamlRenderer(output: Writer) extends Renderer {
       val prefix = spaces + escapeString(field) + SpaceChar + ColonChar + SpaceChar
       value match {
         case list: ParameterizedListValue =>
-          writeParameterizedListIfNotEmpty(output, prefix, list)
+          writeParameterizedListIfNotEmpty(output, prefix, list, tabulation)
         case link: URIValue =>
-          writeLinkIfNotEmpty(output, prefix, link)
+          writeLinkIfNotEmpty(output, tabulation + prefix, link)
         case number: IntegerValue =>
-          writeAsIntegerIfNotEmpty(output, prefix, value)
+          writeAsIntegerIfNotEmpty(output, tabulation + prefix, number)
         case _ =>
-          writeAsStringIfNotEmpty(output, prefix, value)
+          writeAsStringIfNotEmpty(output, tabulation + prefix, value)
       }
       output.write(NewLine)
     })
@@ -177,7 +178,8 @@ class YamlRenderer(output: Writer) extends Renderer {
 
   def renderMetadata(output: UncheckedWriter, typeName: String, table: Table): Unit = {
     val record = MetadataHelper().getMetadataAsRecord(typeName, table)
-    render(output, record, YamlRenderer.MetadataTokens)
+    output.write(HyphenSpace + ParserConstant.TypeSelectionToken + SpaceChar + ColonChar + NewLine)
+    render(output, record, YamlRenderer.MetadataTokens, TwoSpaces)
     output.write(NewLine + NewLine)
   }
 
@@ -185,7 +187,8 @@ class YamlRenderer(output: Writer) extends Renderer {
     val list: Seq[Record] = table.getRecords
     list.indices.foreach(index => {
       val record = list(index)
-      render(output, record, table.getType.getFields)
+      output.write(HyphenChar + SpaceChar)
+      render(output, record, table.getType.getFields, "")
       output.write(NewLine + NewLine)
     })
   }
@@ -210,7 +213,7 @@ class YamlRenderer(output: Writer) extends Renderer {
 object YamlRenderer {
 
   final val MetadataTokens = Seq(
-    ParserConstant.TypeSelectionToken,
+    ParserConstant.TypeNameToken,
     ParserConstant.TypeDefinitionToken,
     ParserConstant.PrefixMapToken,
     ParserConstant.SortingOrderDeclarationToken

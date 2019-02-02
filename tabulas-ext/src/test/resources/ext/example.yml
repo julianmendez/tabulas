@@ -1,19 +1,20 @@
 
 
-- type : record
-  def : 
-  - id:String
-  - title:String
-  - authors:List_URI
-  - web:URI
-  - documents:List_URI
-  - keywords:List_String
-  - year:String
-  prefix : 
-  - partarx:https://arxiv
-  - arxiv:https://arxiv.org/
-  order : 
-  - +id
+- type :
+    name : record
+    def : 
+    - id:String
+    - title:String
+    - authors:List_URI
+    - web:URI
+    - documents:List_URI
+    - keywords:List_String
+    - year:String
+    prefix : 
+    - partarx:https://arxiv
+    - arxiv:https://arxiv.org/
+    order : 
+    - +id
 
 
 - id : arXiv:1412.2223

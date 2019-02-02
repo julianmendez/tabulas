@@ -1,14 +1,15 @@
 
 
-- type : value
-  def : 
-  - id:String
-  - size:Integer
-  prefix : 
+- type :
+    name : value
+    def : 
+    - id:String
+    - size:Integer
+    prefix : 
 
-  order : 
-  - +size
-  - -id
+    order : 
+    - +size
+    - -id
 
 
 - id : boolean
@@ -43,14 +44,15 @@
   size : 64
 
 
-- type : variable
-  def : 
-  - id:String
-  - vartype:String
-  prefix : 
+- type : 
+    name : variable
+    def : 
+    - id:String
+    - vartype:String
+    prefix : 
 
-  order : 
-  - +id
+    order : 
+    - +id
 
 
 - id : x0
