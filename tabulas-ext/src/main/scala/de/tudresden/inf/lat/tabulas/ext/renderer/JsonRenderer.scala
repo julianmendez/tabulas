@@ -134,7 +134,7 @@ class JsonRenderer(output: Writer) extends Renderer {
         case link: URIValue =>
           writeLinkIfNotEmpty(output, prefix, link)
         case number: IntegerValue =>
-          writeAsIntegerIfNotEmpty(output, prefix, value)
+          writeAsIntegerIfNotEmpty(output, prefix, number)
         case _ =>
           writeAsStringIfNotEmpty(output, prefix, value)
       }
