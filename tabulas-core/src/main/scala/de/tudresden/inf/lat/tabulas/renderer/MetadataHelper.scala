@@ -14,6 +14,10 @@ class MetadataHelper {
     new StringValue(typeName)
   }
 
+  private def getNameEntry(typeName: String): PrimitiveTypeValue = {
+    new StringValue(typeName)
+  }
+
   private def getDefEntry(table: Table): PrimitiveTypeValue = {
     val list = table.getType.getFields
       .map(key => key + ParserConstant.TypeSign + table.getType.getFieldType(key).get)
@@ -45,6 +49,7 @@ class MetadataHelper {
   def getMetadataAsRecord(typeName: String, table: Table): Record = {
     val map = new mutable.HashMap[String, PrimitiveTypeValue]
     map.put(ParserConstant.TypeSelectionToken, getTypeEntry(typeName))
+    map.put(ParserConstant.TypeNameToken, getNameEntry(typeName))
     map.put(ParserConstant.TypeDefinitionToken, getDefEntry(table))
     map.put(ParserConstant.PrefixMapToken, getPrefixEntry(table))
     map.put(ParserConstant.SortingOrderDeclarationToken, getOrderEntry(table))
@@ -54,13 +59,6 @@ class MetadataHelper {
 }
 
 object MetadataHelper {
-
-  final val MetadataTokens = Seq(
-    ParserConstant.TypeSelectionToken,
-    ParserConstant.TypeDefinitionToken,
-    ParserConstant.PrefixMapToken,
-    ParserConstant.SortingOrderDeclarationToken
-  )
 
   def apply(): MetadataHelper = new MetadataHelper
 

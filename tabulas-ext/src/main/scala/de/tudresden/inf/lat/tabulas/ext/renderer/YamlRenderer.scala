@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat
 import java.util.Objects
 
 import de.tudresden.inf.lat.tabulas.datatype._
+import de.tudresden.inf.lat.tabulas.parser.ParserConstant
 import de.tudresden.inf.lat.tabulas.renderer.{MetadataHelper, Renderer, UncheckedWriter, UncheckedWriterImpl}
 import de.tudresden.inf.lat.tabulas.table.{Table, TableMap}
 
@@ -176,7 +177,7 @@ class YamlRenderer(output: Writer) extends Renderer {
 
   def renderMetadata(output: UncheckedWriter, typeName: String, table: Table): Unit = {
     val record = MetadataHelper().getMetadataAsRecord(typeName, table)
-    render(output, record, MetadataHelper.MetadataTokens)
+    render(output, record, YamlRenderer.MetadataTokens)
     output.write(NewLine + NewLine)
   }
 
@@ -207,6 +208,13 @@ class YamlRenderer(output: Writer) extends Renderer {
 }
 
 object YamlRenderer {
+
+  final val MetadataTokens = Seq(
+    ParserConstant.TypeSelectionToken,
+    ParserConstant.TypeDefinitionToken,
+    ParserConstant.PrefixMapToken,
+    ParserConstant.SortingOrderDeclarationToken
+  )
 
   def apply(): YamlRenderer = new YamlRenderer(new OutputStreamWriter(System.out))
 

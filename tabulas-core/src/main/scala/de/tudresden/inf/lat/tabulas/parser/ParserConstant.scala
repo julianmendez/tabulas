@@ -18,6 +18,7 @@ object ParserConstant {
   val SortingOrderDeclarationToken: String = "order"
   val Space: String = " "
   val TypeSelectionToken: String = "type"
+  val TypeNameToken: String = "name"
   val TypeDefinitionToken: String = "def"
   val TypeSign: String = ":"
 
