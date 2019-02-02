@@ -5,8 +5,7 @@ import java.io.{BufferedReader, IOException, InputStreamReader, Reader}
 import java.net.{URI, URISyntaxException}
 import java.util.{Objects, StringTokenizer}
 
-import de.tudresden.inf.lat.tabulas.datatype.{CompositeType, CompositeTypeImpl, ParameterizedListValue, ParseException}
-import de.tudresden.inf.lat.tabulas.datatype.{PrimitiveTypeFactory, PrimitiveTypeValue, Record, StringValue, URIType, URIValue}
+import de.tudresden.inf.lat.tabulas.datatype.{CompositeType, CompositeTypeImpl, ParameterizedListValue, ParseException, PrimitiveTypeFactory, PrimitiveTypeValue, Record, StringValue, URIType, URIValue}
 import de.tudresden.inf.lat.tabulas.table.{PrefixMap, PrefixMapImpl, RecordImpl, TableImpl, TableMap, TableMapImpl}
 
 import scala.collection.mutable
@@ -275,8 +274,8 @@ class SimpleFormatParser(input: Reader) extends Parser {
           isDefiningType = true
         }
 
-        if (isDefiningType && hasKey(line, ParserConstant.TypeSelectionToken)||
-          hasKey(line, ParserConstant.TypeNameToken)
+        if (isDefiningType &&
+          (hasKey(line, ParserConstant.TypeSelectionToken) || hasKey(line, ParserConstant.TypeNameToken))
         ) {
           val optTableName: Option[String] = getValue(line)
           if (optTableName.isDefined) {
