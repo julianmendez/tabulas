@@ -272,11 +272,8 @@ class SimpleFormatParser(input: Reader) extends Parser {
       if (Objects.nonNull(line) && !line.trim().isEmpty) {
         if (hasKey(line, ParserConstant.TypeSelectionToken)) {
           isDefiningType = true
-        }
 
-        if (isDefiningType &&
-          (hasKey(line, ParserConstant.TypeSelectionToken) || hasKey(line, ParserConstant.TypeNameToken))
-        ) {
+        } else if (isDefiningType && hasKey(line, ParserConstant.TypeNameToken)) {
           val optTableName: Option[String] = getValue(line)
           if (optTableName.isDefined) {
             tableName = optTableName.get

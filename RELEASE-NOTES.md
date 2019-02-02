@@ -11,6 +11,7 @@
 
 ### v0.3.0
 *(unreleased)*
+* every type definition requires a field `name` for the type name
 * compiled with Scala 2.12.8
 * requires `scala-library-2.12.8.jar`
 * its artifact identifiers include the Scala version as suffix (`_2.12`)

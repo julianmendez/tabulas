@@ -50,7 +50,7 @@ class JsonParser(input: Reader) extends Parser {
   def transformDocument(reader: Reader): String = {
     val value = Json.parse(reader)
     val mainArray = value.asArray()
-    val result = SimpleFormatRenderer.Prefix + ParserConstant.NewLine +
+    val result = SimpleFormatRenderer.Header + ParserConstant.NewLine +
       (0 until mainArray.size)
         .map(index => {
           val record = mainArray.get(index).asObject()

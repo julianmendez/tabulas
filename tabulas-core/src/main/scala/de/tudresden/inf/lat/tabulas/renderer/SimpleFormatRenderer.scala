@@ -23,9 +23,11 @@ class SimpleFormatRenderer(output: Writer) extends Renderer {
   }
 
   def render(output: UncheckedWriter, tableMap: TableMap): Unit = {
-    output.write(SimpleFormatRenderer.Prefix)
+    output.write(SimpleFormatRenderer.Header)
     tableMap.getTableIds.foreach(tableName => {
       output.write(ParserConstant.NewLine)
+      output.write(ParserConstant.NewLine)
+      output.write(ParserConstant.TypeSelectionToken + ParserConstant.Space + ParserConstant.EqualsSign + ParserConstant.Space)
       val table: Table = tableMap.getTable(tableName).get
       val record = MetadataHelper().getMetadataAsRecord(tableName, table)
       val recordRenderer = new SimpleFormatRecordRenderer(output.asWriter(), table.getPrefixMap)
@@ -44,14 +46,15 @@ class SimpleFormatRenderer(output: Writer) extends Renderer {
 object SimpleFormatRenderer {
 
   final val MetadataTokens = Seq(
-    ParserConstant.TypeSelectionToken,
+    ParserConstant.TypeNameToken,
     ParserConstant.TypeDefinitionToken,
     ParserConstant.PrefixMapToken,
     ParserConstant.SortingOrderDeclarationToken
   )
 
-  val Prefix: String = "" +
-    ParserConstant.CommentSymbol + " simple format 1.0.0" + ParserConstant.NewLine
+  val Header: String = "" +
+    ParserConstant.CommentSymbol + " " + ParserConstant.SpecificationFormat + " " +
+    ParserConstant.SpecificationVersion + ParserConstant.NewLine
 
   def apply(output: Writer): SimpleFormatRenderer = new SimpleFormatRenderer(output)
 

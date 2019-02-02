@@ -51,7 +51,8 @@ The field name can be any Tabula String that does not contain an equals sign (`'
 Each type is defined as follows:
 
 ```properties
-type = TYPE_NAME
+type =
+name = TYPE_NAME
 ```
 
 where *TYPE_NAME* can be any identifier.
@@ -140,7 +141,8 @@ This is an example of a library file. Each book record contains an identifier (`
 # simple format 1.0.0
 
 
-type = record
+type = 
+name = record
 def = \
  id:String \
  title:String \

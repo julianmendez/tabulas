@@ -5,6 +5,9 @@ package de.tudresden.inf.lat.tabulas.parser
   */
 object ParserConstant {
 
+  val SpecificationFormat = "simple format"
+  val SpecificationVersion = "1.0.0"
+
   val CommentSymbol: String = "#"
   val EqualsSign: String = "="
   val StandardOrderSign: String = "+"
