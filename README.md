@@ -218,17 +218,18 @@ The given example (as Tabula/Properties) is converted to a YAML file (i.e. Tabul
 ```yaml
 
 
-- type : record
-  def : 
-  - id:String
-  - title:String
-  - authors:List_String
-  - web:URI
-  - documents:List_URI
-  prefix : 
-  - arxiv:https://arxiv.org/
-  order : 
-  - +id
+- type :
+    name : record
+    def : 
+    - id:String
+    - title:String
+    - authors:List_String
+    - web:URI
+    - documents:List_URI
+    prefix : 
+    - arxiv:https://arxiv.org/
+    order : 
+    - +id
 
 
 - id : arXiv:1412.2223
@@ -254,9 +255,12 @@ The given example (as Tabula/Properties) is converted to a YAML file (i.e. Tabul
   - https://arxiv.org/format/1412.3313#other
 
 
+
 ```
 
 The unit tests also include the [previous example](https://github.com/julianmendez/tabulas/blob/master/tabulas-ext/src/test/resources/miniexample.yml).
+
+Please note that there should be no spaces in the elements of the `def` section. For example, the definition is `id:String` and not `id : String`.
 
 A YAML file can be easily converted to a JSON file using a [Python](https://www.python.org) script like
 [yaml_to_json.py](https://github.com/julianmendez/tabulas/blob/master/tabulas-ext/src/main/python/yaml_to_json.py).
