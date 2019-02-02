@@ -2,7 +2,9 @@
 
 
 {
-"type" : "record",
+"type" :
+{
+"name" : "record",
 "def" : [
  "id:String",
  "title:String",
@@ -16,6 +18,7 @@
 "order" : [
  "+id"
 ]
+}
 },
 
 

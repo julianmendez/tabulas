@@ -4,7 +4,7 @@ package de.tudresden.inf.lat.tabulas.ext.renderer
 import java.io.{OutputStreamWriter, Writer}
 import java.util.Objects
 
-import de.tudresden.inf.lat.tabulas.datatype.{CompositeTypeValue, IntegerType, IntegerValue, ParameterizedListValue, PrimitiveTypeValue, Record, StringType, StringValue, URIType, URIValue}
+import de.tudresden.inf.lat.tabulas.datatype._
 import de.tudresden.inf.lat.tabulas.parser.ParserConstant
 import de.tudresden.inf.lat.tabulas.renderer.{MetadataHelper, Renderer, UncheckedWriter, UncheckedWriterImpl}
 import de.tudresden.inf.lat.tabulas.table.{Table, TableMap}
@@ -145,8 +145,13 @@ class JsonRenderer(output: Writer) extends Renderer {
 
   def renderMetadata(output: UncheckedWriter, typeName: String, table: Table): Unit = {
     output.write(NewLine + OpenBrace + NewLine)
+    output.write(addQuotes(ParserConstant.TypeSelectionToken))
+    output.write(SpaceChar + ColonChar)
+    writeAsStringIfNotEmpty(output, ParserConstant.TypeSelectionToken, StringValue())
     val record = MetadataHelper().getMetadataAsRecord(typeName, table)
+    output.write(NewLine + OpenBrace + NewLine)
     render(output, record, JsonRenderer.MetadataTokens)
+    output.write(CloseBrace + NewLine)
     val maybeComma = if (table.getRecords.nonEmpty) CommaChar else ""
     output.write(CloseBrace + maybeComma + NewLine + NewLine)
   }
@@ -186,7 +191,7 @@ class JsonRenderer(output: Writer) extends Renderer {
 object JsonRenderer {
 
   final val MetadataTokens = Seq(
-    ParserConstant.TypeSelectionToken,
+    ParserConstant.TypeNameToken,
     ParserConstant.TypeDefinitionToken,
     ParserConstant.PrefixMapToken,
     ParserConstant.SortingOrderDeclarationToken

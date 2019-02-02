@@ -2,7 +2,9 @@
 
 
 {
-"type" : "value",
+"type" :
+{
+"name" : "value",
 "def" : [
  "id:String",
  "size:Integer"
@@ -13,6 +15,7 @@
  "+size",
  "-id"
 ]
+}
 },
 
 
@@ -65,7 +68,9 @@
 
 
 {
-"type" : "variable",
+"type" :
+{
+"name" : "variable",
 "def" : [
  "id:String",
  "vartype:String"
@@ -75,6 +80,7 @@
 "order" : [
  "+id"
 ]
+}
 },
 
 

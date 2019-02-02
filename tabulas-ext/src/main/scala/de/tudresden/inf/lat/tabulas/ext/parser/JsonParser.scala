@@ -2,9 +2,8 @@
 package de.tudresden.inf.lat.tabulas.ext.parser
 
 import java.io.{BufferedReader, ByteArrayInputStream, IOException, InputStreamReader, Reader}
-import java.util.Objects
 
-import com.eclipsesource.json.{Json, JsonObject, JsonValue}
+import com.eclipsesource.json.{Json, JsonValue}
 import de.tudresden.inf.lat.tabulas.parser.{Parser, ParserConstant, SimpleFormatParser}
 import de.tudresden.inf.lat.tabulas.renderer.SimpleFormatRenderer
 import de.tudresden.inf.lat.tabulas.table.TableMap
@@ -48,28 +47,29 @@ class JsonParser(input: Reader) extends Parser {
     result
   }
 
-  def isMetadata(elements: JsonObject): Boolean = {
-    Objects.nonNull(elements.get(ParserConstant.TypeDefinitionToken))
-  }
-
   def transformDocument(reader: Reader): String = {
     val value = Json.parse(reader)
     val mainArray = value.asArray()
     val result = SimpleFormatRenderer.Prefix + ParserConstant.NewLine +
       (0 until mainArray.size)
         .map(index => {
-          val record = mainArray.get(index)
-          val elements = record.asObject()
+          val record = mainArray.get(index).asObject()
+          val maybeMetadata = Option(record.get(ParserConstant.TypeSelectionToken))
+          val elements = if (maybeMetadata.isDefined) maybeMetadata.get.asObject() else record
+          val typeName = if (maybeMetadata.isDefined) {
+            elements.get(ParserConstant.TypeNameToken).asString()
+          } else {
+            ""
+          }
           val recordStr = elements.names().asScala
             .map(key => renderEntry(key, elements.get(key)))
             .mkString("")
-          val newRecord = if (isMetadata(elements)) {
-            ""
+          val newRecord = if (maybeMetadata.isDefined) {
+            ParserConstant.TypeSelectionToken + ParserConstant.Space + ParserConstant.EqualsSign + ParserConstant.Space + typeName
           } else {
-            ParserConstant.NewLine + ParserConstant.NewLine + ParserConstant.NewRecordToken +
-              ParserConstant.Space + ParserConstant.EqualsSign + ParserConstant.Space
+            ParserConstant.NewRecordToken + ParserConstant.Space + ParserConstant.EqualsSign + ParserConstant.Space
           }
-          newRecord + ParserConstant.NewLine + recordStr
+          ParserConstant.NewLine + ParserConstant.NewLine + newRecord + ParserConstant.NewLine + recordStr
         }).mkString("") + ParserConstant.NewLine + ParserConstant.NewLine
     result
   }
