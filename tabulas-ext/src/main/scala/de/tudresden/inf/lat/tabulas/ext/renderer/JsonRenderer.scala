@@ -90,18 +90,18 @@ class JsonRenderer(output: Writer) extends Renderer {
         val value = newList(index)
         if (value.getType.equals(URIType())) {
           val link: URIValue = URIType().castInstance(value)
-          writeLinkIfNotEmpty(output, " ", link)
+          writeLinkIfNotEmpty(output, SpaceChar + SpaceChar, link)
         } else if (value.getType.equals(IntegerType())) {
           val intVal: IntegerValue = IntegerType().castInstance(value)
-          writeAsIntegerIfNotEmpty(output, " ", intVal)
+          writeAsIntegerIfNotEmpty(output, SpaceChar + SpaceChar, intVal)
         } else {
           val strVal: StringValue = StringType().castInstance(value)
-          writeAsStringIfNotEmpty(output, " ", strVal)
+          writeAsStringIfNotEmpty(output, SpaceChar + SpaceChar, strVal)
         }
         val maybeComma = if (index < newList.length - 1) CommaChar else ""
         output.write(maybeComma + NewLine)
       })
-      output.write(CloseSquareBracket)
+      output.write(SpaceChar + CloseSquareBracket)
       true
     } else {
       false
@@ -127,7 +127,7 @@ class JsonRenderer(output: Writer) extends Renderer {
       val field = newList(index)
       val optValue: Option[PrimitiveTypeValue] = record.get(field)
       val value: PrimitiveTypeValue = optValue.get
-      val prefix = addQuotes(field) + SpaceChar + ColonChar + SpaceChar
+      val prefix = SpaceChar + addQuotes(field) + SpaceChar + ColonChar + SpaceChar
       value match {
         case list: ParameterizedListValue =>
           writeParameterizedListIfNotEmpty(output, prefix, list)
