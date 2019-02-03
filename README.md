@@ -261,7 +261,7 @@ The given example (as Tabula/Properties) is converted to a YAML file (i.e. Tabul
 
 ```
 
-The unit tests also include the [previous example](https://github.com/julianmendez/tabulas/blob/master/tabulas-ext/src/test/resources/miniexample.yml).
+The unit tests also include the [previous example](https://github.com/julianmendez/tabulas/blob/master/tabulas-ext/src/test/resources/ext/miniexample.yml).
 
 Please note that there should be no spaces in the elements of the `def` section. For example, the definition is `id:String` and not `id : String`.
 
