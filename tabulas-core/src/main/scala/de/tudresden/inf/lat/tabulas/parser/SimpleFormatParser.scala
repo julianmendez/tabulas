@@ -27,7 +27,7 @@ class SimpleFormatParser(input: Reader) extends Parser {
     val result = if (Objects.isNull(line)) {
       0
     } else {
-      val posA: Int = line.indexOf(ParserConstant.ColonSign)
+      val posA: Int = line.indexOf(ParserConstant.FieldSign)
       val posB: Int = line.indexOf(ParserConstant.EqualsSign)
       val res = if (posA == -1 && posB == -1) {
         line.length

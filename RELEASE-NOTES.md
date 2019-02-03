@@ -11,7 +11,8 @@
 
 ### v0.3.0
 *(unreleased)*
-* every type definition requires a field `name` for the type name
+* uses the colon (`':'`) in the default serialization instead of equals sign (`'='`), but accepts both symbols in the parser
+* requires a field `name` for the type name in every type definition
 * compiled with Scala 2.12.8
 * requires `scala-library-2.12.8.jar`
 * its artifact identifiers include the Scala version as suffix (`_2.12`)

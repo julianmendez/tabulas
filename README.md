@@ -38,7 +38,7 @@ In this section, the Tabula format is explained using the Tabula/Properties repr
 
 The Tabula format has *primitive types* and *composite types*. Unless something different is stated in the [release notes](https://github.com/julianmendez/tabula/blob/master/RELEASE-NOTES.md), the primitive types are:
 
-* `String`: any string without any newline (`'\n'` 0x0A, `'\r'` 0x0D), and not ending in backslash (`'\'` 0x5C), neither in blanks (`'\t'` 0x08, `' '` 0x20)  
+* `String`: any string without any newline (`'\n'` 0x0A, `'\r'` 0x0D), and not ending in backslash (`'\'` 0x5C), neither in blanks (`'\t'` 0x08, `' '` 0x20)
 * `URI`: any valid Uniform Resource Identifier
 * `Integer`: an integer number (`BigInteger`)
 * `Decimal`: a decimal number (`BigDecimal`)
@@ -46,13 +46,13 @@ The Tabula format has *primitive types* and *composite types*. Unless something 
 * `Empty`: type that ignores any given value
 
 With this format it is possible to define one or many composite *types*. Each type is defined by its *fields*. The *instances* of each type are listed just after the type definition. The type name can be any Tabula String.
-The field name can be any Tabula String that does not contain an equals sign (`'='` 0x3D), and that is not the words `type` or `new`.
+The field name can be any Tabula String that does not contain a colon (`':'` 0x3A) neither an equals sign (`'='` 0x3D), and that is not the words `type` or `new`.
 
 Each type is defined as follows:
 
 ```properties
-type =
-name = TYPE_NAME
+type : 
+ name : TYPE_NAME
 ```
 
 where *TYPE_NAME* can be any identifier.
@@ -60,42 +60,44 @@ where *TYPE_NAME* can be any identifier.
 Each type has its *fields*, defined as follow:
 
 ```properties
-def = \
- FIELD_NAME_0:FIELD_TYPE_0 \
- FIELD_NAME_1:FIELD_TYPE_1 \
-...
- FIELD_NAME_n:FIELD_TYPE_n
+ def : \
+  FIELD_NAME_0:FIELD_TYPE_0 \
+  FIELD_NAME_1:FIELD_TYPE_1 \
+  ...
+  FIELD_NAME_n:FIELD_TYPE_n
 ```
 
 where each *FIELD_NAME* can be any identifier,
 and each *FIELD_TYPE* can be any of the primitive types.
+No space must be left before or after the colon. For example, it is `FIELD_NAME_0:FIELD_TYPE_0` and not `FIELD_NAME_0: FIELD_TYPE_0`.
 
 The URIs can be shortened by using prefixes. The prefixes are URIs themselves without colons, because the colon (`:`) is used to define the association. 
 
 ```properties
-prefix = \
- PREFIX_0:URI_0 \
- PREFIX_1:URI_1 \
- ...
- PREFIX_n:URI_n
+ prefix : \
+  PREFIX_0:URI_0 \
+  PREFIX_1:URI_1 \
+  ...
+  PREFIX_n:URI_n
 ```
 
+No space must be left before or after the colon.
 They are applied using the declaration order during parsing and serialization. Although the serialization shortens every possible URI using the prefixes, it is possible to expand all of them by adding the empty prefix with an empty value, i.e. a colon (`:`) alone, and it has to be the first prefix. This could be useful to rename the prefixes.
 
 The order in which the instances are shown is defined as follows:
 
 ```properties
-order = \
- ['-'|'+']FIELD_NAME_a_0 \
- ['-'|'+']FIELD_NAME_a_1 \
- ...
- ['-'|'+']FIELD_NAME_a_k
+ order : \
+  ['-'|'+']FIELD_NAME_a_0 \
+  ['-'|'+']FIELD_NAME_a_1 \
+  ...
+  ['-'|'+']FIELD_NAME_a_k
 ```
 
 where the `+` and the `-` are used to denote whether the reverse order should be used. For example:
 
 ```properties
-order = \
+order : \
  +id \
  -author
 ``` 
@@ -105,11 +107,11 @@ orders the instances by `id` (ascending) and then by author (descending).
 The instances come just after the type definition, with the following syntax:
 
 ```properties
-new =
-FIELD_NAME_0 = VALUE_0
-FIELD_NAME_1 = VALUE_1
-...
-FIELD_NAME_n = VALUE_n
+new : 
+ FIELD_NAME_0 : VALUE_0
+ FIELD_NAME_1 : VALUE_1
+ ...
+ FIELD_NAME_n : VALUE_n
 ```
 
 where each *FIELD_NAME* is one of the already declared field names in the type and each *VALUE* contains a String accoding to the field type.
@@ -117,16 +119,16 @@ where each *FIELD_NAME* is one of the already declared field names in the type a
 The *values* can be any Tabula String. The blanks (`'\t'` 0x08, `' '` 0x20) at the beginning and at the end are removed. To declare a multi-line value, each line must finish with backslash (`'\'` 0x5C), except the last one. For the sake of simplicity there is no difference between a multi-line value or the concatenation of all those lines. This means that:
 
 ```properties
-field_name = \
- a \
- b \
- c
+ field_name : \
+  a \
+  b \
+  c
 ```
 
 is the same as
 
 ```properties
-field_name = a b c
+ field_name : a b c
 ```
 
 However, the format will normalize and present them differently according to the declared type. Thus, the values of fields with type `List_`... (e.g. `List_String`) will be presented as multi-line values.
@@ -141,43 +143,42 @@ This is an example of a library file. Each book record contains an identifier (`
 # simple format 1.0.0
 
 
-type = 
-name = record
-def = \
- id:String \
- title:String \
- authors:List_String \
- web:URI \
- documents:List_URI
-prefix = \
- arxiv:https://arxiv.org/
-order = \
- +id
+type : 
+ name : record
+ def : \
+  id:String \
+  title:String \
+  authors:List_String \
+  web:URI \
+  documents:List_URI
+ prefix : \
+  arxiv:https://arxiv.org/
+ order : \
+  +id
 
 
-new =
-id = arXiv:1412.2223
-title = A topological approach to non-Archimedean Mathematics
-authors = \
- Vieri_Benci \
- Lorenzo_Luperi_Baglini
-web = https://arxiv.org/abs/1412.2223
-documents = \
- https://arxiv.org/pdf/1412.2223#pdf \
- https://arxiv.org/ps/1412.2223#ps \
- https://arxiv.org/format/1412.2223#other
+new : 
+ id : arXiv:1412.2223
+ title : A topological approach to non-Archimedean Mathematics
+ authors : \
+  Vieri_Benci \
+  Lorenzo_Luperi_Baglini
+ web : https://arxiv.org/abs/1412.2223
+ documents : \
+  https://arxiv.org/pdf/1412.2223#pdf \
+  https://arxiv.org/ps/1412.2223#ps \
+  https://arxiv.org/format/1412.2223#other
 
 
-new =
-id = arXiv:1412.3313
-title = Infinitary stability theory
-authors = Sebastien_Vasey
-web = &arxiv;abs/1412.3313
-documents = \
- &arxiv;pdf/1412.3313#pdf \
- &arxiv;ps/1412.3313#ps \
- &arxiv;format/1412.3313#other
-
+new : 
+ id : arXiv:1412.3313
+ title : Infinitary stability theory
+ authors : Sebastien_Vasey
+ web : &arxiv;abs/1412.3313
+ documents : \
+  &arxiv;pdf/1412.3313#pdf \
+  &arxiv;ps/1412.3313#ps \
+  &arxiv;format/1412.3313#other
 
 ```
 

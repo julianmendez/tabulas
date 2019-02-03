@@ -16,8 +16,9 @@ class SimpleFormatRecordRenderer(output: Writer, prefixMap: PrefixMap) extends R
   def writeIfNotEmpty(output: UncheckedWriter, field: String, value: PrimitiveTypeValue): Boolean = {
     val result: Boolean = if (Objects.nonNull(field) && !field.trim().isEmpty && Objects.nonNull(value) && !value.isEmpty) {
       output.write(ParserConstant.NewLine)
+      output.write(ParserConstant.Space)
       output.write(field)
-      output.write(ParserConstant.Space + ParserConstant.EqualsSign)
+      output.write(ParserConstant.Space + ParserConstant.FieldSign)
       if (value.getType.isList) {
         val hasUris: Boolean = value match {
           case list: ParameterizedListValue =>
@@ -30,6 +31,7 @@ class SimpleFormatRecordRenderer(output: Writer, prefixMap: PrefixMap) extends R
         list.foreach(elem => {
           output.write(ParserConstant.Space + ParserConstant.LineContinuationSymbol)
           output.write(ParserConstant.NewLine)
+          output.write(ParserConstant.Space)
           output.write(ParserConstant.Space)
           if (hasUris) {
             output.write(prefixMap.getWithPrefix(URI.create(elem)).toASCIIString)
@@ -56,7 +58,7 @@ class SimpleFormatRecordRenderer(output: Writer, prefixMap: PrefixMap) extends R
   def renderNew(output: UncheckedWriter): Unit = {
     output.write(ParserConstant.NewLine)
     output.write(ParserConstant.NewRecordToken + ParserConstant.Space)
-    output.write(ParserConstant.EqualsSign + ParserConstant.Space)
+    output.write(ParserConstant.FieldSign + ParserConstant.Space)
   }
 
   def render(output: UncheckedWriter, record: Record, fields: Seq[String]): Unit = {
