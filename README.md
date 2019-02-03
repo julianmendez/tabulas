@@ -182,7 +182,7 @@ new :
 
 ```
 
-The unit tests include an example like [this one](https://github.com/julianmendez/tabulas/blob/master/tabulas-ext/src/test/resources/miniexample.properties).
+The unit tests include an example like [this one](https://github.com/julianmendez/tabulas/blob/master/tabulas-ext/src/test/resources/ext/miniexample.properties).
 
 For example, the [MainTest](https://github.com/julianmendez/tabulas/blob/master/tabulas-core/src/test/scala/de/tudresden/inf/lat/tabulas/main/MainTest.scala) class does the following steps:
 

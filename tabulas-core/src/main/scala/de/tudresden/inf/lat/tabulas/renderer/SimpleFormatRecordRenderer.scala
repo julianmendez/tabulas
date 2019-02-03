@@ -18,7 +18,7 @@ class SimpleFormatRecordRenderer(output: Writer, prefixMap: PrefixMap) extends R
       output.write(ParserConstant.NewLine)
       output.write(ParserConstant.Space)
       output.write(field)
-      output.write(ParserConstant.Space + ParserConstant.FieldSign)
+      output.write(ParserConstant.Space + SimpleFormatRecordRenderer.FieldSign)
       if (value.getType.isList) {
         val hasUris: Boolean = value match {
           case list: ParameterizedListValue =>
@@ -58,7 +58,7 @@ class SimpleFormatRecordRenderer(output: Writer, prefixMap: PrefixMap) extends R
   def renderNew(output: UncheckedWriter): Unit = {
     output.write(ParserConstant.NewLine)
     output.write(ParserConstant.NewRecordToken + ParserConstant.Space)
-    output.write(ParserConstant.FieldSign + ParserConstant.Space)
+    output.write(SimpleFormatRecordRenderer.FieldSign + ParserConstant.Space)
   }
 
   def render(output: UncheckedWriter, record: Record, fields: Seq[String]): Unit = {
@@ -80,6 +80,8 @@ class SimpleFormatRecordRenderer(output: Writer, prefixMap: PrefixMap) extends R
 }
 
 object SimpleFormatRecordRenderer {
+
+  final val FieldSign = ParserConstant.FieldSign
 
   def apply(output: Writer, prefixMap: PrefixMap): SimpleFormatRecordRenderer = new SimpleFormatRecordRenderer(output, prefixMap)
 

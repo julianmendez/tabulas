@@ -27,7 +27,7 @@ class SimpleFormatRenderer(output: Writer) extends Renderer {
     tableMap.getTableIds.foreach(tableName => {
       output.write(ParserConstant.NewLine)
       output.write(ParserConstant.NewLine)
-      output.write(ParserConstant.TypeSelectionToken + ParserConstant.Space + ParserConstant.FieldSign + ParserConstant.Space)
+      output.write(ParserConstant.TypeSelectionToken + ParserConstant.Space + SimpleFormatRecordRenderer.FieldSign + ParserConstant.Space)
       val table: Table = tableMap.getTable(tableName).get
       val record = MetadataHelper().getMetadataAsRecord(tableName, table)
       val recordRenderer = new SimpleFormatRecordRenderer(output.asWriter(), table.getPrefixMap)
