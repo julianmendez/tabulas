@@ -9,6 +9,7 @@ object ParserConstant {
   val SpecificationVersion = "1.0.0"
 
   val CommentSymbol: String = "#"
+  val ColonSign: String = ":"
   val EqualsSign: String = "="
   val StandardOrderSign: String = "+"
   val ReverseOrderSign: String = "-"

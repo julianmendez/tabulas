@@ -23,17 +23,34 @@ class SimpleFormatParser(input: Reader) extends Parser {
 
   }
 
+  def getKeyLength(line: String): Int = {
+    val result = if (Objects.isNull(line)) {
+      0
+    } else {
+      val posA: Int = line.indexOf(ParserConstant.ColonSign)
+      val posB: Int = line.indexOf(ParserConstant.EqualsSign)
+      val res = if (posA == -1 && posB == -1) {
+        line.length
+      } else {
+        val pos = if (posA == -1) {
+          posB
+        } else if (posB == -1) {
+          posA
+        } else {
+          Math.min(posA, posB)
+        }
+        pos
+      }
+      res
+    }
+    result
+  }
+
   def getKey(line: String): Option[String] = {
     val result = if (Objects.isNull(line)) {
       None
     } else {
-      val pos: Int = line.indexOf(ParserConstant.EqualsSign)
-      val res = if (pos == -1) {
-        Some(line)
-      } else {
-        Some(line.substring(0, pos).trim())
-      }
-      res
+      Some(line.substring(0, getKeyLength(line)).trim())
     }
     result
   }
@@ -48,13 +65,7 @@ class SimpleFormatParser(input: Reader) extends Parser {
     val result = if (Objects.isNull(line)) {
       None
     } else {
-      val pos: Int = line.indexOf(ParserConstant.EqualsSign)
-      val res = if (pos == -1) {
-        Some("")
-      } else {
-        Some(line.substring(pos + ParserConstant.EqualsSign.length(), line.length()).trim())
-      }
-      res
+      Some(line.substring(getKeyLength(line) + ParserConstant.EqualsSign.length(), line.length()).trim())
     }
     result
   }
