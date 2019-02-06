@@ -15,13 +15,7 @@ import scala.collection.mutable
   */
 class SimpleFormatParser(input: Reader) extends Parser {
 
-  case class Pair(lineCounter: Int, line: String) {
-
-    def getLine: String = line
-
-    def getLineCounter: Int = lineCounter
-
-  }
+  case class Pair(lineCounter: Int, line: Option[String])
 
   def getKeyLength(line: String): Int = {
     val result = if (Objects.isNull(line)) {
@@ -189,14 +183,14 @@ class SimpleFormatParser(input: Reader) extends Parser {
 
   def readMultiLine(input: BufferedReader, lineCounter0: Int): Pair = {
     var lineCounter: Int = lineCounter0
-    var result: Pair = Pair(lineCounter, null)
+    var result: Pair = Pair(lineCounter, None)
     var line: String = input.readLine()
     if (Objects.isNull(line)) {
-      result = Pair(lineCounter, null)
+      result = Pair(lineCounter, None)
     } else {
       lineCounter += 1
       if (line.startsWith(ParserConstant.CommentSymbol)) {
-        result = Pair(lineCounter, "")
+        result = Pair(lineCounter, Some(""))
       } else {
         val sb: StringBuilder = new StringBuilder()
         while (isMultiLine(line)) {
@@ -209,7 +203,7 @@ class SimpleFormatParser(input: Reader) extends Parser {
         }
         sb.append(getCleanLine(line))
 
-        result = Pair(lineCounter, sb.toString)
+        result = Pair(lineCounter, Some(sb.toString))
       }
     }
     result
@@ -267,7 +261,6 @@ class SimpleFormatParser(input: Reader) extends Parser {
     val mapOfTables = new mutable.TreeMap[String, TableImpl]()
     val mapOfRecordIdsOfTables = new mutable.TreeMap[String, mutable.TreeSet[String]]()
 
-    var line: String = ""
     var tableName = ""
     var currentTable = TableImpl()
     var recordIdsOfCurrentTable = mutable.TreeSet[String]()
@@ -275,12 +268,14 @@ class SimpleFormatParser(input: Reader) extends Parser {
     var record: Record = RecordImpl()
     var lineCounter: Int = 0
     var isDefiningType: Boolean = false
+    var finish = false
 
-    while (Objects.nonNull(line)) {
+    while (!finish) {
       val pair: Pair = readMultiLine(input, lineCounter)
-      line = pair.getLine
-      lineCounter = pair.getLineCounter
-      if (Objects.nonNull(line) && !line.trim().isEmpty) {
+      lineCounter = pair.lineCounter
+      finish = pair.line.isEmpty
+      if (pair.line.isDefined && !pair.line.get.trim().isEmpty) {
+        val line = pair.line.get
         if (hasKey(line, ParserConstant.TypeSelectionToken)) {
           isDefiningType = true
 
