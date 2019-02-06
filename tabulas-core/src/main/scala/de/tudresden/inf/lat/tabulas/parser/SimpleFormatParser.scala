@@ -9,6 +9,7 @@ import de.tudresden.inf.lat.tabulas.datatype.{CompositeType, CompositeTypeImpl, 
 import de.tudresden.inf.lat.tabulas.table.{PrefixMap, PrefixMapImpl, RecordImpl, TableImpl, TableMap, TableMapImpl}
 
 import scala.collection.mutable
+import scala.collection.mutable.ArrayBuffer
 
 /** Parser of a table in simple format.
   *
@@ -192,18 +193,17 @@ class SimpleFormatParser(input: Reader) extends Parser {
       if (line.startsWith(ParserConstant.CommentSymbol)) {
         result = Pair(lineCounter, Some(""))
       } else {
-        val sb: StringBuilder = new StringBuilder()
+        val multiline = ArrayBuffer[String]()
         while (isMultiLine(line)) {
-          sb.append(getCleanLine(line))
-          sb.append(ParserConstant.Space)
+          multiline += getCleanLine(line)
           line = input.readLine()
           if (Objects.nonNull(line)) {
             lineCounter += 1
           }
         }
-        sb.append(getCleanLine(line))
+        multiline += getCleanLine(line)
 
-        result = Pair(lineCounter, Some(sb.toString))
+        result = Pair(lineCounter, Some(multiline.mkString(ParserConstant.Space).toString))
       }
     }
     result
