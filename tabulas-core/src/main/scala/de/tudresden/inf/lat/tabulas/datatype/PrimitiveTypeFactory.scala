@@ -1,7 +1,5 @@
 package de.tudresden.inf.lat.tabulas.datatype
 
-import scala.collection.mutable
-
 /** This models a factory of primitive types.
   *
   */
@@ -14,23 +12,16 @@ class PrimitiveTypeFactory(map: Map[String, PrimitiveType]) {
     *         primitive type
     */
   def contains(primType: String): Boolean = {
-    this.map.get(primType).isDefined
+    map.get(primType).isDefined
   }
 
-  /** Returns a new value of the specified type.
+  /** Returns the type for the given name
     *
     * @param typeName type name
-    * @param value    value
-    * @return a new value of the specified type
+    * @return
     */
-  def newInstance(typeName: String, value: String): PrimitiveTypeValue = {
-    val optPrimType: Option[PrimitiveType] = this.map.get(typeName)
-    val result: PrimitiveTypeValue = if (optPrimType.isEmpty) {
-      throw ParseException("Type '" + typeName + "' is undefined.")
-    } else {
-      optPrimType.get.parse(value)
-    }
-    result
+  def getType(typeName: String): Option[PrimitiveType] = {
+    map.get(typeName)
   }
 
 }

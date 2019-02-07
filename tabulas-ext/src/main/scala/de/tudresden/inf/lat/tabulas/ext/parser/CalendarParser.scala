@@ -3,8 +3,7 @@ package de.tudresden.inf.lat.tabulas.ext.parser
 import java.io.{BufferedReader, IOException, InputStreamReader, Reader}
 import java.util.Objects
 
-import de.tudresden.inf.lat.tabulas.datatype.{CompositeType, ParseException, PrimitiveTypeFactory, PrimitiveTypeValue}
-import de.tudresden.inf.lat.tabulas.datatype.{Record, SimplifiedCompositeType, StringValue}
+import de.tudresden.inf.lat.tabulas.datatype._
 import de.tudresden.inf.lat.tabulas.parser.Parser
 import de.tudresden.inf.lat.tabulas.table.{RecordImpl, TableImpl, TableMap, TableMapImpl}
 
@@ -132,19 +131,18 @@ class CalendarParser(input: Reader) extends Parser {
     Objects.nonNull(line) && line.trim().startsWith(EndKeyword)
   }
 
-  private def getTypedValue(key: String, value: String,
-                            type0: CompositeType, lineCounter: Int): PrimitiveTypeValue = {
+  private def getTypedValue(key: String, value: String, type0: CompositeType, lineCounter: Int): PrimitiveTypeValue = {
     val result = if (Objects.isNull(key)) {
       StringValue()
     } else {
       try {
         val optTypeStr: Option[String] = type0.getFieldType(key)
-        val res = if (optTypeStr.isDefined) {
-          PrimitiveTypeFactory().newInstance(optTypeStr.get, value)
+        val primType = if (optTypeStr.isDefined) {
+          PrimitiveTypeFactory().getType(optTypeStr.get).get // caught by the try
         } else {
           throw ParseException("Key '" + key + "' has an undefined type.")
         }
-        res
+        primType.parse(value)
       } catch {
         case e: IOException => throw new ParseException(e.getMessage + " (line "
           + lineCounter + ")", e.getCause)

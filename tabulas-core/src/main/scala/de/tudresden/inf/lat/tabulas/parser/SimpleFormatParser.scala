@@ -5,8 +5,8 @@ import java.io.{BufferedReader, IOException, InputStreamReader, Reader}
 import java.net.{URI, URISyntaxException}
 import java.util.{Objects, StringTokenizer}
 
-import de.tudresden.inf.lat.tabulas.datatype.{CompositeType, CompositeTypeImpl, ParameterizedListValue, ParseException, PrimitiveTypeFactory, PrimitiveTypeValue, Record, StringValue, URIType, URIValue}
-import de.tudresden.inf.lat.tabulas.table.{PrefixMap, PrefixMapImpl, RecordImpl, TableImpl, TableMap, TableMapImpl}
+import de.tudresden.inf.lat.tabulas.datatype._
+import de.tudresden.inf.lat.tabulas.table._
 
 import scala.collection.mutable
 import scala.collection.mutable.ArrayBuffer
@@ -140,25 +140,34 @@ class SimpleFormatParser(input: Reader) extends Parser {
     } else {
       try {
         val optTypeStr: Option[String] = type0.getFieldType(key)
-        if (optTypeStr.isDefined) {
-          val typeStr: String = optTypeStr.get
-          result = PrimitiveTypeFactory().newInstance(typeStr, value)
-          if (result.getType.equals(new URIType())) {
-            val uri: URIValue = result.asInstanceOf[URIValue]
-            result = new URIValue(prefixMap.getWithoutPrefix(uri.getUri))
-          } else if (result.isInstanceOf[ParameterizedListValue]) {
-            val list: ParameterizedListValue = result.asInstanceOf[ParameterizedListValue]
-            if (list.getParameter.equals(new URIType())) {
-              val newList = list.getList.map(elem => {
-                val uri: URIValue = elem.asInstanceOf[URIValue]
-                new URIValue(prefixMap.getWithoutPrefix(uri.getUri))
-              })
-              result = ParameterizedListValue(new URIType(), newList)
-            }
-          }
+        optTypeStr match {
+          case Some(typeStr) =>
+            val optPrimType = PrimitiveTypeFactory().getType(typeStr)
+            val primType = optPrimType.get // caught by the try
+            if (primType == URIType()) {
+              val uri = URI.create(value)
+              result = new URIValue(prefixMap.getWithoutPrefix(uri))
 
-        } else {
-          throw ParseException("Key '" + key + "' has an undefined type.")
+            } else if (primType.isList) {
+              val param = primType.asInstanceOf[ParameterizedListType].getParameter
+              val lines = value.split(ParserConstant.NewLine)
+              if (param == URIType()) {
+                val newList = lines.map(elem => {
+                  val uri = URI.create(elem)
+                  new URIValue(prefixMap.getWithoutPrefix(uri))
+                })
+                result = ParameterizedListValue(URIType(), newList)
+              } else {
+                val newList = lines.map(x => param.parse(x))
+                result = ParameterizedListValue(param, newList)
+              }
+
+            } else {
+              result = primType.parse(value)
+            }
+
+          case None =>
+            throw ParseException("Key '" + key + "' has an undefined type.")
         }
       } catch {
         case e: ParseException => throw new ParseException(e.getMessage + " (line "
@@ -203,7 +212,7 @@ class SimpleFormatParser(input: Reader) extends Parser {
         }
         multiline += getCleanLine(line)
 
-        result = Pair(lineCounter, Some(multiline.mkString(ParserConstant.Space).toString))
+        result = Pair(lineCounter, Some(multiline.mkString(ParserConstant.NewLine).toString))
       }
     }
     result
