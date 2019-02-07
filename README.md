@@ -38,12 +38,12 @@ In this section, the Tabula format is explained using the Tabula/Properties repr
 
 The Tabula format has *primitive types* and *composite types*. Unless something different is stated in the [release notes](https://github.com/julianmendez/tabula/blob/master/RELEASE-NOTES.md), the primitive types are:
 
-* `String`: any string without any newline (`'\n'` 0x0A, `'\r'` 0x0D), and not ending in backslash (`'\'` 0x5C), neither in blanks (`'\t'` 0x08, `' '` 0x20)
-* `URI`: any valid Uniform Resource Identifier
-* `Integer`: an integer number (`BigInteger`)
-* `Decimal`: a decimal number (`BigDecimal`)
-* `List_`... (e.g. `List_String`): list of space-separated values, for the types above
-* `Empty`: type that ignores any given value
+- `String`: any string without any newline (`'\n'` 0x0A, `'\r'` 0x0D), and not ending in backslash (`'\'` 0x5C), neither in blanks (`'\t'` 0x08, `' '` 0x20)
+- `URI`: any valid Uniform Resource Identifier
+- `Integer`: an integer number (`BigInteger`)
+- `Decimal`: a decimal number (`BigDecimal`)
+- `List_`... (e.g. `List_String`): list of space-separated values, for the types above
+- `Empty`: type that ignores any given value
 
 With this format it is possible to define one or many composite *types*. Each type is defined by its *fields*. The *instances* of each type are listed just after the type definition. The type name can be any Tabula String.
 The field name can be any Tabula String that does not contain a colon (`':'` 0x3A) neither an equals sign (`'='` 0x3D), and that is not the words `type` or `new`.
@@ -116,22 +116,9 @@ new :
 
 where each *FIELD_NAME* is one of the already declared field names in the type and each *VALUE* contains a String accoding to the field type.
 
-The *values* can be any Tabula String. The blanks (`'\t'` 0x08, `' '` 0x20) at the beginning and at the end are removed. To declare a multi-line value, each line must finish with backslash (`'\'` 0x5C), except the last one. For the sake of simplicity there is no difference between a multi-line value or the concatenation of all those lines. This means that:
+The *values* can be any Tabula String. The blanks (`'\t'` 0x08, `' '` 0x20) at the beginning and at the end are removed. To declare a multi-line value, each line must finish with backslash (`'\'` 0x5C), except the last one.
 
-```properties
- field_name : \
-  a \
-  b \
-  c
-```
-
-is the same as
-
-```properties
- field_name : a b c
-```
-
-However, the format will normalize and present them differently according to the declared type. Thus, the values of fields with type `List_`... (e.g. `List_String`) will be presented as multi-line values.
+The formatter normalizes the values and present them differently according to the declared type. For example, the values of fields with type `List_`... (e.g. `List_String`) will be presented as multi-line values.
 
 
 ## Example
@@ -161,8 +148,8 @@ new :
  id : arXiv:1412.2223
  title : A topological approach to non-Archimedean Mathematics
  authors : \
-  Vieri_Benci \
-  Lorenzo_Luperi_Baglini
+  Vieri Benci \
+  Lorenzo Luperi Baglini
  web : https://arxiv.org/abs/1412.2223
  documents : \
   https://arxiv.org/pdf/1412.2223#pdf \
@@ -173,7 +160,7 @@ new :
 new : 
  id : arXiv:1412.3313
  title : Infinitary stability theory
- authors : Sebastien_Vasey
+ authors : Sebastien Vasey
  web : &arxiv;abs/1412.3313
  documents : \
   &arxiv;pdf/1412.3313#pdf \
@@ -186,10 +173,10 @@ The unit tests include an example like [this one](https://github.com/julianmende
 
 For example, the [MainTest](https://github.com/julianmendez/tabulas/blob/master/tabulas-core/src/test/scala/de/tudresden/inf/lat/tabulas/main/MainTest.scala) class does the following steps:
 
-* read the [example file](https://github.com/julianmendez/tabulas/blob/master/tabulas-core/src/test/resources/core/example.properties)
-* add a new field `numberOfAuthors`
-* add to each record the number of authors 
-* compare the [expected result](https://github.com/julianmendez/tabulas/blob/master/tabulas-core/src/test/resources/core/example-modified.properties)
+- read the [example file](https://github.com/julianmendez/tabulas/blob/master/tabulas-core/src/test/resources/core/example.properties)
+- add a new field `numberOfAuthors`
+- add to each record the number of authors 
+- compare the [expected result](https://github.com/julianmendez/tabulas/blob/master/tabulas-core/src/test/resources/core/example-modified.properties)
 
 This [Bash script](https://github.com/julianmendez/tabulas/blob/master/docs/examples/tabulas.sh.txt) shows how to start Tabulas from the command line.
 
