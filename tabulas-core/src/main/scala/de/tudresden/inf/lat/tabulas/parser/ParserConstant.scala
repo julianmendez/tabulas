@@ -9,8 +9,8 @@ object ParserConstant {
   val SpecificationVersion = "1.0.0"
 
   val CommentSymbol: String = "#"
-  val FieldSign: String = ":"
-  val EqualsSign: String = "="
+  val ColonFieldSign: String = ":"
+  val EqualsFieldSign: String = "="
   val StandardOrderSign: String = "+"
   val ReverseOrderSign: String = "-"
   val IdKeyword: String = "\n"

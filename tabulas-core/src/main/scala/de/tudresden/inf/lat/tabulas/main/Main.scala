@@ -1,6 +1,6 @@
 package de.tudresden.inf.lat.tabulas.main
 
-import de.tudresden.inf.lat.tabulas.extension.{DefaultExtension, NormalizationExtension}
+import de.tudresden.inf.lat.tabulas.extension.{DefaultExtension, NormalizationExtension, OldFormatExtension}
 
 /** This is the main class.
   */
@@ -13,6 +13,7 @@ object Main {
   def main(args: Array[String]): Unit = {
     val extensions = Seq(
       DefaultExtension(),
+      OldFormatExtension(),
       NormalizationExtension()
     )
 

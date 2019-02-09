@@ -60,7 +60,7 @@ class MainTest extends FunSuite {
   def assertContent(tableMap: TableMap, fileName: String): Unit = {
     // Store the table map
     val writer = new StringWriter()
-    val renderer = new SimpleFormatRenderer(writer)
+    val renderer = SimpleFormatRenderer(writer)
     renderer.render(tableMap)
 
     // Read the expected output

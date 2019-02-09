@@ -22,8 +22,8 @@ class SimpleFormatParser(input: Reader) extends Parser {
     val result = if (Objects.isNull(line)) {
       0
     } else {
-      val posA: Int = line.indexOf(ParserConstant.FieldSign)
-      val posB: Int = line.indexOf(ParserConstant.EqualsSign)
+      val posA: Int = line.indexOf(ParserConstant.ColonFieldSign)
+      val posB: Int = line.indexOf(ParserConstant.EqualsFieldSign)
       val res = if (posA == -1 && posB == -1) {
         line.length
       } else {
@@ -60,7 +60,7 @@ class SimpleFormatParser(input: Reader) extends Parser {
     val result = if (Objects.isNull(line)) {
       None
     } else {
-      Some(line.substring(getKeyLength(line) + ParserConstant.EqualsSign.length(), line.length()).trim())
+      Some(line.substring(getKeyLength(line) + ParserConstant.EqualsFieldSign.length(), line.length()).trim())
     }
     result
   }
@@ -256,7 +256,7 @@ class SimpleFormatParser(input: Reader) extends Parser {
         if (recordIdsOfCurrentTable.contains(valueStr)) {
           throw ParseException("Identifier '"
             + ParserConstant.IdKeyword + ParserConstant.Space
-            + ParserConstant.EqualsSign + ParserConstant.Space
+            + ParserConstant.EqualsFieldSign + ParserConstant.Space
             + valueStr + "' is duplicated (line " + lineCounter
             + ").")
         }

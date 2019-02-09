@@ -67,7 +67,7 @@ class WikitextRenderer(output: Writer) extends Renderer {
       output.write("|")
       if (optValue.isDefined) {
         val value: PrimitiveTypeValue = optValue.get
-        val prefix = field + ParserConstant.EqualsSign
+        val prefix = field + ParserConstant.EqualsFieldSign
         value match {
           case list: ParameterizedListValue =>
             writeParameterizedListIfNotEmpty(output, prefix, list)

@@ -12,7 +12,7 @@
 ### v0.3.0
 *(unreleased)*
 - preserves newline characters in strings and lists
-- uses the colon (`':'`) in the default serialization instead of equals sign (`'='`), but accepts both symbols in the parser
+- uses the colon (`':'`) in the default serialization instead of equals sign (`'='`), but accepts both symbols in the parser, and there is a renderer for the old format
 - requires a field `name` for the type name in every type definition, but accepts the previous way of giving the type name
 - compiled with Scala 2.12.8
 - requires `scala-library-2.12.8.jar`
@@ -32,6 +32,7 @@
 - includes new writers (extension names between parentheses):
   - (`json`) JSON
   - (`yaml`) YAML
+  - (`oldformat`) Tabula format using the equals sign
 - uses [ScalaTest](http://www.scalatest.org) for unit tests
 - build command:
 

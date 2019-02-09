@@ -25,11 +25,11 @@ class NormalizationExtension extends Extension {
 
         val inputFileName = arguments(0)
         val outputFileName = inputFileName
-        val tableMap: TableMap = new SimpleFormatParser(new FileReader(
+        val tableMap: TableMap = SimpleFormatParser(new FileReader(
           inputFileName)).parse()
         val output: BufferedWriter = new BufferedWriter(new FileWriter(
           outputFileName))
-        val renderer: SimpleFormatRenderer = new SimpleFormatRenderer(output)
+        val renderer: SimpleFormatRenderer = SimpleFormatRenderer(output)
         renderer.render(tableMap)
         true
 

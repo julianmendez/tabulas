@@ -8,10 +8,10 @@ import de.tudresden.inf.lat.tabulas.table.{Table, TableMap}
 
 /** Renderer of a table in simple format.
   */
-class SimpleFormatRenderer(output: Writer) extends Renderer {
+class SimpleFormatRenderer(output: Writer, fieldSign: String) extends Renderer {
 
-  def renderAllRecords(output: UncheckedWriter, table: Table): Unit = {
-    val recordRenderer = new SimpleFormatRecordRenderer(output.asWriter(), table.getPrefixMap)
+  def renderAllRecords(recordRenderer: SimpleFormatRecordRenderer, output: UncheckedWriter, table: Table): Unit = {
+    //val recordRenderer = SimpleFormatRecordRenderer(output.asWriter(), table.getPrefixMap, fieldSign)
     output.write(ParserConstant.NewLine)
     val list = table.getRecords
     list.foreach(record => {
@@ -27,12 +27,12 @@ class SimpleFormatRenderer(output: Writer) extends Renderer {
     tableMap.getTableIds.foreach(tableName => {
       output.write(ParserConstant.NewLine)
       output.write(ParserConstant.NewLine)
-      output.write(ParserConstant.TypeSelectionToken + ParserConstant.Space + SimpleFormatRecordRenderer.FieldSign + ParserConstant.Space)
+      output.write(ParserConstant.TypeSelectionToken + ParserConstant.Space + fieldSign + ParserConstant.Space)
       val table: Table = tableMap.getTable(tableName).get
       val record = MetadataHelper().getMetadataAsRecord(tableName, table)
-      val recordRenderer = new SimpleFormatRecordRenderer(output.asWriter(), table.getPrefixMap)
+      val recordRenderer = SimpleFormatRecordRenderer(output.asWriter(), table.getPrefixMap, fieldSign)
       recordRenderer.render(output, record, SimpleFormatRenderer.MetadataTokens)
-      renderAllRecords(output, table)
+      renderAllRecords(recordRenderer, output, table)
     })
     output.flush()
   }
@@ -56,6 +56,8 @@ object SimpleFormatRenderer {
     ParserConstant.CommentSymbol + " " + ParserConstant.SpecificationFormat + " " +
     ParserConstant.SpecificationVersion + ParserConstant.NewLine
 
-  def apply(output: Writer): SimpleFormatRenderer = new SimpleFormatRenderer(output)
+  def apply(output: Writer): SimpleFormatRenderer = new SimpleFormatRenderer(output, ParserConstant.ColonFieldSign)
+
+  def apply(output: Writer, fieldSign: String): SimpleFormatRenderer = new SimpleFormatRenderer(output, fieldSign)
 
 }

@@ -2,7 +2,7 @@ package de.tudresden.inf.lat.tabulas.main
 
 import java.io.{FileReader, StringWriter}
 
-import de.tudresden.inf.lat.tabulas.parser.SimpleFormatParser
+import de.tudresden.inf.lat.tabulas.parser.{ParserConstant, SimpleFormatParser}
 import de.tudresden.inf.lat.tabulas.renderer.SimpleFormatRenderer
 import de.tudresden.inf.lat.tabulas.table.TableMap
 import org.scalatest.FunSuite
@@ -20,25 +20,67 @@ class NormalizationTest extends FunSuite {
   val InputFileName2: String = "core/another_example.properties"
   val ExpectedOutputFileName2: String = "core/another_example-expected.properties"
 
+  val InputFileName3: String = "core/example.properties"
+  val ExpectedOutputFileName3: String = "core/example-old-expected.properties"
+
+  val InputFileName4: String = "core/multiple_tables.properties"
+  val ExpectedOutputFileName4: String = "core/multiple_tables-old-expected.properties"
+
+  val InputFileName5: String = "core/another_example.properties"
+  val ExpectedOutputFileName5: String = "core/another_example-old-expected.properties"
+
   val NewLine: String = "\n"
 
   def getPath(fileName: String): String = {
     getClass.getClassLoader.getResource(fileName).getFile
   }
 
-  def testNormalizationOfFile(inputFileName: String, expectedFileName: String): Unit = {
+  test("test normalization") {
+    Seq((InputFileName0, ExpectedOutputFileName0),
+      (InputFileName1, ExpectedOutputFileName1),
+      (InputFileName2, ExpectedOutputFileName2),
+      (ExpectedOutputFileName3, ExpectedOutputFileName0),
+      (ExpectedOutputFileName4, ExpectedOutputFileName1),
+      (ExpectedOutputFileName5, ExpectedOutputFileName2))
+      .foreach(pair => {
+
+        val inputFileName = pair._1
+        val expectedFileName = pair._2
+        val tableMap: TableMap = new SimpleFormatParser(new FileReader(getPath(inputFileName))).parse()
+        val expectedResult: String = (new MainTest()).readFile(expectedFileName)
+        val writer = new StringWriter()
+        val renderer = SimpleFormatRenderer(writer)
+        renderer.render(tableMap)
+        assert(expectedResult === writer.toString)
+      }
+      )
+  }
+
+
+  test("test old format normalization") {
+    Seq((InputFileName3, ExpectedOutputFileName3),
+      (InputFileName4, ExpectedOutputFileName4),
+      (InputFileName5, ExpectedOutputFileName5))
+      .foreach(pair => {
+        val inputFileName = pair._1
+        val expectedFileName = pair._2
+        val tableMap: TableMap = new SimpleFormatParser(new FileReader(getPath(inputFileName))).parse()
+        val expectedResult: String = (new MainTest()).readFile(expectedFileName)
+        val writer = new StringWriter()
+        val renderer = SimpleFormatRenderer(writer, ParserConstant.EqualsFieldSign)
+    renderer.render(tableMap)
+    assert(expectedResult === writer.toString)
+      })
+  }
+
+
+  def testOldFormatParsing(inputFileName: String, expectedFileName: String): Unit = {
     val tableMap: TableMap = new SimpleFormatParser(new FileReader(getPath(inputFileName))).parse()
     val expectedResult: String = (new MainTest()).readFile(expectedFileName)
     val writer = new StringWriter()
-    val renderer = new SimpleFormatRenderer(writer)
+    val renderer = SimpleFormatRenderer(writer)
     renderer.render(tableMap)
     assert(expectedResult === writer.toString)
-  }
-
-  test("testNormalization") {
-    testNormalizationOfFile(InputFileName0, ExpectedOutputFileName0)
-    testNormalizationOfFile(InputFileName1, ExpectedOutputFileName1)
-    testNormalizationOfFile(InputFileName2, ExpectedOutputFileName2)
   }
 
 }

@@ -1,38 +1,34 @@
-
-package de.tudresden.inf.lat.tabulas.ext.parser
+package de.tudresden.inf.lat.tabulas.extension
 
 import java.io.{BufferedWriter, FileReader, FileWriter, IOException}
 import java.util.Objects
 
-import de.tudresden.inf.lat.tabulas.extension.Extension
+import de.tudresden.inf.lat.tabulas.parser.{ParserConstant, SimpleFormatParser}
 import de.tudresden.inf.lat.tabulas.renderer.SimpleFormatRenderer
 import de.tudresden.inf.lat.tabulas.table.TableMap
 
-/** This models an extension that reads comma-separated values and writes them
-  * with the default format.
+/** Default extension. It reads and writes using the default format.
   *
   */
-class CalendarParserExtension extends Extension {
+class OldFormatExtension extends Extension {
 
-  val Name: String = "parsecalendar"
-
-  val Help: String = "(input) (output) : create output file with a simple text format parsing a calendar file"
-
+  val Name: String = "oldformat"
+  val Help: String = "(input) (output) : parse and create an output file with the old simple text format (using equals sign)"
   val RequiredArguments: Int = 2
 
   override def process(arguments: Seq[String]): Boolean = {
-    val result = if (Objects.isNull(arguments) || arguments.size != RequiredArguments) {
+    val result: Boolean = if (Objects.isNull(arguments) || arguments.size != RequiredArguments) {
       false
     } else {
       try {
 
         val inputFileName = arguments(0)
         val outputFileName = arguments(1)
-        val tableMap: TableMap = new CalendarParser(new FileReader(
+        val tableMap: TableMap = SimpleFormatParser(new FileReader(
           inputFileName)).parse()
         val output: BufferedWriter = new BufferedWriter(new FileWriter(
           outputFileName))
-        val renderer = SimpleFormatRenderer(output)
+        val renderer: SimpleFormatRenderer = SimpleFormatRenderer(output, ParserConstant.EqualsFieldSign)
         renderer.render(tableMap)
         true
 
@@ -57,8 +53,8 @@ class CalendarParserExtension extends Extension {
 
 }
 
-object CalendarParserExtension {
+object OldFormatExtension {
 
-  def apply(): CalendarParserExtension = new CalendarParserExtension
+  def apply(): OldFormatExtension = new OldFormatExtension
 
 }

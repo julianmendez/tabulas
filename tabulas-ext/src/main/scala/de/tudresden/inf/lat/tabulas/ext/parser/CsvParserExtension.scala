@@ -29,7 +29,7 @@ class CsvParserExtension extends Extension {
           inputFileName)).parse()
         val output = new BufferedWriter(new FileWriter(
           outputFileName))
-        val renderer = new SimpleFormatRenderer(output)
+        val renderer = SimpleFormatRenderer(output)
         renderer.render(tableMap)
         true
 

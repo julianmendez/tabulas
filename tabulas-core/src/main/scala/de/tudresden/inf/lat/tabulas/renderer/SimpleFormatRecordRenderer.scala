@@ -11,14 +11,14 @@ import de.tudresden.inf.lat.tabulas.table.PrefixMap
 
 /** Renderer of a table in simple format.
   */
-class SimpleFormatRecordRenderer(output: Writer, prefixMap: PrefixMap) extends RecordRenderer {
+class SimpleFormatRecordRenderer(output: Writer, prefixMap: PrefixMap, fieldSign: String) extends RecordRenderer {
 
   def writeIfNotEmpty(output: UncheckedWriter, field: String, value: PrimitiveTypeValue): Boolean = {
     val result: Boolean = if (Objects.nonNull(field) && !field.trim().isEmpty && Objects.nonNull(value) && !value.isEmpty) {
       output.write(ParserConstant.NewLine)
       output.write(ParserConstant.Space)
       output.write(field)
-      output.write(ParserConstant.Space + SimpleFormatRecordRenderer.FieldSign)
+      output.write(ParserConstant.Space + fieldSign)
       if (value.getType.isList) {
         val hasUris: Boolean = value match {
           case list: ParameterizedListValue =>
@@ -58,7 +58,7 @@ class SimpleFormatRecordRenderer(output: Writer, prefixMap: PrefixMap) extends R
   def renderNew(output: UncheckedWriter): Unit = {
     output.write(ParserConstant.NewLine)
     output.write(ParserConstant.NewRecordToken + ParserConstant.Space)
-    output.write(SimpleFormatRecordRenderer.FieldSign + ParserConstant.Space)
+    output.write(fieldSign + ParserConstant.Space)
   }
 
   def render(output: UncheckedWriter, record: Record, fields: Seq[String]): Unit = {
@@ -81,8 +81,8 @@ class SimpleFormatRecordRenderer(output: Writer, prefixMap: PrefixMap) extends R
 
 object SimpleFormatRecordRenderer {
 
-  final val FieldSign = ParserConstant.FieldSign
+  def apply(output: Writer, prefixMap: PrefixMap): SimpleFormatRecordRenderer = new SimpleFormatRecordRenderer(output, prefixMap, ParserConstant.ColonFieldSign)
 
-  def apply(output: Writer, prefixMap: PrefixMap): SimpleFormatRecordRenderer = new SimpleFormatRecordRenderer(output, prefixMap)
+  def apply(output: Writer, prefixMap: PrefixMap, fieldSign: String): SimpleFormatRecordRenderer = new SimpleFormatRecordRenderer(output, prefixMap, fieldSign)
 
 }
