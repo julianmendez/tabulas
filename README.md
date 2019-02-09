@@ -256,6 +256,28 @@ A YAML file can be easily converted to a JSON file using a [Python](https://www.
 [yaml_to_json.py](https://github.com/julianmendez/tabulas/blob/master/tabulas-ext/src/main/python/yaml_to_json.py).
 
 
+## Extensions
+
+The command line application can be used to execute the different readers and writers.
+They are implemented as *extensions*.
+Each extension registers at the beginning of the execution and is available to be executed from the command line.
+ 
+The following example contains some of the extensions listed by the application, when no parameters are given.
+
+- `simple` *(input)* *(output)* : creates a Tabula/Properties file (this is the default format)
+- `oldformat` *(input)* *(output)* : creates an old Tabula/Properties file, i.e. using the equals sign instead of colon 
+- `parsejson` *(input)* *(output)* : creates a Tabula/Properties file by parsing a Tabula/JSON file 
+- `json` *(input)* *(output)* : creates a Tabula/JSON file
+- `yaml` *(input)* *(output)* : creates a Tabula/YAML file
+
+The command line application can be executed with:
+
+`java -jar` *(jarname)* *(extension)* *(input)* *(output)*
+
+The executable JAR file is available at the link provided in the *Download* section.
+If the project is build from its source code, the executable JAR file will be available in the location indicated by the *release* property of the [release notes](https://github.com/julianmendez/tabulas/blob/master/RELEASE-NOTES.md).
+
+
 ## Source code
 
 To clone and compile the project:
