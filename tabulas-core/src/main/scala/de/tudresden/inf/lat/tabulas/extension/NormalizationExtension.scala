@@ -13,7 +13,7 @@ import de.tudresden.inf.lat.tabulas.table.TableMap
 class NormalizationExtension extends Extension {
 
   val Name: String = "normalize"
-  val Help: String = "(input) : normalize a file with a simple text format"
+  val Help: String = "(input) : normalize a Tabula/Properties file (this is the default format)"
   val RequiredArguments: Int = 1
 
   override def process(arguments: Seq[String]): Boolean = {

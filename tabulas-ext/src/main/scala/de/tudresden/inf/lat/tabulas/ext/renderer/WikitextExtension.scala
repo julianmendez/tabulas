@@ -13,7 +13,7 @@ import de.tudresden.inf.lat.tabulas.table.TableMap
 class WikitextExtension extends Extension {
 
   val Name: String = "wikitext"
-  val Help: String = "(input) (output) : create output as Wiki text file"
+  val Help: String = "(input) (output) : create a Wiki text file"
   val RequiredArguments: Int = 2
 
   override def process(arguments: Seq[String]): Boolean = {

@@ -13,7 +13,7 @@ import de.tudresden.inf.lat.tabulas.table.TableMap
 class OldFormatExtension extends Extension {
 
   val Name: String = "oldformat"
-  val Help: String = "(input) (output) : parse and create an output file with the old simple text format (using equals sign)"
+  val Help: String = "(input) (output) : create an old Tabula/Properties file, i.e. using the equals sign instead of colon"
   val RequiredArguments: Int = 2
 
   override def process(arguments: Seq[String]): Boolean = {

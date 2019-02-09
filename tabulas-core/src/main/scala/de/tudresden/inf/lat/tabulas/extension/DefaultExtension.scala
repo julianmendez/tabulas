@@ -13,7 +13,7 @@ import de.tudresden.inf.lat.tabulas.table.TableMap
 class DefaultExtension extends Extension {
 
   val Name: String = "simple"
-  val Help: String = "(input) (output) : parse and create output file with a simple text format"
+  val Help: String = "(input) (output) : create a Tabula/Properties file (this is the default format)"
   val RequiredArguments: Int = 2
 
   override def process(arguments: Seq[String]): Boolean = {

@@ -13,7 +13,7 @@ import de.tudresden.inf.lat.tabulas.table.TableMap
 class CsvExtension extends Extension {
 
   val Name: String = "csv"
-  val Help: String = "(input) (output) : create output as a comma-separated values (CSV) file"
+  val Help: String = "(input) (output) : create a comma-separated values (CSV) file"
   val RequiredArguments: Int = 2
 
   override def process(arguments: Seq[String]): Boolean = {

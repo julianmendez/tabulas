@@ -13,7 +13,7 @@ import de.tudresden.inf.lat.tabulas.table.TableMap
 class HtmlExtension extends Extension {
 
   val Name: String = "html"
-  val Help: String = "(input) (output) : create output as HTML file"
+  val Help: String = "(input) (output) : create an HTML file"
   val RequiredArguments: Int = 2
 
   override def process(arguments: Seq[String]): Boolean = {

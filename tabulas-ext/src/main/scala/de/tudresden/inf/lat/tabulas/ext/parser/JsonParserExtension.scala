@@ -12,7 +12,7 @@ import de.tudresden.inf.lat.tabulas.table.TableMap
 class JsonParserExtension extends Extension {
 
   val Name: String = "parsejson"
-  val Help: String = "(input) (output) : create output file with a simple text format parsing a JSON file"
+  val Help: String = "(input) (output) : create a Tabula/Properties file by parsing a Tabula/JSON file"
   val RequiredArguments: Int = 2
 
   override def process(arguments: Seq[String]): Boolean = {

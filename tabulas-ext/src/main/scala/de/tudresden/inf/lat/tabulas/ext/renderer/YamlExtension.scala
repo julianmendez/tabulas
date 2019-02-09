@@ -13,7 +13,7 @@ import de.tudresden.inf.lat.tabulas.table.TableMap
 class YamlExtension extends Extension {
 
   val Name: String = "yaml"
-  val Help: String = "(input) (output) : create output as YAML file"
+  val Help: String = "(input) (output) : create a Tabula/YAML file"
   val RequiredArguments: Int = 2
 
   override def process(arguments: Seq[String]): Boolean = {

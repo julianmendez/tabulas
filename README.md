@@ -264,11 +264,11 @@ Each extension registers at the beginning of the execution and is available to b
  
 The following example contains some of the extensions listed by the application, when no parameters are given.
 
-- `simple` *(input)* *(output)* : creates a Tabula/Properties file (this is the default format)
-- `oldformat` *(input)* *(output)* : creates an old Tabula/Properties file, i.e. using the equals sign instead of colon 
-- `parsejson` *(input)* *(output)* : creates a Tabula/Properties file by parsing a Tabula/JSON file 
-- `json` *(input)* *(output)* : creates a Tabula/JSON file
-- `yaml` *(input)* *(output)* : creates a Tabula/YAML file
+- `simple` *(input)* *(output)* : create a Tabula/Properties file (this is the default format)
+- `oldformat` *(input)* *(output)* : create an old Tabula/Properties file, i.e. using the equals sign instead of colon 
+- `parsejson` *(input)* *(output)* : create a Tabula/Properties file by parsing a Tabula/JSON file 
+- `json` *(input)* *(output)* : create a Tabula/JSON file
+- `yaml` *(input)* *(output)* : create a Tabula/YAML file
 
 The command line application can be executed with:
 

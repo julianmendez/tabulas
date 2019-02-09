@@ -16,7 +16,7 @@ class CalendarParserExtension extends Extension {
 
   val Name: String = "parsecalendar"
 
-  val Help: String = "(input) (output) : create output file with a simple text format parsing a calendar file"
+  val Help: String = "(input) (output) : create a Tabula/Properties file by parsing a calendar (iCalendar) file (this is experimental and does not parse all properties)"
 
   val RequiredArguments: Int = 2
 
