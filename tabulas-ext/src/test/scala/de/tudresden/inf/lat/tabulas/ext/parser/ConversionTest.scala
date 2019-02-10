@@ -40,10 +40,10 @@ class ConversionTest extends FunSuite {
   val ExpectedOutputFileName6: String = ExtPrefix + "multiple_tables-expected.properties"
 
   val InputFileName7: String = ExtPrefix + "example.properties"
-  val ExpectedOutputFileName7: String = ExtPrefix + "example.yml"
+  val ExpectedOutputFileName7: String = ExtPrefix + "example.yaml"
 
   val InputFileName8: String = ExtPrefix + "miniexample.properties"
-  val ExpectedOutputFileName8: String = ExtPrefix + "miniexample.yml"
+  val ExpectedOutputFileName8: String = ExtPrefix + "miniexample.yaml"
 
   val NewLine: String = "\n"
 
