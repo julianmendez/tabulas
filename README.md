@@ -51,7 +51,7 @@ The field name can be any Tabula String that does not contain a colon (`':'` 0x3
 Each type is defined as follows:
 
 ```properties
-type : 
+type :
  name : TYPE_NAME
 ```
 
@@ -71,7 +71,7 @@ where each *FIELD_NAME* can be any identifier,
 and each *FIELD_TYPE* can be any of the primitive types.
 No space must be left before or after the colon. For example, it is `FIELD_NAME_0:FIELD_TYPE_0` and not `FIELD_NAME_0: FIELD_TYPE_0`.
 
-The URIs can be shortened by using prefixes. The prefixes are URIs themselves without colons, because the colon (`:`) is used to define the association. 
+The URIs can be shortened by using prefixes. The prefixes are URIs themselves without colons, because the colon (`:`) is used to define the association.
 
 ```properties
  prefix : \
@@ -100,14 +100,14 @@ where the `+` and the `-` are used to denote whether the reverse order should be
 order : \
  +id \
  -author
-``` 
+```
 
 orders the instances by `id` (ascending) and then by author (descending).
- 
+
 The instances come just after the type definition, with the following syntax:
 
 ```properties
-new : 
+new :
  FIELD_NAME_0 : VALUE_0
  FIELD_NAME_1 : VALUE_1
  ...
@@ -130,7 +130,7 @@ This is an example of a library file. Each book record contains an identifier (`
 # simple format 1.0.0
 
 
-type : 
+type :
  name : record
  def : \
   id:String \
@@ -144,7 +144,7 @@ type :
   +id
 
 
-new : 
+new :
  id : arXiv:1412.2223
  title : A topological approach to non-Archimedean Mathematics
  authors : \
@@ -157,7 +157,7 @@ new :
   https://arxiv.org/format/1412.2223#other
 
 
-new : 
+new :
  id : arXiv:1412.3313
  title : Infinitary stability theory
  authors : Sebastien Vasey
@@ -175,7 +175,7 @@ For example, the [MainTest](https://github.com/julianmendez/tabulas/blob/master/
 
 - read the [example file](https://github.com/julianmendez/tabulas/blob/master/tabulas-core/src/test/resources/core/example.properties)
 - add a new field `numberOfAuthors`
-- add to each record the number of authors 
+- add to each record the number of authors
 - compare the [expected result](https://github.com/julianmendez/tabulas/blob/master/tabulas-core/src/test/resources/core/example-modified.properties)
 
 This [Bash script](https://github.com/julianmendez/tabulas/blob/master/docs/examples/tabulas.sh.txt) shows how to start Tabulas from the command line.
@@ -210,25 +210,25 @@ The given example (as Tabula/Properties) is converted to a YAML file (i.e. Tabul
 
 - type :
     name : record
-    def : 
+    def :
     - id:String
     - title:String
     - authors:List_String
     - web:URI
     - documents:List_URI
-    prefix : 
+    prefix :
     - arxiv:https://arxiv.org/
-    order : 
+    order :
     - +id
 
 
 - id : arXiv:1412.2223
   title : A topological approach to non-Archimedean Mathematics
-  authors : 
+  authors :
   - Vieri_Benci
   - Lorenzo_Luperi_Baglini
   web : https://arxiv.org/abs/1412.2223
-  documents : 
+  documents :
   - https://arxiv.org/pdf/1412.2223#pdf
   - https://arxiv.org/ps/1412.2223#ps
   - https://arxiv.org/format/1412.2223#other
@@ -236,10 +236,10 @@ The given example (as Tabula/Properties) is converted to a YAML file (i.e. Tabul
 
 - id : arXiv:1412.3313
   title : Infinitary stability theory
-  authors : 
+  authors :
   - Sebastien_Vasey
   web : https://arxiv.org/abs/1412.3313
-  documents : 
+  documents :
   - https://arxiv.org/pdf/1412.3313#pdf
   - https://arxiv.org/ps/1412.3313#ps
   - https://arxiv.org/format/1412.3313#other
@@ -261,12 +261,12 @@ A YAML file can be easily converted to a JSON file using a [Python](https://www.
 The command line application can be used to execute the different readers and writers.
 They are implemented as *extensions*.
 Each extension registers at the beginning of the execution and is available to be executed from the command line.
- 
+
 The following example contains some of the extensions listed by the application, when no parameters are given.
 
 - `simple` *(input)* *(output)* : create a Tabula/Properties file (this is the default format)
-- `oldformat` *(input)* *(output)* : create an old Tabula/Properties file, i.e. using the equals sign instead of colon 
-- `parsejson` *(input)* *(output)* : create a Tabula/Properties file by parsing a Tabula/JSON file 
+- `oldformat` *(input)* *(output)* : create an old Tabula/Properties file, i.e. using the equals sign instead of colon
+- `parsejson` *(input)* *(output)* : create a Tabula/Properties file by parsing a Tabula/JSON file
 - `json` *(input)* *(output)* : create a Tabula/JSON file
 - `yaml` *(input)* *(output)* : create a Tabula/YAML file
 
