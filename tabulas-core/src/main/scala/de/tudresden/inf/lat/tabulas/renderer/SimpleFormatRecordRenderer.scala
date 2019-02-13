@@ -58,7 +58,7 @@ class SimpleFormatRecordRenderer(output: Writer, prefixMap: PrefixMap, fieldSign
   def renderNew(output: UncheckedWriter): Unit = {
     output.write(ParserConstant.NewLine)
     output.write(ParserConstant.NewRecordToken + ParserConstant.Space)
-    output.write(fieldSign + ParserConstant.Space)
+    output.write(fieldSign)
   }
 
   def render(output: UncheckedWriter, record: Record, fields: Seq[String]): Unit = {

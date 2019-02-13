@@ -2,12 +2,12 @@
 
 - type :
     name : value
-    def : 
+    def :
     - id:String
     - size:Integer
-    prefix : 
+    prefix :
 
-    order : 
+    order :
     - +size
     - -id
 
@@ -44,14 +44,14 @@
   size : 64
 
 
-- type : 
+- type :
     name : variable
-    def : 
+    def :
     - id:String
     - vartype:String
-    prefix : 
+    prefix :
 
-    order : 
+    order :
     - +id
 
 

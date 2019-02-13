@@ -161,16 +161,17 @@ class YamlRenderer(output: Writer) extends Renderer {
       val optValue: Option[PrimitiveTypeValue] = record.get(field)
       val value: PrimitiveTypeValue = optValue.get
       val spaces = if (index > 0) TwoSpaces else ""
-      val prefix = spaces + escapeString(field) + SpaceChar + ColonChar + SpaceChar
+      val prefix = spaces + escapeString(field) + SpaceChar + ColonChar
+      val tabPrefixSp = tabulation + prefix + SpaceChar
       value match {
         case list: ParameterizedListValue =>
           writeParameterizedListIfNotEmpty(output, prefix, list, tabulation)
         case link: URIValue =>
-          writeLinkIfNotEmpty(output, tabulation + prefix, link)
+          writeLinkIfNotEmpty(output, tabPrefixSp, link)
         case number: IntegerValue =>
-          writeAsIntegerIfNotEmpty(output, tabulation + prefix, number)
+          writeAsIntegerIfNotEmpty(output, tabPrefixSp, number)
         case _ =>
-          writeAsStringIfNotEmpty(output, tabulation + prefix, value)
+          writeAsStringIfNotEmpty(output, tabPrefixSp, value)
       }
       output.write(NewLine)
     })

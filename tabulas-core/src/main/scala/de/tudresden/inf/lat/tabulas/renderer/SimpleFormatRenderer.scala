@@ -11,7 +11,6 @@ import de.tudresden.inf.lat.tabulas.table.{Table, TableMap}
 class SimpleFormatRenderer(output: Writer, fieldSign: String) extends Renderer {
 
   def renderAllRecords(recordRenderer: SimpleFormatRecordRenderer, output: UncheckedWriter, table: Table): Unit = {
-    //val recordRenderer = SimpleFormatRecordRenderer(output.asWriter(), table.getPrefixMap, fieldSign)
     output.write(ParserConstant.NewLine)
     val list = table.getRecords
     list.foreach(record => {
@@ -27,7 +26,7 @@ class SimpleFormatRenderer(output: Writer, fieldSign: String) extends Renderer {
     tableMap.getTableIds.foreach(tableName => {
       output.write(ParserConstant.NewLine)
       output.write(ParserConstant.NewLine)
-      output.write(ParserConstant.TypeSelectionToken + ParserConstant.Space + fieldSign + ParserConstant.Space)
+      output.write(ParserConstant.TypeSelectionToken + ParserConstant.Space + fieldSign)
       val table: Table = tableMap.getTable(tableName).get
       val record = MetadataHelper().getMetadataAsRecord(tableName, table)
       val recordRenderer = SimpleFormatRecordRenderer(output.asWriter(), table.getPrefixMap, fieldSign)

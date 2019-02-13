@@ -2,25 +2,25 @@
 
 - type :
     name : record
-    def : 
+    def :
     - id:String
     - title:String
     - authors:List_String
     - web:URI
     - documents:List_URI
-    prefix : 
+    prefix :
     - arxiv:https://arxiv.org/
-    order : 
+    order :
     - +id
 
 
 - id : arXiv:1412.2223
   title : A topological approach to non-Archimedean Mathematics
-  authors : 
+  authors :
   - Vieri Benci
   - Lorenzo Luperi Baglini
   web : https://arxiv.org/abs/1412.2223
-  documents : 
+  documents :
   - https://arxiv.org/pdf/1412.2223#pdf
   - https://arxiv.org/ps/1412.2223#ps
   - https://arxiv.org/format/1412.2223#other
@@ -28,10 +28,10 @@
 
 - id : arXiv:1412.3313
   title : Infinitary stability theory
-  authors : 
+  authors :
   - Sebastien Vasey
   web : https://arxiv.org/abs/1412.3313
-  documents : 
+  documents :
   - https://arxiv.org/pdf/1412.3313#pdf
   - https://arxiv.org/ps/1412.3313#ps
   - https://arxiv.org/format/1412.3313#other
