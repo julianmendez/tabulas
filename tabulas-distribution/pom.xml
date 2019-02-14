@@ -98,6 +98,8 @@
 								<Main-Class>${mainClass}</Main-Class>
 								<Include-Resource>
 									{maven-resources}, {maven-dependencies},
+									resources/README.md=../README.md,
+									resources/LICENSE.txt=../LICENSE.txt,
 									@tabulas-core_${scala.version.binary}-${project.version}.jar,
 									@tabulas-ext_${scala.version.binary}-${project.version}.jar
 								</Include-Resource>
@@ -122,6 +124,8 @@
 								<Main-Class>${mainClass}</Main-Class>
 								<Include-Resource>
 									{maven-resources}, {maven-dependencies},
+									resources/README.md=../README.md,
+									resources/LICENSE.txt=../LICENSE.txt,
 									@tabulas-core_${scala.version.binary}-${project.version}.jar,
 									@tabulas-ext_${scala.version.binary}-${project.version}.jar,
 									@minimal-json-${jsonparser.version}.jar,
