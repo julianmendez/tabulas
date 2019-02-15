@@ -25,6 +25,8 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
+		<maven.build.timestamp.format>yyyyMMddHHmm</maven.build.timestamp.format>
+
 		<mainClass>de.tudresden.inf.lat.tabulas.ext.main.Main</mainClass>
 
 		<exec.args>html src/test/resources/example.properties target/example.html</exec.args>
@@ -96,6 +98,11 @@
 							</archive>
 							<instructions>
 								<Main-Class>${mainClass}</Main-Class>
+								<Specification-Title>tabulas</Specification-Title>
+								<Specification-Version>${project.version}</Specification-Version>
+								<Implementation-Title>tabulas</Implementation-Title>
+								<Implementation-Version>${project.version}.b${maven.build.timestamp}</Implementation-Version>
+								<Build-Time>${maven.build.timestamp}</Build-Time>
 								<Include-Resource>
 									{maven-resources}, {maven-dependencies},
 									resources/README.md=../README.md,
@@ -122,6 +129,11 @@
 							</archive>
 							<instructions>
 								<Main-Class>${mainClass}</Main-Class>
+								<Specification-Title>tabulas</Specification-Title>
+								<Specification-Version>${project.version}</Specification-Version>
+								<Implementation-Title>tabulas</Implementation-Title>
+								<Implementation-Version>${project.version}.b${maven.build.timestamp}</Implementation-Version>
+								<Build-Time>${maven.build.timestamp}</Build-Time>
 								<Include-Resource>
 									{maven-resources}, {maven-dependencies},
 									resources/README.md=../README.md,

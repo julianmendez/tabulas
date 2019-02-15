@@ -16,6 +16,14 @@ class ConsoleStarter {
     "\nIf the extension is omitted, the '" + NormalizationExtension().Name + "' extension is executed." + //
     "\n\nThe available extensions are:" + "\n"
 
+  def getTitleAndVersion: String = {
+    val packg = this.getClass.getPackage
+    val name = Option(packg.getImplementationTitle).getOrElse("")
+    val version = Option(packg.getImplementationVersion).getOrElse("")
+    val result = (name + " " + version).trim
+    result
+  }
+
   /** Executes the application
     *
     * @param extensions extensions
@@ -36,8 +44,9 @@ class ConsoleStarter {
       manager.process(arguments)
     } catch {
       case e: ExtensionException =>
-        System.out.println(ErrorPrefix + e.getMessage)
-        System.out.println(help + manager.getHelp)
+        print(getTitleAndVersion + "\n")
+        print(ErrorPrefix + e.getMessage + "\n")
+        print(help + manager.getHelp + "\n")
     }
   }
 
