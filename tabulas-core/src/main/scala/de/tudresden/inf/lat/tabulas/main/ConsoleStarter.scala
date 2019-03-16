@@ -10,9 +10,9 @@ import scala.collection.mutable
   */
 class ConsoleStarter {
 
-  private val ErrorPrefix: String = "ERROR: "
+  private final val ErrorPrefix: String = "ERROR: "
 
-  private val help = "\nusage: java -jar (jarname) (extension) (input) (output)\n" + //
+  private final val help = "\nusage: java -jar (jarname) (extension) (input) (output)\n" + //
     "\nIf the extension is omitted, the '" + NormalizationExtension().Name + "' extension is executed." + //
     "\n\nThe available extensions are:" + "\n"
 

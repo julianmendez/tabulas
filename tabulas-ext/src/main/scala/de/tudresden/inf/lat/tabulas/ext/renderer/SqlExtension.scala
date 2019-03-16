@@ -12,9 +12,9 @@ import de.tudresden.inf.lat.tabulas.table.TableMap
   */
 class SqlExtension extends Extension {
 
-  val Name: String = "sql"
-  val Help: String = "(input) (output) : create an SQL dump file"
-  val RequiredArguments: Int = 2
+  final val Name: String = "sql"
+  final val Help: String = "(input) (output) : create an SQL dump file"
+  final val RequiredArguments: Int = 2
 
   override def process(arguments: Seq[String]): Boolean = {
     val result = if (Objects.isNull(arguments) || arguments.size != RequiredArguments) {

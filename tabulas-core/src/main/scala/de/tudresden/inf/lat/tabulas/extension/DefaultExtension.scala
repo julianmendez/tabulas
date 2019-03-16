@@ -12,9 +12,9 @@ import de.tudresden.inf.lat.tabulas.table.TableMap
   */
 class DefaultExtension extends Extension {
 
-  val Name: String = "simple"
-  val Help: String = "(input) (output) : create a Tabula/Properties file (this is the default format)"
-  val RequiredArguments: Int = 2
+  final val Name: String = "simple"
+  final val Help: String = "(input) (output) : create a Tabula/Properties file (this is the default format)"
+  final val RequiredArguments: Int = 2
 
   override def process(arguments: Seq[String]): Boolean = {
     val result: Boolean = if (Objects.isNull(arguments) || arguments.size != RequiredArguments) {

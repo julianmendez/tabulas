@@ -14,11 +14,11 @@ import de.tudresden.inf.lat.tabulas.table.TableMap
   */
 class CalendarParserExtension extends Extension {
 
-  val Name: String = "parsecalendar"
+  final val Name: String = "parsecalendar"
 
-  val Help: String = "(input) (output) : create a Tabula/Properties file by parsing a calendar (iCalendar) file (this is experimental and does not parse all properties)"
+  final val Help: String = "(input) (output) : create a Tabula/Properties file by parsing a calendar (iCalendar) file (this is experimental and does not parse all properties)"
 
-  val RequiredArguments: Int = 2
+  final val RequiredArguments: Int = 2
 
   override def process(arguments: Seq[String]): Boolean = {
     val result = if (Objects.isNull(arguments) || arguments.size != RequiredArguments) {

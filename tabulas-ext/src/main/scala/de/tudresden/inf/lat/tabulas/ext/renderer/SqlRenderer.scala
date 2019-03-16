@@ -13,25 +13,25 @@ import de.tudresden.inf.lat.tabulas.table.{Table, TableMap}
   */
 class SqlRenderer(output: Writer) extends Renderer {
 
-  val DefaultSize: Int = 0x800
-  val DefaultDatabaseName: String = "tabula"
-  val CreateDatabase: String = "create database"
-  val Use: String = "use"
-  val CreateTable: String = "create table"
-  val LeftPar: String = "("
-  val RightPar: String = ")"
-  val DefaultFieldType: String = "varchar(" + DefaultSize + ")"
-  val Comma: String = ","
-  val Semicolon: String = ";"
-  val Values: String = "values"
-  val Null: String = "null"
-  val Apostrophe: String = "'"
-  val InsertInto: String = "insert into"
-  val ApostropheReplacement: String = "%27"
-  val Asc: String = "asc"
-  val Desc: String = "desc"
-  val SelectAllFrom: String = "select * from"
-  val OrderBy: String = "order by"
+  final val DefaultSize: Int = 0x800
+  final val DefaultDatabaseName: String = "tabula"
+  final val CreateDatabase: String = "create database"
+  final val Use: String = "use"
+  final val CreateTable: String = "create table"
+  final val LeftPar: String = "("
+  final val RightPar: String = ")"
+  final val DefaultFieldType: String = "varchar(" + DefaultSize + ")"
+  final val Comma: String = ","
+  final val Semicolon: String = ";"
+  final val Values: String = "values"
+  final val Null: String = "null"
+  final val Apostrophe: String = "'"
+  final val InsertInto: String = "insert into"
+  final val ApostropheReplacement: String = "%27"
+  final val Asc: String = "asc"
+  final val Desc: String = "desc"
+  final val SelectAllFrom: String = "select * from"
+  final val OrderBy: String = "order by"
 
   def sanitize(str: String): String = {
     str.replace(Apostrophe, ApostropheReplacement)

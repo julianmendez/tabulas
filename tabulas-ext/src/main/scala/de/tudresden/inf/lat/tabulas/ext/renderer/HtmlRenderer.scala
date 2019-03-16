@@ -13,7 +13,7 @@ import de.tudresden.inf.lat.tabulas.table.{Table, TableMap}
   */
 class HtmlRenderer(output: Writer) extends Renderer {
 
-  val Prefix: String = "<?xml version=\"1.0\" encoding=\"utf-8\"?>" +
+  final val Prefix: String = "<?xml version=\"1.0\" encoding=\"utf-8\"?>" +
     "\n<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.1//EN\" \"https://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd\">" +
     "\n" +
     "\n<html xmlns=\"https://www.w3.org/1999/xhtml\" lang=\"en\">" +
@@ -28,7 +28,7 @@ class HtmlRenderer(output: Writer) extends Renderer {
     "\n" +
     "\n"
 
-  val Suffix: String = "\n" +
+  final val Suffix: String = "\n" +
     "\n" +
     "\n  </div>" +
     "\n</body>" +

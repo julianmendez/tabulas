@@ -37,55 +37,55 @@ class CalendarParser(input: Reader) extends Parser {
 
   }
 
-  val GeneratedIdFieldName: String = "generatedId"
-  val SubItemsFieldName: String = "subItems"
-  val CalendarTypeLabel: String = "VCALENDAR"
-  val TimeZoneTypeLabel: String = "VTIMEZONE"
-  val DaylightTypeLabel: String = "DAYLIGHT"
-  val StandardTypeLabel: String = "STANDARD"
-  val EventTypeLabel: String = "VEVENT"
-  val AlarmTypeLabel: String = "VALARM"
+  final val GeneratedIdFieldName: String = "generatedId"
+  final val SubItemsFieldName: String = "subItems"
+  final val CalendarTypeLabel: String = "VCALENDAR"
+  final val TimeZoneTypeLabel: String = "VTIMEZONE"
+  final val DaylightTypeLabel: String = "DAYLIGHT"
+  final val StandardTypeLabel: String = "STANDARD"
+  final val EventTypeLabel: String = "VEVENT"
+  final val AlarmTypeLabel: String = "VALARM"
 
-  val CalendarTypeFields: Array[String] = Array(GeneratedIdFieldName,
+  final val CalendarTypeFields: Array[String] = Array(GeneratedIdFieldName,
     SubItemsFieldName, "PRODID", "VERSION", "CALSCALE", "METHOD",
     "X-WR-CALNAME", "X-WR-TIMEZONE")
 
-  val TimeZoneTypeFields: Array[String] = Array(GeneratedIdFieldName,
+  final val TimeZoneTypeFields: Array[String] = Array(GeneratedIdFieldName,
     SubItemsFieldName, "TZID", "X-LIC-LOCATION")
 
-  val DaylightTypeFields: Array[String] = Array(GeneratedIdFieldName,
+  final val DaylightTypeFields: Array[String] = Array(GeneratedIdFieldName,
     SubItemsFieldName, "TZOFFSETFROM", "TZOFFSETTO", "TZNAME",
     "DTSTART", "RRULE")
 
-  val StandardTypeFields: Array[String] = DaylightTypeFields
+  final val StandardTypeFields: Array[String] = DaylightTypeFields
 
-  val EventTypeFields: Array[String] = Array(GeneratedIdFieldName,
+  final val EventTypeFields: Array[String] = Array(GeneratedIdFieldName,
     SubItemsFieldName, "DTSTART", "DTEND", "RRULE", "ORGANIZER",
     "DTSTAMP", "UID", "ATTENDEE", "CREATED", "DESCRIPTION",
     "LAST-MODIFIED", "LOCATION", "SEQUENCE", "STATUS", "SUMMARY",
     "TRANSP", "X-ALT-DESC", "X-MICROSOFT-CDO-BUSYSTATUS", "CLASS")
 
-  val AlarmTypeFields: Array[String] = Array(GeneratedIdFieldName,
+  final val AlarmTypeFields: Array[String] = Array(GeneratedIdFieldName,
     SubItemsFieldName, "ACTION", "DESCRIPTION", "SUMMARY", "ATTENDEE",
     "TRIGGER")
 
-  val EventTyp: SimplifiedCompositeType = SimplifiedCompositeType()
+  final val EventTyp: SimplifiedCompositeType = SimplifiedCompositeType()
 
-  val UnderscoreChar: Char = '_'
-  val CommaChar: Char = ','
-  val QuotesChar: Char = '"'
-  val ColonChar: Char = ':'
-  val SemicolonChar: Char = ';'
-  val SpaceChar: Char = ' '
-  val NewLineChar: Char = '\n'
-  val GeneratedIdSeparatorChar: Char = '.'
-  val FirstGeneratedIndex: Int = 0
+  final val UnderscoreChar: Char = '_'
+  final val CommaChar: Char = ','
+  final val QuotesChar: Char = '"'
+  final val ColonChar: Char = ':'
+  final val SemicolonChar: Char = ';'
+  final val SpaceChar: Char = ' '
+  final val NewLineChar: Char = '\n'
+  final val GeneratedIdSeparatorChar: Char = '.'
+  final val FirstGeneratedIndex: Int = 0
 
-  val Underscore: String = "" + UnderscoreChar
+  final val Underscore: String = "" + UnderscoreChar
 
-  val NewEvent: String = "BEGIN:" + EventTypeLabel
-  val BeginKeyword: String = "BEGIN"
-  val EndKeyword: String = "END"
+  final val NewEvent: String = "BEGIN:" + EventTypeLabel
+  final val BeginKeyword: String = "BEGIN"
+  final val EndKeyword: String = "END"
 
   def getKey(line: String): Option[String] = {
     val result = if (Objects.isNull(line)) {

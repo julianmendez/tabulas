@@ -8,11 +8,11 @@ trait PrefixMap {
 
   /** Start of the prefix.
     */
-  val PrefixAmpersand: String = "&"
+  final val PrefixAmpersand: String = "&"
 
   /** End of the prefix.
     */
-  val PrefixSemicolon: String = ";"
+  final val PrefixSemicolon: String = ";"
 
   /** Returns <code>true</code> if and only if this map does not contain associations.
     *

@@ -12,11 +12,11 @@ import scala.collection.mutable
   */
 class ExtensionManager extends Extension {
 
-  val Name: String = "ext"
-  val Help: String = "extension manager"
-  val RequiredArguments: Int = 1
-  val NewLine: Char = '\n'
-  val Space: Char = ' '
+  final val Name: String = "ext"
+  final val Help: String = "extension manager"
+  final val RequiredArguments: Int = 1
+  final val NewLine: Char = '\n'
+  final val Space: Char = ' '
 
   private val _extensions = new mutable.ArrayBuffer[Extension]()
   private val _extensionMap = new mutable.TreeMap[String, Extension]()

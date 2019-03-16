@@ -15,13 +15,13 @@ import scala.collection.mutable
   */
 class CsvParser(input: Reader) extends Parser {
 
-  val UnderscoreChar: Char = '_'
-  val CommaChar: Char = ','
-  val QuotesChar: Char = '"'
+  final val UnderscoreChar: Char = '_'
+  final val CommaChar: Char = ','
+  final val QuotesChar: Char = '"'
 
-  val DefaultTableName: String = "defaultType"
-  val DefaultFieldType: String = "String"
-  val Underscore: String = "" + UnderscoreChar
+  final val DefaultTableName: String = "defaultType"
+  final val DefaultFieldType: String = "String"
+  final val Underscore: String = "" + UnderscoreChar
 
   def getColumns(line0: String): Seq[String] = {
     val result = new mutable.ArrayBuffer[String]()

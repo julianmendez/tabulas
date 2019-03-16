@@ -13,10 +13,10 @@ import de.tudresden.inf.lat.tabulas.table.{Table, TableMap}
   */
 class CsvRenderer(output: Writer) extends Renderer {
 
-  val Quotes: String = "\""
-  val QuotesReplacement: String = "''"
-  val Null: String = ""
-  val Comma: String = ","
+  final val Quotes: String = "\""
+  final val QuotesReplacement: String = "''"
+  final val Null: String = ""
+  final val Comma: String = ","
 
   def sanitize(str: String): String = {
     str.replace(Quotes, QuotesReplacement)
