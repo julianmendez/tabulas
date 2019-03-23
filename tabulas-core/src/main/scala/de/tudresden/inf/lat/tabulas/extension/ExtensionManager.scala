@@ -10,7 +10,7 @@ import scala.collection.mutable
 /** This models an extension that can execute other extensions.
   *
   */
-class ExtensionManager extends Extension {
+case class ExtensionManager(extensions: Seq[Extension]) extends Extension {
 
   final val Name: String = "ext"
   final val Help: String = "extension manager"
@@ -18,27 +18,14 @@ class ExtensionManager extends Extension {
   final val NewLine: Char = '\n'
   final val Space: Char = ' '
 
-  private val _extensions = new mutable.ArrayBuffer[Extension]()
-  private val _extensionMap = new mutable.TreeMap[String, Extension]()
+  private val _extensionMap = getExtensionMap(extensions)
 
-  /** Constructs an extension manager.
+  /** Returns the extension map.
     *
     * @param extensions list of extensions
     */
-  def this(extensions: Seq[Extension]) = {
-    this()
-    if (Objects.nonNull(extensions)) {
-      this._extensions ++= extensions
-      extensions.foreach(extension => {
-        val key: String = extension.getExtensionName
-        if (this._extensionMap.get(key).isDefined) {
-          throw ExtensionException(
-            "Only one implementation is allowed for each extension, and '"
-              + key + "' was at least twice.")
-        }
-        this._extensionMap.put(key, extension)
-      })
-    }
+  def getExtensionMap(extensions: Seq[Extension]): Map[String, Extension] = {
+    extensions.map(extension => (extension.getExtensionName, extension)).toMap
   }
 
   override def process(arguments: Seq[String]): Boolean = {
@@ -73,25 +60,14 @@ class ExtensionManager extends Extension {
   }
 
   override def getHelp: String = {
-    val sbuf: StringBuffer = new StringBuffer()
-    this._extensions.foreach(extension => {
-      sbuf.append(extension.getExtensionName)
-      sbuf.append(Space)
-      sbuf.append(extension.getHelp)
-      sbuf.append(NewLine)
-    })
-    val result: String = sbuf.toString
+    val result = extensions.map(extension => {
+      extension.getExtensionName + Space + extension.getHelp
+    }).mkString("" + NewLine)
     result
   }
 
   override def getRequiredArguments: Int = {
     RequiredArguments
   }
-
-}
-
-object ExtensionManager {
-
-  def apply(): ExtensionManager = new ExtensionManager
 
 }
