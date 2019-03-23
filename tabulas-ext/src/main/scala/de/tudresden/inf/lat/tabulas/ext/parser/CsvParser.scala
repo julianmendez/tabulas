@@ -13,7 +13,7 @@ import scala.collection.mutable
 /** Parser of a table in comma-separated values format.
   *
   */
-class CsvParser(input: Reader) extends Parser {
+case class CsvParser(input: Reader) extends Parser {
 
   final val UnderscoreChar: Char = '_'
   final val CommaChar: Char = ','
@@ -157,7 +157,5 @@ class CsvParser(input: Reader) extends Parser {
 object CsvParser {
 
   def apply(): CsvParser = new CsvParser(new InputStreamReader(System.in))
-
-  def apply(input: Reader): CsvParser = new CsvParser(input)
 
 }

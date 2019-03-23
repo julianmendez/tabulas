@@ -10,7 +10,7 @@ import de.tudresden.inf.lat.tabulas.table.TableMap
 /** This models an extension that writes the output in comma-separated values.
   *
   */
-class CsvExtension extends Extension {
+case class CsvExtension() extends Extension {
 
   final val Name: String = "csv"
   final val Help: String = "(input) (output) : create a comma-separated values (CSV) file"
@@ -51,11 +51,5 @@ class CsvExtension extends Extension {
   override def getRequiredArguments: Int = {
     RequiredArguments
   }
-
-}
-
-object CsvExtension {
-
-  def apply(): CsvExtension = new CsvExtension
 
 }

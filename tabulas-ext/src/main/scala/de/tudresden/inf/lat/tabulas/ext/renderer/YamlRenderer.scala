@@ -14,7 +14,7 @@ import scala.util.Try
 
 /** Renderer that creates a YAML file.
   */
-class YamlRenderer(output: Writer) extends Renderer {
+case class YamlRenderer(output: Writer) extends Renderer {
 
   final val ColonChar = ":"
   final val SpaceChar = " "
@@ -206,7 +206,7 @@ class YamlRenderer(output: Writer) extends Renderer {
   }
 
   override def render(tableMap: TableMap): Unit = {
-    render(new UncheckedWriterImpl(this.output), tableMap)
+    render(UncheckedWriterImpl(this.output), tableMap)
   }
 
 }
@@ -221,7 +221,5 @@ object YamlRenderer {
   )
 
   def apply(): YamlRenderer = new YamlRenderer(new OutputStreamWriter(System.out))
-
-  def apply(output: Writer): YamlRenderer = new YamlRenderer(output)
 
 }

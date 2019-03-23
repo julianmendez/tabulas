@@ -12,7 +12,7 @@ import scala.collection.JavaConverters._
 
 /** Parser for JSON format.
   */
-class JsonParser(input: Reader) extends Parser {
+case class JsonParser(input: Reader) extends Parser {
 
   def asString(value: JsonValue): String = {
     val result = if (value.isString) {
@@ -92,7 +92,5 @@ class JsonParser(input: Reader) extends Parser {
 object JsonParser {
 
   def apply(): JsonParser = new JsonParser(new InputStreamReader(System.in))
-
-  def apply(input: Reader): JsonParser = new JsonParser(input)
 
 }

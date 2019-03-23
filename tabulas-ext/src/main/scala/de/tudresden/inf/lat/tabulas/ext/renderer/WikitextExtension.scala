@@ -10,7 +10,7 @@ import de.tudresden.inf.lat.tabulas.table.TableMap
 /** This models an extension that writes the output in Wikitext.
   *
   */
-class WikitextExtension extends Extension {
+case class WikitextExtension() extends Extension {
 
   final val Name: String = "wikitext"
   final val Help: String = "(input) (output) : create a Wiki text file"
@@ -51,11 +51,5 @@ class WikitextExtension extends Extension {
   override def getRequiredArguments: Int = {
     RequiredArguments
   }
-
-}
-
-object WikitextExtension {
-
-  def apply(): WikitextExtension = new WikitextExtension
 
 }

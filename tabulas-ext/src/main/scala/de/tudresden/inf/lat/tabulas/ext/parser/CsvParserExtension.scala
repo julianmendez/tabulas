@@ -11,7 +11,7 @@ import de.tudresden.inf.lat.tabulas.table.TableMap
   * with the default format.
   *
   */
-class CsvParserExtension extends Extension {
+case class CsvParserExtension() extends Extension {
 
   final val Name: String = "parsecsv"
   final val Help: String = "(input) (output) : create a Tabula/Properties file by parsing a comma-separated values (CSV) file"
@@ -51,11 +51,5 @@ class CsvParserExtension extends Extension {
   override def getRequiredArguments: Int = {
     RequiredArguments
   }
-
-}
-
-object CsvParserExtension {
-
-  def apply(): CsvParserExtension = new CsvParserExtension
 
 }

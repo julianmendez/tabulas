@@ -11,7 +11,7 @@ import de.tudresden.inf.lat.tabulas.table.{Table, TableMap}
 
 /** Renderer of a table that creates an HTML document.
   */
-class HtmlRenderer(output: Writer) extends Renderer {
+case class HtmlRenderer(output: Writer) extends Renderer {
 
   final val Prefix: String = "<?xml version=\"1.0\" encoding=\"utf-8\"?>" +
     "\n<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.1//EN\" \"https://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd\">" +
@@ -130,7 +130,7 @@ class HtmlRenderer(output: Writer) extends Renderer {
   }
 
   override def render(tableMap: TableMap): Unit = {
-    render(new UncheckedWriterImpl(this.output), tableMap)
+    render(UncheckedWriterImpl(this.output), tableMap)
   }
 
 }
@@ -138,7 +138,5 @@ class HtmlRenderer(output: Writer) extends Renderer {
 object HtmlRenderer {
 
   def apply(): HtmlRenderer = new HtmlRenderer(new OutputStreamWriter(System.out))
-
-  def apply(output: Writer): HtmlRenderer = new HtmlRenderer(output)
 
 }

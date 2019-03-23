@@ -9,7 +9,7 @@ import de.tudresden.inf.lat.tabulas.table.TableMap
 
 /** This models an extension that reads a JSON file and writes the default format.
   */
-class JsonParserExtension extends Extension {
+case class JsonParserExtension() extends Extension {
 
   final val Name: String = "parsejson"
   final val Help: String = "(input) (output) : create a Tabula/Properties file by parsing a Tabula/JSON file"
@@ -49,11 +49,5 @@ class JsonParserExtension extends Extension {
   override def getRequiredArguments: Int = {
     RequiredArguments
   }
-
-}
-
-object JsonParserExtension {
-
-  def apply(): JsonParserExtension = new JsonParserExtension
 
 }

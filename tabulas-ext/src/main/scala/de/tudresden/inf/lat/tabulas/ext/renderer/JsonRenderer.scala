@@ -11,7 +11,7 @@ import de.tudresden.inf.lat.tabulas.table.{Table, TableMap}
 
 /** Renderer that creates a JSON file.
   */
-class JsonRenderer(output: Writer) extends Renderer {
+case class JsonRenderer(output: Writer) extends Renderer {
 
   final val OpenBrace = "{"
   final val CloseBrace = "}"
@@ -183,7 +183,7 @@ class JsonRenderer(output: Writer) extends Renderer {
   }
 
   override def render(tableMap: TableMap): Unit = {
-    render(new UncheckedWriterImpl(this.output), tableMap)
+    render(UncheckedWriterImpl(this.output), tableMap)
   }
 
 }
@@ -198,7 +198,5 @@ object JsonRenderer {
   )
 
   def apply(): JsonRenderer = new JsonRenderer(new OutputStreamWriter(System.out))
-
-  def apply(output: Writer): JsonRenderer = new JsonRenderer(output)
 
 }

@@ -10,7 +10,7 @@ import de.tudresden.inf.lat.tabulas.table.TableMap
 /** This models an extension that writes the output in SQL.
   *
   */
-class SqlExtension extends Extension {
+case class SqlExtension() extends Extension {
 
   final val Name: String = "sql"
   final val Help: String = "(input) (output) : create an SQL dump file"
@@ -51,11 +51,5 @@ class SqlExtension extends Extension {
   override def getRequiredArguments: Int = {
     RequiredArguments
   }
-
-}
-
-object SqlExtension {
-
-  def apply(): SqlExtension = new SqlExtension
 
 }

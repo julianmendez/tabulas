@@ -12,7 +12,7 @@ import scala.collection.mutable
 /** Parser of a calendar.
   *
   */
-class CalendarParser(input: Reader) extends Parser {
+case class CalendarParser(input: Reader) extends Parser {
 
   case class Pair(lineCounter: Int, line: String) {
 
@@ -161,7 +161,7 @@ class CalendarParser(input: Reader) extends Parser {
       if (line.startsWith("" + SpaceChar)) {
         sbuf.append(line)
       } else {
-        result += new Pair(lineCounter, sbuf.toString)
+        result += Pair(lineCounter, sbuf.toString)
         sbuf = new StringBuffer()
         sbuf.append(line)
       }
@@ -325,7 +325,5 @@ class CalendarParser(input: Reader) extends Parser {
 object CalendarParser {
 
   def apply(): CalendarParser = new CalendarParser (new InputStreamReader(System.in))
-
-  def apply(input: Reader): CalendarParser = new CalendarParser (input)
 
 }

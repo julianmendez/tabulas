@@ -10,7 +10,7 @@ import de.tudresden.inf.lat.tabulas.table.TableMap
 /** This models an extension that writes the output in HTML.
   *
   */
-class HtmlExtension extends Extension {
+case class HtmlExtension() extends Extension {
 
   final val Name: String = "html"
   final val Help: String = "(input) (output) : create an HTML file"
@@ -51,11 +51,5 @@ class HtmlExtension extends Extension {
   override def getRequiredArguments: Int = {
     RequiredArguments
   }
-
-}
-
-object HtmlExtension {
-
-  def apply(): HtmlExtension = new HtmlExtension
 
 }

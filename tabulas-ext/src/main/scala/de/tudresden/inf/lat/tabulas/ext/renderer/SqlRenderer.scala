@@ -11,7 +11,7 @@ import de.tudresden.inf.lat.tabulas.table.{Table, TableMap}
 
 /** Renderer of tables in SQL format.
   */
-class SqlRenderer(output: Writer) extends Renderer {
+case class SqlRenderer(output: Writer) extends Renderer {
 
   final val DefaultSize: Int = 0x800
   final val DefaultDatabaseName: String = "tabula"
@@ -209,7 +209,7 @@ class SqlRenderer(output: Writer) extends Renderer {
   }
 
   override def render(tableMap: TableMap): Unit = {
-    render(new UncheckedWriterImpl(this.output), tableMap)
+    render(UncheckedWriterImpl(this.output), tableMap)
   }
 
 }
@@ -217,7 +217,5 @@ class SqlRenderer(output: Writer) extends Renderer {
 object SqlRenderer {
 
   def apply(): SqlRenderer = new SqlRenderer(new OutputStreamWriter(System.out))
-
-  def apply(output: Writer): SqlRenderer = new SqlRenderer(output)
 
 }

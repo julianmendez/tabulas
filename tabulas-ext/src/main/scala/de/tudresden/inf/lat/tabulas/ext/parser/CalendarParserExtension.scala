@@ -12,7 +12,7 @@ import de.tudresden.inf.lat.tabulas.table.TableMap
   * with the default format.
   *
   */
-class CalendarParserExtension extends Extension {
+case class CalendarParserExtension() extends Extension {
 
   final val Name: String = "parsecalendar"
 
@@ -54,11 +54,5 @@ class CalendarParserExtension extends Extension {
   override def getRequiredArguments: Int = {
     RequiredArguments
   }
-
-}
-
-object CalendarParserExtension {
-
-  def apply(): CalendarParserExtension = new CalendarParserExtension
 
 }

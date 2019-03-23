@@ -11,7 +11,7 @@ import de.tudresden.inf.lat.tabulas.table.{Table, TableMap}
 
 /** Renderer of tables in comma-separated values format.
   */
-class CsvRenderer(output: Writer) extends Renderer {
+case class CsvRenderer(output: Writer) extends Renderer {
 
   final val Quotes: String = "\""
   final val QuotesReplacement: String = "''"
@@ -138,7 +138,7 @@ class CsvRenderer(output: Writer) extends Renderer {
   }
 
   override def render(tableMap: TableMap): Unit = {
-    render(new UncheckedWriterImpl(this.output), tableMap)
+    render(UncheckedWriterImpl(this.output), tableMap)
   }
 
 }
@@ -146,7 +146,5 @@ class CsvRenderer(output: Writer) extends Renderer {
 object CsvRenderer {
 
   def apply(): CsvRenderer = new CsvRenderer(new OutputStreamWriter(System.out))
-
-  def apply(output: Writer): CsvRenderer = new CsvRenderer(output)
 
 }

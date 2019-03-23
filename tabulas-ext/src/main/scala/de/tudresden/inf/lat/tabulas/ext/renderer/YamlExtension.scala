@@ -10,7 +10,7 @@ import de.tudresden.inf.lat.tabulas.table.TableMap
 /** This models an extension that writes the output in Wikitext.
   *
   */
-class YamlExtension extends Extension {
+case class YamlExtension() extends Extension {
 
   final val Name: String = "yaml"
   final val Help: String = "(input) (output) : create a Tabula/YAML file"
@@ -51,11 +51,5 @@ class YamlExtension extends Extension {
   override def getRequiredArguments: Int = {
     RequiredArguments
   }
-
-}
-
-object YamlExtension {
-
-  def apply(): YamlExtension = new YamlExtension
 
 }

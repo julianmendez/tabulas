@@ -10,7 +10,7 @@ import de.tudresden.inf.lat.tabulas.table.TableMap
 /** This models an extension that writes the output in Wikitext.
   *
   */
-class JsonExtension extends Extension {
+case class JsonExtension() extends Extension {
 
   final val Name: String = "json"
   final val Help: String = "(input) (output) : create a Tabula/JSON file"
@@ -54,8 +54,3 @@ class JsonExtension extends Extension {
 
 }
 
-object JsonExtension {
-
-  def apply(): JsonExtension = new JsonExtension
-
-}
