@@ -4,12 +4,12 @@ package de.tudresden.inf.lat.tabulas.datatype
 /** This models a empty value.
   *
   */
-class EmptyValue extends PrimitiveTypeValue {
+case class EmptyValue() extends PrimitiveTypeValue {
 
   private val Value: String = ""
 
   override def getType: PrimitiveType = {
-    new EmptyType()
+    EmptyType()
   }
 
   override def isEmpty: Boolean = {
@@ -26,18 +26,6 @@ class EmptyValue extends PrimitiveTypeValue {
 
   override def compareTo(other: PrimitiveTypeValue): Int = {
     toString.compareTo(other.toString)
-  }
-
-  override def hashCode(): Int = {
-    Value.hashCode()
-  }
-
-  override def equals(obj: Any): Boolean = {
-    val result = obj match {
-      case other: EmptyValue => true
-      case _ => false
-    }
-    result
   }
 
   override def toString: String = {

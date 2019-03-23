@@ -6,13 +6,13 @@ import java.util.Objects
 /** This models a list of elements with a parameterized type.
   *
   */
-class ParameterizedListValue(parameter: PrimitiveType, list: Seq[PrimitiveTypeValue])
+case class ParameterizedListValue(parameter: PrimitiveType, list: Seq[PrimitiveTypeValue])
   extends PrimitiveTypeValue {
 
   val Separator: String = " "
 
   override def getType: PrimitiveType = {
-    new ParameterizedListType(this.parameter)
+    ParameterizedListType(this.parameter)
   }
 
   override def render(): String = {
@@ -61,16 +61,6 @@ object ParameterizedListValue {
   def apply(parameter: PrimitiveType): ParameterizedListValue = {
     Objects.requireNonNull(parameter)
     new ParameterizedListValue(parameter, Seq())
-  }
-
-  /** Constructs a new parameterized list value.
-    *
-    * @param parameter primitive type
-    * @param list      list
-    */
-  def apply(parameter: PrimitiveType, list: Seq[PrimitiveTypeValue]): ParameterizedListValue = {
-    Objects.requireNonNull(parameter)
-    new ParameterizedListValue(parameter, list)
   }
 
   /** Constructs a new parameterized list value using another parameterized

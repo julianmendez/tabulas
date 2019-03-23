@@ -9,10 +9,10 @@ import scala.collection.mutable
 /** This models a decimal value.
   *
   */
-class DecimalValue(number: BigDecimal) extends PrimitiveTypeValue {
+case class DecimalValue(number: BigDecimal) extends PrimitiveTypeValue {
 
   override def getType: PrimitiveType = {
-    new DecimalType()
+    DecimalType()
   }
 
   def getValue: BigDecimal = number
@@ -35,18 +35,6 @@ class DecimalValue(number: BigDecimal) extends PrimitiveTypeValue {
         this.number.compareTo(otherValue.getValue)
       case _ =>
         render().compareTo(other.render())
-    }
-    result
-  }
-
-  override def hashCode(): Int = {
-    this.number.hashCode()
-  }
-
-  override def equals(obj: Any): Boolean = {
-    val result = obj match {
-      case other: DecimalValue => this.number.equals(other.getValue)
-      case _ => false
     }
     result
   }
@@ -75,14 +63,6 @@ object DecimalValue {
     } catch {
       case e: NumberFormatException => throw new ParseException(e.getMessage, e)
     }
-  }
-
-  /** Constructs a new decimal value using another decimal value.
-    *
-    * @param other a decimal value
-    */
-  def apply(other: DecimalValue): DecimalValue = {
-    new DecimalValue(other.getValue)
   }
 
 }

@@ -14,7 +14,7 @@ import scala.collection.mutable.ArrayBuffer
 /** Parser of a table in simple format.
   *
   */
-class SimpleFormatParser(input: Reader) extends Parser {
+case class SimpleFormatParser(input: Reader) extends Parser {
 
   case class Pair(lineCounter: Int, line: Option[String])
 
@@ -367,7 +367,5 @@ class SimpleFormatParser(input: Reader) extends Parser {
 object SimpleFormatParser {
 
   def apply(): SimpleFormatParser = new SimpleFormatParser(new InputStreamReader(System.in))
-
-  def apply(input: Reader): SimpleFormatParser = new SimpleFormatParser(input)
 
 }

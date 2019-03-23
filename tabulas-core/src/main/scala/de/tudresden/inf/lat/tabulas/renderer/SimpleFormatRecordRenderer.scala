@@ -11,7 +11,7 @@ import de.tudresden.inf.lat.tabulas.table.PrefixMap
 
 /** Renderer of a table in simple format.
   */
-class SimpleFormatRecordRenderer(output: Writer, prefixMap: PrefixMap, fieldSign: String) extends RecordRenderer {
+case class SimpleFormatRecordRenderer(output: Writer, prefixMap: PrefixMap, fieldSign: String) extends RecordRenderer {
 
   def writeIfNotEmpty(output: UncheckedWriter, field: String, value: PrimitiveTypeValue): Boolean = {
     val result: Boolean = if (Objects.nonNull(field) && !field.trim().isEmpty && Objects.nonNull(value) && !value.isEmpty) {
@@ -22,7 +22,7 @@ class SimpleFormatRecordRenderer(output: Writer, prefixMap: PrefixMap, fieldSign
       if (value.getType.isList) {
         val hasUris: Boolean = value match {
           case list: ParameterizedListValue =>
-            list.getParameter.equals(new URIType())
+            list.getParameter.equals(URIType())
           case _ =>
             false
         }
@@ -42,7 +42,7 @@ class SimpleFormatRecordRenderer(output: Writer, prefixMap: PrefixMap, fieldSign
 
       } else {
         output.write(ParserConstant.Space)
-        if (value.getType.equals(new URIType())) {
+        if (value.getType.equals(URIType())) {
           output.write(prefixMap.getWithPrefix(URI.create(value.toString)).toASCIIString)
         } else {
           output.write(value.toString)
@@ -74,7 +74,7 @@ class SimpleFormatRecordRenderer(output: Writer, prefixMap: PrefixMap, fieldSign
   }
 
   override def render(record: Record, fields: Seq[String]): Unit = {
-    render(new UncheckedWriterImpl(output), record, fields)
+    render(UncheckedWriterImpl(output), record, fields)
   }
 
 }
@@ -82,7 +82,5 @@ class SimpleFormatRecordRenderer(output: Writer, prefixMap: PrefixMap, fieldSign
 object SimpleFormatRecordRenderer {
 
   def apply(output: Writer, prefixMap: PrefixMap): SimpleFormatRecordRenderer = new SimpleFormatRecordRenderer(output, prefixMap, ParserConstant.ColonFieldSign)
-
-  def apply(output: Writer, prefixMap: PrefixMap, fieldSign: String): SimpleFormatRecordRenderer = new SimpleFormatRecordRenderer(output, prefixMap, fieldSign)
 
 }

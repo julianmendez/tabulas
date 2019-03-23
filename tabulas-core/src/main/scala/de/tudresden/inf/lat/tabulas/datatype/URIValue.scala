@@ -7,12 +7,12 @@ import java.util.Objects
 /** This models a URI.
   *
   */
-class URIValue(uri: URI) extends PrimitiveTypeValue {
+case class URIValue(uri: URI) extends PrimitiveTypeValue {
 
   val SpecialSymbol: String = "#"
 
   override def getType: PrimitiveType = {
-    new URIType()
+    URIType()
   }
 
   def getUri: URI = {
@@ -57,18 +57,6 @@ class URIValue(uri: URI) extends PrimitiveTypeValue {
     toString.compareTo(other.toString)
   }
 
-  override def hashCode(): Int = {
-    uri.hashCode()
-  }
-
-  override def equals(obj: Any): Boolean = {
-    val result = obj match {
-      case other: URIValue => getUri.equals(other.getUri)
-      case _ => false
-    }
-    result
-  }
-
   override def toString: String = {
     render()
   }
@@ -88,15 +76,6 @@ object URIValue {
   def apply(uriStr: String): URIValue = {
     Objects.requireNonNull(uriStr)
     new URIValue(createURI(uriStr))
-  }
-
-  /** Constructs a new URI value using a URI.
-    *
-    * @param uri URI
-    */
-  def apply(uri: URI): URIValue = {
-    Objects.requireNonNull(uri)
-    new URIValue(uri)
   }
 
   /** Constructs a new URI value using another URI value.

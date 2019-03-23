@@ -8,7 +8,7 @@ import scala.collection.mutable
 
 /** This helps in the serialization of metadata.
   */
-class MetadataHelper {
+case class MetadataHelper() {
 
   private def getTypeEntry(typeName: String): PrimitiveTypeValue = {
     new StringValue(typeName)
@@ -55,11 +55,5 @@ class MetadataHelper {
     map.put(ParserConstant.SortingOrderDeclarationToken, getOrderEntry(table))
     new RecordImpl(map)
   }
-
-}
-
-object MetadataHelper {
-
-  def apply(): MetadataHelper = new MetadataHelper
 
 }

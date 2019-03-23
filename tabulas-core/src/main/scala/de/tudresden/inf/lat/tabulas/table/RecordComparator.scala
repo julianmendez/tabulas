@@ -10,7 +10,7 @@ import scala.collection.mutable
 /** Comparator for records.
   *
   */
-class RecordComparator extends Comparator[Record] {
+case class RecordComparator() extends Comparator[Record] {
 
   private val _sortingOrder = new mutable.ArrayBuffer[String]
   private val _fieldsWithReverseOrder = new mutable.TreeSet[String]()
@@ -81,26 +81,8 @@ class RecordComparator extends Comparator[Record] {
     result
   }
 
-  override def equals(obj: Any): Boolean = {
-    val result = obj match {
-      case other: RecordComparator => this._sortingOrder.equals(other._sortingOrder)
-      case _ => false
-    }
-    result
-  }
-
-  override def hashCode(): Int = {
-    this._sortingOrder.hashCode()
-  }
-
   override def toString: String = {
     this._sortingOrder.toString
   }
-
-}
-
-object RecordComparator {
-
-  def apply(): RecordComparator = new RecordComparator
 
 }

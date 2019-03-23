@@ -8,7 +8,7 @@ import java.util.Objects
   * @author Julian Mendez
   *
   */
-class UncheckedWriterImpl(writer: Writer) extends UncheckedWriter {
+case class UncheckedWriterImpl(writer: Writer) extends UncheckedWriter {
 
   override def write(character: Int): Unit = {
     try {
@@ -97,28 +97,8 @@ class UncheckedWriterImpl(writer: Writer) extends UncheckedWriter {
     this.writer
   }
 
-  override def hashCode(): Int = {
-    this.writer.hashCode()
-  }
-
-  override def equals(obj: Any): Boolean = {
-    val result = obj match {
-      case other: UncheckedWriter =>
-        asWriter().equals(other.asWriter())
-      case _ =>
-        false
-    }
-    result
-  }
-
   override def toString: String = {
     this.writer.toString
   }
-
-}
-
-object UncheckedWriterImpl {
-
-  def apply(writer: Writer): UncheckedWriterImpl = new UncheckedWriterImpl(writer)
 
 }

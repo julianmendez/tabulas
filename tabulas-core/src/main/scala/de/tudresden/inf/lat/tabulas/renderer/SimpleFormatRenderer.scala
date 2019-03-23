@@ -8,7 +8,7 @@ import de.tudresden.inf.lat.tabulas.table.{Table, TableMap}
 
 /** Renderer of a table in simple format.
   */
-class SimpleFormatRenderer(output: Writer, fieldSign: String) extends Renderer {
+case class SimpleFormatRenderer(output: Writer, fieldSign: String) extends Renderer {
 
   def renderAllRecords(recordRenderer: SimpleFormatRecordRenderer, output: UncheckedWriter, table: Table): Unit = {
     output.write(ParserConstant.NewLine)
@@ -37,7 +37,7 @@ class SimpleFormatRenderer(output: Writer, fieldSign: String) extends Renderer {
   }
 
   override def render(tableMap: TableMap): Unit = {
-    render(new UncheckedWriterImpl(this.output), tableMap)
+    render(UncheckedWriterImpl(this.output), tableMap)
   }
 
 }
@@ -56,7 +56,5 @@ object SimpleFormatRenderer {
     ParserConstant.SpecificationVersion + ParserConstant.NewLine
 
   def apply(output: Writer): SimpleFormatRenderer = new SimpleFormatRenderer(output, ParserConstant.ColonFieldSign)
-
-  def apply(output: Writer, fieldSign: String): SimpleFormatRenderer = new SimpleFormatRenderer(output, fieldSign)
 
 }

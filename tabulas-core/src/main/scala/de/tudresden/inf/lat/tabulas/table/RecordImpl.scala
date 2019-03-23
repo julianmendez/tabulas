@@ -10,7 +10,7 @@ import scala.collection.mutable
 /** This is the default implementation of a record.
   *
   */
-class RecordImpl(map: mutable.Map[String, PrimitiveTypeValue]) extends Record {
+case class RecordImpl(map: mutable.Map[String, PrimitiveTypeValue]) extends Record {
 
   override def get(key: String): Option[PrimitiveTypeValue] = {
     val result = if (Objects.isNull(key)) {
@@ -33,20 +33,6 @@ class RecordImpl(map: mutable.Map[String, PrimitiveTypeValue]) extends Record {
     result
   }
 
-  override def equals(obj: Any): Boolean = {
-    val result = obj match {
-      case other: Record =>
-        getProperties.equals(other.getProperties) &&
-          getProperties.forall(property => get(property).equals(other.get(property)))
-      case _ => false
-    }
-    result
-  }
-
-  override def hashCode(): Int = {
-    this.map.hashCode()
-  }
-
   override def toString: String = {
     this.map.toString
   }
@@ -56,9 +42,6 @@ class RecordImpl(map: mutable.Map[String, PrimitiveTypeValue]) extends Record {
 object RecordImpl {
 
   def apply(): RecordImpl = new RecordImpl(mutable.TreeMap[String, PrimitiveTypeValue]())
-
-  def apply(map: mutable.Map[String, PrimitiveTypeValue]): RecordImpl = new RecordImpl(map)
-
 
   /** Constructs a new record using another one.
     *

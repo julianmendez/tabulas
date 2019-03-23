@@ -8,7 +8,7 @@ import scala.util.Try
 /** Default implementation of a composite type.
   *
   */
-class CompositeTypeImpl(fields: Seq[String], fieldType: Map[String, String]) extends CompositeType {
+case class CompositeTypeImpl(fields: Seq[String], fieldType: Map[String, String]) extends CompositeType {
 
   override def getFields: Seq[String] = fields
 
@@ -27,20 +27,6 @@ class CompositeTypeImpl(fields: Seq[String], fieldType: Map[String, String]) ext
       val map = fieldType + (field -> typeStr)
       new CompositeTypeImpl(list, map)
     }
-  }
-
-  override def hashCode(): Int = {
-    fields.hashCode() + (0x1F * fieldType.hashCode())
-  }
-
-  override def equals(obj: Any): Boolean = {
-    val result = obj match {
-      case other: CompositeType =>
-        getFields.equals(other.getFields) &&
-          getFields.forall(field => getFieldType(field).equals(other.getFieldType(field)))
-      case _ => false
-    }
-    result
   }
 
   override def toString: String = {

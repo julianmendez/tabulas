@@ -8,7 +8,7 @@ import scala.collection.mutable
 
 /** An object of this class runs the application with the given arguments.
   */
-class ConsoleStarter {
+case class ConsoleStarter() {
 
   private final val ErrorPrefix: String = "ERROR: "
 
@@ -49,11 +49,5 @@ class ConsoleStarter {
         print(help + manager.getHelp + "\n")
     }
   }
-
-}
-
-object ConsoleStarter {
-
-  def apply(): ConsoleStarter = new ConsoleStarter
 
 }

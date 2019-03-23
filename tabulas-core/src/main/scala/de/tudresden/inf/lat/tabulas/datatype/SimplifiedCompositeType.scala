@@ -4,7 +4,7 @@ package de.tudresden.inf.lat.tabulas.datatype
 /** This models a simplified composite type where the fields have the same type.
   *
   */
-class SimplifiedCompositeType(dataType: CompositeTypeImpl) extends CompositeType {
+case class SimplifiedCompositeType(dataType: CompositeTypeImpl) extends CompositeType {
 
   override def getFields: Seq[String] = {
     this.dataType.getFields
@@ -16,19 +16,6 @@ class SimplifiedCompositeType(dataType: CompositeTypeImpl) extends CompositeType
 
   override def getFieldType(field: String): Option[String] = {
     this.dataType.getFieldType(field)
-  }
-
-  override def hashCode(): Int = {
-    this.dataType.hashCode()
-  }
-
-  override def equals(obj: Any): Boolean = {
-    val result = obj match {
-      case other: SimplifiedCompositeType =>
-        this.dataType.equals(other.getDataType)
-      case _ => false
-    }
-    result
   }
 
   override def toString: String = {

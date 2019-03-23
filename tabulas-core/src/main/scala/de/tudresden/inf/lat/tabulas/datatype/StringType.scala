@@ -4,7 +4,7 @@ package de.tudresden.inf.lat.tabulas.datatype
 /** This models the primitive data type String.
   *
   */
-class StringType extends PrimitiveType {
+case class StringType() extends PrimitiveType {
 
   val TypeName: String = "String"
 
@@ -24,26 +24,8 @@ class StringType extends PrimitiveType {
     parse(value.render())
   }
 
-  override def hashCode(): Int = {
-    getTypeName.hashCode()
-  }
-
-  override def equals(obj: Any): Boolean = {
-    val result = obj match {
-      case other: StringType => true
-      case _ => false
-    }
-    result
-  }
-
   override def toString: String = {
     getTypeName
   }
-
-}
-
-object StringType {
-
-  def apply(): StringType = new StringType
 
 }

@@ -4,10 +4,10 @@ package de.tudresden.inf.lat.tabulas.datatype
 /** This models a string value.
   *
   */
-class StringValue(str: String) extends PrimitiveTypeValue {
+case class StringValue(str: String) extends PrimitiveTypeValue {
 
   override def getType: PrimitiveType = {
-    new StringType()
+    StringType()
   }
 
   def getValue: String = {
@@ -30,18 +30,6 @@ class StringValue(str: String) extends PrimitiveTypeValue {
     toString.compareTo(other.toString)
   }
 
-  override def hashCode(): Int = {
-    str.hashCode()
-  }
-
-  override def equals(obj: Any): Boolean = {
-    val result = obj match {
-      case other: StringValue => str.equals(other.getValue)
-      case _ => false
-    }
-    result
-  }
-
   override def toString: String = {
     str
   }
@@ -52,14 +40,6 @@ object StringValue {
 
   def apply(): StringValue = {
     new StringValue("")
-  }
-
-  /** Constructs a new string value using a string.
-    *
-    * @param str string
-    */
-  def apply(str: String): StringValue = {
-    new StringValue(str)
   }
 
   /** Constructs a new string value using another string value.

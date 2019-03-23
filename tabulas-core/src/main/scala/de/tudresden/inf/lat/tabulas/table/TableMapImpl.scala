@@ -6,7 +6,7 @@ import scala.collection.mutable
 /** This is the default implementation of a table map.
   *
   */
-class TableMapImpl(map: mutable.TreeMap[String, Table]) extends TableMap {
+case class TableMapImpl(map: mutable.TreeMap[String, Table]) extends TableMap {
 
   override def getTableIds: Seq[String] = {
     val result = new mutable.ArrayBuffer[String]()
@@ -17,18 +17,6 @@ class TableMapImpl(map: mutable.TreeMap[String, Table]) extends TableMap {
   override def put(id: String, table: Table): Option[Table] = { this.map.put(id, table) }
 
   override def getTable(id: String): Option[Table] = { this.map.get(id) }
-
-  override def hashCode(): Int = { this.map.hashCode() }
-
-  override def equals(obj: Any): Boolean = {
-    val result = obj match {
-      case other: TableMap =>
-        getTableIds.equals(other.getTableIds) &&
-          getTableIds.forall(tableId => getTable(tableId).equals(other.getTable(tableId)))
-      case _ => false
-    }
-    result
-  }
 
   override def toString: String = {
     val sbuf: StringBuffer = new StringBuffer()

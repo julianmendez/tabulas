@@ -10,7 +10,7 @@ import de.tudresden.inf.lat.tabulas.table.TableMap
 /** Normalization extension. It reads and writes using the same file.
   *
   */
-class NormalizationExtension extends Extension {
+case class NormalizationExtension() extends Extension {
 
   final val Name: String = "normalize"
   final val Help: String = "(input) : normalize a Tabula/Properties file (this is the default format)"
@@ -51,11 +51,5 @@ class NormalizationExtension extends Extension {
   override def getRequiredArguments: Int = {
     RequiredArguments
   }
-
-}
-
-object NormalizationExtension {
-
-  def apply(): NormalizationExtension = new NormalizationExtension
 
 }

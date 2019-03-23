@@ -4,7 +4,7 @@ package de.tudresden.inf.lat.tabulas.datatype
 /** This models the primitive data type Decimal.
   *
   */
-class DecimalType extends PrimitiveType {
+case class DecimalType() extends PrimitiveType {
 
   val TypeName: String = "Decimal"
 
@@ -24,26 +24,8 @@ class DecimalType extends PrimitiveType {
     parse(value.render())
   }
 
-  override def hashCode(): Int = {
-    getTypeName.hashCode()
-  }
-
-  override def equals(obj: Any): Boolean = {
-    val result = obj match {
-      case other: DecimalType => true
-      case _ => false
-    }
-    result
-  }
-
   override def toString: String = {
     getTypeName
   }
-
-}
-
-object DecimalType {
-
-  def apply(): DecimalType = new DecimalType
 
 }

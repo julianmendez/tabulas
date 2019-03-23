@@ -10,7 +10,7 @@ import de.tudresden.inf.lat.tabulas.table.TableMap
 /** Default extension. It reads and writes using the default format.
   *
   */
-class OldFormatExtension extends Extension {
+case class OldFormatExtension() extends Extension {
 
   final val Name: String = "oldformat"
   final val Help: String = "(input) (output) : create an old Tabula/Properties file, i.e. using the equals sign instead of colon"
@@ -50,11 +50,5 @@ class OldFormatExtension extends Extension {
   override def getRequiredArguments: Int = {
     RequiredArguments
   }
-
-}
-
-object OldFormatExtension {
-
-  def apply(): OldFormatExtension = new OldFormatExtension
 
 }

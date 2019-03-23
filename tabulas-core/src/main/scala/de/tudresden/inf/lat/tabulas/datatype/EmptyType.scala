@@ -4,7 +4,7 @@ package de.tudresden.inf.lat.tabulas.datatype
 /** This models the primitive data type Empty.
   *
   */
-class EmptyType extends PrimitiveType {
+case class EmptyType() extends PrimitiveType {
 
   val TypeName: String = "Empty"
 
@@ -17,33 +17,15 @@ class EmptyType extends PrimitiveType {
   }
 
   override def parse(str: String): EmptyValue = {
-    new EmptyValue()
+    EmptyValue()
   }
 
   def castInstance(value: PrimitiveTypeValue): EmptyValue = {
     parse(value.render())
   }
 
-  override def hashCode(): Int = {
-    getTypeName.hashCode()
-  }
-
-  override def equals(obj: Any): Boolean = {
-    val result: Boolean = obj match {
-      case other: EmptyType => true
-      case _ => false
-    }
-    result
-  }
-
   override def toString: String = {
     getTypeName
   }
-
-}
-
-object EmptyType {
-
-  def apply(): EmptyType = new EmptyType
 
 }

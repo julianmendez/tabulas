@@ -10,7 +10,7 @@ import de.tudresden.inf.lat.tabulas.table.TableMap
 /** Default extension. It reads and writes using the default format.
   *
   */
-class DefaultExtension extends Extension {
+case class DefaultExtension() extends Extension {
 
   final val Name: String = "simple"
   final val Help: String = "(input) (output) : create a Tabula/Properties file (this is the default format)"
@@ -22,7 +22,7 @@ class DefaultExtension extends Extension {
     } else {
       try {
 
-        val inputFileName= arguments(0)
+        val inputFileName = arguments(0)
         val outputFileName = arguments(1)
         val tableMap: TableMap = SimpleFormatParser(new FileReader(
           inputFileName)).parse()
@@ -50,11 +50,5 @@ class DefaultExtension extends Extension {
   override def getRequiredArguments: Int = {
     RequiredArguments
   }
-
-}
-
-object DefaultExtension {
-
-  def apply(): DefaultExtension = new DefaultExtension
 
 }
