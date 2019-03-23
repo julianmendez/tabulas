@@ -1,7 +1,7 @@
 
 package de.tudresden.inf.lat.tabulas.ext.parser
 
-import java.io.{BufferedReader, ByteArrayInputStream, IOException, InputStreamReader, Reader}
+import java.io._
 
 import com.eclipsesource.json.{Json, JsonValue}
 import de.tudresden.inf.lat.tabulas.parser.{Parser, ParserConstant, SimpleFormatParser}
@@ -14,36 +14,16 @@ import scala.collection.JavaConverters._
   */
 case class JsonParser(input: Reader) extends Parser {
 
-  def asString(value: JsonValue): String = {
-    val result = if (value.isString) {
-      value.asString
-    } else {
-      value.toString
+  override def parse(): TableMap = {
+    val result: TableMap = try {
+      val buffer = transformDocument(input)
+      val parser = new SimpleFormatParser(new BufferedReader(
+        new InputStreamReader(new ByteArrayInputStream(buffer.getBytes()))))
+      parser.parse()
+
+    } catch {
+      case e: IOException => throw new RuntimeException(e)
     }
-    result
-  }
-
-  def renderEntry(key: String, value: JsonValue): String = {
-    val prefix = key + ParserConstant.Space + ParserConstant.EqualsFieldSign
-    val middle = if (value.isNull) {
-      ""
-
-    } else if (value.isArray) {
-      val array = value.asArray()
-      val arrayStr = (0 until array.size)
-        .map(index => {
-          val entry = array.get(index)
-          ParserConstant.Space + ParserConstant.LineContinuationSymbol + ParserConstant.NewLine +
-            ParserConstant.Space + asString(entry)
-        })
-        .mkString("")
-      arrayStr
-
-    } else {
-      ParserConstant.Space + asString(value)
-
-    }
-    val result = prefix + middle + ParserConstant.NewLine
     result
   }
 
@@ -74,15 +54,35 @@ case class JsonParser(input: Reader) extends Parser {
     result
   }
 
-  override def parse(): TableMap = {
-    val result: TableMap = try {
-      val buffer = transformDocument(input)
-      val parser = new SimpleFormatParser(new BufferedReader(
-        new InputStreamReader(new ByteArrayInputStream(buffer.getBytes()))))
-      parser.parse()
+  def renderEntry(key: String, value: JsonValue): String = {
+    val prefix = key + ParserConstant.Space + ParserConstant.EqualsFieldSign
+    val middle = if (value.isNull) {
+      ""
 
-    } catch {
-      case e: IOException => throw new RuntimeException(e)
+    } else if (value.isArray) {
+      val array = value.asArray()
+      val arrayStr = (0 until array.size)
+        .map(index => {
+          val entry = array.get(index)
+          ParserConstant.Space + ParserConstant.LineContinuationSymbol + ParserConstant.NewLine +
+            ParserConstant.Space + asString(entry)
+        })
+        .mkString("")
+      arrayStr
+
+    } else {
+      ParserConstant.Space + asString(value)
+
+    }
+    val result = prefix + middle + ParserConstant.NewLine
+    result
+  }
+
+  def asString(value: JsonValue): String = {
+    val result = if (value.isString) {
+      value.asString
+    } else {
+      value.toString
     }
     result
   }

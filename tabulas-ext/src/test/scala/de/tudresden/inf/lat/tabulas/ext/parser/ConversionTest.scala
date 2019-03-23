@@ -17,7 +17,7 @@ import scala.collection.JavaConverters._
 class ConversionTest extends FunSuite {
 
   final val ExtPrefix = "ext/"
-  
+
   final val InputFileName0: String = ExtPrefix + "example.properties"
   final val ExpectedOutputFileName0: String = ExtPrefix + "example-expected.properties"
 
@@ -47,12 +47,12 @@ class ConversionTest extends FunSuite {
 
   final val NewLine: String = "\n"
 
-  def getPath(fileName: String): URL = {
-    getClass.getClassLoader.getResource(fileName)
-  }
-
   def getFileReader(inputFileName: String): FileReader = {
     new FileReader(getPath(inputFileName).getFile)
+  }
+
+  def getPath(fileName: String): URL = {
+    getClass.getClassLoader.getResource(fileName)
   }
 
   def readFile(fileName: String): String = {

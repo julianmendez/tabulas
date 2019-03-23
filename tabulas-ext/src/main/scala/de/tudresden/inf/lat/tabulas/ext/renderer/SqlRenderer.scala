@@ -4,7 +4,7 @@ package de.tudresden.inf.lat.tabulas.ext.renderer
 import java.io.{OutputStreamWriter, Writer}
 import java.util.Objects
 
-import de.tudresden.inf.lat.tabulas.datatype.{CompositeTypeValue, ParameterizedListValue, PrimitiveTypeValue, Record, URIValue}
+import de.tudresden.inf.lat.tabulas.datatype._
 import de.tudresden.inf.lat.tabulas.parser.ParserConstant
 import de.tudresden.inf.lat.tabulas.renderer.{Renderer, UncheckedWriter, UncheckedWriterImpl}
 import de.tudresden.inf.lat.tabulas.table.{Table, TableMap}
@@ -33,8 +33,70 @@ case class SqlRenderer(output: Writer) extends Renderer {
   final val SelectAllFrom: String = "select * from"
   final val OrderBy: String = "order by"
 
-  def sanitize(str: String): String = {
-    str.replace(Apostrophe, ApostropheReplacement)
+  override def render(tableMap: TableMap): Unit = {
+    render(UncheckedWriterImpl(output), tableMap)
+  }
+
+  def render(output: UncheckedWriter, tableMap: TableMap): Unit = {
+    renderPrefix(output)
+    tableMap.getTableIds.foreach(tableName => {
+      val table: Table = tableMap.getTable(tableName).get
+      renderTypes(output, tableName, table)
+      renderAllRecords(output, tableName, table)
+      renderOrder(output, tableName, table)
+    })
+    output.write(ParserConstant.NewLine)
+    output.flush()
+  }
+
+  def renderAllRecords(output: UncheckedWriter, tableName: String, table: CompositeTypeValue): Unit = {
+    val list: Seq[Record] = table.getRecords
+    output.write(ParserConstant.NewLine)
+    list.foreach(record => {
+      render(output, tableName, record, table.getType.getFields)
+      output.write(ParserConstant.NewLine)
+    })
+    output.write(ParserConstant.NewLine)
+  }
+
+  def render(output: UncheckedWriter, tableName: String, record: Record, fields: Seq[String]): Unit = {
+    output.write(ParserConstant.NewLine)
+    output.write(InsertInto)
+    output.write(ParserConstant.Space)
+    output.write(tableName)
+    output.write(ParserConstant.Space)
+    output.write(Values)
+    output.write(ParserConstant.Space)
+    output.write(LeftPar)
+    output.write(ParserConstant.Space)
+
+    var first: Boolean = true
+    for (field: String <- fields) {
+      if (first) {
+        first = false
+      } else {
+        output.write(Comma)
+      }
+      output.write(ParserConstant.NewLine)
+      val optValue: Option[PrimitiveTypeValue] = record.get(field)
+      if (optValue.isDefined) {
+        val value: PrimitiveTypeValue = optValue.get
+        value match {
+          case list: ParameterizedListValue =>
+            writeParameterizedListIfNotEmpty(output, field, list)
+          case link: URIValue =>
+            writeLinkIfNotEmpty(output, field, link)
+          case _ =>
+            writeAsStringIfNotEmpty(output, field, value)
+        }
+
+      } else {
+        output.write(Null)
+      }
+    }
+    output.write(ParserConstant.NewLine)
+    output.write(RightPar)
+    output.write(Semicolon)
   }
 
   def writeAsStringIfNotEmpty(output: UncheckedWriter, field: String, value: PrimitiveTypeValue): Boolean = {
@@ -81,54 +143,8 @@ case class SqlRenderer(output: Writer) extends Renderer {
     result
   }
 
-  def render(output: UncheckedWriter, tableName: String, record: Record, fields: Seq[String]): Unit = {
-    output.write(ParserConstant.NewLine)
-    output.write(InsertInto)
-    output.write(ParserConstant.Space)
-    output.write(tableName)
-    output.write(ParserConstant.Space)
-    output.write(Values)
-    output.write(ParserConstant.Space)
-    output.write(LeftPar)
-    output.write(ParserConstant.Space)
-
-    var first: Boolean = true
-    for (field: String <- fields) {
-      if (first) {
-        first = false
-      } else {
-        output.write(Comma)
-      }
-      output.write(ParserConstant.NewLine)
-      val optValue: Option[PrimitiveTypeValue] = record.get(field)
-      if (optValue.isDefined) {
-        val value: PrimitiveTypeValue = optValue.get
-        value match {
-          case list: ParameterizedListValue =>
-            writeParameterizedListIfNotEmpty(output, field, list)
-          case link: URIValue =>
-            writeLinkIfNotEmpty(output, field, link)
-          case _ =>
-            writeAsStringIfNotEmpty(output, field, value)
-        }
-
-      } else {
-        output.write(Null)
-      }
-    }
-    output.write(ParserConstant.NewLine)
-    output.write(RightPar)
-    output.write(Semicolon)
-  }
-
-  def renderAllRecords(output: UncheckedWriter, tableName: String, table: CompositeTypeValue): Unit = {
-    val list: Seq[Record] = table.getRecords
-    output.write(ParserConstant.NewLine)
-    list.foreach(record => {
-      render(output, tableName, record, table.getType.getFields)
-      output.write(ParserConstant.NewLine)
-    })
-    output.write(ParserConstant.NewLine)
+  def sanitize(str: String): String = {
+    str.replace(Apostrophe, ApostropheReplacement)
   }
 
   def renderTypes(output: UncheckedWriter, tableName: String, table: CompositeTypeValue): Unit = {
@@ -194,22 +210,6 @@ case class SqlRenderer(output: Writer) extends Renderer {
     output.write(Use + ParserConstant.Space + DefaultDatabaseName + Semicolon)
     output.write(ParserConstant.NewLine)
     output.write(ParserConstant.NewLine)
-  }
-
-  def render(output: UncheckedWriter, tableMap: TableMap): Unit = {
-    renderPrefix(output)
-    tableMap.getTableIds.foreach(tableName => {
-      val table: Table = tableMap.getTable(tableName).get
-      renderTypes(output, tableName, table)
-      renderAllRecords(output, tableName, table)
-      renderOrder(output, tableName, table)
-    })
-    output.write(ParserConstant.NewLine)
-    output.flush()
-  }
-
-  override def render(tableMap: TableMap): Unit = {
-    render(UncheckedWriterImpl(output), tableMap)
   }
 
 }

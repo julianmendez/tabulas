@@ -14,29 +14,6 @@ import scala.collection.mutable
   */
 case class CalendarParser(input: Reader) extends Parser {
 
-  case class Pair(lineCounter: Int, line: String) {
-
-    def getLine: String = line
-
-    def getLineCounter: Int = lineCounter
-
-  }
-
-  class MyStack[A] extends mutable.ArrayBuffer[A] {
-
-    def push(elem: A): MyStack[A] = {
-      insert(0, elem)
-      this
-    }
-
-    def pop(): A = {
-      iterator.next() // this throws an NoSuchElementException in an empty stack
-      val result: A = remove(0)
-      result
-    }
-
-  }
-
   final val GeneratedIdFieldName: String = "generatedId"
   final val SubItemsFieldName: String = "subItems"
   final val CalendarTypeLabel: String = "VCALENDAR"
@@ -45,32 +22,24 @@ case class CalendarParser(input: Reader) extends Parser {
   final val StandardTypeLabel: String = "STANDARD"
   final val EventTypeLabel: String = "VEVENT"
   final val AlarmTypeLabel: String = "VALARM"
-
   final val CalendarTypeFields: Array[String] = Array(GeneratedIdFieldName,
     SubItemsFieldName, "PRODID", "VERSION", "CALSCALE", "METHOD",
     "X-WR-CALNAME", "X-WR-TIMEZONE")
-
   final val TimeZoneTypeFields: Array[String] = Array(GeneratedIdFieldName,
     SubItemsFieldName, "TZID", "X-LIC-LOCATION")
-
   final val DaylightTypeFields: Array[String] = Array(GeneratedIdFieldName,
     SubItemsFieldName, "TZOFFSETFROM", "TZOFFSETTO", "TZNAME",
     "DTSTART", "RRULE")
-
   final val StandardTypeFields: Array[String] = DaylightTypeFields
-
   final val EventTypeFields: Array[String] = Array(GeneratedIdFieldName,
     SubItemsFieldName, "DTSTART", "DTEND", "RRULE", "ORGANIZER",
     "DTSTAMP", "UID", "ATTENDEE", "CREATED", "DESCRIPTION",
     "LAST-MODIFIED", "LOCATION", "SEQUENCE", "STATUS", "SUMMARY",
     "TRANSP", "X-ALT-DESC", "X-MICROSOFT-CDO-BUSYSTATUS", "CLASS")
-
   final val AlarmTypeFields: Array[String] = Array(GeneratedIdFieldName,
     SubItemsFieldName, "ACTION", "DESCRIPTION", "SUMMARY", "ATTENDEE",
     "TRIGGER")
-
   final val EventTyp: SimplifiedCompositeType = SimplifiedCompositeType()
-
   final val UnderscoreChar: Char = '_'
   final val CommaChar: Char = ','
   final val QuotesChar: Char = '"'
@@ -80,136 +49,18 @@ case class CalendarParser(input: Reader) extends Parser {
   final val NewLineChar: Char = '\n'
   final val GeneratedIdSeparatorChar: Char = '.'
   final val FirstGeneratedIndex: Int = 0
-
   final val Underscore: String = "" + UnderscoreChar
-
   final val NewEvent: String = "BEGIN:" + EventTypeLabel
   final val BeginKeyword: String = "BEGIN"
   final val EndKeyword: String = "END"
 
-  def getKey(line: String): Option[String] = {
-    val result = if (Objects.isNull(line)) {
-      None
-    } else {
-      val pos: Int = line.indexOf(ColonChar)
-      val res = if (pos == -1) {
-        Some(line)
-      } else {
-        val pos2: Int = line.indexOf(SemicolonChar)
-        val lastPos = if (pos2 >= 0 && pos2 < pos) {
-          pos2
-        } else {
-          pos
-        }
-        Some(line.substring(0, lastPos).trim())
-      }
-      res
-    }
-    result
-  }
+  override def parse(): TableMap = {
+    val result = try {
+      parseMap(new BufferedReader(input))
 
-  def getValue(line: String): Option[String] = {
-    var result = if (Objects.isNull(line)) {
-      None
-    } else {
-      val pos: Int = line.indexOf(ColonChar)
-      val res = if (pos == -1) {
-        Some("")
-      } else {
-        Some(line.substring(pos + 1, line.length()).trim())
-      }
-      res
+    } catch {
+      case e: IOException => throw new RuntimeException(e)
     }
-    result
-  }
-
-  def isBeginLine(line: String): Boolean = {
-    Objects.nonNull(line) && line.trim().startsWith(BeginKeyword)
-  }
-
-  def isEndLine(line: String): Boolean = {
-    Objects.nonNull(line) && line.trim().startsWith(EndKeyword)
-  }
-
-  private def getTypedValue(key: String, value: String, type0: CompositeType, lineCounter: Int): PrimitiveTypeValue = {
-    val result = if (Objects.isNull(key)) {
-      StringValue()
-    } else {
-      try {
-        val optTypeStr: Option[String] = type0.getFieldType(key)
-        val primType = if (optTypeStr.isDefined) {
-          PrimitiveTypeFactory().getType(optTypeStr.get).get // caught by the try
-        } else {
-          throw ParseException("Key '" + key + "' has an undefined type.")
-        }
-        primType.parse(value)
-      } catch {
-        case e: IOException => throw new ParseException(e.getMessage + " (line "
-          + lineCounter + ")", e.getCause)
-      }
-    }
-    result
-  }
-
-  private def preload(input: BufferedReader): Seq[Pair] = {
-    val result = new mutable.ArrayBuffer[Pair]()
-    var sbuf: StringBuffer = new StringBuffer()
-    var finish: Boolean = false
-    var lineCounter: Int = 0
-    input.lines().toArray().foreach(obj => {
-      val line = obj.asInstanceOf[String]
-      if (line.startsWith("" + SpaceChar)) {
-        sbuf.append(line)
-      } else {
-        result += Pair(lineCounter, sbuf.toString)
-        sbuf = new StringBuffer()
-        sbuf.append(line)
-      }
-      lineCounter += 1
-    })
-    result
-  }
-
-  private def parseProperty(line: String, currentTable: TableImpl,
-                            record: Record, lineCounter: Int): Unit = {
-    if (Objects.isNull(currentTable)) {
-      throw ParseException("New record was not declared (line "
-        + lineCounter + ")")
-    }
-
-    val optKey: Option[String] = getKey(line)
-    val optValueStr: Option[String] = getValue(line)
-    if (optKey.isDefined && optValueStr.isDefined) {
-      val key: String = optKey.get
-      val valueStr: String = optValueStr.get
-      val value: PrimitiveTypeValue = getTypedValue(key, valueStr,
-        currentTable.getType, lineCounter)
-      record.set(key, value)
-    }
-  }
-
-  def getGeneratedId(generatedIds: Seq[Int], level: Int): String = {
-    val auxGeneratedIds = new mutable.ArrayBuffer[Int]
-    auxGeneratedIds ++= generatedIds
-    while (level >= auxGeneratedIds.size) {
-      auxGeneratedIds += FirstGeneratedIndex
-    }
-    val newValue: Int = generatedIds(level) + 1
-    while (level < auxGeneratedIds.size) {
-      auxGeneratedIds.remove(auxGeneratedIds.size - 1)
-    }
-    auxGeneratedIds += newValue
-    val sbuf: StringBuffer = new StringBuffer()
-    var firstTime: Boolean = true
-    for (counter: Int <- auxGeneratedIds) {
-      if (firstTime) {
-        firstTime = false
-      } else {
-        sbuf.append(GeneratedIdSeparatorChar)
-      }
-      sbuf.append(counter)
-    }
-    val result: String = sbuf.toString
     result
   }
 
@@ -310,20 +161,159 @@ case class CalendarParser(input: Reader) extends Parser {
     result
   }
 
-  override def parse(): TableMap = {
-    val result  = try {
-      parseMap(new BufferedReader(input))
+  def isBeginLine(line: String): Boolean = {
+    Objects.nonNull(line) && line.trim().startsWith(BeginKeyword)
+  }
 
-    } catch {
-      case e: IOException => throw new RuntimeException(e)
+  def isEndLine(line: String): Boolean = {
+    Objects.nonNull(line) && line.trim().startsWith(EndKeyword)
+  }
+
+  private def preload(input: BufferedReader): Seq[Pair] = {
+    val result = new mutable.ArrayBuffer[Pair]()
+    var sbuf: StringBuffer = new StringBuffer()
+    var finish: Boolean = false
+    var lineCounter: Int = 0
+    input.lines().toArray().foreach(obj => {
+      val line = obj.asInstanceOf[String]
+      if (line.startsWith("" + SpaceChar)) {
+        sbuf.append(line)
+      } else {
+        result += Pair(lineCounter, sbuf.toString)
+        sbuf = new StringBuffer()
+        sbuf.append(line)
+      }
+      lineCounter += 1
+    })
+    result
+  }
+
+  private def parseProperty(line: String, currentTable: TableImpl,
+                            record: Record, lineCounter: Int): Unit = {
+    if (Objects.isNull(currentTable)) {
+      throw ParseException("New record was not declared (line "
+        + lineCounter + ")")
+    }
+
+    val optKey: Option[String] = getKey(line)
+    val optValueStr: Option[String] = getValue(line)
+    if (optKey.isDefined && optValueStr.isDefined) {
+      val key: String = optKey.get
+      val valueStr: String = optValueStr.get
+      val value: PrimitiveTypeValue = getTypedValue(key, valueStr,
+        currentTable.getType, lineCounter)
+      record.set(key, value)
+    }
+  }
+
+  def getKey(line: String): Option[String] = {
+    val result = if (Objects.isNull(line)) {
+      None
+    } else {
+      val pos: Int = line.indexOf(ColonChar)
+      val res = if (pos == -1) {
+        Some(line)
+      } else {
+        val pos2: Int = line.indexOf(SemicolonChar)
+        val lastPos = if (pos2 >= 0 && pos2 < pos) {
+          pos2
+        } else {
+          pos
+        }
+        Some(line.substring(0, lastPos).trim())
+      }
+      res
     }
     result
+  }
+
+  def getValue(line: String): Option[String] = {
+    var result = if (Objects.isNull(line)) {
+      None
+    } else {
+      val pos: Int = line.indexOf(ColonChar)
+      val res = if (pos == -1) {
+        Some("")
+      } else {
+        Some(line.substring(pos + 1, line.length()).trim())
+      }
+      res
+    }
+    result
+  }
+
+  private def getTypedValue(key: String, value: String, type0: CompositeType, lineCounter: Int): PrimitiveTypeValue = {
+    val result = if (Objects.isNull(key)) {
+      StringValue()
+    } else {
+      try {
+        val optTypeStr: Option[String] = type0.getFieldType(key)
+        val primType = if (optTypeStr.isDefined) {
+          PrimitiveTypeFactory().getType(optTypeStr.get).get // caught by the try
+        } else {
+          throw ParseException("Key '" + key + "' has an undefined type.")
+        }
+        primType.parse(value)
+      } catch {
+        case e: IOException => throw new ParseException(e.getMessage + " (line "
+          + lineCounter + ")", e.getCause)
+      }
+    }
+    result
+  }
+
+  def getGeneratedId(generatedIds: Seq[Int], level: Int): String = {
+    val auxGeneratedIds = new mutable.ArrayBuffer[Int]
+    auxGeneratedIds ++= generatedIds
+    while (level >= auxGeneratedIds.size) {
+      auxGeneratedIds += FirstGeneratedIndex
+    }
+    val newValue: Int = generatedIds(level) + 1
+    while (level < auxGeneratedIds.size) {
+      auxGeneratedIds.remove(auxGeneratedIds.size - 1)
+    }
+    auxGeneratedIds += newValue
+    val sbuf: StringBuffer = new StringBuffer()
+    var firstTime: Boolean = true
+    for (counter: Int <- auxGeneratedIds) {
+      if (firstTime) {
+        firstTime = false
+      } else {
+        sbuf.append(GeneratedIdSeparatorChar)
+      }
+      sbuf.append(counter)
+    }
+    val result: String = sbuf.toString
+    result
+  }
+
+  case class Pair(lineCounter: Int, line: String) {
+
+    def getLine: String = line
+
+    def getLineCounter: Int = lineCounter
+
+  }
+
+  class MyStack[A] extends mutable.ArrayBuffer[A] {
+
+    def push(elem: A): MyStack[A] = {
+      insert(0, elem)
+      this
+    }
+
+    def pop(): A = {
+      iterator.next() // this throws an NoSuchElementException in an empty stack
+      val result: A = remove(0)
+      result
+    }
+
   }
 
 }
 
 object CalendarParser {
 
-  def apply(): CalendarParser = new CalendarParser (new InputStreamReader(System.in))
+  def apply(): CalendarParser = new CalendarParser(new InputStreamReader(System.in))
 
 }

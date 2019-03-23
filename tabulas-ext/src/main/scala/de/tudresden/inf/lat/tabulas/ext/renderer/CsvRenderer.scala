@@ -18,8 +18,52 @@ case class CsvRenderer(output: Writer) extends Renderer {
   final val Null: String = ""
   final val Comma: String = ","
 
-  def sanitize(str: String): String = {
-    str.replace(Quotes, QuotesReplacement)
+  override def render(tableMap: TableMap): Unit = {
+    render(UncheckedWriterImpl(output), tableMap)
+  }
+
+  def render(output: UncheckedWriter, tableMap: TableMap): Unit = {
+    tableMap.getTableIds.foreach(tableName => {
+      val table: Table = tableMap.getTable(tableName).get
+      renderTypeSelection(output, tableName, table)
+      renderTypeDefinition(output, table)
+      renderAllRecords(output, table)
+    })
+    output.flush()
+  }
+
+  def renderAllRecords(output: UncheckedWriter, table: Table): Unit = {
+    val list: Seq[Record] = table.getRecords
+    list.foreach(record => {
+      render(output, record, table.getType.getFields)
+    })
+  }
+
+  def render(output: UncheckedWriter, record: Record, fields: Seq[String]): Unit = {
+    var first = true
+    fields.foreach(field => {
+      if (first) {
+        first = false
+      } else {
+        output.write(Comma)
+      }
+      val optValue: Option[PrimitiveTypeValue] = record.get(field)
+      if (optValue.isDefined) {
+        val value: PrimitiveTypeValue = optValue.get
+        value match {
+          case list: ParameterizedListValue =>
+            writeParameterizedListIfNotEmpty(output, field, list)
+          case link: URIValue =>
+            writeLinkIfNotEmpty(output, field, link)
+          case _ =>
+            writeAsStringIfNotEmpty(output, field, value)
+        }
+
+      } else {
+        output.write(Null)
+      }
+    })
+    output.write(ParserConstant.NewLine)
   }
 
   def writeAsStringIfNotEmpty(output: UncheckedWriter, field: String, value: PrimitiveTypeValue): Boolean = {
@@ -52,6 +96,10 @@ case class CsvRenderer(output: Writer) extends Renderer {
     result
   }
 
+  def sanitize(str: String): String = {
+    str.replace(Quotes, QuotesReplacement)
+  }
+
   def writeLinkIfNotEmpty(output: UncheckedWriter, field: String, link: URIValue): Boolean = {
     val result = false
     if (Objects.nonNull(link) && !link.isEmpty) {
@@ -64,40 +112,6 @@ case class CsvRenderer(output: Writer) extends Renderer {
       false
     }
     result
-  }
-
-  def render(output: UncheckedWriter, record: Record, fields: Seq[String]): Unit = {
-    var first = true
-    fields.foreach(field => {
-      if (first) {
-        first = false
-      } else {
-        output.write(Comma)
-      }
-      val optValue: Option[PrimitiveTypeValue] = record.get(field)
-      if (optValue.isDefined) {
-        val value: PrimitiveTypeValue = optValue.get
-        value match {
-          case list: ParameterizedListValue =>
-            writeParameterizedListIfNotEmpty(output, field, list)
-          case link: URIValue =>
-            writeLinkIfNotEmpty(output, field, link)
-          case _ =>
-            writeAsStringIfNotEmpty(output, field, value)
-        }
-
-      } else {
-        output.write(Null)
-      }
-    })
-    output.write(ParserConstant.NewLine)
-  }
-
-  def renderAllRecords(output: UncheckedWriter, table: Table): Unit = {
-    val list: Seq[Record] = table.getRecords
-    list.foreach(record => {
-      render(output, record, table.getType.getFields)
-    })
   }
 
   def renderTypeSelection(output: UncheckedWriter, tableName: String, table: Table): Unit = {
@@ -125,20 +139,6 @@ case class CsvRenderer(output: Writer) extends Renderer {
       output.write(Quotes)
     })
     output.write(ParserConstant.NewLine)
-  }
-
-  def render(output: UncheckedWriter, tableMap: TableMap): Unit = {
-    tableMap.getTableIds.foreach(tableName => {
-      val table: Table = tableMap.getTable(tableName).get
-      renderTypeSelection(output, tableName, table)
-      renderTypeDefinition(output, table)
-      renderAllRecords(output, table)
-    })
-    output.flush()
-  }
-
-  override def render(tableMap: TableMap): Unit = {
-    render(UncheckedWriterImpl(output), tableMap)
   }
 
 }

@@ -23,83 +23,12 @@ case class CsvParser(input: Reader) extends Parser {
   final val DefaultFieldType: String = "String"
   final val Underscore: String = "" + UnderscoreChar
 
-  def getColumns(line0: String): Seq[String] = {
-    val result = new mutable.ArrayBuffer[String]()
-    val line: String = if (Objects.isNull(line0)) {
-      ""
-    } else {
-      line0.trim()
-    }
-    var current: StringBuffer = new StringBuffer()
-    var betweenQuotes: Boolean = false
-    for (index <- 0 until line.length()) {
-      val ch: Char = line.charAt(index)
-      if (ch == QuotesChar) {
-        betweenQuotes = !betweenQuotes
-      } else if ((ch == CommaChar) && !betweenQuotes) {
-        result += current.toString
-        current = new StringBuffer()
-      } else {
-        current.append(ch)
-      }
-    }
-    if (!current.toString.isEmpty) {
-      result += current.toString
-    }
+  override def parse(): TableMap = {
+    val result: TableMap = try {
+      parseMap(new BufferedReader(input))
 
-    result
-  }
-
-  private def createSortedTable(fields: Seq[String]): TableImpl = {
-    val tableType = fields
-      .foldLeft(CompositeTypeImpl())((compType, field) => compType.declareField(field, DefaultFieldType).get)
-
-    val result: TableImpl = new TableImpl(tableType)
-    result
-  }
-
-  def normalize(fieldName: String): String = {
-    val auxName: String = if (Objects.isNull(fieldName)) {
-      Underscore
-    } else {
-      fieldName.trim()
-    }
-    val name = if (auxName.isEmpty) {
-      Underscore
-    } else {
-      auxName
-    }
-
-    val ret: StringBuffer = new StringBuffer()
-    Range(0, name.length()).foreach(index => {
-      val ch: Char = name.charAt(index)
-      val ch2 = if (Character.isLetterOrDigit(ch)) {
-        ch
-      } else {
-        UnderscoreChar
-      }
-      ret.append(ch2)
-    })
-    val result = ret.toString
-    result
-  }
-
-  def normalizeHeaders(headers: Seq[String], lineCounter: Int): Seq[String] = {
-    val result = new mutable.ArrayBuffer[String]()
-    var idCount: Int = 0
-    for (header: String <- headers) {
-      val fieldName: String = normalize(header)
-      if (fieldName.equals(ParserConstant.IdKeyword)) {
-        idCount += 1
-      }
-      if (idCount > 1) {
-        throw ParseException(
-          "This cannot have two identifiers (field '"
-            + ParserConstant.IdKeyword + "') (line "
-            + lineCounter + ")")
-      } else {
-        result += fieldName
-      }
+    } catch {
+      case e: IOException => throw new RuntimeException(e)
     }
     result
   }
@@ -142,13 +71,84 @@ case class CsvParser(input: Reader) extends Parser {
     result
   }
 
-  override def parse(): TableMap = {
-    val result: TableMap = try {
-      parseMap(new BufferedReader(input))
-
-    } catch {
-      case e: IOException => throw new RuntimeException(e)
+  def getColumns(line0: String): Seq[String] = {
+    val result = new mutable.ArrayBuffer[String]()
+    val line: String = if (Objects.isNull(line0)) {
+      ""
+    } else {
+      line0.trim()
     }
+    var current: StringBuffer = new StringBuffer()
+    var betweenQuotes: Boolean = false
+    for (index <- 0 until line.length()) {
+      val ch: Char = line.charAt(index)
+      if (ch == QuotesChar) {
+        betweenQuotes = !betweenQuotes
+      } else if ((ch == CommaChar) && !betweenQuotes) {
+        result += current.toString
+        current = new StringBuffer()
+      } else {
+        current.append(ch)
+      }
+    }
+    if (!current.toString.isEmpty) {
+      result += current.toString
+    }
+
+    result
+  }
+
+  private def createSortedTable(fields: Seq[String]): TableImpl = {
+    val tableType = fields
+      .foldLeft(CompositeTypeImpl())((compType, field) => compType.declareField(field, DefaultFieldType).get)
+
+    val result: TableImpl = new TableImpl(tableType)
+    result
+  }
+
+  def normalizeHeaders(headers: Seq[String], lineCounter: Int): Seq[String] = {
+    val result = new mutable.ArrayBuffer[String]()
+    var idCount: Int = 0
+    for (header: String <- headers) {
+      val fieldName: String = normalize(header)
+      if (fieldName.equals(ParserConstant.IdKeyword)) {
+        idCount += 1
+      }
+      if (idCount > 1) {
+        throw ParseException(
+          "This cannot have two identifiers (field '"
+            + ParserConstant.IdKeyword + "') (line "
+            + lineCounter + ")")
+      } else {
+        result += fieldName
+      }
+    }
+    result
+  }
+
+  def normalize(fieldName: String): String = {
+    val auxName: String = if (Objects.isNull(fieldName)) {
+      Underscore
+    } else {
+      fieldName.trim()
+    }
+    val name = if (auxName.isEmpty) {
+      Underscore
+    } else {
+      auxName
+    }
+
+    val ret: StringBuffer = new StringBuffer()
+    Range(0, name.length()).foreach(index => {
+      val ch: Char = name.charAt(index)
+      val ch2 = if (Character.isLetterOrDigit(ch)) {
+        ch
+      } else {
+        UnderscoreChar
+      }
+      ret.append(ch2)
+    })
+    val result = ret.toString
     result
   }
 

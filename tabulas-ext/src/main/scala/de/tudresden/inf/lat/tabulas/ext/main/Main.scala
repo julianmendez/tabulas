@@ -1,7 +1,7 @@
 package de.tudresden.inf.lat.tabulas.ext.main
 
 import de.tudresden.inf.lat.tabulas.ext.parser.{CalendarParserExtension, CsvParserExtension, JsonParserExtension}
-import de.tudresden.inf.lat.tabulas.ext.renderer.{CsvExtension, HtmlExtension, JsonExtension, SqlExtension, WikitextExtension, YamlExtension}
+import de.tudresden.inf.lat.tabulas.ext.renderer._
 import de.tudresden.inf.lat.tabulas.extension.{DefaultExtension, NormalizationExtension, OldFormatExtension}
 import de.tudresden.inf.lat.tabulas.main.ConsoleStarter
 

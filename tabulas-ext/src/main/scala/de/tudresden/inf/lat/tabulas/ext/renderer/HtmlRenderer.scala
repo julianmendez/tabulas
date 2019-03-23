@@ -4,8 +4,7 @@ package de.tudresden.inf.lat.tabulas.ext.renderer
 import java.io.{OutputStreamWriter, Writer}
 import java.util.Objects
 
-import de.tudresden.inf.lat.tabulas.datatype.{ParameterizedListValue, PrimitiveTypeValue, Record, StringType, StringValue}
-import de.tudresden.inf.lat.tabulas.datatype.{URIType, URIValue}
+import de.tudresden.inf.lat.tabulas.datatype._
 import de.tudresden.inf.lat.tabulas.renderer.{Renderer, UncheckedWriter, UncheckedWriterImpl}
 import de.tudresden.inf.lat.tabulas.table.{Table, TableMap}
 
@@ -34,6 +33,60 @@ case class HtmlRenderer(output: Writer) extends Renderer {
     "\n</body>" +
     "\n</html>" +
     "\n"
+
+  override def render(tableMap: TableMap): Unit = {
+    render(UncheckedWriterImpl(output), tableMap)
+  }
+
+  def render(output: UncheckedWriter, tableMap: TableMap): Unit = {
+    output.write(Prefix)
+    tableMap.getTableIds.foreach(tableName => {
+      val table: Table = tableMap.getTable(tableName).get
+      renderAllRecords(output, table)
+    })
+    output.write("\n")
+    output.write("\n")
+    output.write(Suffix)
+    output.flush()
+  }
+
+  def renderAllRecords(output: UncheckedWriter, table: Table): Unit = {
+    val list: Seq[Record] = table.getRecords
+    output.write("<table summary=\"\">\n")
+    list.foreach(record => {
+      output.write("<tr>\n")
+      render(output, record, table.getType.getFields)
+      output.write("</tr>\n")
+    })
+    output.write("</table>\n")
+  }
+
+  def render(output: UncheckedWriter, record: Record, fields: Seq[String]): Unit = {
+    fields.foreach(field => {
+      val optValue: Option[PrimitiveTypeValue] = record.get(field)
+      if (optValue.isDefined) {
+        val value: PrimitiveTypeValue = optValue.get
+        value match {
+          case list: ParameterizedListValue =>
+            output.write("<td> ")
+            writeParameterizedListIfNotEmpty(output, list)
+            output.write(" </td>\n")
+          case link: URIValue =>
+            output.write("<td> ")
+            writeLinkIfNotEmpty(output, link)
+            output.write(" </td>\n")
+          case _ =>
+            output.write("<td> ")
+            writeAsStringIfNotEmpty(output, value)
+            output.write(" </td>\n")
+        }
+
+      } else {
+        output.write("<td> </td>\n")
+        output.write("\n")
+      }
+    })
+  }
 
   def writeAsStringIfNotEmpty(output: UncheckedWriter, value: PrimitiveTypeValue): Boolean = {
     val result = if (Objects.nonNull(value) && !value.toString.trim().isEmpty) {
@@ -77,60 +130,6 @@ case class HtmlRenderer(output: Writer) extends Renderer {
       false
     }
     result
-  }
-
-  def render(output: UncheckedWriter, record: Record, fields: Seq[String]): Unit = {
-    fields.foreach(field => {
-      val optValue: Option[PrimitiveTypeValue] = record.get(field)
-      if (optValue.isDefined) {
-        val value: PrimitiveTypeValue = optValue.get
-        value match {
-          case list: ParameterizedListValue =>
-            output.write("<td> ")
-            writeParameterizedListIfNotEmpty(output, list)
-            output.write(" </td>\n")
-          case link: URIValue =>
-            output.write("<td> ")
-            writeLinkIfNotEmpty(output, link)
-            output.write(" </td>\n")
-          case _ =>
-            output.write("<td> ")
-            writeAsStringIfNotEmpty(output, value)
-            output.write(" </td>\n")
-        }
-
-      } else {
-        output.write("<td> </td>\n")
-        output.write("\n")
-      }
-    })
-  }
-
-  def renderAllRecords(output: UncheckedWriter, table: Table): Unit = {
-    val list: Seq[Record] = table.getRecords
-    output.write("<table summary=\"\">\n")
-    list.foreach(record => {
-      output.write("<tr>\n")
-      render(output, record, table.getType.getFields)
-      output.write("</tr>\n")
-    })
-    output.write("</table>\n")
-  }
-
-  def render(output: UncheckedWriter, tableMap: TableMap): Unit = {
-    output.write(Prefix)
-    tableMap.getTableIds.foreach(tableName => {
-      val table: Table = tableMap.getTable(tableName).get
-      renderAllRecords(output, table)
-    })
-    output.write("\n")
-    output.write("\n")
-    output.write(Suffix)
-    output.flush()
-  }
-
-  override def render(tableMap: TableMap): Unit = {
-    render(UncheckedWriterImpl(output), tableMap)
   }
 
 }
