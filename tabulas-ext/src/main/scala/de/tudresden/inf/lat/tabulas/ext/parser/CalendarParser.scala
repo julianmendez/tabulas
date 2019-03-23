@@ -312,7 +312,7 @@ case class CalendarParser(input: Reader) extends Parser {
 
   override def parse(): TableMap = {
     val result  = try {
-      parseMap(new BufferedReader(this.input))
+      parseMap(new BufferedReader(input))
 
     } catch {
       case e: IOException => throw new RuntimeException(e)

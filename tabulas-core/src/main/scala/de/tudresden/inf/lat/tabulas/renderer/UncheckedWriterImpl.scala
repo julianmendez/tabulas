@@ -12,7 +12,7 @@ case class UncheckedWriterImpl(writer: Writer) extends UncheckedWriter {
 
   override def write(character: Int): Unit = {
     try {
-      this.writer.write(character)
+      writer.write(character)
     } catch {
       case e: IOException => throw new UncheckedIOException(e)
     }
@@ -20,7 +20,7 @@ case class UncheckedWriterImpl(writer: Writer) extends UncheckedWriter {
 
   override def write(charBuffer: Array[Char]): Unit = {
     try {
-      this.writer.write(charBuffer)
+      writer.write(charBuffer)
     } catch {
       case e: IOException => throw new UncheckedIOException(e)
     }
@@ -28,7 +28,7 @@ case class UncheckedWriterImpl(writer: Writer) extends UncheckedWriter {
 
   override def write(charBuffer: Array[Char], offset: Int, length: Int): Unit = {
     try {
-      this.writer.write(charBuffer, offset, length)
+      writer.write(charBuffer, offset, length)
     } catch {
       case e: IOException => throw new UncheckedIOException(e)
     }
@@ -36,7 +36,7 @@ case class UncheckedWriterImpl(writer: Writer) extends UncheckedWriter {
 
   override def write(str: String): Unit = {
     try {
-      this.writer.write(str)
+      writer.write(str)
     } catch {
       case e: IOException => throw new UncheckedIOException(e)
     }
@@ -44,7 +44,7 @@ case class UncheckedWriterImpl(writer: Writer) extends UncheckedWriter {
 
   override def write(str: String, offset: Int, length: Int): Unit = {
     try {
-      this.writer.write(str, offset, length)
+      writer.write(str, offset, length)
     } catch {
       case e: IOException => throw new UncheckedIOException(e)
     }
@@ -52,7 +52,7 @@ case class UncheckedWriterImpl(writer: Writer) extends UncheckedWriter {
 
   override def close(): Unit = {
     try {
-      this.writer.close()
+      writer.close()
     } catch {
       case e: IOException => throw new UncheckedIOException(e)
     }
@@ -60,7 +60,7 @@ case class UncheckedWriterImpl(writer: Writer) extends UncheckedWriter {
 
   override def flush(): Unit = {
     try {
-      this.writer.flush()
+      writer.flush()
     } catch {
       case e: IOException => throw new UncheckedIOException(e)
     }
@@ -68,7 +68,7 @@ case class UncheckedWriterImpl(writer: Writer) extends UncheckedWriter {
 
   override def append(character: Char): UncheckedWriter = {
     try {
-      this.writer.append(character)
+      writer.append(character)
     } catch {
       case e: IOException => throw new UncheckedIOException(e)
     }
@@ -77,7 +77,7 @@ case class UncheckedWriterImpl(writer: Writer) extends UncheckedWriter {
 
   override def append(charSequence: CharSequence): UncheckedWriter = {
     try {
-      this.writer.append(charSequence)
+      writer.append(charSequence)
     } catch {
       case e: IOException => throw new UncheckedIOException(e)
     }
@@ -86,7 +86,7 @@ case class UncheckedWriterImpl(writer: Writer) extends UncheckedWriter {
 
   override def append(charSequence: CharSequence, start: Int, end: Int): UncheckedWriter = {
     try {
-      this.writer.append(charSequence, start, end)
+      writer.append(charSequence, start, end)
     } catch {
       case e: IOException => throw new UncheckedIOException(e)
     }
@@ -94,11 +94,11 @@ case class UncheckedWriterImpl(writer: Writer) extends UncheckedWriter {
   }
 
   override def asWriter(): Writer = {
-    this.writer
+    writer
   }
 
   override def toString: String = {
-    this.writer.toString
+    writer.toString
   }
 
 }

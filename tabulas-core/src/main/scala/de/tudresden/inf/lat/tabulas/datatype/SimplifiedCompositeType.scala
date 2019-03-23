@@ -7,7 +7,7 @@ package de.tudresden.inf.lat.tabulas.datatype
 case class SimplifiedCompositeType(dataType: CompositeTypeImpl) extends CompositeType {
 
   override def getFields: Seq[String] = {
-    this.dataType.getFields
+    dataType.getFields
   }
 
   def getDataType: CompositeTypeImpl = {
@@ -15,11 +15,11 @@ case class SimplifiedCompositeType(dataType: CompositeTypeImpl) extends Composit
   }
 
   override def getFieldType(field: String): Option[String] = {
-    this.dataType.getFieldType(field)
+    dataType.getFieldType(field)
   }
 
   override def toString: String = {
-    this.dataType.toString
+    dataType.toString
   }
 
 }

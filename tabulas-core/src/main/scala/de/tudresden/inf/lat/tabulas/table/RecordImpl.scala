@@ -16,25 +16,25 @@ case class RecordImpl(map: mutable.Map[String, PrimitiveTypeValue]) extends Reco
     val result = if (Objects.isNull(key)) {
       None
     } else {
-      this.map.get(key)
+      map.get(key)
     }
     result
   }
 
   override def set(key: String, value: PrimitiveTypeValue): Unit = {
     if (Objects.nonNull(key)) {
-      this.map.put(key, value)
+      map.put(key, value)
     }
   }
 
   override def getProperties: Seq[String] = {
     val result = new mutable.ArrayBuffer[String]
-    result ++= this.map.keySet
+    result ++= map.keySet
     result
   }
 
   override def toString: String = {
-    this.map.toString
+    map.toString
   }
 
 }

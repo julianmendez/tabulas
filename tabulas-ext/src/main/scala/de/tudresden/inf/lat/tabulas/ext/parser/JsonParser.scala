@@ -76,7 +76,7 @@ case class JsonParser(input: Reader) extends Parser {
 
   override def parse(): TableMap = {
     val result: TableMap = try {
-      val buffer = transformDocument(this.input)
+      val buffer = transformDocument(input)
       val parser = new SimpleFormatParser(new BufferedReader(
         new InputStreamReader(new ByteArrayInputStream(buffer.getBytes()))))
       parser.parse()

@@ -22,7 +22,7 @@ case class DecimalValue(number: BigDecimal) extends PrimitiveTypeValue {
   }
 
   override def render(): String = {
-    this.number.toString
+    number.toString
   }
 
   override def renderAsList(): Seq[String] = {
@@ -32,7 +32,7 @@ case class DecimalValue(number: BigDecimal) extends PrimitiveTypeValue {
   override def compareTo(other: PrimitiveTypeValue): Int = {
     val result = other match {
       case otherValue: DecimalValue =>
-        this.number.compareTo(otherValue.getValue)
+        number.compareTo(otherValue.getValue)
       case _ =>
         render().compareTo(other.render())
     }
@@ -40,7 +40,7 @@ case class DecimalValue(number: BigDecimal) extends PrimitiveTypeValue {
   }
 
   override def toString: String = {
-    this.number.toString
+    number.toString
   }
 
 }

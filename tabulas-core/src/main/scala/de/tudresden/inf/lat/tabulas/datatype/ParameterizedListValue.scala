@@ -12,7 +12,7 @@ case class ParameterizedListValue(parameter: PrimitiveType, list: Seq[PrimitiveT
   final val Separator: String = " "
 
   override def getType: PrimitiveType = {
-    ParameterizedListType(this.parameter)
+    ParameterizedListType(parameter)
   }
 
   override def render(): String = {

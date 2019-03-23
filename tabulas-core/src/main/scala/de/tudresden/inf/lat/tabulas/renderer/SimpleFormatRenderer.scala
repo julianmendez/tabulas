@@ -37,7 +37,7 @@ case class SimpleFormatRenderer(output: Writer, fieldSign: String) extends Rende
   }
 
   override def render(tableMap: TableMap): Unit = {
-    render(UncheckedWriterImpl(this.output), tableMap)
+    render(UncheckedWriterImpl(output), tableMap)
   }
 
 }

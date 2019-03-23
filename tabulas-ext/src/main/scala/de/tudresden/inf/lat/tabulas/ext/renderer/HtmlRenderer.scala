@@ -130,7 +130,7 @@ case class HtmlRenderer(output: Writer) extends Renderer {
   }
 
   override def render(tableMap: TableMap): Unit = {
-    render(UncheckedWriterImpl(this.output), tableMap)
+    render(UncheckedWriterImpl(output), tableMap)
   }
 
 }

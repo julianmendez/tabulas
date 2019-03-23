@@ -25,7 +25,7 @@ class TableImpl(tableType: CompositeType) extends Table {
   private val _fieldsWithReverseOrder = new mutable.TreeSet[String]()
 
   override def getType: CompositeType = {
-    this.tableType
+    tableType
   }
 
   override def getPrefixMap: PrefixMap = {
@@ -82,7 +82,7 @@ class TableImpl(tableType: CompositeType) extends Table {
   }
 
   override def hashCode(): Int = {
-    val result = this.tableType.hashCode() + 0x1F * (this._prefixMap.hashCode() + 0x1F * (this._sortingOrder.hashCode() +
+    val result = tableType.hashCode() + 0x1F * (this._prefixMap.hashCode() + 0x1F * (this._sortingOrder.hashCode() +
       0x1F * (this._fieldsWithReverseOrder.hashCode() + 0x1F * this._list.hashCode())))
     result
   }
@@ -100,7 +100,7 @@ class TableImpl(tableType: CompositeType) extends Table {
   }
 
   override def toString: String = {
-    val result = "\ndef = " + this.tableType.toString + "\n\nprefix = " + this._prefixMap.toString +
+    val result = "\ndef = " + tableType.toString + "\n\nprefix = " + this._prefixMap.toString +
       "\n\norder = " + this._sortingOrder.toString + " " +
       "\n\nreverseorder = " + this._fieldsWithReverseOrder.toString + "\n\nlist = " + this._list.toString
     result

@@ -20,7 +20,7 @@ case class URIValue(uri: URI) extends PrimitiveTypeValue {
   }
 
   def getUriNoLabel: URI = {
-    val uriStr = this.uri.toASCIIString
+    val uriStr = uri.toASCIIString
     val pos: Int = uriStr.lastIndexOf(SpecialSymbol)
     val result = if (pos == -1) {
       uri
@@ -31,7 +31,7 @@ case class URIValue(uri: URI) extends PrimitiveTypeValue {
   }
 
   def getLabel: String = {
-    val uriStr = this.uri.toASCIIString
+    val uriStr = uri.toASCIIString
     val pos: Int = uriStr.lastIndexOf(SpecialSymbol)
     val result: String = if (pos == -1) {
       ""
