@@ -8,24 +8,24 @@ case class IntegerType() extends PrimitiveType {
 
   final val TypeName: String = "Integer"
 
-  override def getTypeName: String = {
-    TypeName
-  }
-
   override def isList: Boolean = {
     false
-  }
-
-  override def parse(str: String): IntegerValue = {
-    IntegerValue(str)
   }
 
   def castInstance(value: PrimitiveTypeValue): IntegerValue = {
     parse(value.render())
   }
 
+  override def parse(str: String): IntegerValue = {
+    IntegerValue(str)
+  }
+
   override def toString: String = {
     getTypeName
+  }
+
+  override def getTypeName: String = {
+    TypeName
   }
 
 }

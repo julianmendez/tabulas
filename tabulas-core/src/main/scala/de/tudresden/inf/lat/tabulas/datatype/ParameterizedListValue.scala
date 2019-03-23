@@ -38,16 +38,16 @@ case class ParameterizedListValue(parameter: PrimitiveType, list: Seq[PrimitiveT
     result
   }
 
+  def getList: Seq[PrimitiveTypeValue] = {
+    list
+  }
+
   override def isEmpty: Boolean = {
     getList.isEmpty
   }
 
   def getParameter: PrimitiveType = {
     parameter
-  }
-
-  def getList: Seq[PrimitiveTypeValue] = {
-    list
   }
 
 }

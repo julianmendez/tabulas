@@ -4,8 +4,6 @@ package de.tudresden.inf.lat.tabulas.datatype
 import java.math.BigDecimal
 import java.util.Objects
 
-import scala.collection.mutable
-
 /** This models a decimal value.
   *
   */
@@ -15,18 +13,16 @@ case class DecimalValue(number: BigDecimal) extends PrimitiveTypeValue {
     DecimalType()
   }
 
-  def getValue: BigDecimal = number
-
   override def isEmpty: Boolean = {
     false
   }
 
-  override def render(): String = {
-    number.toString
-  }
-
   override def renderAsList(): Seq[String] = {
     List(render())
+  }
+
+  override def render(): String = {
+    number.toString
   }
 
   override def compareTo(other: PrimitiveTypeValue): Int = {
@@ -38,6 +34,8 @@ case class DecimalValue(number: BigDecimal) extends PrimitiveTypeValue {
     }
     result
   }
+
+  def getValue: BigDecimal = number
 
   override def toString: String = {
     number.toString

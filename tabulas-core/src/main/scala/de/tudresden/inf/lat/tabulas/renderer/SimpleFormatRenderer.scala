@@ -10,15 +10,8 @@ import de.tudresden.inf.lat.tabulas.table.{Table, TableMap}
   */
 case class SimpleFormatRenderer(output: Writer, fieldSign: String) extends Renderer {
 
-  def renderAllRecords(recordRenderer: SimpleFormatRecordRenderer, output: UncheckedWriter, table: Table): Unit = {
-    output.write(ParserConstant.NewLine)
-    val list = table.getRecords
-    list.foreach(record => {
-      recordRenderer.renderNew(output)
-      recordRenderer.render(output, record, table.getType.getFields)
-      output.write(ParserConstant.NewLine)
-    })
-    output.write(ParserConstant.NewLine)
+  override def render(tableMap: TableMap): Unit = {
+    render(UncheckedWriterImpl(output), tableMap)
   }
 
   def render(output: UncheckedWriter, tableMap: TableMap): Unit = {
@@ -36,8 +29,15 @@ case class SimpleFormatRenderer(output: Writer, fieldSign: String) extends Rende
     output.flush()
   }
 
-  override def render(tableMap: TableMap): Unit = {
-    render(UncheckedWriterImpl(output), tableMap)
+  def renderAllRecords(recordRenderer: SimpleFormatRecordRenderer, output: UncheckedWriter, table: Table): Unit = {
+    output.write(ParserConstant.NewLine)
+    val list = table.getRecords
+    list.foreach(record => {
+      recordRenderer.renderNew(output)
+      recordRenderer.render(output, record, table.getType.getFields)
+      output.write(ParserConstant.NewLine)
+    })
+    output.write(ParserConstant.NewLine)
   }
 
 }

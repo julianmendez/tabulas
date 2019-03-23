@@ -24,6 +24,38 @@ class TableImpl(tableType: CompositeType) extends Table {
   private val _sortingOrder = new mutable.ArrayBuffer[String]
   private val _fieldsWithReverseOrder = new mutable.TreeSet[String]()
 
+  override def add(record: Record): Boolean = {
+    val result = if (Objects.isNull(record)) {
+      false
+    } else {
+      this._list += record
+      true
+    }
+    result
+  }
+
+  override def clear(): Unit = {
+    this._list.clear()
+  }
+
+  override def hashCode(): Int = {
+    val result = tableType.hashCode() + 0x1F * (this._prefixMap.hashCode() + 0x1F * (this._sortingOrder.hashCode() +
+      0x1F * (this._fieldsWithReverseOrder.hashCode() + 0x1F * this._list.hashCode())))
+    result
+  }
+
+  override def equals(obj: Any): Boolean = {
+    val result = obj match {
+      case other: Table => getType.equals(other.getType) &&
+        getPrefixMap.equals(other.getPrefixMap) &&
+        getSortingOrder.equals(other.getSortingOrder) &&
+        getFieldsWithReverseOrder.equals(other.getFieldsWithReverseOrder) &&
+        getRecords.equals(other.getRecords)
+      case _ => false
+    }
+    result
+  }
+
   override def getType: CompositeType = {
     tableType
   }
@@ -35,16 +67,6 @@ class TableImpl(tableType: CompositeType) extends Table {
   override def setPrefixMap(newPrefixMap: PrefixMap): Unit = {
     this._prefixMap.clear()
     newPrefixMap.getKeysAsStream.foreach(key => this._prefixMap.put(key, newPrefixMap.get(key).get))
-  }
-
-  override def add(record: Record): Boolean = {
-    val result = if (Objects.isNull(record)) {
-      false
-    } else {
-      this._list += record
-      true
-    }
-    result
   }
 
   override def getSortingOrder: Seq[String] = {
@@ -74,28 +96,6 @@ class TableImpl(tableType: CompositeType) extends Table {
     val ret = new mutable.ArrayBuffer[Record]
     ret ++= this._list
     val result = ret.sortWith((record0, record1) => comparator.compare(record0, record1) < 0)
-    result
-  }
-
-  override def clear(): Unit = {
-    this._list.clear()
-  }
-
-  override def hashCode(): Int = {
-    val result = tableType.hashCode() + 0x1F * (this._prefixMap.hashCode() + 0x1F * (this._sortingOrder.hashCode() +
-      0x1F * (this._fieldsWithReverseOrder.hashCode() + 0x1F * this._list.hashCode())))
-    result
-  }
-
-  override def equals(obj: Any): Boolean = {
-    val result = obj match {
-      case other: Table => getType.equals(other.getType) &&
-        getPrefixMap.equals(other.getPrefixMap) &&
-        getSortingOrder.equals(other.getSortingOrder) &&
-        getFieldsWithReverseOrder.equals(other.getFieldsWithReverseOrder) &&
-        getRecords.equals(other.getRecords)
-      case _ => false
-    }
     result
   }
 

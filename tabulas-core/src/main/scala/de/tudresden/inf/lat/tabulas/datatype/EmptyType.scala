@@ -8,24 +8,24 @@ case class EmptyType() extends PrimitiveType {
 
   final val TypeName: String = "Empty"
 
-  override def getTypeName: String = {
-    TypeName
-  }
-
   override def isList: Boolean = {
     false
-  }
-
-  override def parse(str: String): EmptyValue = {
-    EmptyValue()
   }
 
   def castInstance(value: PrimitiveTypeValue): EmptyValue = {
     parse(value.render())
   }
 
+  override def parse(str: String): EmptyValue = {
+    EmptyValue()
+  }
+
   override def toString: String = {
     getTypeName
+  }
+
+  override def getTypeName: String = {
+    TypeName
   }
 
 }

@@ -10,16 +10,8 @@ case class URIType() extends PrimitiveType {
 
   final val TypeName: String = "URI"
 
-  override def getTypeName: String = {
-    TypeName
-  }
-
   override def isList: Boolean = {
     false
-  }
-
-  override def parse(str: String): URIValue = {
-    URIValue(str)
   }
 
   def castInstance(value: PrimitiveTypeValue): URIValue = {
@@ -28,8 +20,16 @@ case class URIType() extends PrimitiveType {
     result
   }
 
+  override def parse(str: String): URIValue = {
+    URIValue(str)
+  }
+
   override def toString: String = {
     getTypeName
+  }
+
+  override def getTypeName: String = {
+    TypeName
   }
 
 }

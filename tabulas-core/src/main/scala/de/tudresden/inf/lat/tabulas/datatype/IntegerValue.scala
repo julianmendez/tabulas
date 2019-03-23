@@ -4,8 +4,6 @@ package de.tudresden.inf.lat.tabulas.datatype
 import java.math.BigInteger
 import java.util.Objects
 
-import scala.collection.mutable
-
 /** This models a integer value.
   *
   */
@@ -15,14 +13,8 @@ case class IntegerValue(number: BigInteger) extends PrimitiveTypeValue {
     IntegerType()
   }
 
-  def getValue: BigInteger = number
-
   override def isEmpty: Boolean = {
     false
-  }
-
-  override def render(): String = {
-    number.toString
   }
 
   override def renderAsList(): Seq[String] = {
@@ -37,6 +29,12 @@ case class IntegerValue(number: BigInteger) extends PrimitiveTypeValue {
         render().compareTo(other.render())
     }
     result
+  }
+
+  def getValue: BigInteger = number
+
+  override def render(): String = {
+    number.toString
   }
 
   override def toString: String = {

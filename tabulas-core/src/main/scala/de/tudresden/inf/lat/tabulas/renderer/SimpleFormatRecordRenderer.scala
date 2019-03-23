@@ -13,6 +13,28 @@ import de.tudresden.inf.lat.tabulas.table.PrefixMap
   */
 case class SimpleFormatRecordRenderer(output: Writer, prefixMap: PrefixMap, fieldSign: String) extends RecordRenderer {
 
+  def renderNew(output: UncheckedWriter): Unit = {
+    output.write(ParserConstant.NewLine)
+    output.write(ParserConstant.NewRecordToken + ParserConstant.Space)
+    output.write(fieldSign)
+  }
+
+  override def render(record: Record, fields: Seq[String]): Unit = {
+    render(UncheckedWriterImpl(output), record, fields)
+  }
+
+  def render(output: UncheckedWriter, record: Record, fields: Seq[String]): Unit = {
+    fields.foreach(field => {
+      val optValue: Option[PrimitiveTypeValue] = record.get(field)
+      if (optValue.isDefined) {
+        writeIfNotEmpty(output, field, optValue.get)
+      }
+    })
+
+    output.write(ParserConstant.NewLine)
+    output.flush()
+  }
+
   def writeIfNotEmpty(output: UncheckedWriter, field: String, value: PrimitiveTypeValue): Boolean = {
     val result: Boolean = if (Objects.nonNull(field) && !field.trim().isEmpty && Objects.nonNull(value) && !value.isEmpty) {
       output.write(ParserConstant.NewLine)
@@ -53,28 +75,6 @@ case class SimpleFormatRecordRenderer(output: Writer, prefixMap: PrefixMap, fiel
       false
     }
     result
-  }
-
-  def renderNew(output: UncheckedWriter): Unit = {
-    output.write(ParserConstant.NewLine)
-    output.write(ParserConstant.NewRecordToken + ParserConstant.Space)
-    output.write(fieldSign)
-  }
-
-  def render(output: UncheckedWriter, record: Record, fields: Seq[String]): Unit = {
-    fields.foreach(field => {
-      val optValue: Option[PrimitiveTypeValue] = record.get(field)
-      if (optValue.isDefined) {
-        writeIfNotEmpty(output, field, optValue.get)
-      }
-    })
-
-    output.write(ParserConstant.NewLine)
-    output.flush()
-  }
-
-  override def render(record: Record, fields: Seq[String]): Unit = {
-    render(UncheckedWriterImpl(output), record, fields)
   }
 
 }

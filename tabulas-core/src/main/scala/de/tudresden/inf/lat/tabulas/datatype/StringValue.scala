@@ -18,12 +18,12 @@ case class StringValue(str: String) extends PrimitiveTypeValue {
     str.trim().isEmpty
   }
 
-  override def render(): String = {
-    str
-  }
-
   override def renderAsList(): Seq[String] = {
     List(render())
+  }
+
+  override def render(): String = {
+    str
   }
 
   override def compareTo(other: PrimitiveTypeValue): Int = {

@@ -21,21 +21,11 @@ class PrefixMapImpl extends PrefixMap {
     this._prefixMap.size
   }
 
-  override def get(key: URI): Option[URI] = {
-    this._prefixMap.get(key)
-  }
-
   override def put(key: URI, value: URI): Option[URI] = {
     if (!this._prefixMap.contains(key)) {
       this._keyList += key
     }
     val result: Option[URI] = this._prefixMap.put(key, value)
-    result
-  }
-
-  override def getPrefixFor(uri: URI): Option[URI] = {
-    val uriStr = uri.toASCIIString
-    val result: Option[URI] = this._prefixMap.keySet.find(e => uriStr.startsWith(_prefixMap.get(e).get.toASCIIString))
     result
   }
 
@@ -72,6 +62,16 @@ class PrefixMapImpl extends PrefixMap {
     } else {
       uri
     }
+    result
+  }
+
+  override def get(key: URI): Option[URI] = {
+    this._prefixMap.get(key)
+  }
+
+  override def getPrefixFor(uri: URI): Option[URI] = {
+    val uriStr = uri.toASCIIString
+    val result: Option[URI] = this._prefixMap.keySet.find(e => uriStr.startsWith(_prefixMap.get(e).get.toASCIIString))
     result
   }
 

@@ -31,8 +31,13 @@ class NormalizationTest extends FunSuite {
 
   final val NewLine: String = "\n"
 
-  def getPath(fileName: String): String = {
-    getClass.getClassLoader.getResource(fileName).getFile
+  def testOldFormatParsing(inputFileName: String, expectedFileName: String): Unit = {
+    val tableMap: TableMap = new SimpleFormatParser(new FileReader(getPath(inputFileName))).parse()
+    val expectedResult: String = (new MainTest()).readFile(expectedFileName)
+    val writer = new StringWriter()
+    val renderer = SimpleFormatRenderer(writer)
+    renderer.render(tableMap)
+    assert(expectedResult === writer.toString)
   }
 
   test("test normalization") {
@@ -68,19 +73,13 @@ class NormalizationTest extends FunSuite {
         val expectedResult: String = (new MainTest()).readFile(expectedFileName)
         val writer = new StringWriter()
         val renderer = SimpleFormatRenderer(writer, ParserConstant.EqualsFieldSign)
-    renderer.render(tableMap)
-    assert(expectedResult === writer.toString)
+        renderer.render(tableMap)
+        assert(expectedResult === writer.toString)
       })
   }
 
-
-  def testOldFormatParsing(inputFileName: String, expectedFileName: String): Unit = {
-    val tableMap: TableMap = new SimpleFormatParser(new FileReader(getPath(inputFileName))).parse()
-    val expectedResult: String = (new MainTest()).readFile(expectedFileName)
-    val writer = new StringWriter()
-    val renderer = SimpleFormatRenderer(writer)
-    renderer.render(tableMap)
-    assert(expectedResult === writer.toString)
+  def getPath(fileName: String): String = {
+    getClass.getClassLoader.getResource(fileName).getFile
   }
 
 }

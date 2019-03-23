@@ -47,16 +47,6 @@ class MainTest extends FunSuite {
     result
   }
 
-  def getPath(fileName: String): URL = {
-    getClass.getClassLoader.getResource(fileName)
-  }
-
-  def readFile(fileName: String): String = {
-    val path = Paths.get(getPath(fileName).toURI)
-    val result = Files.readAllLines(path).asScala.mkString(NewLine) + NewLine
-    result
-  }
-
   def assertContent(tableMap: TableMap, fileName: String): Unit = {
     // Store the table map
     val writer = new StringWriter()
@@ -68,6 +58,16 @@ class MainTest extends FunSuite {
 
     // Compare the expected output with the actual output
     assert(expectedOutput === writer.toString)
+  }
+
+  def readFile(fileName: String): String = {
+    val path = Paths.get(getPath(fileName).toURI)
+    val result = Files.readAllLines(path).asScala.mkString(NewLine) + NewLine
+    result
+  }
+
+  def getPath(fileName: String): URL = {
+    getClass.getClassLoader.getResource(fileName)
   }
 
   test("testAddNewField") {

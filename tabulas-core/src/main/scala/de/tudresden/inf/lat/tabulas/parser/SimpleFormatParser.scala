@@ -16,8 +16,6 @@ import scala.collection.mutable.ArrayBuffer
   */
 case class SimpleFormatParser(input: Reader) extends Parser {
 
-  case class Pair(lineCounter: Int, line: Option[String])
-
   def getKeyLength(line: String): Int = {
     val result = if (Objects.isNull(line)) {
       0
@@ -87,15 +85,6 @@ case class SimpleFormatParser(input: Reader) extends Parser {
     result
   }
 
-  private def asUri(uriStr: String, lineCounter: Int): URI = {
-    val result: URI = try {
-      new URI(uriStr)
-    } catch {
-      case e: URISyntaxException => throw ParseException("String '" + uriStr + "' is not a valid URI. (line " + lineCounter + ")")
-    }
-    result
-  }
-
   def parsePrefixMap(line: String, lineCounter: Int): PrefixMap = {
     val result: PrefixMap = new PrefixMapImpl()
     val stok: StringTokenizer = new StringTokenizer(getValue(line).get)
@@ -111,26 +100,6 @@ case class SimpleFormatParser(input: Reader) extends Parser {
       }
     }
     result
-  }
-
-  private def setSortingOrder(line: String, table: TableImpl): Unit = {
-    val fieldsWithReverseOrder = new mutable.TreeSet[String]()
-    val list = new mutable.ArrayBuffer[String]
-    val stok: StringTokenizer = new StringTokenizer(getValue(line).get)
-    while (stok.hasMoreTokens) {
-      var token: String = stok.nextToken()
-      if (token.startsWith(ParserConstant.StandardOrderSign)) {
-        token = token.substring(ParserConstant.StandardOrderSign
-          .length())
-      } else if (token.startsWith(ParserConstant.ReverseOrderSign)) {
-        token = token.substring(ParserConstant.ReverseOrderSign
-          .length())
-        fieldsWithReverseOrder.add(token)
-      }
-      list += token
-    }
-    table.setSortingOrder(list)
-    table.setFieldsWithReverseOrder(fieldsWithReverseOrder.toSet)
   }
 
   def getTypedValue(key: String, value: String, type0: CompositeType, prefixMap: PrefixMap, lineCounter: Int): PrimitiveTypeValue = {
@@ -218,53 +187,6 @@ case class SimpleFormatParser(input: Reader) extends Parser {
     result
   }
 
-  private def isIdProperty(line: String): Boolean = {
-    val optKey: Option[String] = getKey(line)
-    val result = if (optKey.isDefined) {
-      optKey.get.equals(ParserConstant.IdKeyword)
-    } else {
-      false
-    }
-    result
-  }
-
-  private def getIdProperty(line: String): Option[String] = {
-    val optKey: Option[String] = getKey(line)
-    val optValueStr: Option[String] = getValue(line)
-    val result = if (optKey.isDefined && optValueStr.isDefined && optKey.get.equals(ParserConstant.IdKeyword)) {
-      Some(optValueStr.get)
-    } else {
-      None
-    }
-    result
-  }
-
-  private def parseProperty(line: String, currentTable: TableImpl,
-    recordIdsOfCurrentTable: mutable.TreeSet[String], record: Record, lineCounter: Int): Unit = {
-    if (Objects.isNull(currentTable)) {
-      throw ParseException("New record was not declared (line "
-        + lineCounter + ")")
-    }
-
-    val optKey: Option[String] = getKey(line)
-    val optValueStr: Option[String] = getValue(line)
-    if (optKey.isDefined && optValueStr.isDefined) {
-      val key: String = optKey.get
-      val valueStr: String = optValueStr.get
-      val value: PrimitiveTypeValue = getTypedValue(key, valueStr, currentTable.getType, currentTable.getPrefixMap, lineCounter)
-      if (key.equals(ParserConstant.IdKeyword)) {
-        if (recordIdsOfCurrentTable.contains(valueStr)) {
-          throw ParseException("Identifier '"
-            + ParserConstant.IdKeyword + ParserConstant.Space
-            + ParserConstant.EqualsFieldSign + ParserConstant.Space
-            + valueStr + "' is duplicated (line " + lineCounter
-            + ").")
-        }
-      }
-      record.set(key, value)
-    }
-  }
-
   // scalastyle:off
   def parseMap(input: BufferedReader): TableMap = {
     val mapOfTables = new mutable.TreeMap[String, TableImpl]()
@@ -350,8 +272,6 @@ case class SimpleFormatParser(input: Reader) extends Parser {
     result
   }
 
-  // scalastyle:on
-
   override def parse(): TableMap = {
     val result = try {
       parseMap(new BufferedReader(this.input))
@@ -361,6 +281,86 @@ case class SimpleFormatParser(input: Reader) extends Parser {
     }
     result
   }
+
+  private def asUri(uriStr: String, lineCounter: Int): URI = {
+    val result: URI = try {
+      new URI(uriStr)
+    } catch {
+      case e: URISyntaxException => throw ParseException("String '" + uriStr + "' is not a valid URI. (line " + lineCounter + ")")
+    }
+    result
+  }
+
+  private def setSortingOrder(line: String, table: TableImpl): Unit = {
+    val fieldsWithReverseOrder = new mutable.TreeSet[String]()
+    val list = new mutable.ArrayBuffer[String]
+    val stok: StringTokenizer = new StringTokenizer(getValue(line).get)
+    while (stok.hasMoreTokens) {
+      var token: String = stok.nextToken()
+      if (token.startsWith(ParserConstant.StandardOrderSign)) {
+        token = token.substring(ParserConstant.StandardOrderSign
+          .length())
+      } else if (token.startsWith(ParserConstant.ReverseOrderSign)) {
+        token = token.substring(ParserConstant.ReverseOrderSign
+          .length())
+        fieldsWithReverseOrder.add(token)
+      }
+      list += token
+    }
+    table.setSortingOrder(list)
+    table.setFieldsWithReverseOrder(fieldsWithReverseOrder.toSet)
+  }
+
+  private def isIdProperty(line: String): Boolean = {
+    val optKey: Option[String] = getKey(line)
+    val result = if (optKey.isDefined) {
+      optKey.get.equals(ParserConstant.IdKeyword)
+    } else {
+      false
+    }
+    result
+  }
+
+  private def getIdProperty(line: String): Option[String] = {
+    val optKey: Option[String] = getKey(line)
+    val optValueStr: Option[String] = getValue(line)
+    val result = if (optKey.isDefined && optValueStr.isDefined && optKey.get.equals(ParserConstant.IdKeyword)) {
+      Some(optValueStr.get)
+    } else {
+      None
+    }
+    result
+  }
+
+  private def parseProperty(line: String, currentTable: TableImpl,
+                            recordIdsOfCurrentTable: mutable.TreeSet[String], record: Record, lineCounter: Int): Unit = {
+    if (Objects.isNull(currentTable)) {
+      throw ParseException("New record was not declared (line "
+        + lineCounter + ")")
+    }
+
+    val optKey: Option[String] = getKey(line)
+    val optValueStr: Option[String] = getValue(line)
+    if (optKey.isDefined && optValueStr.isDefined) {
+      val key: String = optKey.get
+      val valueStr: String = optValueStr.get
+      val value: PrimitiveTypeValue = getTypedValue(key, valueStr, currentTable.getType, currentTable.getPrefixMap, lineCounter)
+      if (key.equals(ParserConstant.IdKeyword)) {
+        if (recordIdsOfCurrentTable.contains(valueStr)) {
+          throw ParseException("Identifier '"
+            + ParserConstant.IdKeyword + ParserConstant.Space
+            + ParserConstant.EqualsFieldSign + ParserConstant.Space
+            + valueStr + "' is duplicated (line " + lineCounter
+            + ").")
+        }
+      }
+      record.set(key, value)
+    }
+  }
+
+  // scalastyle:on
+
+  case class Pair(lineCounter: Int, line: Option[String])
 
 }
 

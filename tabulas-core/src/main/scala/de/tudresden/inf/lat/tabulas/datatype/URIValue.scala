@@ -15,10 +15,6 @@ case class URIValue(uri: URI) extends PrimitiveTypeValue {
     URIType()
   }
 
-  def getUri: URI = {
-    uri
-  }
-
   def getUriNoLabel: URI = {
     val uriStr = uri.toASCIIString
     val pos: Int = uriStr.lastIndexOf(SpecialSymbol)
@@ -45,8 +41,8 @@ case class URIValue(uri: URI) extends PrimitiveTypeValue {
     getUri.toASCIIString.trim().isEmpty
   }
 
-  override def render(): String = {
-    uri.toASCIIString
+  def getUri: URI = {
+    uri
   }
 
   override def renderAsList(): Seq[String] = {
@@ -59,6 +55,10 @@ case class URIValue(uri: URI) extends PrimitiveTypeValue {
 
   override def toString: String = {
     render()
+  }
+
+  override def render(): String = {
+    uri.toASCIIString
   }
 
 }
@@ -78,14 +78,6 @@ object URIValue {
     new URIValue(createURI(uriStr))
   }
 
-  /** Constructs a new URI value using another URI value.
-    *
-    * @param other URI value
-    */
-  def apply(other: URIValue): URIValue = {
-    new URIValue(other.getUri)
-  }
-
   def createURI(uriStr: String): URI = {
     val result = try {
       new URI(uriStr)
@@ -93,6 +85,14 @@ object URIValue {
       case e: URISyntaxException => throw new ParseException("Invalid URI '" + uriStr + "'.", e)
     }
     result
+  }
+
+  /** Constructs a new URI value using another URI value.
+    *
+    * @param other URI value
+    */
+  def apply(other: URIValue): URIValue = {
+    new URIValue(other.getUri)
   }
 
 }

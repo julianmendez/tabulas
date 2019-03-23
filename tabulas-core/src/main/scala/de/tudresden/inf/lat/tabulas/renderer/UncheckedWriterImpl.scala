@@ -1,7 +1,6 @@
 package de.tudresden.inf.lat.tabulas.renderer
 
 import java.io.{IOException, UncheckedIOException, Writer}
-import java.util.Objects
 
 /** This is the default implementation of UncheckedWriter.
   *

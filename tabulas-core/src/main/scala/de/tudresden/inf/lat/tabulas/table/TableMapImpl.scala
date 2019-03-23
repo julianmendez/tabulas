@@ -8,15 +8,9 @@ import scala.collection.mutable
   */
 case class TableMapImpl(map: mutable.TreeMap[String, Table]) extends TableMap {
 
-  override def getTableIds: Seq[String] = {
-    val result = new mutable.ArrayBuffer[String]()
-    result ++= map.keySet
-    result
+  override def put(id: String, table: Table): Option[Table] = {
+    map.put(id, table)
   }
-
-  override def put(id: String, table: Table): Option[Table] = { map.put(id, table) }
-
-  override def getTable(id: String): Option[Table] = { map.get(id) }
 
   override def toString: String = {
     val sbuf: StringBuffer = new StringBuffer()
@@ -29,6 +23,16 @@ case class TableMapImpl(map: mutable.TreeMap[String, Table]) extends TableMap {
     })
     val result: String = sbuf.toString
     result
+  }
+
+  override def getTableIds: Seq[String] = {
+    val result = new mutable.ArrayBuffer[String]()
+    result ++= map.keySet
+    result
+  }
+
+  override def getTable(id: String): Option[Table] = {
+    map.get(id)
   }
 
 }
