@@ -8,7 +8,7 @@ import java.util.Objects
   */
 case class URIType() extends PrimitiveType {
 
-  val TypeName: String = "URI"
+  final val TypeName: String = "URI"
 
   override def getTypeName: String = {
     TypeName

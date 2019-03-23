@@ -9,7 +9,7 @@ import java.util.Objects
   */
 case class URIValue(uri: URI) extends PrimitiveTypeValue {
 
-  val SpecialSymbol: String = "#"
+  final val SpecialSymbol: String = "#"
 
   override def getType: PrimitiveType = {
     URIType()

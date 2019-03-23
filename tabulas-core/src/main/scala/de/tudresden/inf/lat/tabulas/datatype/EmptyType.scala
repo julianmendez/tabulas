@@ -6,7 +6,7 @@ package de.tudresden.inf.lat.tabulas.datatype
   */
 case class EmptyType() extends PrimitiveType {
 
-  val TypeName: String = "Empty"
+  final val TypeName: String = "Empty"
 
   override def getTypeName: String = {
     TypeName

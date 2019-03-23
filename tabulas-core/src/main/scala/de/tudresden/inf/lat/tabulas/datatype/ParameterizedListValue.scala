@@ -9,7 +9,7 @@ import java.util.Objects
 case class ParameterizedListValue(parameter: PrimitiveType, list: Seq[PrimitiveTypeValue])
   extends PrimitiveTypeValue {
 
-  val Separator: String = " "
+  final val Separator: String = " "
 
   override def getType: PrimitiveType = {
     ParameterizedListType(this.parameter)

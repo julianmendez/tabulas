@@ -11,25 +11,25 @@ import org.scalatest.FunSuite
   */
 class NormalizationTest extends FunSuite {
 
-  val InputFileName0: String = "core/example.properties"
-  val ExpectedOutputFileName0: String = "core/example-expected.properties"
+  final val InputFileName0: String = "core/example.properties"
+  final val ExpectedOutputFileName0: String = "core/example-expected.properties"
 
-  val InputFileName1: String = "core/multiple_tables.properties"
-  val ExpectedOutputFileName1: String = "core/multiple_tables-expected.properties"
+  final val InputFileName1: String = "core/multiple_tables.properties"
+  final val ExpectedOutputFileName1: String = "core/multiple_tables-expected.properties"
 
-  val InputFileName2: String = "core/another_example.properties"
-  val ExpectedOutputFileName2: String = "core/another_example-expected.properties"
+  final val InputFileName2: String = "core/another_example.properties"
+  final val ExpectedOutputFileName2: String = "core/another_example-expected.properties"
 
-  val InputFileName3: String = "core/example.properties"
-  val ExpectedOutputFileName3: String = "core/example-old-expected.properties"
+  final val InputFileName3: String = "core/example.properties"
+  final val ExpectedOutputFileName3: String = "core/example-old-expected.properties"
 
-  val InputFileName4: String = "core/multiple_tables.properties"
-  val ExpectedOutputFileName4: String = "core/multiple_tables-old-expected.properties"
+  final val InputFileName4: String = "core/multiple_tables.properties"
+  final val ExpectedOutputFileName4: String = "core/multiple_tables-old-expected.properties"
 
-  val InputFileName5: String = "core/another_example.properties"
-  val ExpectedOutputFileName5: String = "core/another_example-old-expected.properties"
+  final val InputFileName5: String = "core/another_example.properties"
+  final val ExpectedOutputFileName5: String = "core/another_example-old-expected.properties"
 
-  val NewLine: String = "\n"
+  final val NewLine: String = "\n"
 
   def getPath(fileName: String): String = {
     getClass.getClassLoader.getResource(fileName).getFile

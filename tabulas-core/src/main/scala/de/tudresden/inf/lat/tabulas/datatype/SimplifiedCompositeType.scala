@@ -26,7 +26,7 @@ case class SimplifiedCompositeType(dataType: CompositeTypeImpl) extends Composit
 
 object SimplifiedCompositeType {
 
-  val DefaultFieldType: String = "String"
+  final val DefaultFieldType: String = "String"
 
   def apply(): SimplifiedCompositeType = new SimplifiedCompositeType(CompositeTypeImpl())
 

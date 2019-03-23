@@ -16,36 +16,36 @@ import scala.collection.JavaConverters._
   */
 class ConversionTest extends FunSuite {
 
-  val ExtPrefix = "ext/"
+  final val ExtPrefix = "ext/"
   
-  val InputFileName0: String = ExtPrefix + "example.properties"
-  val ExpectedOutputFileName0: String = ExtPrefix + "example-expected.properties"
+  final val InputFileName0: String = ExtPrefix + "example.properties"
+  final val ExpectedOutputFileName0: String = ExtPrefix + "example-expected.properties"
 
-  val InputFileName1: String = ExtPrefix + "example.properties"
-  val ExpectedOutputFileName1: String = ExtPrefix + "example.json"
+  final val InputFileName1: String = ExtPrefix + "example.properties"
+  final val ExpectedOutputFileName1: String = ExtPrefix + "example.json"
 
-  val InputFileName2: String = ExtPrefix + "multiple_tables.properties"
-  val ExpectedOutputFileName2: String = ExtPrefix + "multiple_tables.json"
+  final val InputFileName2: String = ExtPrefix + "multiple_tables.properties"
+  final val ExpectedOutputFileName2: String = ExtPrefix + "multiple_tables.json"
 
-  val InputFileName3: String = ExtPrefix + "miniexample.properties"
-  val ExpectedOutputFileName3: String = ExtPrefix + "miniexample.json"
+  final val InputFileName3: String = ExtPrefix + "miniexample.properties"
+  final val ExpectedOutputFileName3: String = ExtPrefix + "miniexample.json"
 
-  val InputFileName4: String = ExtPrefix + "example.json"
-  val ExpectedOutputFileName4: String = ExtPrefix + "example-expected.properties"
+  final val InputFileName4: String = ExtPrefix + "example.json"
+  final val ExpectedOutputFileName4: String = ExtPrefix + "example-expected.properties"
 
-  val InputFileName5: String = ExtPrefix + "multiple_tables.json"
-  val ExpectedOutputFileName5: String = ExtPrefix + "multiple_tables-expected.properties"
+  final val InputFileName5: String = ExtPrefix + "multiple_tables.json"
+  final val ExpectedOutputFileName5: String = ExtPrefix + "multiple_tables-expected.properties"
 
-  val InputFileName6: String = ExtPrefix + "multiple_tables_2.json"
-  val ExpectedOutputFileName6: String = ExtPrefix + "multiple_tables-expected.properties"
+  final val InputFileName6: String = ExtPrefix + "multiple_tables_2.json"
+  final val ExpectedOutputFileName6: String = ExtPrefix + "multiple_tables-expected.properties"
 
-  val InputFileName7: String = ExtPrefix + "example.properties"
-  val ExpectedOutputFileName7: String = ExtPrefix + "example.yaml"
+  final val InputFileName7: String = ExtPrefix + "example.properties"
+  final val ExpectedOutputFileName7: String = ExtPrefix + "example.yaml"
 
-  val InputFileName8: String = ExtPrefix + "miniexample.properties"
-  val ExpectedOutputFileName8: String = ExtPrefix + "miniexample.yaml"
+  final val InputFileName8: String = ExtPrefix + "miniexample.properties"
+  final val ExpectedOutputFileName8: String = ExtPrefix + "miniexample.yaml"
 
-  val NewLine: String = "\n"
+  final val NewLine: String = "\n"
 
   def getPath(fileName: String): URL = {
     getClass.getClassLoader.getResource(fileName)

@@ -17,17 +17,17 @@ import scala.collection.JavaConverters._
   */
 class MainTest extends FunSuite {
 
-  val CorePrefix = "core/"
+  final val CorePrefix = "core/"
 
-  val InputFileName: String = CorePrefix + "example.properties"
-  val ExpectedOutputFileName: String = CorePrefix + "example-expected.properties"
-  val ModifiedOutputFileName: String = CorePrefix + "example-modified.properties"
+  final val InputFileName: String = CorePrefix + "example.properties"
+  final val ExpectedOutputFileName: String = CorePrefix + "example-expected.properties"
+  final val ModifiedOutputFileName: String = CorePrefix + "example-modified.properties"
 
-  val TypeNameRecord: String = "record"
-  val FieldNameAuthors: String = "authors"
-  val FieldNameNumberOfAuthors: String = "numberOfAuthors"
-  val TypeOfNumberOfAuthors: String = "String"
-  val NewLine: String = "\n"
+  final val TypeNameRecord: String = "record"
+  final val FieldNameAuthors: String = "authors"
+  final val FieldNameNumberOfAuthors: String = "numberOfAuthors"
+  final val TypeOfNumberOfAuthors: String = "String"
+  final val NewLine: String = "\n"
 
 
   /**

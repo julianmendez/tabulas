@@ -6,7 +6,7 @@ package de.tudresden.inf.lat.tabulas.datatype
   */
 case class IntegerType() extends PrimitiveType {
 
-  val TypeName: String = "Integer"
+  final val TypeName: String = "Integer"
 
   override def getTypeName: String = {
     TypeName

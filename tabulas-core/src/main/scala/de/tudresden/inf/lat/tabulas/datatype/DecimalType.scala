@@ -6,7 +6,7 @@ package de.tudresden.inf.lat.tabulas.datatype
   */
 case class DecimalType() extends PrimitiveType {
 
-  val TypeName: String = "Decimal"
+  final val TypeName: String = "Decimal"
 
   override def getTypeName: String = {
     TypeName

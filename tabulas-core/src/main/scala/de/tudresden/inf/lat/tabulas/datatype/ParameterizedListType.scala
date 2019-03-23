@@ -6,7 +6,7 @@ package de.tudresden.inf.lat.tabulas.datatype
   */
 case class ParameterizedListType(parameter: PrimitiveType) extends PrimitiveType {
 
-  val TypePrefix: String = "List_"
+  final val TypePrefix: String = "List_"
 
   override def getTypeName: String = {
     TypePrefix + parameter.getTypeName
