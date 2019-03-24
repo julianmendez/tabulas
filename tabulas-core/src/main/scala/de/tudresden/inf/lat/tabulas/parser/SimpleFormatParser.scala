@@ -254,7 +254,7 @@ case class SimpleFormatParser(input: Reader) extends Parser {
         } else if (hasKey(line, ParserConstant.NewRecordToken)) {
           isDefiningType = false
           if (mustAddRecord) {
-            currentTable.add(record)
+            currentTable = currentTable.add(record)
             mapOfTables.put(tableName, currentTable)
           }
           record = RecordImpl()
@@ -286,7 +286,7 @@ case class SimpleFormatParser(input: Reader) extends Parser {
       }
     })
     if (mustAddRecord) {
-      currentTable.add(record)
+      currentTable = currentTable.add(record)
       mapOfTables.put(tableName, currentTable)
       mustAddRecord = false
     }
@@ -342,8 +342,8 @@ case class SimpleFormatParser(input: Reader) extends Parser {
       }
       list += token
     }
-    result.setSortingOrder(list)
-    result.setFieldsWithReverseOrder(fieldsWithReverseOrder.toSet)
+    result = result.setSortingOrder(list)
+    result = result.setFieldsWithReverseOrder(fieldsWithReverseOrder.toSet)
     result
   }
 

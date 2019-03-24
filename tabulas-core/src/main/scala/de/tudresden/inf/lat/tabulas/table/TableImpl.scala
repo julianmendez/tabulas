@@ -1,8 +1,6 @@
 
 package de.tudresden.inf.lat.tabulas.table
 
-import java.util.Objects
-
 import de.tudresden.inf.lat.tabulas.datatype.{CompositeType, Record}
 
 import scala.collection.mutable
@@ -17,34 +15,16 @@ case class EmptyCompositeType() extends CompositeType {
 
 /** This is the default implementation of a sorted table.
   */
-class TableImpl(tableType: CompositeType) extends Table {
-
-  private val _sortingOrder = new mutable.ArrayBuffer[String]
-  private val _fieldsWithReverseOrder = new mutable.TreeSet[String]()
-  private var _records = new mutable.ArrayBuffer[Record]
-  private var _prefixMap: PrefixMap = PrefixMapImpl(Map(), Seq())
+case class TableImpl(
+  tableType: CompositeType,
+  prefixMap: PrefixMap,
+  sortingOrder: Seq[String],
+  fieldsWithReverseOrder: Set[String],
+  records: Seq[Record]
+) extends Table {
 
   def add(record: Record): TableImpl = {
-    this._records += record
-    this
-  }
-
-  override def hashCode(): Int = {
-    val result = tableType.hashCode() + 0x1F * (this._prefixMap.hashCode() + 0x1F * (this._sortingOrder.hashCode() +
-      0x1F * (this._fieldsWithReverseOrder.hashCode() + 0x1F * this._records.hashCode())))
-    result
-  }
-
-  override def equals(obj: Any): Boolean = {
-    val result = obj match {
-      case other: Table => getType.equals(other.getType) &&
-        getPrefixMap.equals(other.getPrefixMap) &&
-        getSortingOrder.equals(other.getSortingOrder) &&
-        getFieldsWithReverseOrder.equals(other.getFieldsWithReverseOrder) &&
-        getRecords.equals(other.getRecords)
-      case _ => false
-    }
-    result
+    copy(tableType, prefixMap, sortingOrder, fieldsWithReverseOrder, records ++ Seq(record))
   }
 
   override def getType: CompositeType = {
@@ -52,55 +32,45 @@ class TableImpl(tableType: CompositeType) extends Table {
   }
 
   override def getPrefixMap: PrefixMap = {
-    this._prefixMap
+    prefixMap
   }
 
   override def getSortingOrder: Seq[String] = {
-    this._sortingOrder
+    sortingOrder
   }
 
   override def getFieldsWithReverseOrder: Set[String] = {
-    this._fieldsWithReverseOrder.toSet
+    fieldsWithReverseOrder
   }
 
   override def getRecords: Seq[Record] = {
-    val comparator = new RecordComparator(this._sortingOrder, this._fieldsWithReverseOrder.toSet)
+    val comparator = new RecordComparator(sortingOrder, fieldsWithReverseOrder)
     val ret = new mutable.ArrayBuffer[Record]
-    ret ++= this._records
+    ret ++= records
     val result = ret.sortWith((record0, record1) => comparator.compare(record0, record1) < 0)
     result
   }
 
   def setPrefixMap(newPrefixMap: PrefixMap): TableImpl = {
-    this._prefixMap = newPrefixMap
-    this
+    copy(prefixMap = newPrefixMap)
   }
 
-  def setSortingOrder(sortingOrder: Seq[String]): TableImpl = {
-    this._sortingOrder.clear()
-    if (Objects.nonNull(sortingOrder)) {
-      this._sortingOrder ++= sortingOrder
-    }
-    this
+  def setSortingOrder(newSortingOrder: Seq[String]): TableImpl = {
+    copy(sortingOrder = newSortingOrder)
   }
 
-  def setFieldsWithReverseOrder(fieldsWithReverseOrder: Set[String]): TableImpl = {
-    this._fieldsWithReverseOrder.clear()
-    if (Objects.nonNull(fieldsWithReverseOrder)) {
-      this._fieldsWithReverseOrder ++= fieldsWithReverseOrder
-    }
-    this
+  def setFieldsWithReverseOrder(newFieldsWithReverseOrder: Set[String]): TableImpl = {
+    copy(fieldsWithReverseOrder = newFieldsWithReverseOrder)
   }
 
   def setRecords(newRecords: Seq[Record]): TableImpl = {
-    _records = new mutable.ArrayBuffer[Record] ++ newRecords
-    this
+    copy(records = newRecords)
   }
 
   override def toString: String = {
-    val result = "\ndef = " + tableType.toString + "\n\nprefix = " + this._prefixMap.toString +
-      "\n\norder = " + this._sortingOrder.toString + " " +
-      "\n\nreverseorder = " + this._fieldsWithReverseOrder.toString + "\n\nlist = " + this._records.toString
+    val result = "\ndef = " + tableType.toString + "\n\nprefix = " + prefixMap.toString +
+      "\n\norder = " + sortingOrder.toString + " " +
+      "\n\nreverseorder = " + fieldsWithReverseOrder.toString + "\n\nlist = " + records.toString
     result
   }
 
@@ -108,22 +78,20 @@ class TableImpl(tableType: CompositeType) extends Table {
 
 object TableImpl {
 
-  def apply(): TableImpl = new TableImpl(EmptyCompositeType())
+  def apply(): TableImpl = {
+    TableImpl(EmptyCompositeType())
+  }
 
-  def apply(newType: CompositeType): TableImpl = new TableImpl(newType)
-
-  def apply(other: Table): TableImpl = TableImpl(other.getType, other)
+  def apply(newType: CompositeType): TableImpl = {
+    TableImpl(newType, PrefixMapImpl(), Seq(), Set(), Seq())
+  }
 
   def apply(newType: CompositeType, other: Table): TableImpl = {
-    val result = new TableImpl(newType)
-    result._records ++= other.getRecords
-    other match {
-      case otherTable: Table =>
-        result._prefixMap = otherTable.getPrefixMap
-        result._sortingOrder ++= otherTable.getSortingOrder
-        result._fieldsWithReverseOrder ++= otherTable.getFieldsWithReverseOrder
-    }
-    result
+    TableImpl(newType, other.getPrefixMap, other.getSortingOrder, other.getFieldsWithReverseOrder, other.getRecords)
+  }
+
+  def apply(other: Table): TableImpl = {
+    TableImpl(other.getType, other.getPrefixMap, other.getSortingOrder, other.getFieldsWithReverseOrder, other.getRecords)
   }
 
 }
