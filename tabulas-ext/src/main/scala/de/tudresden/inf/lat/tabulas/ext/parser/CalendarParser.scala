@@ -67,12 +67,12 @@ case class CalendarParser(input: Reader) extends Parser {
   def parseMap(input: BufferedReader): TableMap = {
     val map = new mutable.TreeMap[String, TableImpl]()
 
-    map.put(CalendarTypeLabel, new TableImpl(SimplifiedCompositeType(CalendarTypeFields)))
-    map.put(TimeZoneTypeLabel, new TableImpl(SimplifiedCompositeType(TimeZoneTypeFields)))
-    map.put(DaylightTypeLabel, new TableImpl(SimplifiedCompositeType(DaylightTypeFields)))
-    map.put(StandardTypeLabel, new TableImpl(SimplifiedCompositeType(StandardTypeFields)))
-    map.put(EventTypeLabel, new TableImpl(SimplifiedCompositeType(EventTypeFields)))
-    map.put(AlarmTypeLabel, new TableImpl(SimplifiedCompositeType(AlarmTypeFields)))
+    map.put(CalendarTypeLabel, TableImpl(SimplifiedCompositeType(CalendarTypeFields)))
+    map.put(TimeZoneTypeLabel, TableImpl(SimplifiedCompositeType(TimeZoneTypeFields)))
+    map.put(DaylightTypeLabel, TableImpl(SimplifiedCompositeType(DaylightTypeFields)))
+    map.put(StandardTypeLabel, TableImpl(SimplifiedCompositeType(StandardTypeFields)))
+    map.put(EventTypeLabel, TableImpl(SimplifiedCompositeType(EventTypeFields)))
+    map.put(AlarmTypeLabel, TableImpl(SimplifiedCompositeType(AlarmTypeFields)))
 
     var currentTable = TableImpl()
     var currentRecord = RecordImpl()
@@ -188,7 +188,7 @@ case class CalendarParser(input: Reader) extends Parser {
   }
 
   private def parseProperty(line: String, currentTable: TableImpl,
-                            record: RecordImpl, lineCounter: Int): Unit = {
+    record: RecordImpl, lineCounter: Int): Unit = {
     if (Objects.isNull(currentTable)) {
       throw ParseException("New record was not declared (line "
         + lineCounter + ")")
