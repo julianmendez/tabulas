@@ -24,7 +24,7 @@ class TableImpl(tableType: CompositeType) extends Table {
   private var _records = new mutable.ArrayBuffer[Record]
   private var _prefixMap: PrefixMap = PrefixMapImpl(Map(), Seq())
 
-  override def add(record: Record): Boolean = {
+  def add(record: Record): Boolean = {
     val result = if (Objects.isNull(record)) {
       false
     } else {
@@ -34,7 +34,7 @@ class TableImpl(tableType: CompositeType) extends Table {
     result
   }
 
-  override def clear(): Unit = {
+  def clear(): Unit = {
     this._records.clear()
   }
 
@@ -64,7 +64,7 @@ class TableImpl(tableType: CompositeType) extends Table {
     this._prefixMap
   }
 
-  override def setPrefixMap(newPrefixMap: PrefixMap): Unit = {
+  def setPrefixMap(newPrefixMap: PrefixMap): Unit = {
     this._prefixMap = newPrefixMap
   }
 
@@ -72,7 +72,7 @@ class TableImpl(tableType: CompositeType) extends Table {
     this._sortingOrder
   }
 
-  override def setSortingOrder(sortingOrder: Seq[String]): Unit = {
+  def setSortingOrder(sortingOrder: Seq[String]): Unit = {
     this._sortingOrder.clear()
     if (Objects.nonNull(sortingOrder)) {
       this._sortingOrder ++= sortingOrder
@@ -83,7 +83,7 @@ class TableImpl(tableType: CompositeType) extends Table {
     this._fieldsWithReverseOrder.toSet
   }
 
-  override def setFieldsWithReverseOrder(fieldsWithReverseOrder: Set[String]): Unit = {
+  def setFieldsWithReverseOrder(fieldsWithReverseOrder: Set[String]): Unit = {
     this._fieldsWithReverseOrder.clear()
     if (Objects.nonNull(fieldsWithReverseOrder)) {
       this._fieldsWithReverseOrder ++= fieldsWithReverseOrder

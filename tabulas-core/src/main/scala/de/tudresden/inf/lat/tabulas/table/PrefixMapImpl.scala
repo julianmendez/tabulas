@@ -72,3 +72,10 @@ case class PrefixMapImpl(prefixMap: Map[URI, URI], keyList: Seq[URI]) extends Pr
 
 }
 
+object PrefixMapImpl {
+
+  def apply(): PrefixMapImpl = {
+    PrefixMapImpl(Map(), Seq())
+  }
+
+}

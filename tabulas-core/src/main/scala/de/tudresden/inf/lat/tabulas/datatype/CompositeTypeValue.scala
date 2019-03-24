@@ -18,18 +18,5 @@ trait CompositeTypeValue {
     */
   def getRecords: Seq[Record]
 
-  /** Adds a record. Returns <code>true</code> if and only if this composite
-    * type value changed as a result of the call.
-    *
-    * @param record record
-    * @return <code>true</code> if and only if this composite type value
-    *         changed as a result of the call
-    */
-  def add(record: Record): Boolean
-
-  /** Removes all of the records from this composite type value.
-    */
-  def clear(): Unit
-
 }
 
