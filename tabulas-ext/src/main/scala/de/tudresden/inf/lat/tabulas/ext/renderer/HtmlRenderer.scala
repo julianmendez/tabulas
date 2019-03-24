@@ -88,17 +88,6 @@ case class HtmlRenderer(output: Writer) extends Renderer {
     })
   }
 
-  def writeAsStringIfNotEmpty(output: Writer, value: PrimitiveTypeValue): Boolean = {
-    val result = if (Objects.nonNull(value) && !value.toString.trim().isEmpty) {
-      output.write(value.toString)
-      output.write("\n")
-      true
-    } else {
-      false
-    }
-    result
-  }
-
   def writeParameterizedListIfNotEmpty(output: Writer, list: ParameterizedListValue): Boolean = {
     val result = if (Objects.nonNull(list)) {
       list.getList.foreach(value => {
@@ -117,10 +106,21 @@ case class HtmlRenderer(output: Writer) extends Renderer {
     result
   }
 
+  def writeAsStringIfNotEmpty(output: Writer, value: PrimitiveTypeValue): Boolean = {
+    val result = if (Objects.nonNull(value) && !value.toString.trim().isEmpty) {
+      output.write(value.toString)
+      output.write("\n")
+      true
+    } else {
+      false
+    }
+    result
+  }
+
   def writeLinkIfNotEmpty(output: Writer, link: URIValue): Boolean = {
     val result = if (Objects.nonNull(link) && !link.isEmpty) {
       output.write("<a href=\"")
-      output.write(link.getUriNoLabel.toASCIIString)
+      output.write(link.getUriNoLabel.toString)
       output.write("\">(")
       output.write(link.getLabel)
       output.write(")</a>")

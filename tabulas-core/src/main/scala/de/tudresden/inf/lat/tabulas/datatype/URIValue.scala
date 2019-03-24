@@ -16,7 +16,7 @@ case class URIValue(uri: URI) extends PrimitiveTypeValue {
   }
 
   def getUriNoLabel: URI = {
-    val uriStr = uri.toASCIIString
+    val uriStr = uri.toString
     val pos: Int = uriStr.lastIndexOf(SpecialSymbol)
     val result = if (pos == -1) {
       uri
@@ -27,7 +27,7 @@ case class URIValue(uri: URI) extends PrimitiveTypeValue {
   }
 
   def getLabel: String = {
-    val uriStr = uri.toASCIIString
+    val uriStr = uri.toString
     val pos: Int = uriStr.lastIndexOf(SpecialSymbol)
     val result: String = if (pos == -1) {
       ""
@@ -38,7 +38,7 @@ case class URIValue(uri: URI) extends PrimitiveTypeValue {
   }
 
   override def isEmpty: Boolean = {
-    getUri.toASCIIString.trim().isEmpty
+    getUri.toString.trim().isEmpty
   }
 
   def getUri: URI = {
@@ -49,16 +49,16 @@ case class URIValue(uri: URI) extends PrimitiveTypeValue {
     List(render())
   }
 
+  override def render(): String = {
+    uri.toString
+  }
+
   override def compareTo(other: PrimitiveTypeValue): Int = {
     toString.compareTo(other.toString)
   }
 
   override def toString: String = {
     render()
-  }
-
-  override def render(): String = {
-    uri.toASCIIString
   }
 
 }

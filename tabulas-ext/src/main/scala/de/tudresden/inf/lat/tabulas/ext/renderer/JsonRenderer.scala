@@ -113,7 +113,7 @@ case class JsonRenderer(output: Writer) extends Renderer {
     val result = if (Objects.nonNull(link) && !link.isEmpty) {
       val fragment = if (link.getLabel.isEmpty) "" else HashChar + link.getLabel
       output.write(prefix)
-      output.write(addQuotes(link.getUriNoLabel.toASCIIString + fragment))
+      output.write(addQuotes(link.getUriNoLabel.toString + fragment))
       true
     } else {
       false

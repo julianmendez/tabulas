@@ -56,7 +56,7 @@ case class SimpleFormatRecordRenderer(output: Writer, prefixMap: PrefixMap, fiel
           output.write(ParserConstant.Space)
           output.write(ParserConstant.Space)
           if (hasUris) {
-            output.write(prefixMap.getWithPrefix(URI.create(elem)).toASCIIString)
+            output.write(prefixMap.getWithPrefix(URI.create(elem)).toString)
           } else {
             output.write(elem.toString)
           }
@@ -65,7 +65,7 @@ case class SimpleFormatRecordRenderer(output: Writer, prefixMap: PrefixMap, fiel
       } else {
         output.write(ParserConstant.Space)
         if (value.getType.equals(URIType())) {
-          output.write(prefixMap.getWithPrefix(URI.create(value.toString)).toASCIIString)
+          output.write(prefixMap.getWithPrefix(URI.create(value.toString)).toString)
         } else {
           output.write(value.toString)
         }

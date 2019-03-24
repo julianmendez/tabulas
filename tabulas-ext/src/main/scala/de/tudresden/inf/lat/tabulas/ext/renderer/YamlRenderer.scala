@@ -145,7 +145,7 @@ case class YamlRenderer(output: Writer) extends Renderer {
     val result = if (Objects.nonNull(link) && !link.isEmpty) {
       val fragment = if (link.getLabel.isEmpty) "" else HashChar + link.getLabel
       output.write(prefix)
-      output.write(escapeString(link.getUriNoLabel.toASCIIString + fragment))
+      output.write(escapeString(link.getUriNoLabel.toString + fragment))
       true
     } else {
       false

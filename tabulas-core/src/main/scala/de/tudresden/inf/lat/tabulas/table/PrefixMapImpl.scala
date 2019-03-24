@@ -2,13 +2,11 @@ package de.tudresden.inf.lat.tabulas.table
 
 import java.net.URI
 
-import scala.collection.mutable
-
 /** An object of this class is a map of URI prefixes.
   * This implementation iterates on the keys keeping the order in which they were added for the first time.
   *
   */
-case class PrefixMapImpl(prefixMap :Map[URI, URI], keyList : Seq[URI]) extends PrefixMap {
+case class PrefixMapImpl(prefixMap: Map[URI, URI], keyList: Seq[URI]) extends PrefixMap {
 
   override def isEmpty: Boolean = {
     prefixMap.isEmpty
@@ -20,14 +18,14 @@ case class PrefixMapImpl(prefixMap :Map[URI, URI], keyList : Seq[URI]) extends P
 
   override def getWithoutPrefix(uri: URI): URI = {
     var result = uri
-    val uriStr = uri.toASCIIString
+    val uriStr = uri.toString
     if (uriStr.startsWith(PrefixAmpersand)) {
       val pos = uriStr.indexOf(PrefixSemicolon, PrefixAmpersand.length())
       if (pos != -1) {
         val prefix: URI = URI.create(uriStr.substring(PrefixAmpersand.length(), pos))
         val optExpansion: Option[URI] = prefixMap.get(prefix)
         if (optExpansion.isDefined) {
-          result = URI.create(optExpansion.get.toASCIIString + uriStr.substring(pos + PrefixSemicolon.length))
+          result = URI.create(optExpansion.get.toString + uriStr.substring(pos + PrefixSemicolon.length))
         }
       }
     }
@@ -37,11 +35,11 @@ case class PrefixMapImpl(prefixMap :Map[URI, URI], keyList : Seq[URI]) extends P
   override def getWithPrefix(uri: URI): URI = {
     val optPrefix: Option[URI] = getPrefixFor(uri)
     val result = if (optPrefix.isDefined) {
-      val uriStr = uri.toASCIIString
+      val uriStr = uri.toString
       val key: URI = optPrefix.get
-      val keyStr: String = key.toASCIIString
+      val keyStr: String = key.toString
       val optExpansion: Option[URI] = get(key)
-      val expansionStr = optExpansion.get.toASCIIString
+      val expansionStr = optExpansion.get.toString
       val res = if (keyStr.isEmpty) {
         URI.create(uriStr.substring(expansionStr.length))
       } else {
@@ -59,8 +57,8 @@ case class PrefixMapImpl(prefixMap :Map[URI, URI], keyList : Seq[URI]) extends P
   }
 
   override def getPrefixFor(uri: URI): Option[URI] = {
-    val uriStr = uri.toASCIIString
-    val result: Option[URI] = prefixMap.keySet.find(e => uriStr.startsWith(prefixMap.get(e).get.toASCIIString))
+    val uriStr = uri.toString
+    val result: Option[URI] = prefixMap.keySet.find(e => uriStr.startsWith(prefixMap.get(e).get.toString))
     result
   }
 

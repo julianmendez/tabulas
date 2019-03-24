@@ -96,7 +96,7 @@ case class WikitextRenderer(output: Writer) extends Renderer {
     val result = if (Objects.nonNull(link) && !link.isEmpty) {
       output.write(prefix)
       output.write("[")
-      output.write(link.getUriNoLabel.toASCIIString)
+      output.write(link.getUriNoLabel.toString)
       output.write(" (")
       output.write(link.getLabel)
       output.write(")]")
