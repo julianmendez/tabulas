@@ -86,7 +86,8 @@ case class SimpleFormatParser(input: Reader) extends Parser {
   }
 
   def parsePrefixMap(line: String, lineCounter: Int): PrefixMap = {
-    val result: PrefixMap = new PrefixMapImpl()
+    val mapOfUris = mutable.HashMap[URI, URI]()
+    val listOfUris = mutable.ArrayBuffer[URI]()
     val stok: StringTokenizer = new StringTokenizer(getValue(line).get)
     while (stok.hasMoreTokens) {
       val token: String = stok.nextToken()
@@ -94,11 +95,15 @@ case class SimpleFormatParser(input: Reader) extends Parser {
       if (pos == -1) {
         throw ParseException("Prefix '" + line + "' does not have a definition. (line " + lineCounter + ")")
       } else {
-        val key: String = token.substring(0, pos)
-        val value: String = token.substring(pos + ParserConstant.PrefixSign.length(), token.length())
-        result.put(asUri(key, lineCounter), asUri(value, lineCounter))
+        val key = token.substring(0, pos)
+        val value = token.substring(pos + ParserConstant.PrefixSign.length(), token.length())
+        val keyPair = asUri(key, lineCounter)
+        val valuePair = asUri(value, lineCounter)
+        mapOfUris.put(keyPair, valuePair)
+        listOfUris += keyPair
       }
     }
+    val result = PrefixMapImpl(mapOfUris.toMap, listOfUris)
     result
   }
 

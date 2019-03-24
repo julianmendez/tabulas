@@ -33,14 +33,6 @@ trait PrefixMap {
     */
   def get(key: URI): Option[URI]
 
-  /** Assigns a prefix to an expansion.
-    *
-    * @param key   prefix
-    * @param value expansion
-    * @return an optional containing the previous value of the given key, or empty if there was no value for that key
-    */
-  def put(key: URI, value: URI): Option[URI]
-
   /** Returns a URI with the prefix, i.e. a shortened URI.
     *
     * @param uri URI
@@ -67,9 +59,5 @@ trait PrefixMap {
     * @return a stream to iterate on the keys
     */
   def getKeysAsStream: Stream[URI]
-
-  /** Clears the content.
-    */
-  def clear(): Unit
 
 }

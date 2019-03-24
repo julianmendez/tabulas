@@ -8,25 +8,14 @@ import scala.collection.mutable
   * This implementation iterates on the keys keeping the order in which they were added for the first time.
   *
   */
-class PrefixMapImpl extends PrefixMap {
-
-  private val _prefixMap = new mutable.TreeMap[URI, URI]
-  private val _keyList = new mutable.ArrayBuffer[URI]
+case class PrefixMapImpl(prefixMap :Map[URI, URI], keyList : Seq[URI]) extends PrefixMap {
 
   override def isEmpty: Boolean = {
-    this._prefixMap.isEmpty
+    prefixMap.isEmpty
   }
 
   override def size(): Int = {
-    this._prefixMap.size
-  }
-
-  override def put(key: URI, value: URI): Option[URI] = {
-    if (!this._prefixMap.contains(key)) {
-      this._keyList += key
-    }
-    val result: Option[URI] = this._prefixMap.put(key, value)
-    result
+    prefixMap.size
   }
 
   override def getWithoutPrefix(uri: URI): URI = {
@@ -36,7 +25,7 @@ class PrefixMapImpl extends PrefixMap {
       val pos = uriStr.indexOf(PrefixSemicolon, PrefixAmpersand.length())
       if (pos != -1) {
         val prefix: URI = URI.create(uriStr.substring(PrefixAmpersand.length(), pos))
-        val optExpansion: Option[URI] = this._prefixMap.get(prefix)
+        val optExpansion: Option[URI] = prefixMap.get(prefix)
         if (optExpansion.isDefined) {
           result = URI.create(optExpansion.get.toASCIIString + uriStr.substring(pos + PrefixSemicolon.length))
         }
@@ -66,32 +55,22 @@ class PrefixMapImpl extends PrefixMap {
   }
 
   override def get(key: URI): Option[URI] = {
-    this._prefixMap.get(key)
+    prefixMap.get(key)
   }
 
   override def getPrefixFor(uri: URI): Option[URI] = {
     val uriStr = uri.toASCIIString
-    val result: Option[URI] = this._prefixMap.keySet.find(e => uriStr.startsWith(_prefixMap.get(e).get.toASCIIString))
+    val result: Option[URI] = prefixMap.keySet.find(e => uriStr.startsWith(prefixMap.get(e).get.toASCIIString))
     result
   }
 
   override def getKeysAsStream: Stream[URI] = {
-    this._keyList.toStream
-  }
-
-  override def clear(): Unit = {
-    this._prefixMap.clear()
-    this._keyList.clear()
+    keyList.toStream
   }
 
   override def toString: String = {
-    this._prefixMap.toString + " " + this._keyList.toString
+    prefixMap.toString + " " + keyList.toString
   }
 
 }
 
-object PrefixMapImpl {
-
-  def apply(): PrefixMapImpl = new PrefixMapImpl
-
-}

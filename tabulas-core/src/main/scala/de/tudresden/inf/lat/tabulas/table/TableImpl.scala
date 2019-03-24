@@ -20,7 +20,7 @@ case class EmptyCompositeType() extends CompositeType {
 class TableImpl(tableType: CompositeType) extends Table {
 
   private val _list = new mutable.ArrayBuffer[Record]
-  private val _prefixMap: PrefixMap = new PrefixMapImpl()
+  private var _prefixMap: PrefixMap = PrefixMapImpl(Map(), Seq())
   private val _sortingOrder = new mutable.ArrayBuffer[String]
   private val _fieldsWithReverseOrder = new mutable.TreeSet[String]()
 
@@ -65,8 +65,7 @@ class TableImpl(tableType: CompositeType) extends Table {
   }
 
   override def setPrefixMap(newPrefixMap: PrefixMap): Unit = {
-    this._prefixMap.clear()
-    newPrefixMap.getKeysAsStream.foreach(key => this._prefixMap.put(key, newPrefixMap.get(key).get))
+    this._prefixMap = newPrefixMap
   }
 
   override def getSortingOrder: Seq[String] = {
@@ -121,8 +120,7 @@ object TableImpl {
     result._list ++= other.getRecords
     other match {
       case otherTable: Table =>
-        val otherMap: PrefixMap = otherTable.getPrefixMap
-        otherMap.getKeysAsStream.foreach(key => result._prefixMap.put(key, otherMap.get(key).get))
+        result._prefixMap = otherTable.getPrefixMap
         result._sortingOrder ++= otherTable.getSortingOrder
         result._fieldsWithReverseOrder ++= otherTable.getFieldsWithReverseOrder
     }
