@@ -193,7 +193,7 @@ case class SimpleFormatParser(input: Reader) extends Parser {
   }
 
   // scalastyle:off
-  def parseMap(input: BufferedReader): TableMap = {
+  def parseMap(input: BufferedReader): TableMapImpl = {
     val mapOfTables = new mutable.TreeMap[String, TableImpl]()
     val mapOfRecordIdsOfTables = new mutable.TreeMap[String, mutable.TreeSet[String]]()
 
@@ -272,12 +272,11 @@ case class SimpleFormatParser(input: Reader) extends Parser {
 
     }
 
-    val result = TableMapImpl()
-    mapOfTables.keySet.foreach(key => result.put(key, mapOfTables.get(key).get))
+    val result = TableMapImpl(mapOfTables.toMap)
     result
   }
 
-  override def parse(): TableMap = {
+  override def parse(): TableMapImpl = {
     val result = try {
       parseMap(new BufferedReader(this.input))
 

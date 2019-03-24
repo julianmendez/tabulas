@@ -156,8 +156,7 @@ case class CalendarParser(input: Reader) extends Parser {
         + " keywords  (line " + lineCounter + ").")
     }
 
-    val result: TableMapImpl = TableMapImpl()
-    map.keySet.foreach(key => result.put(key, map.get(key).get))
+    val result: TableMapImpl = TableMapImpl(map.toMap)
     result
   }
 

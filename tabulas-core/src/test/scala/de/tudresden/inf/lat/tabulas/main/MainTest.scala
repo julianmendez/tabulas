@@ -76,17 +76,15 @@ class MainTest extends FunSuite {
     // a computed value
 
     // Read the table map
-    val oldTableMap: TableMap = new SimpleFormatParser(new FileReader(getPath(InputFileName).getFile)).parse()
+    val oldTableMap = new SimpleFormatParser(new FileReader(getPath(InputFileName).getFile)).parse()
 
     // Make a copy of the tableMap
-    // val newTableMap: TableMapImpl = new TableMapImpl(oldTableMap)
-    val newTableMap: TableMapImpl = TableMapImpl()
-    oldTableMap.getTableIds.foreach(tableId => newTableMap.put(tableId, oldTableMap.getTable(tableId).get))
+    val tableMap: TableMapImpl = TableMapImpl(oldTableMap)
 
-    assertContent(newTableMap, ExpectedOutputFileName)
+    assertContent(tableMap, ExpectedOutputFileName)
 
     // Get the main table
-    val table: Table = newTableMap.getTable(TypeNameRecord).get
+    val table: Table = tableMap.getTable(TypeNameRecord).get
 
     // Make a copy of the main table
     var newTable: TableImpl = TableImpl(table)
@@ -111,7 +109,7 @@ class MainTest extends FunSuite {
     newTable.setPrefixMap(table.getPrefixMap)
 
     // Add the new table to the new table map
-    newTableMap.put(TypeNameRecord, newTable)
+    val newTableMap = TableMapImpl(tableMap.mapOfTables ++ Seq((TypeNameRecord, newTable)))
 
     // Compute the number of authors for each record
     table.getRecords

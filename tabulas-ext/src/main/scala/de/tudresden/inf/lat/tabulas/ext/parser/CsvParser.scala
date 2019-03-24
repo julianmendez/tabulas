@@ -66,8 +66,7 @@ case class CsvParser(input: Reader) extends Parser {
       }
     }
 
-    val result: TableMapImpl = TableMapImpl()
-    result.put(DefaultTableName, currentTable)
+    val result: TableMapImpl = TableMapImpl(Map() ++ Seq((DefaultTableName, currentTable)))
     result
   }
 
