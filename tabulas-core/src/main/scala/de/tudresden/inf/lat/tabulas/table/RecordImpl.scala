@@ -23,10 +23,11 @@ case class RecordImpl(map: mutable.Map[String, PrimitiveTypeValue]) extends Reco
 
   override def getMap: Map[String, PrimitiveTypeValue] = map.toMap
 
-  override def set(key: String, value: PrimitiveTypeValue): Unit = {
+  def set(key: String, value: PrimitiveTypeValue): RecordImpl = {
     if (Objects.nonNull(key)) {
       map.put(key, value)
     }
+    this
   }
 
   override def getProperties: Seq[String] = {

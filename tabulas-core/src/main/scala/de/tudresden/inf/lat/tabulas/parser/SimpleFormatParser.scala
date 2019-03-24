@@ -209,6 +209,7 @@ case class SimpleFormatParser(input: Reader) extends Parser {
     var record = RecordImpl()
     var lineCounter: Int = 0
     var isDefiningType: Boolean = false
+    var mustAddRecord: Boolean = false
 
     val pairs = getMultiLines(input)
     pairs.foreach(pair => {
@@ -216,6 +217,10 @@ case class SimpleFormatParser(input: Reader) extends Parser {
       if (pair.line.isDefined && !pair.line.get.trim().isEmpty) {
         val line = pair.line.get
         if (hasKey(line, ParserConstant.TypeSelectionToken)) {
+          if (mustAddRecord) {
+            currentTable.add(record)
+            mustAddRecord = false
+          }
           isDefiningType = true
         }
         if (isDefiningType &&
@@ -245,12 +250,15 @@ case class SimpleFormatParser(input: Reader) extends Parser {
 
         } else if (hasKey(line, ParserConstant.NewRecordToken)) {
           isDefiningType = false
+          if (mustAddRecord) {
+            currentTable.add(record)
+          }
           record = RecordImpl()
-          currentTable.add(record)
+          mustAddRecord = true
           optCurrentId = None
 
         } else {
-          parseProperty(line, currentTable, recordIdsOfCurrentTable, record, lineCounter)
+          record = parseProperty(line, currentTable, recordIdsOfCurrentTable, record, lineCounter)
           if (isIdProperty(line)) {
             val successful = if (optCurrentId.isEmpty) {
               optCurrentId = getIdProperty(line)
@@ -273,6 +281,10 @@ case class SimpleFormatParser(input: Reader) extends Parser {
         }
       }
     })
+    if (mustAddRecord) {
+      currentTable.add(record)
+      mustAddRecord = false
+    }
 
     val result = TableMapImpl(mapOfTables.toMap)
     result
@@ -350,7 +362,7 @@ case class SimpleFormatParser(input: Reader) extends Parser {
   }
 
   private def parseProperty(line: String, currentTable: TableImpl,
-                            recordIdsOfCurrentTable: mutable.TreeSet[String], record: Record, lineCounter: Int): Unit = {
+                            recordIdsOfCurrentTable: mutable.TreeSet[String], record: RecordImpl, lineCounter: Int): RecordImpl = {
     if (Objects.isNull(currentTable)) {
       throw ParseException("New record was not declared (line "
         + lineCounter + ")")
@@ -358,7 +370,7 @@ case class SimpleFormatParser(input: Reader) extends Parser {
 
     val optKey: Option[String] = getKey(line)
     val optValueStr: Option[String] = getValue(line)
-    if (optKey.isDefined && optValueStr.isDefined) {
+    val result = if (optKey.isDefined && optValueStr.isDefined) {
       val key: String = optKey.get
       val valueStr: String = optValueStr.get
       val value: PrimitiveTypeValue = getTypedValue(key, valueStr, currentTable.getType, currentTable.getPrefixMap, lineCounter)
@@ -372,7 +384,11 @@ case class SimpleFormatParser(input: Reader) extends Parser {
         }
       }
       record.set(key, value)
+      record
+    } else {
+      record
     }
+    result
   }
 
   // scalastyle:on

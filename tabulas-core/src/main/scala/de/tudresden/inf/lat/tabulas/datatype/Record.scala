@@ -21,13 +21,6 @@ trait Record {
     */
   def getMap: Map[String, PrimitiveTypeValue]
 
-  /** Sets the value of a given property.
-    *
-    * @param key   property name
-    * @param value value
-    */
-  def set(key: String, value: PrimitiveTypeValue): Unit
-
   /** Returns the property names.
     *
     * @return the property names

@@ -8,7 +8,7 @@ import java.util.Objects
 import de.tudresden.inf.lat.tabulas.datatype._
 import de.tudresden.inf.lat.tabulas.parser.SimpleFormatParser
 import de.tudresden.inf.lat.tabulas.renderer.SimpleFormatRenderer
-import de.tudresden.inf.lat.tabulas.table.{Table, TableImpl, TableMap, TableMapImpl}
+import de.tudresden.inf.lat.tabulas.table._
 import org.scalatest.FunSuite
 
 import scala.collection.JavaConverters._
@@ -112,8 +112,10 @@ class MainTest extends FunSuite {
     val newTableMap = TableMapImpl(tableMap.mapOfTables ++ Seq((TypeNameRecord, newTable)))
 
     // Compute the number of authors for each record
-    table.getRecords
-      .foreach(record => record.set(FieldNameNumberOfAuthors, computeFieldValue(record)))
+    val newRecords = newTable.getRecords
+      .map(record => RecordImpl(record).set(FieldNameNumberOfAuthors, computeFieldValue(record)))
+
+    newTable.setRecords(newRecords)
 
     assertContent(newTableMap, ModifiedOutputFileName)
   }

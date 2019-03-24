@@ -19,10 +19,10 @@ case class EmptyCompositeType() extends CompositeType {
   */
 class TableImpl(tableType: CompositeType) extends Table {
 
-  private val _list = new mutable.ArrayBuffer[Record]
-  private var _prefixMap: PrefixMap = PrefixMapImpl(Map(), Seq())
   private val _sortingOrder = new mutable.ArrayBuffer[String]
   private val _fieldsWithReverseOrder = new mutable.TreeSet[String]()
+  private var _list = new mutable.ArrayBuffer[Record]
+  private var _prefixMap: PrefixMap = PrefixMapImpl(Map(), Seq())
 
   override def add(record: Record): Boolean = {
     val result = if (Objects.isNull(record)) {
@@ -96,6 +96,10 @@ class TableImpl(tableType: CompositeType) extends Table {
     ret ++= this._list
     val result = ret.sortWith((record0, record1) => comparator.compare(record0, record1) < 0)
     result
+  }
+
+  def setRecords(records: Seq[Record]): Unit = {
+    _list = new mutable.ArrayBuffer[Record] ++ records
   }
 
   override def toString: String = {
