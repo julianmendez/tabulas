@@ -1,11 +1,7 @@
 
 package de.tudresden.inf.lat.tabulas.table
 
-import java.util.Objects
-
 import de.tudresden.inf.lat.tabulas.datatype.{PrimitiveTypeValue, Record}
-
-import scala.collection.mutable
 
 /** This is the default implementation of a record.
   *
@@ -13,12 +9,7 @@ import scala.collection.mutable
 case class RecordImpl(map: Map[String, PrimitiveTypeValue]) extends Record {
 
   override def get(key: String): Option[PrimitiveTypeValue] = {
-    val result = if (Objects.isNull(key)) {
-      None
-    } else {
-      map.get(key)
-    }
-    result
+    map.get(key)
   }
 
   override def getMap: Map[String, PrimitiveTypeValue] = map
@@ -28,9 +19,7 @@ case class RecordImpl(map: Map[String, PrimitiveTypeValue]) extends Record {
   }
 
   override def getProperties: Seq[String] = {
-    val result = new mutable.ArrayBuffer[String]
-    result ++= map.keySet
-    result
+    map.keys.toSeq
   }
 
   override def toString: String = {
@@ -41,7 +30,9 @@ case class RecordImpl(map: Map[String, PrimitiveTypeValue]) extends Record {
 
 object RecordImpl {
 
-  def apply(): RecordImpl = RecordImpl(Map[String, PrimitiveTypeValue]())
+  def apply(): RecordImpl = {
+    RecordImpl(Map[String, PrimitiveTypeValue]())
+  }
 
   /** Constructs a new record using another one.
     *
