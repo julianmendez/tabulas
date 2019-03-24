@@ -384,7 +384,6 @@ case class SimpleFormatParser(input: Reader) extends Parser {
         }
       }
       record.set(key, value)
-      record
     } else {
       record
     }

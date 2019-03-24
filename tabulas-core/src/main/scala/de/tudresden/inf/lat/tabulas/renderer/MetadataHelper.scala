@@ -17,7 +17,7 @@ case class MetadataHelper() {
     map.put(ParserConstant.TypeDefinitionToken, getDefEntry(table))
     map.put(ParserConstant.PrefixMapToken, getPrefixEntry(table))
     map.put(ParserConstant.SortingOrderDeclarationToken, getOrderEntry(table))
-    RecordImpl(map)
+    RecordImpl(map.toMap)
   }
 
   private def getTypeEntry(typeName: String): PrimitiveTypeValue = {

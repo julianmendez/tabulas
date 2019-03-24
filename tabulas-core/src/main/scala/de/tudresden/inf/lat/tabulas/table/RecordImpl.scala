@@ -10,7 +10,7 @@ import scala.collection.mutable
 /** This is the default implementation of a record.
   *
   */
-case class RecordImpl(map: mutable.Map[String, PrimitiveTypeValue]) extends Record {
+case class RecordImpl(map: Map[String, PrimitiveTypeValue]) extends Record {
 
   override def get(key: String): Option[PrimitiveTypeValue] = {
     val result = if (Objects.isNull(key)) {
@@ -21,13 +21,10 @@ case class RecordImpl(map: mutable.Map[String, PrimitiveTypeValue]) extends Reco
     result
   }
 
-  override def getMap: Map[String, PrimitiveTypeValue] = map.toMap
+  override def getMap: Map[String, PrimitiveTypeValue] = map
 
   def set(key: String, value: PrimitiveTypeValue): RecordImpl = {
-    if (Objects.nonNull(key)) {
-      map.put(key, value)
-    }
-    this
+    RecordImpl(map ++ Seq((key, value)))
   }
 
   override def getProperties: Seq[String] = {
@@ -44,7 +41,7 @@ case class RecordImpl(map: mutable.Map[String, PrimitiveTypeValue]) extends Reco
 
 object RecordImpl {
 
-  def apply(): RecordImpl = new RecordImpl(mutable.TreeMap[String, PrimitiveTypeValue]())
+  def apply(): RecordImpl = RecordImpl(Map[String, PrimitiveTypeValue]())
 
   /** Constructs a new record using another one.
     *
@@ -52,11 +49,7 @@ object RecordImpl {
     * other record
     */
   def apply(otherRecord: Record): RecordImpl = {
-    val newMap = otherRecord.getProperties
-      .map(property => (property, otherRecord.get(property).get))
-      .toMap
-    val mutableMap = mutable.TreeMap[String, PrimitiveTypeValue]() ++ newMap
-    RecordImpl(mutableMap)
+    RecordImpl(otherRecord.getMap)
   }
 
 }
