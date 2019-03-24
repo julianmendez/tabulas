@@ -51,22 +51,6 @@ case class TableImpl(
     result
   }
 
-  def setPrefixMap(newPrefixMap: PrefixMap): TableImpl = {
-    copy(prefixMap = newPrefixMap)
-  }
-
-  def setSortingOrder(newSortingOrder: Seq[String]): TableImpl = {
-    copy(sortingOrder = newSortingOrder)
-  }
-
-  def setFieldsWithReverseOrder(newFieldsWithReverseOrder: Set[String]): TableImpl = {
-    copy(fieldsWithReverseOrder = newFieldsWithReverseOrder)
-  }
-
-  def setRecords(newRecords: Seq[Record]): TableImpl = {
-    copy(records = newRecords)
-  }
-
   override def toString: String = {
     val result = "\ndef = " + tableType.toString + "\n\nprefix = " + prefixMap.toString +
       "\n\norder = " + sortingOrder.toString + " " +

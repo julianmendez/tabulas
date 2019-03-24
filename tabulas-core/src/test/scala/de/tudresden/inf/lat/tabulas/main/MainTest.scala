@@ -106,13 +106,13 @@ class MainTest extends FunSuite {
     newTable = TableImpl(newType, newTable)
 
     // Update the map of URI prefixes
-    newTable = newTable.setPrefixMap(table.getPrefixMap)
+    newTable = newTable.copy(prefixMap = table.getPrefixMap)
 
     // Compute the number of authors for each record
     val newRecords = newTable.getRecords
       .map(record => RecordImpl(record).set(FieldNameNumberOfAuthors, computeFieldValue(record)))
 
-    newTable = newTable.setRecords(newRecords)
+    newTable = newTable.copy(records = newRecords)
 
     // Add the new table to the new table map
     val newTableMap = tableMap.put(TypeNameRecord, newTable)

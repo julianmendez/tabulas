@@ -244,7 +244,7 @@ case class SimpleFormatParser(input: Reader) extends Parser {
           mapOfTables.put(tableName, currentTable)
 
         } else if (isDefiningType && hasKey(line, ParserConstant.PrefixMapToken)) {
-          currentTable = currentTable.setPrefixMap(parsePrefixMap(line, lineCounter))
+          currentTable = currentTable.copy(prefixMap = parsePrefixMap(line, lineCounter))
           mapOfTables.put(tableName, currentTable)
 
         } else if (isDefiningType && hasKey(line, ParserConstant.SortingOrderDeclarationToken)) {
@@ -342,8 +342,8 @@ case class SimpleFormatParser(input: Reader) extends Parser {
       }
       list += token
     }
-    result = result.setSortingOrder(list)
-    result = result.setFieldsWithReverseOrder(fieldsWithReverseOrder.toSet)
+    result = result.copy(sortingOrder = list)
+    result = result.copy(fieldsWithReverseOrder = fieldsWithReverseOrder.toSet)
     result
   }
 
@@ -369,7 +369,7 @@ case class SimpleFormatParser(input: Reader) extends Parser {
   }
 
   private def parseProperty(line: String, currentTable: TableImpl,
-                            recordIdsOfCurrentTable: mutable.TreeSet[String], record: RecordImpl, lineCounter: Int): RecordImpl = {
+    recordIdsOfCurrentTable: mutable.TreeSet[String], record: RecordImpl, lineCounter: Int): RecordImpl = {
     if (Objects.isNull(currentTable)) {
       throw ParseException("New record was not declared (line "
         + lineCounter + ")")
