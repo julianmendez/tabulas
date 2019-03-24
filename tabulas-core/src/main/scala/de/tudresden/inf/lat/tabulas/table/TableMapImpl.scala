@@ -8,6 +8,10 @@ import scala.collection.mutable
   */
 case class TableMapImpl(mapOfTables: Map[String, Table]) extends TableMap {
 
+  def put(id: String, table: Table): TableMapImpl = {
+    TableMapImpl(mapOfTables ++ Seq((id, table)))
+  }
+
   override def toString: String = {
     val sbuf: StringBuffer = new StringBuffer()
     val tableIds: Seq[String] = getTableIds

@@ -109,7 +109,7 @@ class MainTest extends FunSuite {
     newTable.setPrefixMap(table.getPrefixMap)
 
     // Add the new table to the new table map
-    val newTableMap = TableMapImpl(tableMap.mapOfTables ++ Seq((TypeNameRecord, newTable)))
+    val newTableMap = tableMap.put(TypeNameRecord, newTable)
 
     // Compute the number of authors for each record
     val newRecords = newTable.getRecords
