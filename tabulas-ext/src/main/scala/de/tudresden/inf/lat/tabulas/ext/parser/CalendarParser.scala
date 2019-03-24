@@ -75,12 +75,12 @@ case class CalendarParser(input: Reader) extends Parser {
     map.put(AlarmTypeLabel, new TableImpl(SimplifiedCompositeType(AlarmTypeFields)))
 
     var currentTable = TableImpl()
-    var currentRecord: Record = RecordImpl()
+    var currentRecord = RecordImpl()
     var currentTableId = ""
 
-    val tableIdStack: MyStack[String] = new MyStack[String]()
-    val recordStack: MyStack[Record] = new MyStack[Record]()
-    val tableStack: MyStack[TableImpl] = new MyStack[TableImpl]()
+    val tableIdStack = new MyStack[String]()
+    val recordStack = new MyStack[RecordImpl]()
+    val tableStack = new MyStack[TableImpl]()
     val generatedIds: Seq[Int] = new mutable.ArrayBuffer[Int]()
 
     val lines: Seq[Pair] = preload(input)
@@ -188,7 +188,7 @@ case class CalendarParser(input: Reader) extends Parser {
   }
 
   private def parseProperty(line: String, currentTable: TableImpl,
-                            record: Record, lineCounter: Int): Unit = {
+                            record: RecordImpl, lineCounter: Int): Unit = {
     if (Objects.isNull(currentTable)) {
       throw ParseException("New record was not declared (line "
         + lineCounter + ")")

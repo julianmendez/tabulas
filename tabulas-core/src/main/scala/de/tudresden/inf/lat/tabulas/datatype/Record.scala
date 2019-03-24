@@ -15,6 +15,12 @@ trait Record {
     */
   def get(key: String): Option[PrimitiveTypeValue]
 
+  /** Returns a map representing this record.
+    *
+    * @return a map
+    */
+  def getMap: Map[String, PrimitiveTypeValue]
+
   /** Sets the value of a given property.
     *
     * @param key   property name

@@ -201,7 +201,7 @@ case class SimpleFormatParser(input: Reader) extends Parser {
     var currentTable = TableImpl()
     var recordIdsOfCurrentTable = mutable.TreeSet[String]()
     var optCurrentId: Option[String] = None
-    var record: Record = RecordImpl()
+    var record = RecordImpl()
     var lineCounter: Int = 0
     var isDefiningType: Boolean = false
     var finish = false

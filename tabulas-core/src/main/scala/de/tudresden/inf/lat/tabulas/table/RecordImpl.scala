@@ -21,6 +21,8 @@ case class RecordImpl(map: mutable.Map[String, PrimitiveTypeValue]) extends Reco
     result
   }
 
+  override def getMap: Map[String, PrimitiveTypeValue] = map.toMap
+
   override def set(key: String, value: PrimitiveTypeValue): Unit = {
     if (Objects.nonNull(key)) {
       map.put(key, value)
