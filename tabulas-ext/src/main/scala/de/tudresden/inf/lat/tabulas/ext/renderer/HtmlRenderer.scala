@@ -5,7 +5,7 @@ import java.io.{OutputStreamWriter, Writer}
 import java.util.Objects
 
 import de.tudresden.inf.lat.tabulas.datatype._
-import de.tudresden.inf.lat.tabulas.renderer.{Renderer, UncheckedWriter, UncheckedWriterImpl}
+import de.tudresden.inf.lat.tabulas.renderer.Renderer
 import de.tudresden.inf.lat.tabulas.table.{Table, TableMap}
 
 /** Renderer of a table that creates an HTML document.
@@ -35,10 +35,10 @@ case class HtmlRenderer(output: Writer) extends Renderer {
     "\n"
 
   override def render(tableMap: TableMap): Unit = {
-    render(UncheckedWriterImpl(output), tableMap)
+    render(output, tableMap)
   }
 
-  def render(output: UncheckedWriter, tableMap: TableMap): Unit = {
+  def render(output: Writer, tableMap: TableMap): Unit = {
     output.write(Prefix)
     tableMap.getTableIds.foreach(tableName => {
       val table: Table = tableMap.getTable(tableName).get
@@ -50,7 +50,7 @@ case class HtmlRenderer(output: Writer) extends Renderer {
     output.flush()
   }
 
-  def renderAllRecords(output: UncheckedWriter, table: Table): Unit = {
+  def renderAllRecords(output: Writer, table: Table): Unit = {
     val list: Seq[Record] = table.getRecords
     output.write("<table summary=\"\">\n")
     list.foreach(record => {
@@ -61,7 +61,7 @@ case class HtmlRenderer(output: Writer) extends Renderer {
     output.write("</table>\n")
   }
 
-  def render(output: UncheckedWriter, record: Record, fields: Seq[String]): Unit = {
+  def render(output: Writer, record: Record, fields: Seq[String]): Unit = {
     fields.foreach(field => {
       val optValue: Option[PrimitiveTypeValue] = record.get(field)
       if (optValue.isDefined) {
@@ -88,7 +88,7 @@ case class HtmlRenderer(output: Writer) extends Renderer {
     })
   }
 
-  def writeAsStringIfNotEmpty(output: UncheckedWriter, value: PrimitiveTypeValue): Boolean = {
+  def writeAsStringIfNotEmpty(output: Writer, value: PrimitiveTypeValue): Boolean = {
     val result = if (Objects.nonNull(value) && !value.toString.trim().isEmpty) {
       output.write(value.toString)
       output.write("\n")
@@ -99,7 +99,7 @@ case class HtmlRenderer(output: Writer) extends Renderer {
     result
   }
 
-  def writeParameterizedListIfNotEmpty(output: UncheckedWriter, list: ParameterizedListValue): Boolean = {
+  def writeParameterizedListIfNotEmpty(output: Writer, list: ParameterizedListValue): Boolean = {
     val result = if (Objects.nonNull(list)) {
       list.getList.foreach(value => {
         if (value.getType.equals(URIType())) {
@@ -117,7 +117,7 @@ case class HtmlRenderer(output: Writer) extends Renderer {
     result
   }
 
-  def writeLinkIfNotEmpty(output: UncheckedWriter, link: URIValue): Boolean = {
+  def writeLinkIfNotEmpty(output: Writer, link: URIValue): Boolean = {
     val result = if (Objects.nonNull(link) && !link.isEmpty) {
       output.write("<a href=\"")
       output.write(link.getUriNoLabel.toASCIIString)

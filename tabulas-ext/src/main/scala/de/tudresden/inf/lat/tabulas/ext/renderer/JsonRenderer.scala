@@ -6,7 +6,7 @@ import java.util.Objects
 
 import de.tudresden.inf.lat.tabulas.datatype._
 import de.tudresden.inf.lat.tabulas.parser.ParserConstant
-import de.tudresden.inf.lat.tabulas.renderer.{MetadataHelper, Renderer, UncheckedWriter, UncheckedWriterImpl}
+import de.tudresden.inf.lat.tabulas.renderer.{MetadataHelper, Renderer}
 import de.tudresden.inf.lat.tabulas.table.{Table, TableMap}
 
 /** Renderer that creates a JSON file.
@@ -59,7 +59,7 @@ case class JsonRenderer(output: Writer) extends Renderer {
     result
   }
 
-  def writeAsIntegerIfNotEmpty(output: UncheckedWriter, prefix: String, value: PrimitiveTypeValue): Boolean = {
+  def writeAsIntegerIfNotEmpty(output: Writer, prefix: String, value: PrimitiveTypeValue): Boolean = {
     val result = if (Objects.nonNull(value) && !value.toString.trim().isEmpty) {
       output.write(prefix)
       output.write(escapeString(value.toString))
@@ -70,7 +70,7 @@ case class JsonRenderer(output: Writer) extends Renderer {
     result
   }
 
-  def writeAsStringIfNotEmpty(output: UncheckedWriter, prefix: String, value: PrimitiveTypeValue): Boolean = {
+  def writeAsStringIfNotEmpty(output: Writer, prefix: String, value: PrimitiveTypeValue): Boolean = {
     val result = if (Objects.nonNull(value) && !value.toString.trim().isEmpty) {
       output.write(prefix)
       output.write(addQuotes(value.toString))
@@ -81,7 +81,7 @@ case class JsonRenderer(output: Writer) extends Renderer {
     result
   }
 
-  def writeParameterizedListIfNotEmpty(output: UncheckedWriter, prefix: String, list: ParameterizedListValue): Boolean = {
+  def writeParameterizedListIfNotEmpty(output: Writer, prefix: String, list: ParameterizedListValue): Boolean = {
     val result = if (Objects.nonNull(list)) {
       output.write(prefix)
       output.write(OpenSquareBracket + NewLine)
@@ -109,7 +109,7 @@ case class JsonRenderer(output: Writer) extends Renderer {
     result
   }
 
-  def writeLinkIfNotEmpty(output: UncheckedWriter, prefix: String, link: URIValue): Boolean = {
+  def writeLinkIfNotEmpty(output: Writer, prefix: String, link: URIValue): Boolean = {
     val result = if (Objects.nonNull(link) && !link.isEmpty) {
       val fragment = if (link.getLabel.isEmpty) "" else HashChar + link.getLabel
       output.write(prefix)
@@ -121,7 +121,7 @@ case class JsonRenderer(output: Writer) extends Renderer {
     result
   }
 
-  def render(output: UncheckedWriter, record: Record, fields: Seq[String]): Unit = {
+  def render(output: Writer, record: Record, fields: Seq[String]): Unit = {
     val newList = fields.filter(field => record.get(field).isDefined)
     newList.indices.foreach(index => {
       val field = newList(index)
@@ -143,7 +143,7 @@ case class JsonRenderer(output: Writer) extends Renderer {
     })
   }
 
-  def renderMetadata(output: UncheckedWriter, typeName: String, table: Table): Unit = {
+  def renderMetadata(output: Writer, typeName: String, table: Table): Unit = {
     output.write(NewLine + OpenBrace + NewLine)
     output.write(addQuotes(ParserConstant.TypeSelectionToken))
     output.write(SpaceChar + ColonChar)
@@ -156,7 +156,7 @@ case class JsonRenderer(output: Writer) extends Renderer {
     output.write(CloseBrace + maybeComma + NewLine + NewLine)
   }
 
-  def renderAllRecords(output: UncheckedWriter, table: CompositeTypeValue, hasMoreTables: Boolean): Unit = {
+  def renderAllRecords(output: Writer, table: CompositeTypeValue, hasMoreTables: Boolean): Unit = {
     val list: Seq[Record] = table.getRecords
     list.indices.foreach(index => {
       output.write(NewLine + OpenBrace + NewLine)
@@ -168,7 +168,7 @@ case class JsonRenderer(output: Writer) extends Renderer {
   }
 
 
-  def render(output: UncheckedWriter, tableMap: TableMap): Unit = {
+  def render(output: Writer, tableMap: TableMap): Unit = {
     output.write(OpenSquareBracket + NewLine + NewLine)
     val list = tableMap.getTableIds
     list.indices.foreach(index => {
@@ -183,7 +183,7 @@ case class JsonRenderer(output: Writer) extends Renderer {
   }
 
   override def render(tableMap: TableMap): Unit = {
-    render(UncheckedWriterImpl(output), tableMap)
+    render(output, tableMap)
   }
 
 }

@@ -6,7 +6,7 @@ import java.util.Objects
 
 import de.tudresden.inf.lat.tabulas.datatype._
 import de.tudresden.inf.lat.tabulas.parser.ParserConstant
-import de.tudresden.inf.lat.tabulas.renderer.{Renderer, UncheckedWriter, UncheckedWriterImpl}
+import de.tudresden.inf.lat.tabulas.renderer.Renderer
 import de.tudresden.inf.lat.tabulas.table.{Table, TableMap}
 
 /** Renderer of tables in SQL format.
@@ -34,10 +34,10 @@ case class SqlRenderer(output: Writer) extends Renderer {
   final val OrderBy: String = "order by"
 
   override def render(tableMap: TableMap): Unit = {
-    render(UncheckedWriterImpl(output), tableMap)
+    render(output, tableMap)
   }
 
-  def render(output: UncheckedWriter, tableMap: TableMap): Unit = {
+  def render(output: Writer, tableMap: TableMap): Unit = {
     renderPrefix(output)
     tableMap.getTableIds.foreach(tableName => {
       val table: Table = tableMap.getTable(tableName).get
@@ -49,7 +49,7 @@ case class SqlRenderer(output: Writer) extends Renderer {
     output.flush()
   }
 
-  def renderAllRecords(output: UncheckedWriter, tableName: String, table: CompositeTypeValue): Unit = {
+  def renderAllRecords(output: Writer, tableName: String, table: CompositeTypeValue): Unit = {
     val list: Seq[Record] = table.getRecords
     output.write(ParserConstant.NewLine)
     list.foreach(record => {
@@ -59,7 +59,7 @@ case class SqlRenderer(output: Writer) extends Renderer {
     output.write(ParserConstant.NewLine)
   }
 
-  def render(output: UncheckedWriter, tableName: String, record: Record, fields: Seq[String]): Unit = {
+  def render(output: Writer, tableName: String, record: Record, fields: Seq[String]): Unit = {
     output.write(ParserConstant.NewLine)
     output.write(InsertInto)
     output.write(ParserConstant.Space)
@@ -99,7 +99,7 @@ case class SqlRenderer(output: Writer) extends Renderer {
     output.write(Semicolon)
   }
 
-  def writeAsStringIfNotEmpty(output: UncheckedWriter, field: String, value: PrimitiveTypeValue): Boolean = {
+  def writeAsStringIfNotEmpty(output: Writer, field: String, value: PrimitiveTypeValue): Boolean = {
     val result = if (Objects.nonNull(field) && !field.trim().isEmpty && Objects.nonNull(value)
       && !value.toString.trim().isEmpty) {
       output.write(Apostrophe)
@@ -113,7 +113,7 @@ case class SqlRenderer(output: Writer) extends Renderer {
     result
   }
 
-  def writeParameterizedListIfNotEmpty(output: UncheckedWriter, field: String, list: ParameterizedListValue): Boolean = {
+  def writeParameterizedListIfNotEmpty(output: Writer, field: String, list: ParameterizedListValue): Boolean = {
     val result = if (Objects.nonNull(list) && !list.isEmpty) {
       output.write(Apostrophe)
       list.getList.foreach(value => {
@@ -129,7 +129,7 @@ case class SqlRenderer(output: Writer) extends Renderer {
     result
   }
 
-  def writeLinkIfNotEmpty(output: UncheckedWriter, prefix: String, link: URIValue): Boolean = {
+  def writeLinkIfNotEmpty(output: Writer, prefix: String, link: URIValue): Boolean = {
     val result = if (Objects.nonNull(link) && !link.isEmpty) {
       output.write(prefix)
       output.write(Apostrophe)
@@ -147,7 +147,7 @@ case class SqlRenderer(output: Writer) extends Renderer {
     str.replace(Apostrophe, ApostropheReplacement)
   }
 
-  def renderTypes(output: UncheckedWriter, tableName: String, table: CompositeTypeValue): Unit = {
+  def renderTypes(output: Writer, tableName: String, table: CompositeTypeValue): Unit = {
     output.write(ParserConstant.NewLine + ParserConstant.NewLine)
     output.write(CreateTable + ParserConstant.Space)
     output.write(tableName + ParserConstant.Space)
@@ -172,7 +172,7 @@ case class SqlRenderer(output: Writer) extends Renderer {
     output.write(ParserConstant.NewLine)
   }
 
-  def renderOrder(output: UncheckedWriter, tableName: String, table: Table): Unit = {
+  def renderOrder(output: Writer, tableName: String, table: Table): Unit = {
     output.write(ParserConstant.NewLine)
     output.write(SelectAllFrom)
     output.write(ParserConstant.Space)
@@ -202,7 +202,7 @@ case class SqlRenderer(output: Writer) extends Renderer {
     output.write(ParserConstant.NewLine)
   }
 
-  def renderPrefix(output: UncheckedWriter): Unit = {
+  def renderPrefix(output: Writer): Unit = {
     output.write(ParserConstant.NewLine)
     output.write(CreateDatabase + ParserConstant.Space + DefaultDatabaseName + Semicolon)
     output.write(ParserConstant.NewLine)

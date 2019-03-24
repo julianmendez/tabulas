@@ -6,7 +6,7 @@ import java.util.Objects
 
 import de.tudresden.inf.lat.tabulas.datatype._
 import de.tudresden.inf.lat.tabulas.parser.ParserConstant
-import de.tudresden.inf.lat.tabulas.renderer.{Renderer, UncheckedWriter, UncheckedWriterImpl}
+import de.tudresden.inf.lat.tabulas.renderer.Renderer
 import de.tudresden.inf.lat.tabulas.table.{Table, TableMap}
 
 /** Renderer of a table.
@@ -14,10 +14,10 @@ import de.tudresden.inf.lat.tabulas.table.{Table, TableMap}
 case class WikitextRenderer(output: Writer) extends Renderer {
 
   override def render(tableMap: TableMap): Unit = {
-    render(UncheckedWriterImpl(output), tableMap)
+    render(output, tableMap)
   }
 
-  def render(output: UncheckedWriter, tableMap: TableMap): Unit = {
+  def render(output: Writer, tableMap: TableMap): Unit = {
     output.write("\n")
     tableMap.getTableIds.foreach(tableId => {
       val table: Table = tableMap.getTable(tableId).get
@@ -28,7 +28,7 @@ case class WikitextRenderer(output: Writer) extends Renderer {
     output.flush()
   }
 
-  def renderAllRecords(output: UncheckedWriter, table: CompositeTypeValue): Unit = {
+  def renderAllRecords(output: Writer, table: CompositeTypeValue): Unit = {
     val list: Seq[Record] = table.getRecords
     output.write("{|\n")
     output.write("|-\n")
@@ -39,7 +39,7 @@ case class WikitextRenderer(output: Writer) extends Renderer {
     output.write("|}\n")
   }
 
-  def render(output: UncheckedWriter, record: Record, fields: Seq[String]): Unit = {
+  def render(output: Writer, record: Record, fields: Seq[String]): Unit = {
     fields.foreach(field => {
       val optValue: Option[PrimitiveTypeValue] = record.get(field)
       output.write("|")
@@ -61,7 +61,7 @@ case class WikitextRenderer(output: Writer) extends Renderer {
     })
   }
 
-  def writeParameterizedListIfNotEmpty(output: UncheckedWriter, prefix: String, list: ParameterizedListValue): Boolean = {
+  def writeParameterizedListIfNotEmpty(output: Writer, prefix: String, list: ParameterizedListValue): Boolean = {
     val result = if (Objects.nonNull(list)) {
       output.write(prefix)
       list.getList.foreach(value => {
@@ -80,7 +80,7 @@ case class WikitextRenderer(output: Writer) extends Renderer {
     result
   }
 
-  def writeAsStringIfNotEmpty(output: UncheckedWriter, prefix: String, value: PrimitiveTypeValue): Boolean = {
+  def writeAsStringIfNotEmpty(output: Writer, prefix: String, value: PrimitiveTypeValue): Boolean = {
     val result = if (Objects.nonNull(value) && !value.toString.trim().isEmpty) {
       output.write(prefix)
       output.write(value.toString)
@@ -92,7 +92,7 @@ case class WikitextRenderer(output: Writer) extends Renderer {
     result
   }
 
-  def writeLinkIfNotEmpty(output: UncheckedWriter, prefix: String, link: URIValue): Boolean = {
+  def writeLinkIfNotEmpty(output: Writer, prefix: String, link: URIValue): Boolean = {
     val result = if (Objects.nonNull(link) && !link.isEmpty) {
       output.write(prefix)
       output.write("[")

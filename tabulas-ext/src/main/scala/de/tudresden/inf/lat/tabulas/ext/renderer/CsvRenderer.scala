@@ -6,7 +6,7 @@ import java.util.Objects
 
 import de.tudresden.inf.lat.tabulas.datatype.{ParameterizedListValue, PrimitiveTypeValue, Record, URIValue}
 import de.tudresden.inf.lat.tabulas.parser.ParserConstant
-import de.tudresden.inf.lat.tabulas.renderer.{Renderer, UncheckedWriter, UncheckedWriterImpl}
+import de.tudresden.inf.lat.tabulas.renderer.Renderer
 import de.tudresden.inf.lat.tabulas.table.{Table, TableMap}
 
 /** Renderer of tables in comma-separated values format.
@@ -19,10 +19,10 @@ case class CsvRenderer(output: Writer) extends Renderer {
   final val Comma: String = ","
 
   override def render(tableMap: TableMap): Unit = {
-    render(UncheckedWriterImpl(output), tableMap)
+    render(output, tableMap)
   }
 
-  def render(output: UncheckedWriter, tableMap: TableMap): Unit = {
+  def render(output: Writer, tableMap: TableMap): Unit = {
     tableMap.getTableIds.foreach(tableName => {
       val table: Table = tableMap.getTable(tableName).get
       renderTypeSelection(output, tableName, table)
@@ -32,14 +32,14 @@ case class CsvRenderer(output: Writer) extends Renderer {
     output.flush()
   }
 
-  def renderAllRecords(output: UncheckedWriter, table: Table): Unit = {
+  def renderAllRecords(output: Writer, table: Table): Unit = {
     val list: Seq[Record] = table.getRecords
     list.foreach(record => {
       render(output, record, table.getType.getFields)
     })
   }
 
-  def render(output: UncheckedWriter, record: Record, fields: Seq[String]): Unit = {
+  def render(output: Writer, record: Record, fields: Seq[String]): Unit = {
     var first = true
     fields.foreach(field => {
       if (first) {
@@ -66,7 +66,7 @@ case class CsvRenderer(output: Writer) extends Renderer {
     output.write(ParserConstant.NewLine)
   }
 
-  def writeAsStringIfNotEmpty(output: UncheckedWriter, field: String, value: PrimitiveTypeValue): Boolean = {
+  def writeAsStringIfNotEmpty(output: Writer, field: String, value: PrimitiveTypeValue): Boolean = {
     val result = if (Objects.nonNull(field) && !field.trim().isEmpty && Objects.nonNull(value)
       && !value.toString.trim().isEmpty) {
       output.write(Quotes)
@@ -80,7 +80,7 @@ case class CsvRenderer(output: Writer) extends Renderer {
     result
   }
 
-  def writeParameterizedListIfNotEmpty(output: UncheckedWriter, field: String, list: ParameterizedListValue): Boolean = {
+  def writeParameterizedListIfNotEmpty(output: Writer, field: String, list: ParameterizedListValue): Boolean = {
     val result = if (Objects.nonNull(list) && !list.isEmpty) {
       output.write(Quotes)
       list.getList.foreach(value => {
@@ -100,7 +100,7 @@ case class CsvRenderer(output: Writer) extends Renderer {
     str.replace(Quotes, QuotesReplacement)
   }
 
-  def writeLinkIfNotEmpty(output: UncheckedWriter, field: String, link: URIValue): Boolean = {
+  def writeLinkIfNotEmpty(output: Writer, field: String, link: URIValue): Boolean = {
     val result = false
     if (Objects.nonNull(link) && !link.isEmpty) {
       output.write(Quotes)
@@ -114,7 +114,7 @@ case class CsvRenderer(output: Writer) extends Renderer {
     result
   }
 
-  def renderTypeSelection(output: UncheckedWriter, tableName: String, table: Table): Unit = {
+  def renderTypeSelection(output: Writer, tableName: String, table: Table): Unit = {
     output.write(Quotes)
     output.write(tableName)
     output.write(Quotes)
@@ -126,7 +126,7 @@ case class CsvRenderer(output: Writer) extends Renderer {
     output.write(ParserConstant.NewLine)
   }
 
-  def renderTypeDefinition(output: UncheckedWriter, table: Table): Unit = {
+  def renderTypeDefinition(output: Writer, table: Table): Unit = {
     var first = true
     table.getType.getFields.foreach(field => {
       if (first) {

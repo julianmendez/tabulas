@@ -13,17 +13,17 @@ import de.tudresden.inf.lat.tabulas.table.PrefixMap
   */
 case class SimpleFormatRecordRenderer(output: Writer, prefixMap: PrefixMap, fieldSign: String) extends RecordRenderer {
 
-  def renderNew(output: UncheckedWriter): Unit = {
+  def renderNew(output: Writer): Unit = {
     output.write(ParserConstant.NewLine)
     output.write(ParserConstant.NewRecordToken + ParserConstant.Space)
     output.write(fieldSign)
   }
 
   override def render(record: Record, fields: Seq[String]): Unit = {
-    render(UncheckedWriterImpl(output), record, fields)
+    render(output, record, fields)
   }
 
-  def render(output: UncheckedWriter, record: Record, fields: Seq[String]): Unit = {
+  def render(output: Writer, record: Record, fields: Seq[String]): Unit = {
     fields.foreach(field => {
       val optValue: Option[PrimitiveTypeValue] = record.get(field)
       if (optValue.isDefined) {
@@ -35,7 +35,7 @@ case class SimpleFormatRecordRenderer(output: Writer, prefixMap: PrefixMap, fiel
     output.flush()
   }
 
-  def writeIfNotEmpty(output: UncheckedWriter, field: String, value: PrimitiveTypeValue): Boolean = {
+  def writeIfNotEmpty(output: Writer, field: String, value: PrimitiveTypeValue): Boolean = {
     val result: Boolean = if (Objects.nonNull(field) && !field.trim().isEmpty && Objects.nonNull(value) && !value.isEmpty) {
       output.write(ParserConstant.NewLine)
       output.write(ParserConstant.Space)

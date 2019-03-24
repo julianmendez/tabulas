@@ -11,10 +11,10 @@ import de.tudresden.inf.lat.tabulas.table.{Table, TableMap}
 case class SimpleFormatRenderer(output: Writer, fieldSign: String) extends Renderer {
 
   override def render(tableMap: TableMap): Unit = {
-    render(UncheckedWriterImpl(output), tableMap)
+    render(output, tableMap)
   }
 
-  def render(output: UncheckedWriter, tableMap: TableMap): Unit = {
+  def render(output: Writer, tableMap: TableMap): Unit = {
     output.write(SimpleFormatRenderer.Header)
     tableMap.getTableIds.foreach(tableName => {
       output.write(ParserConstant.NewLine)
@@ -22,14 +22,14 @@ case class SimpleFormatRenderer(output: Writer, fieldSign: String) extends Rende
       output.write(ParserConstant.TypeSelectionToken + ParserConstant.Space + fieldSign)
       val table: Table = tableMap.getTable(tableName).get
       val record = MetadataHelper().getMetadataAsRecord(tableName, table)
-      val recordRenderer = SimpleFormatRecordRenderer(output.asWriter(), table.getPrefixMap, fieldSign)
+      val recordRenderer = SimpleFormatRecordRenderer(output, table.getPrefixMap, fieldSign)
       recordRenderer.render(output, record, SimpleFormatRenderer.MetadataTokens)
       renderAllRecords(recordRenderer, output, table)
     })
     output.flush()
   }
 
-  def renderAllRecords(recordRenderer: SimpleFormatRecordRenderer, output: UncheckedWriter, table: Table): Unit = {
+  def renderAllRecords(recordRenderer: SimpleFormatRecordRenderer, output: Writer, table: Table): Unit = {
     output.write(ParserConstant.NewLine)
     val list = table.getRecords
     list.foreach(record => {
