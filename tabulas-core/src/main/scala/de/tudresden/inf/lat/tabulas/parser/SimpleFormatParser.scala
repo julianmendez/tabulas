@@ -218,7 +218,8 @@ case class SimpleFormatParser(input: Reader) extends Parser {
         val line = pair.line.get
         if (hasKey(line, ParserConstant.TypeSelectionToken)) {
           if (mustAddRecord) {
-            currentTable.add(record)
+            currentTable = currentTable.add(record)
+            mapOfTables.put(tableName, currentTable)
             mustAddRecord = false
           }
           isDefiningType = true
@@ -243,15 +244,18 @@ case class SimpleFormatParser(input: Reader) extends Parser {
           mapOfTables.put(tableName, currentTable)
 
         } else if (isDefiningType && hasKey(line, ParserConstant.PrefixMapToken)) {
-          currentTable.setPrefixMap(parsePrefixMap(line, lineCounter))
+          currentTable = currentTable.setPrefixMap(parsePrefixMap(line, lineCounter))
+          mapOfTables.put(tableName, currentTable)
 
         } else if (isDefiningType && hasKey(line, ParserConstant.SortingOrderDeclarationToken)) {
-          setSortingOrder(line, currentTable)
+          currentTable = setSortingOrder(line, currentTable)
+          mapOfTables.put(tableName, currentTable)
 
         } else if (hasKey(line, ParserConstant.NewRecordToken)) {
           isDefiningType = false
           if (mustAddRecord) {
             currentTable.add(record)
+            mapOfTables.put(tableName, currentTable)
           }
           record = RecordImpl()
           mustAddRecord = true
@@ -283,6 +287,7 @@ case class SimpleFormatParser(input: Reader) extends Parser {
     })
     if (mustAddRecord) {
       currentTable.add(record)
+      mapOfTables.put(tableName, currentTable)
       mustAddRecord = false
     }
 
@@ -320,7 +325,8 @@ case class SimpleFormatParser(input: Reader) extends Parser {
     result
   }
 
-  private def setSortingOrder(line: String, table: TableImpl): Unit = {
+  private def setSortingOrder(line: String, table: TableImpl): TableImpl = {
+    var result = table
     val fieldsWithReverseOrder = new mutable.TreeSet[String]()
     val list = new mutable.ArrayBuffer[String]
     val stok: StringTokenizer = new StringTokenizer(getValue(line).get)
@@ -336,8 +342,9 @@ case class SimpleFormatParser(input: Reader) extends Parser {
       }
       list += token
     }
-    table.setSortingOrder(list)
-    table.setFieldsWithReverseOrder(fieldsWithReverseOrder.toSet)
+    result.setSortingOrder(list)
+    result.setFieldsWithReverseOrder(fieldsWithReverseOrder.toSet)
+    result
   }
 
   private def isIdProperty(line: String): Boolean = {

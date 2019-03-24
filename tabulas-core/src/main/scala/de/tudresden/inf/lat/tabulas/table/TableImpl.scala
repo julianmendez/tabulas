@@ -24,18 +24,9 @@ class TableImpl(tableType: CompositeType) extends Table {
   private var _records = new mutable.ArrayBuffer[Record]
   private var _prefixMap: PrefixMap = PrefixMapImpl(Map(), Seq())
 
-  def add(record: Record): Boolean = {
-    val result = if (Objects.isNull(record)) {
-      false
-    } else {
-      this._records += record
-      true
-    }
-    result
-  }
-
-  def clear(): Unit = {
-    this._records.clear()
+  def add(record: Record): TableImpl = {
+    this._records += record
+    this
   }
 
   override def hashCode(): Int = {
@@ -64,30 +55,12 @@ class TableImpl(tableType: CompositeType) extends Table {
     this._prefixMap
   }
 
-  def setPrefixMap(newPrefixMap: PrefixMap): Unit = {
-    this._prefixMap = newPrefixMap
-  }
-
   override def getSortingOrder: Seq[String] = {
     this._sortingOrder
   }
 
-  def setSortingOrder(sortingOrder: Seq[String]): Unit = {
-    this._sortingOrder.clear()
-    if (Objects.nonNull(sortingOrder)) {
-      this._sortingOrder ++= sortingOrder
-    }
-  }
-
   override def getFieldsWithReverseOrder: Set[String] = {
     this._fieldsWithReverseOrder.toSet
-  }
-
-  def setFieldsWithReverseOrder(fieldsWithReverseOrder: Set[String]): Unit = {
-    this._fieldsWithReverseOrder.clear()
-    if (Objects.nonNull(fieldsWithReverseOrder)) {
-      this._fieldsWithReverseOrder ++= fieldsWithReverseOrder
-    }
   }
 
   override def getRecords: Seq[Record] = {
@@ -98,8 +71,30 @@ class TableImpl(tableType: CompositeType) extends Table {
     result
   }
 
-  def setRecords(newRecords: Seq[Record]): Unit = {
+  def setPrefixMap(newPrefixMap: PrefixMap): TableImpl = {
+    this._prefixMap = newPrefixMap
+    this
+  }
+
+  def setSortingOrder(sortingOrder: Seq[String]): TableImpl = {
+    this._sortingOrder.clear()
+    if (Objects.nonNull(sortingOrder)) {
+      this._sortingOrder ++= sortingOrder
+    }
+    this
+  }
+
+  def setFieldsWithReverseOrder(fieldsWithReverseOrder: Set[String]): TableImpl = {
+    this._fieldsWithReverseOrder.clear()
+    if (Objects.nonNull(fieldsWithReverseOrder)) {
+      this._fieldsWithReverseOrder ++= fieldsWithReverseOrder
+    }
+    this
+  }
+
+  def setRecords(newRecords: Seq[Record]): TableImpl = {
     _records = new mutable.ArrayBuffer[Record] ++ newRecords
+    this
   }
 
   override def toString: String = {
