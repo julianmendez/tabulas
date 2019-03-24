@@ -21,26 +21,26 @@ class TableImpl(tableType: CompositeType) extends Table {
 
   private val _sortingOrder = new mutable.ArrayBuffer[String]
   private val _fieldsWithReverseOrder = new mutable.TreeSet[String]()
-  private var _list = new mutable.ArrayBuffer[Record]
+  private var _records = new mutable.ArrayBuffer[Record]
   private var _prefixMap: PrefixMap = PrefixMapImpl(Map(), Seq())
 
   override def add(record: Record): Boolean = {
     val result = if (Objects.isNull(record)) {
       false
     } else {
-      this._list += record
+      this._records += record
       true
     }
     result
   }
 
   override def clear(): Unit = {
-    this._list.clear()
+    this._records.clear()
   }
 
   override def hashCode(): Int = {
     val result = tableType.hashCode() + 0x1F * (this._prefixMap.hashCode() + 0x1F * (this._sortingOrder.hashCode() +
-      0x1F * (this._fieldsWithReverseOrder.hashCode() + 0x1F * this._list.hashCode())))
+      0x1F * (this._fieldsWithReverseOrder.hashCode() + 0x1F * this._records.hashCode())))
     result
   }
 
@@ -93,19 +93,19 @@ class TableImpl(tableType: CompositeType) extends Table {
   override def getRecords: Seq[Record] = {
     val comparator = new RecordComparator(this._sortingOrder, this._fieldsWithReverseOrder.toSet)
     val ret = new mutable.ArrayBuffer[Record]
-    ret ++= this._list
+    ret ++= this._records
     val result = ret.sortWith((record0, record1) => comparator.compare(record0, record1) < 0)
     result
   }
 
-  def setRecords(records: Seq[Record]): Unit = {
-    _list = new mutable.ArrayBuffer[Record] ++ records
+  def setRecords(newRecords: Seq[Record]): Unit = {
+    _records = new mutable.ArrayBuffer[Record] ++ newRecords
   }
 
   override def toString: String = {
     val result = "\ndef = " + tableType.toString + "\n\nprefix = " + this._prefixMap.toString +
       "\n\norder = " + this._sortingOrder.toString + " " +
-      "\n\nreverseorder = " + this._fieldsWithReverseOrder.toString + "\n\nlist = " + this._list.toString
+      "\n\nreverseorder = " + this._fieldsWithReverseOrder.toString + "\n\nlist = " + this._records.toString
     result
   }
 
@@ -121,7 +121,7 @@ object TableImpl {
 
   def apply(newType: CompositeType, other: Table): TableImpl = {
     val result = new TableImpl(newType)
-    result._list ++= other.getRecords
+    result._records ++= other.getRecords
     other match {
       case otherTable: Table =>
         result._prefixMap = otherTable.getPrefixMap
