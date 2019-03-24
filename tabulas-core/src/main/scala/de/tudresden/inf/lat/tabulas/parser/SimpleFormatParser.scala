@@ -8,6 +8,7 @@ import java.util.{Objects, StringTokenizer}
 import de.tudresden.inf.lat.tabulas.datatype._
 import de.tudresden.inf.lat.tabulas.table._
 
+import scala.annotation.tailrec
 import scala.collection.mutable
 import scala.collection.mutable.ArrayBuffer
 
@@ -192,6 +193,10 @@ case class SimpleFormatParser(input: Reader) extends Parser {
     result
   }
 
+  def getMultiLines(input: BufferedReader): Seq[Pair] = {
+    getMultiLines(input, Seq(), Pair(0, Some("")))
+  }
+
   // scalastyle:off
   def parseMap(input: BufferedReader): TableMapImpl = {
     val mapOfTables = new mutable.TreeMap[String, TableImpl]()
@@ -204,12 +209,10 @@ case class SimpleFormatParser(input: Reader) extends Parser {
     var record = RecordImpl()
     var lineCounter: Int = 0
     var isDefiningType: Boolean = false
-    var finish = false
 
-    while (!finish) {
-      val pair: Pair = readMultiLine(input, lineCounter)
+    val pairs = getMultiLines(input)
+    pairs.foreach(pair => {
       lineCounter = pair.lineCounter
-      finish = pair.line.isEmpty
       if (pair.line.isDefined && !pair.line.get.trim().isEmpty) {
         val line = pair.line.get
         if (hasKey(line, ParserConstant.TypeSelectionToken)) {
@@ -269,8 +272,7 @@ case class SimpleFormatParser(input: Reader) extends Parser {
 
         }
       }
-
-    }
+    })
 
     val result = TableMapImpl(mapOfTables.toMap)
     result
@@ -284,6 +286,17 @@ case class SimpleFormatParser(input: Reader) extends Parser {
       case e: IOException => throw new RuntimeException(e)
     }
     result
+  }
+
+  @tailrec
+  private def getMultiLines(input: BufferedReader, elements: Seq[Pair], lastPair: Pair): Seq[Pair] = {
+    if (lastPair.line.isEmpty) {
+      elements
+    } else {
+      val lineCounter = lastPair.lineCounter
+      val newPair = readMultiLine(input, lineCounter)
+      getMultiLines(input, elements ++ Seq(lastPair), newPair)
+    }
   }
 
   private def asUri(uriStr: String, lineCounter: Int): URI = {
