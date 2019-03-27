@@ -225,8 +225,8 @@ The given example (as Tabula/Properties) is converted to a YAML file (i.e. Tabul
 - id : arXiv:1412.2223
   title : A topological approach to non-Archimedean Mathematics
   authors :
-  - Vieri_Benci
-  - Lorenzo_Luperi_Baglini
+  - Vieri Benci
+  - Lorenzo Luperi Baglini
   web : https://arxiv.org/abs/1412.2223
   documents :
   - https://arxiv.org/pdf/1412.2223#pdf
@@ -237,7 +237,7 @@ The given example (as Tabula/Properties) is converted to a YAML file (i.e. Tabul
 - id : arXiv:1412.3313
   title : Infinitary stability theory
   authors :
-  - Sebastien_Vasey
+  - Sebastien Vasey
   web : https://arxiv.org/abs/1412.3313
   documents :
   - https://arxiv.org/pdf/1412.3313#pdf
