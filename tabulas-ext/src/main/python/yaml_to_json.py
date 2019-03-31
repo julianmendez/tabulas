@@ -7,16 +7,19 @@
 # https://github.com/julianmendez/tabulas
 #
 
-import sys, json, yaml
+import json
+import sys
+import yaml
+
 
 def main(argv):
     if (len(argv) == 3):
-        input_file = argv[1]
-        output_file = argv[2]
-        with open(input_file, 'r') as stream:
+        input_file_name = argv[1]
+        output_file_name = argv[2]
+        with open(input_file_name, 'r') as input_file:
             try:
-                data = yaml.load(stream)
-                with open(output_file, 'w') as output_file:
+                data = yaml.load(input_file)
+                with open(output_file_name, 'w') as output_file:
                     json.dump(data, output_file, indent=1)
             except yaml.YAMLError as exception:
                 print(exception)
