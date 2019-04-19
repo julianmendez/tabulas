@@ -34,18 +34,18 @@ case class CsvParser(input: Reader) extends Parser {
   }
 
   def parseMap(input: BufferedReader): TableMap = {
-    var lineCounter: Int = 0
-    var line: String = input.readLine()
+    var lineCounter = 0
+    var line = input.readLine()
     lineCounter += 1
-    val headers: Seq[String] = getColumns(line)
-    val fieldNames: Seq[String] = normalizeHeaders(headers, lineCounter)
+    val headers = getColumns(line)
+    val fieldNames = normalizeHeaders(headers, lineCounter)
     val currentTable: TableImpl = createSortedTable(fieldNames)
 
     while (Objects.nonNull(line)) {
       line = input.readLine()
       lineCounter += 1
       if (Objects.nonNull(line) && !line.trim().isEmpty) {
-        val columns: Seq[String] = getColumns(line)
+        val columns = getColumns(line)
         if (columns.size > fieldNames.size) {
           throw ParseException("Too many fields in line: "
             + columns.size + " instead of "
@@ -54,9 +54,9 @@ case class CsvParser(input: Reader) extends Parser {
         }
 
         val record: RecordImpl = RecordImpl()
-        var index: Int = 0
+        var index = 0
         for (column: String <- columns) {
-          val field: String = fieldNames(index)
+          val field = fieldNames(index)
           val value: StringValue = new StringValue(column)
           record.set(field, value)
           index += 1
@@ -72,12 +72,12 @@ case class CsvParser(input: Reader) extends Parser {
 
   def getColumns(line0: String): Seq[String] = {
     val result = new mutable.ArrayBuffer[String]()
-    val line: String = if (Objects.isNull(line0)) {
+    val line = if (Objects.isNull(line0)) {
       ""
     } else {
       line0.trim()
     }
-    var current: StringBuffer = new StringBuffer()
+    var current = new StringBuffer()
     var betweenQuotes: Boolean = false
     for (index <- 0 until line.length()) {
       val ch: Char = line.charAt(index)
@@ -107,9 +107,9 @@ case class CsvParser(input: Reader) extends Parser {
 
   def normalizeHeaders(headers: Seq[String], lineCounter: Int): Seq[String] = {
     val result = new mutable.ArrayBuffer[String]()
-    var idCount: Int = 0
+    var idCount = 0
     for (header: String <- headers) {
-      val fieldName: String = normalize(header)
+      val fieldName = normalize(header)
       if (fieldName.equals(ParserConstant.IdKeyword)) {
         idCount += 1
       }
@@ -126,7 +126,7 @@ case class CsvParser(input: Reader) extends Parser {
   }
 
   def normalize(fieldName: String): String = {
-    val auxName: String = if (Objects.isNull(fieldName)) {
+    val auxName = if (Objects.isNull(fieldName)) {
       Underscore
     } else {
       fieldName.trim()
@@ -137,17 +137,16 @@ case class CsvParser(input: Reader) extends Parser {
       auxName
     }
 
-    val ret: StringBuffer = new StringBuffer()
-    Range(0, name.length()).foreach(index => {
-      val ch: Char = name.charAt(index)
-      val ch2 = if (Character.isLetterOrDigit(ch)) {
-        ch
-      } else {
-        UnderscoreChar
-      }
-      ret.append(ch2)
-    })
-    val result = ret.toString
+    val result = Range(0, name.length())
+      .map(index => {
+        val ch: Char = name.charAt(index)
+        val newChar = if (Character.isLetterOrDigit(ch)) {
+          ch
+        } else {
+          UnderscoreChar
+        }
+        newChar
+      }).mkString
     result
   }
 

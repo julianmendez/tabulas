@@ -170,9 +170,8 @@ case class CalendarParser(input: Reader) extends Parser {
 
   private def preload(input: BufferedReader): Seq[Pair] = {
     val result = new mutable.ArrayBuffer[Pair]()
-    var sbuf: StringBuffer = new StringBuffer()
-    var finish: Boolean = false
-    var lineCounter: Int = 0
+    var sbuf = new StringBuffer()
+    var lineCounter = 0
     input.lines().toArray().foreach(obj => {
       val line = obj.asInstanceOf[String]
       if (line.startsWith("" + SpaceChar)) {
@@ -272,17 +271,7 @@ case class CalendarParser(input: Reader) extends Parser {
       auxGeneratedIds.remove(auxGeneratedIds.size - 1)
     }
     auxGeneratedIds += newValue
-    val sbuf: StringBuffer = new StringBuffer()
-    var firstTime: Boolean = true
-    for (counter: Int <- auxGeneratedIds) {
-      if (firstTime) {
-        firstTime = false
-      } else {
-        sbuf.append(GeneratedIdSeparatorChar)
-      }
-      sbuf.append(counter)
-    }
-    val result: String = sbuf.toString
+    val result = auxGeneratedIds.mkString("" + GeneratedIdSeparatorChar)
     result
   }
 

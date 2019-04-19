@@ -28,10 +28,8 @@ case class CompositeTypeImpl(fields: Seq[String], fieldType: Map[String, String]
   override def getFields: Seq[String] = fields
 
   override def toString: String = {
-    val sbuf = new StringBuffer()
-    getFields.foreach(field => sbuf.append(field + ":" + getFieldType(field) + " "))
-    val result: String = sbuf.toString
-    result
+    getFields.map(field => field + ":" + getFieldType(field) + " ")
+      .mkString
   }
 
   override def getFieldType(field: String): Option[String] = fieldType.get(field)
