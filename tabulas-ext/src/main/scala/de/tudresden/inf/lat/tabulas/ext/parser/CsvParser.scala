@@ -14,7 +14,7 @@ import scala.util.Try
 /** Parser of a table in comma-separated values format.
   *
   */
-case class CsvParser(input: Reader) extends Parser {
+case class CsvParser() extends Parser {
 
   final val UnderscoreChar: Char = '_'
   final val CommaChar: Char = ','
@@ -24,7 +24,7 @@ case class CsvParser(input: Reader) extends Parser {
   final val DefaultFieldType: String = "String"
   final val Underscore: String = "" + UnderscoreChar
 
-  override def parse(): Try[TableMap] = Try {
+  override def parse(input: Reader): Try[TableMap] = Try {
     parseMap(new BufferedReader(input))
   }
 
@@ -144,11 +144,5 @@ case class CsvParser(input: Reader) extends Parser {
       }).mkString
     result
   }
-
-}
-
-object CsvParser {
-
-  def apply(): CsvParser = new CsvParser(new InputStreamReader(System.in))
 
 }

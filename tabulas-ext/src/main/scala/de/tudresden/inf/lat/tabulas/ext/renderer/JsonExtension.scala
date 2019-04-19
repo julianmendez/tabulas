@@ -4,8 +4,9 @@ package de.tudresden.inf.lat.tabulas.ext.renderer
 import java.io.{BufferedWriter, FileReader, FileWriter}
 import java.util.Objects
 
-import de.tudresden.inf.lat.tabulas.ext.parser.MultiParser
+import de.tudresden.inf.lat.tabulas.ext.parser.{JsonParser, MultiParser, YamlParser}
 import de.tudresden.inf.lat.tabulas.extension.Extension
+import de.tudresden.inf.lat.tabulas.parser.SimpleFormatParser
 
 import scala.util.Try
 
@@ -24,7 +25,9 @@ case class JsonExtension() extends Extension {
     } else {
       val inputFileName = arguments(0)
       val outputFileName = arguments(1)
-      val tableMap = MultiParser(new FileReader(inputFileName)).parse().get
+      val tableMap = MultiParser(
+        Seq(JsonParser(), YamlParser(), SimpleFormatParser())
+      ).parse(new FileReader(inputFileName)).get
       val output = new BufferedWriter(new FileWriter(outputFileName))
       val renderer = JsonRenderer(output)
       renderer.render(tableMap)

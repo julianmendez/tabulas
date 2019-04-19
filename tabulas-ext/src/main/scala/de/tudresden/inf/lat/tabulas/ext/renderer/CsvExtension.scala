@@ -24,7 +24,7 @@ case class CsvExtension() extends Extension {
     } else {
       val inputFileName = arguments(0)
       val outputFileName = arguments(1)
-      val tableMap = MultiParser(new FileReader(inputFileName)).parse().get
+      val tableMap = MultiParser().parse(new FileReader(inputFileName)).get
       val output = new BufferedWriter(new FileWriter(outputFileName))
       val renderer = CsvRenderer(output)
       renderer.render(tableMap)

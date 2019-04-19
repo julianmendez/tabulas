@@ -24,7 +24,7 @@ case class OldFormatExtension() extends Extension {
     } else {
       val inputFileName = arguments(0)
       val outputFileName = arguments(1)
-      val tableMap: TableMap = SimpleFormatParser(new FileReader(inputFileName)).parse().get
+      val tableMap: TableMap = SimpleFormatParser().parse(new FileReader(inputFileName)).get
       val output: BufferedWriter = new BufferedWriter(new FileWriter(outputFileName))
       val renderer: SimpleFormatRenderer = SimpleFormatRenderer(output, ParserConstant.EqualsFieldSign)
       renderer.render(tableMap)

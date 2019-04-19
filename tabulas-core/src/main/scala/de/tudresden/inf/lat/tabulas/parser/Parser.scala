@@ -1,6 +1,8 @@
 
 package de.tudresden.inf.lat.tabulas.parser
 
+import java.io.Reader
+
 import de.tudresden.inf.lat.tabulas.table.TableMap
 
 import scala.util.Try
@@ -10,7 +12,7 @@ import scala.util.Try
   */
 trait Parser {
 
-  def parse(): Try[TableMap]
+  def parse(reader: Reader): Try[TableMap]
 
 }
 

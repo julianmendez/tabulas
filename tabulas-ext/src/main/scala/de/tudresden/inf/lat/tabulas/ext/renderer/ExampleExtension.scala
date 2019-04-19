@@ -4,7 +4,7 @@ package de.tudresden.inf.lat.tabulas.ext.renderer
 import java.io._
 import java.util.Objects
 
-import de.tudresden.inf.lat.tabulas.ext.parser.{MultiParser, YamlParser}
+import de.tudresden.inf.lat.tabulas.ext.parser.MultiParser
 import de.tudresden.inf.lat.tabulas.extension.Extension
 
 import scala.util.Try
@@ -26,7 +26,7 @@ case class ExampleExtension() extends Extension {
       val inputFileName = ExampleFileName
       val inputStream = getClass.getResourceAsStream(inputFileName)
       val outputFileName = arguments(0)
-      val tableMap = MultiParser(new InputStreamReader(inputStream)).parse().get
+      val tableMap = MultiParser().parse(new FileReader(inputFileName)).get
       val output = new BufferedWriter(new FileWriter(outputFileName))
       val renderer = YamlRenderer(output)
       renderer.render(tableMap)

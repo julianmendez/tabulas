@@ -13,13 +13,14 @@ import scala.util.Try
 
 /** Parser for YAML format.
   */
-case class YamlParser(input: Reader) extends Parser {
+case class YamlParser() extends Parser {
 
-  override def parse(): Try[TableMap] = Try {
+  override def parse(input: Reader): Try[TableMap] = Try {
     val buffer = transformDocument(input)
-    val parser = new SimpleFormatParser(new BufferedReader(
-      new InputStreamReader(new ByteArrayInputStream(buffer.getBytes()))))
-    parser.parse().get
+    val newReader = new BufferedReader(
+      new InputStreamReader(new ByteArrayInputStream(buffer.getBytes())))
+
+    SimpleFormatParser().parse(newReader).get
   }
 
   def transformDocument(reader: Reader): String = {
@@ -108,12 +109,5 @@ case class YamlParser(input: Reader) extends Parser {
       }
     }
   }
-
-}
-
-
-object YamlParser {
-
-  def apply(): YamlParser = new YamlParser(new InputStreamReader(System.in))
 
 }

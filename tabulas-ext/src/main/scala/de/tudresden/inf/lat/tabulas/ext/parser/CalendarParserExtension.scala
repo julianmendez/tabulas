@@ -27,7 +27,7 @@ case class CalendarParserExtension() extends Extension {
     } else {
       val inputFileName = arguments(0)
       val outputFileName = arguments(1)
-      val tableMap = CalendarParser(new FileReader(inputFileName)).parse().get
+      val tableMap = CalendarParser().parse(new FileReader(inputFileName)).get
       val output = new BufferedWriter(new FileWriter(outputFileName))
       val renderer = SimpleFormatRenderer(output)
       renderer.render(tableMap)

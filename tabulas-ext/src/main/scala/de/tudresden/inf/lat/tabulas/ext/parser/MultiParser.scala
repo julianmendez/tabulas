@@ -10,24 +10,30 @@ import scala.util.Try
 
 /** Parser for JSON, YAML, and Properties format.
   */
-case class MultiParser(input: Reader) extends Parser {
+case class MultiParser(parsers: Seq[Parser]) extends Parser {
 
-  override def parse(): Try[TableMap] = Try {
-    val reader = new BufferedReader(input)
-    val readerContent = reader.lines.toArray.mkString(ParserConstant.NewLine)
-    val parsers = Seq(
-      SimpleFormatParser(new StringReader(readerContent)),
-      JsonParser(new StringReader(readerContent)),
-      YamlParser(new StringReader(readerContent))
-    )
-    val res = parsers.par.map(parser => parser.parse()).seq
+  override def parse(input: Reader): Try[TableMap] = Try {
+    val content = readContent(input)
+    val res = parsers.par.map(parser => parser.parse(new StringReader(content))).seq
     val result = if (res.exists(content => content.isSuccess)) {
       res.find(content => content.isSuccess).get.get
     } else {
-      res(0).get
+      res.head.get
     }
     result
   }
+
+  @throws[IOException]
+  def readContent(input: Reader): String = {
+    val reader = new BufferedReader(input)
+    val result = reader.lines.toArray.mkString(ParserConstant.NewLine)
+    result
+  }
+}
+
+object MultiParser {
+
+  def apply(): MultiParser = MultiParser(Seq(YamlParser(), JsonParser(), SimpleFormatParser()))
 
 }
 

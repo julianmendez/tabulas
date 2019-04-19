@@ -1,6 +1,6 @@
 package de.tudresden.inf.lat.tabulas.ext.parser
 
-import java.io.{BufferedReader, IOException, InputStreamReader, Reader}
+import java.io.{BufferedReader, IOException, Reader}
 import java.util.Objects
 
 import de.tudresden.inf.lat.tabulas.datatype._
@@ -13,7 +13,7 @@ import scala.util.Try
 /** Parser of a calendar.
   *
   */
-case class CalendarParser(input: Reader) extends Parser {
+case class CalendarParser() extends Parser {
 
   final val GeneratedIdFieldName: String = "generatedId"
   final val SubItemsFieldName: String = "subItems"
@@ -55,7 +55,7 @@ case class CalendarParser(input: Reader) extends Parser {
   final val BeginKeyword: String = "BEGIN"
   final val EndKeyword: String = "END"
 
-  override def parse(): Try[TableMap] = Try {
+  override def parse(input: Reader): Try[TableMap] = Try {
     parseMap(new BufferedReader(input))
   }
 
@@ -219,21 +219,6 @@ case class CalendarParser(input: Reader) extends Parser {
     result
   }
 
-  def getValue(line: String): Option[String] = {
-    var result = if (Objects.isNull(line)) {
-      None
-    } else {
-      val pos: Int = line.indexOf(ColonChar)
-      val res = if (pos == -1) {
-        Some("")
-      } else {
-        Some(line.substring(pos + 1, line.length()).trim())
-      }
-      res
-    }
-    result
-  }
-
   private def getTypedValue(key: String, value: String, type0: CompositeType, lineCounter: Int): PrimitiveTypeValue = {
     val result = if (Objects.isNull(key)) {
       StringValue()
@@ -250,6 +235,21 @@ case class CalendarParser(input: Reader) extends Parser {
         case e: IOException => throw new ParseException(e.getMessage + " (line "
           + lineCounter + ")", e.getCause)
       }
+    }
+    result
+  }
+
+  def getValue(line: String): Option[String] = {
+    var result = if (Objects.isNull(line)) {
+      None
+    } else {
+      val pos: Int = line.indexOf(ColonChar)
+      val res = if (pos == -1) {
+        Some("")
+      } else {
+        Some(line.substring(pos + 1, line.length()).trim())
+      }
+      res
     }
     result
   }
@@ -294,8 +294,3 @@ case class CalendarParser(input: Reader) extends Parser {
 
 }
 
-object CalendarParser {
-
-  def apply(): CalendarParser = new CalendarParser(new InputStreamReader(System.in))
-
-}

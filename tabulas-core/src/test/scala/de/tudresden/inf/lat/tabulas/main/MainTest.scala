@@ -76,7 +76,7 @@ class MainTest extends FunSuite {
     // a computed value
 
     // Read the table map
-    val oldTableMap = new SimpleFormatParser(new FileReader(getPath(InputFileName).getFile)).parse().get
+    val oldTableMap = new SimpleFormatParser().parse(new FileReader(getPath(InputFileName).getFile)).get
 
     // Make a copy of the tableMap
     val tableMap: TableMapImpl = TableMapImpl(oldTableMap)

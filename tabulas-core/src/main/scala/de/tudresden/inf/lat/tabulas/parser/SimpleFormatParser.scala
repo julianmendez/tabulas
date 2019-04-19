@@ -1,7 +1,7 @@
 
 package de.tudresden.inf.lat.tabulas.parser
 
-import java.io.{BufferedReader, InputStreamReader, Reader}
+import java.io.{BufferedReader, Reader}
 import java.net.{URI, URISyntaxException}
 import java.util.{Objects, StringTokenizer}
 
@@ -16,7 +16,7 @@ import scala.util.Try
 /** Parser of a table in simple format.
   *
   */
-case class SimpleFormatParser(input: Reader) extends Parser {
+case class SimpleFormatParser() extends Parser {
 
   def getKeyLength(line: String): Int = {
     val result = if (Objects.isNull(line)) {
@@ -70,8 +70,8 @@ case class SimpleFormatParser(input: Reader) extends Parser {
     val stok: StringTokenizer = new StringTokenizer(getValue(line).get)
     val factory: PrimitiveTypeFactory = PrimitiveTypeFactory()
     while (stok.hasMoreTokens) {
-      val token: String = stok.nextToken()
-      val pos: Int = token.indexOf(ParserConstant.TypeSign)
+      val token = stok.nextToken()
+      val pos = token.indexOf(ParserConstant.TypeSign)
       if (pos == -1) {
         throw ParseException("Field '" + line + "' does not have a type. (line " + lineCounter + ")")
       } else {
@@ -92,8 +92,8 @@ case class SimpleFormatParser(input: Reader) extends Parser {
     val listOfUris = mutable.ArrayBuffer[URI]()
     val stok: StringTokenizer = new StringTokenizer(getValue(line).get)
     while (stok.hasMoreTokens) {
-      val token: String = stok.nextToken()
-      val pos: Int = token.indexOf(ParserConstant.PrefixSign)
+      val token = stok.nextToken()
+      val pos = token.indexOf(ParserConstant.PrefixSign)
       if (pos == -1) {
         throw ParseException("Prefix '" + line + "' does not have a definition. (line " + lineCounter + ")")
       } else {
@@ -296,8 +296,8 @@ case class SimpleFormatParser(input: Reader) extends Parser {
     result
   }
 
-  override def parse(): Try[TableMapImpl] = Try {
-    parseMap(new BufferedReader(this.input))
+  override def parse(input: Reader): Try[TableMapImpl] = Try {
+    parseMap(new BufferedReader(input))
   }
 
   @tailrec
@@ -395,11 +395,5 @@ case class SimpleFormatParser(input: Reader) extends Parser {
   // scalastyle:on
 
   case class Pair(lineCounter: Int, line: Option[String])
-
-}
-
-object SimpleFormatParser {
-
-  def apply(): SimpleFormatParser = new SimpleFormatParser(new InputStreamReader(System.in))
 
 }

@@ -4,7 +4,6 @@ import java.io.{FileReader, StringWriter}
 
 import de.tudresden.inf.lat.tabulas.parser.{ParserConstant, SimpleFormatParser}
 import de.tudresden.inf.lat.tabulas.renderer.SimpleFormatRenderer
-import de.tudresden.inf.lat.tabulas.table.TableMap
 import org.scalatest.FunSuite
 
 /** This is a test of normalization of files.
@@ -32,8 +31,8 @@ class NormalizationTest extends FunSuite {
   final val NewLine: String = "\n"
 
   def testOldFormatParsing(inputFileName: String, expectedFileName: String): Unit = {
-    val tableMap: TableMap = new SimpleFormatParser(new FileReader(getPath(inputFileName))).parse().get
-    val expectedResult: String = (new MainTest()).readFile(expectedFileName)
+    val tableMap = SimpleFormatParser().parse(new FileReader(getPath(inputFileName))).get
+    val expectedResult = MainTest().readFile(expectedFileName)
     val writer = new StringWriter()
     val renderer = SimpleFormatRenderer(writer)
     renderer.render(tableMap)
@@ -51,8 +50,8 @@ class NormalizationTest extends FunSuite {
 
         val inputFileName = pair._1
         val expectedFileName = pair._2
-        val tableMap: TableMap = new SimpleFormatParser(new FileReader(getPath(inputFileName))).parse().get
-        val expectedResult: String = (new MainTest()).readFile(expectedFileName)
+        val tableMap = SimpleFormatParser().parse(new FileReader(getPath(inputFileName))).get
+        val expectedResult = MainTest().readFile(expectedFileName)
         val writer = new StringWriter()
         val renderer = SimpleFormatRenderer(writer)
         renderer.render(tableMap)
@@ -69,8 +68,8 @@ class NormalizationTest extends FunSuite {
       .foreach(pair => {
         val inputFileName = pair._1
         val expectedFileName = pair._2
-        val tableMap: TableMap = new SimpleFormatParser(new FileReader(getPath(inputFileName))).parse().get
-        val expectedResult: String = (new MainTest()).readFile(expectedFileName)
+        val tableMap = SimpleFormatParser().parse(new FileReader(getPath(inputFileName))).get
+        val expectedResult = MainTest().readFile(expectedFileName)
         val writer = new StringWriter()
         val renderer = SimpleFormatRenderer(writer, ParserConstant.EqualsFieldSign)
         renderer.render(tableMap)

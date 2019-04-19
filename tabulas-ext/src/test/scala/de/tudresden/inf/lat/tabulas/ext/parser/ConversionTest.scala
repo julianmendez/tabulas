@@ -68,7 +68,7 @@ class ConversionTest extends FunSuite {
   }
 
   test("normalization") {
-    val tableMap = new SimpleFormatParser(getFileReader(InputFileName0)).parse().get
+    val tableMap = SimpleFormatParser().parse(getFileReader(InputFileName0)).get
     val expectedResult = readFile(ExpectedOutputFileName0)
     val writer = new StringWriter()
     val renderer = SimpleFormatRenderer(writer)
@@ -82,7 +82,7 @@ class ConversionTest extends FunSuite {
       (InputFileName2, ExpectedOutputFileName2),
       (InputFileName3, ExpectedOutputFileName3)
     ).foreach(pair => {
-      val tableMap = new SimpleFormatParser(getFileReader(pair._1)).parse().get
+      val tableMap = SimpleFormatParser().parse(getFileReader(pair._1)).get
       val expectedResult = readFile(pair._2)
       val writer = new StringWriter()
       val renderer = JsonRenderer(writer)
@@ -97,7 +97,7 @@ class ConversionTest extends FunSuite {
       (InputFileName5, ExpectedOutputFileName5),
       (InputFileName6, ExpectedOutputFileName6)
     ).foreach(pair => {
-      val tableMap = new JsonParser(getFileReader(pair._1)).parse().get
+      val tableMap = JsonParser().parse(getFileReader(pair._1)).get
       val expectedResult = readFile(pair._2)
       val writer = new StringWriter()
       val renderer = SimpleFormatRenderer(writer)
@@ -111,7 +111,7 @@ class ConversionTest extends FunSuite {
       (InputFileName7, ExpectedOutputFileName7),
       (InputFileName8, ExpectedOutputFileName8)
     ).foreach(pair => {
-      val tableMap = new SimpleFormatParser(getFileReader(pair._1)).parse().get
+      val tableMap = SimpleFormatParser().parse(getFileReader(pair._1)).get
       val expectedResult = readFile(pair._2)
       val writer = new StringWriter()
       val renderer = YamlRenderer(writer)
@@ -125,7 +125,7 @@ class ConversionTest extends FunSuite {
       (InputFileName9, ExpectedOutputFileName9),
       (InputFileName10, ExpectedOutputFileName10)
     ).foreach(pair => {
-      val tableMap = new YamlParser(getFileReader(pair._1)).parse().get
+      val tableMap = YamlParser().parse(getFileReader(pair._1)).get
       val expectedResult = readFile(pair._2)
       val writer = new StringWriter()
       val renderer = SimpleFormatRenderer(writer)

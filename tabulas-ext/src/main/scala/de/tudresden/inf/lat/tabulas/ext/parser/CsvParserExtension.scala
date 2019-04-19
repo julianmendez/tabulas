@@ -5,7 +5,6 @@ import java.util.Objects
 
 import de.tudresden.inf.lat.tabulas.extension.Extension
 import de.tudresden.inf.lat.tabulas.renderer.SimpleFormatRenderer
-import de.tudresden.inf.lat.tabulas.table.TableMap
 
 import scala.util.Try
 
@@ -25,7 +24,7 @@ case class CsvParserExtension() extends Extension {
     } else {
       val inputFileName = arguments(0)
       val outputFileName = arguments(1)
-      val tableMap = CsvParser(new FileReader(inputFileName)).parse().get
+      val tableMap = CsvParser().parse(new FileReader(inputFileName)).get
       val output = new BufferedWriter(new FileWriter(outputFileName))
       val renderer = SimpleFormatRenderer(output)
       renderer.render(tableMap)
