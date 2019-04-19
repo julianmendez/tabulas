@@ -45,9 +45,9 @@ case class JsonParser(input: Reader) extends Parser {
             .map(key => renderEntry(key, elements.get(key)))
             .mkString("")
           val newRecord = if (maybeMetadata.isDefined) {
-            ParserConstant.TypeSelectionToken + ParserConstant.Space + ParserConstant.EqualsFieldSign + ParserConstant.Space + typeName
+            ParserConstant.TypeSelectionToken + ParserConstant.Space + ParserConstant.ColonFieldSign + ParserConstant.Space + typeName
           } else {
-            ParserConstant.NewRecordToken + ParserConstant.Space + ParserConstant.EqualsFieldSign + ParserConstant.Space
+            ParserConstant.NewRecordToken + ParserConstant.Space + ParserConstant.ColonFieldSign + ParserConstant.Space
           }
           ParserConstant.NewLine + ParserConstant.NewLine + newRecord + ParserConstant.NewLine + recordStr
         }).mkString("") + ParserConstant.NewLine + ParserConstant.NewLine
@@ -55,7 +55,7 @@ case class JsonParser(input: Reader) extends Parser {
   }
 
   def renderEntry(key: String, value: JsonValue): String = {
-    val prefix = key + ParserConstant.Space + ParserConstant.EqualsFieldSign
+    val prefix = key + ParserConstant.Space + ParserConstant.ColonFieldSign
     val middle = if (value.isNull) {
       ""
 
