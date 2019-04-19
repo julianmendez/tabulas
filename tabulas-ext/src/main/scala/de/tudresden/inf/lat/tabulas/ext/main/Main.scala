@@ -1,6 +1,6 @@
 package de.tudresden.inf.lat.tabulas.ext.main
 
-import de.tudresden.inf.lat.tabulas.ext.parser.{CalendarParserExtension, CsvParserExtension, JsonParserExtension}
+import de.tudresden.inf.lat.tabulas.ext.parser.{CalendarParserExtension, CsvParserExtension, JsonParserExtension, YamlParserExtension}
 import de.tudresden.inf.lat.tabulas.ext.renderer._
 import de.tudresden.inf.lat.tabulas.extension.{DefaultExtension, NormalizationExtension, OldFormatExtension}
 import de.tudresden.inf.lat.tabulas.main.ConsoleStarter
@@ -19,6 +19,7 @@ object Main {
       DefaultExtension(),
       OldFormatExtension(),
       JsonParserExtension(),
+      YamlParserExtension(),
       CsvParserExtension(),
       CalendarParserExtension(),
       JsonExtension(),
@@ -30,7 +31,7 @@ object Main {
       NormalizationExtension()
     )
 
-    val instance: ConsoleStarter = new ConsoleStarter()
+    val instance: ConsoleStarter = ConsoleStarter()
     instance.run(extensions, args)
   }
 

@@ -45,20 +45,27 @@ class ConversionTest extends FunSuite {
   final val InputFileName8: String = ExtPrefix + "miniexample.properties"
   final val ExpectedOutputFileName8: String = ExtPrefix + "miniexample.yaml"
 
+  final val InputFileName9: String = ExtPrefix + "example.yaml"
+  final val ExpectedOutputFileName9: String = ExtPrefix + "example-expected.properties"
+
+  final val InputFileName10: String = ExtPrefix + "multiple_tables.yaml"
+  final val ExpectedOutputFileName10: String = ExtPrefix + "multiple_tables-expected.properties"
+
+
   final val NewLine: String = "\n"
 
   def getFileReader(inputFileName: String): FileReader = {
     new FileReader(getPath(inputFileName).getFile)
   }
 
-  def getPath(fileName: String): URL = {
-    getClass.getClassLoader.getResource(fileName)
-  }
-
   def readFile(fileName: String): String = {
     val path = Paths.get(getPath(fileName).toURI)
     val result = Files.readAllLines(path).asScala.mkString(NewLine) + NewLine
     result
+  }
+
+  def getPath(fileName: String): URL = {
+    getClass.getClassLoader.getResource(fileName)
   }
 
   test("normalization") {
@@ -109,6 +116,20 @@ class ConversionTest extends FunSuite {
       val expectedResult: String = readFile(pair._2)
       val writer = new StringWriter()
       val renderer = YamlRenderer(writer)
+      renderer.render(tableMap)
+      assert(expectedResult === writer.toString)
+    })
+  }
+
+  test("parsing YAML") {
+    Seq(
+      (InputFileName9, ExpectedOutputFileName9),
+      (InputFileName10, ExpectedOutputFileName10)
+    ).foreach(pair => {
+      val tableMap: TableMap = new YamlParser(getFileReader(pair._1)).parse()
+      val expectedResult: String = readFile(pair._2)
+      val writer = new StringWriter()
+      val renderer = SimpleFormatRenderer(writer)
       renderer.render(tableMap)
       assert(expectedResult === writer.toString)
     })
