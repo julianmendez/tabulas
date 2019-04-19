@@ -22,7 +22,7 @@ case class JsonParserExtension() extends Extension {
     } else {
       val inputFileName = arguments(0)
       val outputFileName = arguments(1)
-      val tableMap = new JsonParser(new FileReader(inputFileName)).parse().get
+      val tableMap = JsonParser(new FileReader(inputFileName)).parse().get
       val output = new BufferedWriter(new FileWriter(outputFileName))
       val renderer = SimpleFormatRenderer(output)
       renderer.render(tableMap)
