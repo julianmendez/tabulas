@@ -20,6 +20,8 @@ case class ExtensionManager(extensions: Seq[Extension]) extends Extension {
 
   private val _extensionMap = getExtensionMap(extensions)
 
+  def getExtensionNames: Set[String] = _extensionMap.keySet
+
   /** Returns the extension map.
     *
     * @param extensions list of extensions

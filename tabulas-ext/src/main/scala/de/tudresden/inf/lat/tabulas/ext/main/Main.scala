@@ -29,6 +29,7 @@ object Main {
       CsvExtension(),
       HtmlExtension(),
       NormalizationExtension(),
+      ReadmeExtension(),
       ExampleExtension()
     )
 

@@ -4,8 +4,6 @@ import java.util.Objects
 
 import de.tudresden.inf.lat.tabulas.extension.{Extension, ExtensionException, ExtensionManager, NormalizationExtension}
 
-import scala.collection.mutable
-
 /** An object of this class runs the application with the given arguments.
   */
 case class ConsoleStarter() {
@@ -25,15 +23,16 @@ case class ConsoleStarter() {
     Objects.requireNonNull(extensions)
     Objects.requireNonNull(args)
 
-    val arguments = new mutable.ArrayBuffer[String]()
-    if (args.length == 1) {
-      arguments += NormalizationExtension().Name
-    }
-    arguments ++= args.toList
+    val manager = ExtensionManager(extensions)
 
-    val manager = new ExtensionManager(extensions)
+    val newArguments = if (args.length == 1 && !manager.getExtensionNames.contains(args(0))) {
+      Seq(NormalizationExtension().Name) ++ args
+    } else {
+      args.toSeq
+    }
+
     try {
-      manager.process(arguments)
+      manager.process(newArguments)
     } catch {
       case e: ExtensionException =>
         print(getTitleAndVersion + "\n")
