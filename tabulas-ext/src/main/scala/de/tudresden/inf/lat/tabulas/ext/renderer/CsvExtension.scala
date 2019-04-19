@@ -1,11 +1,13 @@
 
 package de.tudresden.inf.lat.tabulas.ext.renderer
 
-import java.io.{BufferedWriter, FileReader, FileWriter, IOException}
+import java.io.{BufferedWriter, FileReader, FileWriter}
 import java.util.Objects
 
 import de.tudresden.inf.lat.tabulas.extension.Extension
 import de.tudresden.inf.lat.tabulas.parser.SimpleFormatParser
+
+import scala.util.Try
 
 /** This models an extension that writes the output in comma-separated values.
   *
@@ -16,24 +18,17 @@ case class CsvExtension() extends Extension {
   final val Help: String = "(input) (output) : create a comma-separated values (CSV) file"
   final val RequiredArguments: Int = 2
 
-  override def process(arguments: Seq[String]): Boolean = {
-    val result: Boolean = if (Objects.isNull(arguments) || arguments.size != RequiredArguments) {
+  override def process(arguments: Seq[String]): Try[Boolean] = Try {
+    val result = if (Objects.isNull(arguments) || arguments.size != RequiredArguments) {
       false
     } else {
-      val res = try {
-
-        val inputFileName = arguments(0)
-        val outputFileName = arguments(1)
-        val tableMap = new SimpleFormatParser(new FileReader(inputFileName)).parse()
-        val output = new BufferedWriter(new FileWriter(outputFileName))
-        val renderer = new CsvRenderer(output)
-        renderer.render(tableMap)
-        true
-
-      } catch {
-        case e: IOException => throw new RuntimeException(e)
-      }
-      res
+      val inputFileName = arguments(0)
+      val outputFileName = arguments(1)
+      val tableMap = new SimpleFormatParser(new FileReader(inputFileName)).parse().get
+      val output = new BufferedWriter(new FileWriter(outputFileName))
+      val renderer = new CsvRenderer(output)
+      renderer.render(tableMap)
+      true
     }
     result
   }

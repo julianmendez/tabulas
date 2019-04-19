@@ -6,6 +6,7 @@ import java.util.Objects
 import de.tudresden.inf.lat.tabulas.datatype.ParseException
 
 import scala.collection.mutable
+import scala.util.Try
 
 /** This models an extension that can execute other extensions.
   *
@@ -30,10 +31,11 @@ case class ExtensionManager(extensions: Seq[Extension]) extends Extension {
     extensions.map(extension => (extension.getExtensionName, extension)).toMap
   }
 
-  override def process(arguments: Seq[String]): Boolean = {
+  override def process(arguments: Seq[String]): Try[Boolean] = Try {
     Objects.requireNonNull(arguments)
     val result = if (arguments.size < RequiredArguments) {
       throw ExtensionException("No extension name was given.")
+
     } else {
       val command: String = arguments(0)
       val newArguments = new mutable.ArrayBuffer[String]()
@@ -42,15 +44,17 @@ case class ExtensionManager(extensions: Seq[Extension]) extends Extension {
       val optExtension: Option[Extension] = this._extensionMap.get(command)
       if (optExtension.isEmpty) {
         throw ExtensionException("Extension '" + command + "' was not found.")
+
       } else if (newArguments.size < optExtension.get.getRequiredArguments) {
         throw ExtensionException("Insufficient number of arguments for extension '" + command + "'.")
+
       } else {
         try {
-          optExtension.get.process(newArguments)
+          optExtension.get.process(newArguments).get
 
         } catch {
           case e@(_: ParseException | _: UncheckedIOException | _: IOException) =>
-            throw new ExtensionException(e.toString, e)
+            throw ExtensionException(e.toString, e)
         }
       }
     }

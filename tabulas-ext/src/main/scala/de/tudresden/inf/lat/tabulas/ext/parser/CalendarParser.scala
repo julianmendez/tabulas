@@ -8,6 +8,7 @@ import de.tudresden.inf.lat.tabulas.parser.Parser
 import de.tudresden.inf.lat.tabulas.table.{RecordImpl, TableImpl, TableMap, TableMapImpl}
 
 import scala.collection.mutable
+import scala.util.Try
 
 /** Parser of a calendar.
   *
@@ -54,14 +55,8 @@ case class CalendarParser(input: Reader) extends Parser {
   final val BeginKeyword: String = "BEGIN"
   final val EndKeyword: String = "END"
 
-  override def parse(): TableMap = {
-    val result = try {
-      parseMap(new BufferedReader(input))
-
-    } catch {
-      case e: IOException => throw new RuntimeException(e)
-    }
-    result
+  override def parse(): Try[TableMap] = Try {
+    parseMap(new BufferedReader(input))
   }
 
   def parseMap(input: BufferedReader): TableMap = {
@@ -156,8 +151,7 @@ case class CalendarParser(input: Reader) extends Parser {
         + " keywords  (line " + lineCounter + ").")
     }
 
-    val result: TableMapImpl = TableMapImpl(map.toMap)
-    result
+    TableMapImpl(map.toMap)
   }
 
   def isBeginLine(line: String): Boolean = {

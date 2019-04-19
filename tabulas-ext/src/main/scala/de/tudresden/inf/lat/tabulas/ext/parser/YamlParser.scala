@@ -9,22 +9,17 @@ import de.tudresden.inf.lat.tabulas.table.TableMap
 import org.snakeyaml.engine.v1.api.{Load, LoadSettingsBuilder}
 
 import scala.collection.JavaConverters._
+import scala.util.Try
 
 /** Parser for YAML format.
   */
 case class YamlParser(input: Reader) extends Parser {
 
-  override def parse(): TableMap = {
-    val result: TableMap = try {
-      val buffer = transformDocument(input)
-      val parser = new SimpleFormatParser(new BufferedReader(
-        new InputStreamReader(new ByteArrayInputStream(buffer.getBytes()))))
-      parser.parse()
-
-    } catch {
-      case e: IOException => throw new RuntimeException(e)
-    }
-    result
+  override def parse(): Try[TableMap] = Try {
+    val buffer = transformDocument(input)
+    val parser = new SimpleFormatParser(new BufferedReader(
+      new InputStreamReader(new ByteArrayInputStream(buffer.getBytes()))))
+    parser.parse().get
   }
 
   def transformDocument(reader: Reader): String = {

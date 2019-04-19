@@ -1,11 +1,12 @@
 package de.tudresden.inf.lat.tabulas.extension
 
-import java.io.{BufferedWriter, FileReader, FileWriter, IOException}
+import java.io.{BufferedWriter, FileReader, FileWriter}
 import java.util.Objects
 
 import de.tudresden.inf.lat.tabulas.parser.SimpleFormatParser
 import de.tudresden.inf.lat.tabulas.renderer.SimpleFormatRenderer
-import de.tudresden.inf.lat.tabulas.table.TableMap
+
+import scala.util.Try
 
 /** Default extension. It reads and writes using the default format.
   *
@@ -16,25 +17,17 @@ case class DefaultExtension() extends Extension {
   final val Help: String = "(input) (output) : create a Tabula/Properties file (this is the default format)"
   final val RequiredArguments: Int = 2
 
-  override def process(arguments: Seq[String]): Boolean = {
-    val result: Boolean = if (Objects.isNull(arguments) || arguments.size != RequiredArguments) {
+  override def process(arguments: Seq[String]): Try[Boolean] = Try {
+    val result = if (Objects.isNull(arguments) || arguments.size != RequiredArguments) {
       false
     } else {
-      try {
-
-        val inputFileName = arguments(0)
-        val outputFileName = arguments(1)
-        val tableMap: TableMap = SimpleFormatParser(new FileReader(
-          inputFileName)).parse()
-        val output: BufferedWriter = new BufferedWriter(new FileWriter(
-          outputFileName))
-        val renderer: SimpleFormatRenderer = SimpleFormatRenderer(output)
-        renderer.render(tableMap)
-        true
-
-      } catch {
-        case e: IOException => throw new RuntimeException(e)
-      }
+      val inputFileName = arguments(0)
+      val outputFileName = arguments(1)
+      val tableMap = SimpleFormatParser(new FileReader(inputFileName)).parse().get
+      val output = new BufferedWriter(new FileWriter(outputFileName))
+      val renderer = SimpleFormatRenderer(output)
+      renderer.render(tableMap)
+      true
     }
     result
   }

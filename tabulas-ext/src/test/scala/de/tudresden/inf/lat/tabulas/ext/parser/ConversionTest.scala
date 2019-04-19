@@ -7,7 +7,6 @@ import java.nio.file.{Files, Paths}
 import de.tudresden.inf.lat.tabulas.ext.renderer.{JsonRenderer, YamlRenderer}
 import de.tudresden.inf.lat.tabulas.parser.SimpleFormatParser
 import de.tudresden.inf.lat.tabulas.renderer.SimpleFormatRenderer
-import de.tudresden.inf.lat.tabulas.table.TableMap
 import org.scalatest.FunSuite
 
 import scala.collection.JavaConverters._
@@ -58,19 +57,19 @@ class ConversionTest extends FunSuite {
     new FileReader(getPath(inputFileName).getFile)
   }
 
+  def getPath(fileName: String): URL = {
+    getClass.getClassLoader.getResource(fileName)
+  }
+
   def readFile(fileName: String): String = {
     val path = Paths.get(getPath(fileName).toURI)
     val result = Files.readAllLines(path).asScala.mkString(NewLine) + NewLine
     result
   }
 
-  def getPath(fileName: String): URL = {
-    getClass.getClassLoader.getResource(fileName)
-  }
-
   test("normalization") {
-    val tableMap: TableMap = new SimpleFormatParser(getFileReader(InputFileName0)).parse()
-    val expectedResult: String = readFile(ExpectedOutputFileName0)
+    val tableMap = new SimpleFormatParser(getFileReader(InputFileName0)).parse().get
+    val expectedResult = readFile(ExpectedOutputFileName0)
     val writer = new StringWriter()
     val renderer = SimpleFormatRenderer(writer)
     renderer.render(tableMap)
@@ -83,8 +82,8 @@ class ConversionTest extends FunSuite {
       (InputFileName2, ExpectedOutputFileName2),
       (InputFileName3, ExpectedOutputFileName3)
     ).foreach(pair => {
-      val tableMap: TableMap = new SimpleFormatParser(getFileReader(pair._1)).parse()
-      val expectedResult: String = readFile(pair._2)
+      val tableMap = new SimpleFormatParser(getFileReader(pair._1)).parse().get
+      val expectedResult = readFile(pair._2)
       val writer = new StringWriter()
       val renderer = JsonRenderer(writer)
       renderer.render(tableMap)
@@ -98,8 +97,8 @@ class ConversionTest extends FunSuite {
       (InputFileName5, ExpectedOutputFileName5),
       (InputFileName6, ExpectedOutputFileName6)
     ).foreach(pair => {
-      val tableMap: TableMap = new JsonParser(getFileReader(pair._1)).parse()
-      val expectedResult: String = readFile(pair._2)
+      val tableMap = new JsonParser(getFileReader(pair._1)).parse().get
+      val expectedResult = readFile(pair._2)
       val writer = new StringWriter()
       val renderer = SimpleFormatRenderer(writer)
       renderer.render(tableMap)
@@ -112,8 +111,8 @@ class ConversionTest extends FunSuite {
       (InputFileName7, ExpectedOutputFileName7),
       (InputFileName8, ExpectedOutputFileName8)
     ).foreach(pair => {
-      val tableMap: TableMap = new SimpleFormatParser(getFileReader(pair._1)).parse()
-      val expectedResult: String = readFile(pair._2)
+      val tableMap = new SimpleFormatParser(getFileReader(pair._1)).parse().get
+      val expectedResult = readFile(pair._2)
       val writer = new StringWriter()
       val renderer = YamlRenderer(writer)
       renderer.render(tableMap)
@@ -126,8 +125,8 @@ class ConversionTest extends FunSuite {
       (InputFileName9, ExpectedOutputFileName9),
       (InputFileName10, ExpectedOutputFileName10)
     ).foreach(pair => {
-      val tableMap: TableMap = new YamlParser(getFileReader(pair._1)).parse()
-      val expectedResult: String = readFile(pair._2)
+      val tableMap = new YamlParser(getFileReader(pair._1)).parse().get
+      val expectedResult = readFile(pair._2)
       val writer = new StringWriter()
       val renderer = SimpleFormatRenderer(writer)
       renderer.render(tableMap)

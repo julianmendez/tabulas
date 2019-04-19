@@ -1,5 +1,7 @@
 package de.tudresden.inf.lat.tabulas.extension
 
+import scala.util.Try
+
 /** This models an extension.
   *
   */
@@ -10,7 +12,7 @@ trait Extension {
     * @param arguments arguments
     * @return <code>true</code> if the extension was successfully executed
     */
-  def process(arguments: Seq[String]): Boolean
+  def process(arguments: Seq[String]): Try[Boolean]
 
   /** Returns a name for this extension.
     *

@@ -7,6 +7,8 @@ import java.util.Objects
 import de.tudresden.inf.lat.tabulas.extension.Extension
 import de.tudresden.inf.lat.tabulas.parser.ParserConstant
 
+import scala.util.Try
+
 /** This models an extension that outputs the README.md file.
   *
   */
@@ -18,21 +20,13 @@ case class ReadmeExtension() extends Extension {
   final val ReadmeFileName = "/resources/README.md"
   final val ErrorMessageReadmeNotAvailable = "README.md not available."
 
-  override def process(arguments: Seq[String]): Boolean = {
+  override def process(arguments: Seq[String]): Try[Boolean] = Try {
     val result = if (Objects.isNull(arguments) || arguments.size != RequiredArguments) {
       false
     } else {
-      val res = try {
-
-        val inputFileName = ReadmeFileName
-        val content = readFileOrReturnDefault(ReadmeFileName)
-        println(content)
-        true
-
-      } catch {
-        case e: IOException => throw new RuntimeException(e)
-      }
-      res
+      val content = readFileOrReturnDefault(ReadmeFileName)
+      println(content)
+      true
     }
     result
   }

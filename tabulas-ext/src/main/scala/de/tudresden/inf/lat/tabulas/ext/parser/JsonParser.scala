@@ -9,22 +9,17 @@ import de.tudresden.inf.lat.tabulas.renderer.SimpleFormatRenderer
 import de.tudresden.inf.lat.tabulas.table.TableMap
 
 import scala.collection.JavaConverters._
+import scala.util.Try
 
 /** Parser for JSON format.
   */
 case class JsonParser(input: Reader) extends Parser {
 
-  override def parse(): TableMap = {
-    val result: TableMap = try {
-      val buffer = transformDocument(input)
-      val parser = new SimpleFormatParser(new BufferedReader(
-        new InputStreamReader(new ByteArrayInputStream(buffer.getBytes()))))
-      parser.parse()
-
-    } catch {
-      case e: IOException => throw new RuntimeException(e)
-    }
-    result
+  override def parse(): Try[TableMap] = Try {
+    val buffer = transformDocument(input)
+    val parser = new SimpleFormatParser(new BufferedReader(
+      new InputStreamReader(new ByteArrayInputStream(buffer.getBytes()))))
+    parser.parse().get
   }
 
   def transformDocument(reader: Reader): String = {

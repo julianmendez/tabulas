@@ -1,7 +1,7 @@
 
 package de.tudresden.inf.lat.tabulas.ext.parser
 
-import java.io.{BufferedReader, IOException, InputStreamReader, Reader}
+import java.io.{BufferedReader, InputStreamReader, Reader}
 import java.util.Objects
 
 import de.tudresden.inf.lat.tabulas.datatype.{CompositeTypeImpl, ParseException, StringValue}
@@ -9,6 +9,7 @@ import de.tudresden.inf.lat.tabulas.parser.{Parser, ParserConstant}
 import de.tudresden.inf.lat.tabulas.table.{RecordImpl, TableImpl, TableMap, TableMapImpl}
 
 import scala.collection.mutable
+import scala.util.Try
 
 /** Parser of a table in comma-separated values format.
   *
@@ -23,14 +24,8 @@ case class CsvParser(input: Reader) extends Parser {
   final val DefaultFieldType: String = "String"
   final val Underscore: String = "" + UnderscoreChar
 
-  override def parse(): TableMap = {
-    val result: TableMap = try {
-      parseMap(new BufferedReader(input))
-
-    } catch {
-      case e: IOException => throw new RuntimeException(e)
-    }
-    result
+  override def parse(): Try[TableMap] = Try {
+    parseMap(new BufferedReader(input))
   }
 
   def parseMap(input: BufferedReader): TableMap = {

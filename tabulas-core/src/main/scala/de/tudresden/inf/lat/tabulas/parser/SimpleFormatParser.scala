@@ -1,7 +1,7 @@
 
 package de.tudresden.inf.lat.tabulas.parser
 
-import java.io.{BufferedReader, IOException, InputStreamReader, Reader}
+import java.io.{BufferedReader, InputStreamReader, Reader}
 import java.net.{URI, URISyntaxException}
 import java.util.{Objects, StringTokenizer}
 
@@ -11,6 +11,7 @@ import de.tudresden.inf.lat.tabulas.table._
 import scala.annotation.tailrec
 import scala.collection.mutable
 import scala.collection.mutable.ArrayBuffer
+import scala.util.Try
 
 /** Parser of a table in simple format.
   *
@@ -295,14 +296,8 @@ case class SimpleFormatParser(input: Reader) extends Parser {
     result
   }
 
-  override def parse(): TableMapImpl = {
-    val result = try {
-      parseMap(new BufferedReader(this.input))
-
-    } catch {
-      case e: IOException => throw new RuntimeException(e)
-    }
-    result
+  override def parse(): Try[TableMapImpl] = Try {
+    parseMap(new BufferedReader(this.input))
   }
 
   @tailrec

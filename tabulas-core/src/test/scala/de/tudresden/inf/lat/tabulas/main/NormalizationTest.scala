@@ -32,7 +32,7 @@ class NormalizationTest extends FunSuite {
   final val NewLine: String = "\n"
 
   def testOldFormatParsing(inputFileName: String, expectedFileName: String): Unit = {
-    val tableMap: TableMap = new SimpleFormatParser(new FileReader(getPath(inputFileName))).parse()
+    val tableMap: TableMap = new SimpleFormatParser(new FileReader(getPath(inputFileName))).parse().get
     val expectedResult: String = (new MainTest()).readFile(expectedFileName)
     val writer = new StringWriter()
     val renderer = SimpleFormatRenderer(writer)
@@ -51,7 +51,7 @@ class NormalizationTest extends FunSuite {
 
         val inputFileName = pair._1
         val expectedFileName = pair._2
-        val tableMap: TableMap = new SimpleFormatParser(new FileReader(getPath(inputFileName))).parse()
+        val tableMap: TableMap = new SimpleFormatParser(new FileReader(getPath(inputFileName))).parse().get
         val expectedResult: String = (new MainTest()).readFile(expectedFileName)
         val writer = new StringWriter()
         val renderer = SimpleFormatRenderer(writer)
@@ -69,7 +69,7 @@ class NormalizationTest extends FunSuite {
       .foreach(pair => {
         val inputFileName = pair._1
         val expectedFileName = pair._2
-        val tableMap: TableMap = new SimpleFormatParser(new FileReader(getPath(inputFileName))).parse()
+        val tableMap: TableMap = new SimpleFormatParser(new FileReader(getPath(inputFileName))).parse().get
         val expectedResult: String = (new MainTest()).readFile(expectedFileName)
         val writer = new StringWriter()
         val renderer = SimpleFormatRenderer(writer, ParserConstant.EqualsFieldSign)

@@ -1,12 +1,13 @@
 
 package de.tudresden.inf.lat.tabulas.ext.parser
 
-import java.io.{BufferedWriter, FileReader, FileWriter, IOException}
+import java.io.{BufferedWriter, FileReader, FileWriter}
 import java.util.Objects
 
 import de.tudresden.inf.lat.tabulas.extension.Extension
 import de.tudresden.inf.lat.tabulas.renderer.SimpleFormatRenderer
-import de.tudresden.inf.lat.tabulas.table.TableMap
+
+import scala.util.Try
 
 /** This models an extension that reads comma-separated values and writes them
   * with the default format.
@@ -20,25 +21,17 @@ case class CalendarParserExtension() extends Extension {
 
   final val RequiredArguments: Int = 2
 
-  override def process(arguments: Seq[String]): Boolean = {
+  override def process(arguments: Seq[String]): Try[Boolean] = Try {
     val result = if (Objects.isNull(arguments) || arguments.size != RequiredArguments) {
       false
     } else {
-      try {
-
-        val inputFileName = arguments(0)
-        val outputFileName = arguments(1)
-        val tableMap: TableMap = new CalendarParser(new FileReader(
-          inputFileName)).parse()
-        val output: BufferedWriter = new BufferedWriter(new FileWriter(
-          outputFileName))
-        val renderer = SimpleFormatRenderer(output)
-        renderer.render(tableMap)
-        true
-
-      } catch {
-        case e: IOException => throw new RuntimeException(e)
-      }
+      val inputFileName = arguments(0)
+      val outputFileName = arguments(1)
+      val tableMap = new CalendarParser(new FileReader(inputFileName)).parse().get
+      val output = new BufferedWriter(new FileWriter(outputFileName))
+      val renderer = SimpleFormatRenderer(output)
+      renderer.render(tableMap)
+      true
     }
     result
   }
