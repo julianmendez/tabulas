@@ -1,8 +1,10 @@
-package de.tudresden.inf.lat.tabulas.extension
+
+package de.tudresden.inf.lat.tabulas.ext.renderer
 
 import java.io.{BufferedWriter, FileReader, FileWriter}
 import java.util.Objects
 
+import de.tudresden.inf.lat.tabulas.extension.Extension
 import de.tudresden.inf.lat.tabulas.parser.{ParserConstant, SimpleFormatParser}
 import de.tudresden.inf.lat.tabulas.renderer.SimpleFormatRenderer
 import de.tudresden.inf.lat.tabulas.table.TableMap
