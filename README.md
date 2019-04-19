@@ -207,7 +207,7 @@ Some serializers and some deserializers cannot map completely the content of a T
 
 The given example (as Tabula/Properties) is converted to a YAML file (i.e. Tabula/YAML) as follows:
 ```yaml
-
+---
 
 - type :
     name : record
@@ -351,4 +351,5 @@ See [release notes](https://julianmendez.github.io/tabulas/RELEASE-NOTES.html).
 ## Contact
 
 In case you need more information, please contact @julianmendez .
+
 
