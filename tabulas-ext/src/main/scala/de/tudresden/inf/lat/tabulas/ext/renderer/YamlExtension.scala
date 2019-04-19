@@ -1,3 +1,4 @@
+
 package de.tudresden.inf.lat.tabulas.ext.renderer
 
 import java.io.{BufferedWriter, FileReader, FileWriter, IOException}
@@ -5,9 +6,8 @@ import java.util.Objects
 
 import de.tudresden.inf.lat.tabulas.extension.Extension
 import de.tudresden.inf.lat.tabulas.parser.SimpleFormatParser
-import de.tudresden.inf.lat.tabulas.table.TableMap
 
-/** This models an extension that writes the output in Wikitext.
+/** This models an extension that writes the output in Tabula/YAML.
   *
   */
 case class YamlExtension() extends Extension {
@@ -24,11 +24,9 @@ case class YamlExtension() extends Extension {
 
         val inputFileName = arguments(0)
         val outputFileName = arguments(1)
-        val tableMap: TableMap = new SimpleFormatParser(new FileReader(
-          inputFileName)).parse()
-        val output: BufferedWriter = new BufferedWriter(new FileWriter(
-          outputFileName))
-        val renderer: YamlRenderer = new YamlRenderer(output)
+        val tableMap = new SimpleFormatParser(new FileReader(inputFileName)).parse()
+        val output = new BufferedWriter(new FileWriter(outputFileName))
+        val renderer = new YamlRenderer(output)
         renderer.render(tableMap)
         true
 
