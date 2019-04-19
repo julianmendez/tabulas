@@ -20,9 +20,12 @@ case class YamlRenderer(output: Writer) extends Renderer {
   final val SpaceChar = " "
   final val HashChar = "#"
   final val HyphenChar = "-"
+  final val DotChar = "."
   final val HyphenSpace = HyphenChar + SpaceChar
   final val TwoSpaces = SpaceChar + SpaceChar
   final val FourSpaces = TwoSpaces + TwoSpaces
+  final val BeginningOfDocument = HyphenChar + HyphenChar + HyphenChar
+  final val EndOfDocument = DotChar + DotChar + DotChar
 
   final val QuotationMark = "\""
   final val EscapedQuotationMark = "\\\""
@@ -195,9 +198,10 @@ case class YamlRenderer(output: Writer) extends Renderer {
   }
 
   def render(output: Writer, tableMap: TableMap): Unit = {
-    output.write(NewLine + NewLine)
     tableMap.getTableIds.foreach(tableId => {
       val table: Table = tableMap.getTable(tableId).get
+      output.write(BeginningOfDocument)
+      output.write(NewLine + NewLine)
       renderMetadata(output, tableId, table)
       renderAllRecords(output, table)
     })
