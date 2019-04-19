@@ -24,7 +24,8 @@ lazy val tabulas_ext = project
   .dependsOn(tabulas_core)
   .settings(
     commonSettings,
-    libraryDependencies += "com.eclipsesource.minimal-json" % "minimal-json" % "0.9.5"
+    libraryDependencies += "com.eclipsesource.minimal-json" % "minimal-json" % "0.9.5",
+    libraryDependencies += "org.snakeyaml" % "snakeyaml-engine" % "1.0"
   )
 
 lazy val tabulas_distribution = project

@@ -141,6 +141,7 @@
 									@tabulas-core_${scala.version.binary}-${project.version}.jar,
 									@tabulas-ext_${scala.version.binary}-${project.version}.jar,
 									@minimal-json-${jsonparser.version}.jar,
+									@snakeyaml-engine-${yamlparser.version}.jar,
 									@scala-library-${scala.version}.jar
 								</Include-Resource>
 							</instructions>
