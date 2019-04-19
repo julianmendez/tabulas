@@ -28,7 +28,8 @@ object Main {
       SqlExtension(),
       CsvExtension(),
       HtmlExtension(),
-      NormalizationExtension()
+      NormalizationExtension(),
+      ExampleExtension()
     )
 
     val instance: ConsoleStarter = ConsoleStarter()
