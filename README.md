@@ -190,8 +190,8 @@ Some serializers and some deserializers cannot map completely the content of a T
 
 | serializer   | stores metadata   | multiple tables |
 |:-------------|:------------------|:----------------|
-| JSON         | yes               | yes             |
 | YAML         | yes               | yes             |
+| JSON         | yes               | yes             |
 | HTML         | no                | yes             |
 | [Wikitext](https://www.mediawiki.org/wiki/Specs/wikitext/1.0.0) | no | yes |
 | CSV          | no                | no              |
@@ -200,6 +200,7 @@ Some serializers and some deserializers cannot map completely the content of a T
 
 | deserializer | requires metadata | multiple tables |
 |:-------------|:------------------|:----------------|
+| YAML         | yes               | yes             |
 | JSON         | yes               | yes             |
 | CSV          | no                | no              |
 
