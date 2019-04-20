@@ -9,12 +9,12 @@
 
 
 **Tabulas** is a system to manage human-readable tables using files. 
-Tabulas is a [Scala](https://www.scala-lang.org/) reimplementation of [Tabula](https://github.com/julianmendez/tabula), which is implemented in Java.
+Tabulas is a [Scala](https://www.scala-lang.org/) implementation based on the [Tabula](https://github.com/julianmendez/tabula) format.
 There are three alternatives to represent the content:
 - **Tabula/Properties**, which is a type of file format that is similar to a [Java Properties](https://docs.oracle.com/javase/8/docs/api/java/util/Properties.html#load-java.io.Reader-) file,
 but allows defining the same property for different objects.
 - **Tabula/JSON**, using the [JSON](https://json.org) format,
-- **Tabulas/YAML**, using the [YAML](https://yaml.org) format.
+- **Tabula/YAML**, using the [YAML](https://yaml.org) format.
 
 
 ## Download
