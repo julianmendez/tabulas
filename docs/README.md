@@ -39,7 +39,7 @@ This describes the project as it is in the `master` branch.
 In this section, the Tabula format is explained using the Tabula/Properties representation.
 
 The Tabula format has *primitive types* and *composite types*. 
-Unless something different is stated in the [release notes](https://github.com/julianmendez/tabula/blob/master/RELEASE-NOTES.md), the primitive types are:
+Unless something different is stated in the release notes, the primitive types are:
 
 - `String`: any string without any newline (`'\n'` 0x0A, `'\r'` 0x0D), and not ending in backslash (`'\'` 0x5C), neither in blanks (`'\t'` 0x08, `' '` 0x20)
 - `URI`: any valid Uniform Resource Identifier
@@ -277,7 +277,7 @@ The command line application can be executed with:
 `java -jar` *(jarname)* *(extension)* *(input)* *(output)*
 
 The executable JAR file is available at the link provided in the *Download* section.
-If the project is build from its source code, the executable JAR file will be available in the location indicated by the *release* property of the [release notes](https://github.com/julianmendez/tabulas/blob/master/RELEASE-NOTES.md).
+If the project is build from its source code, the executable JAR file will be available in the location indicated by the *release* property of the release notes.
 
 
 ## Source code
@@ -291,7 +291,7 @@ $ mvn clean install
 ```
 
 The created executable library, its sources, and its Javadoc will be in `tabulas-distribution/target`.
-This executable JAR file requires the [Scala library](https://search.maven.org/#search|gav|1|g%3A%22org.scala-lang%22%20AND%20a%3A%22scala-library%22) in the same directory. The required version is shown in the [release notes](https://github.com/julianmendez/tabulas/blob/master/RELEASE-NOTES.md).
+This executable JAR file requires the [Scala library](https://search.maven.org/#search|gav|1|g%3A%22org.scala-lang%22%20AND%20a%3A%22scala-library%22) in the same directory. The required version is shown in the release notes.
 
 To compile the project offline, first download the dependencies:
 
