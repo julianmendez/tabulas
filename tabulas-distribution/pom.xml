@@ -105,8 +105,8 @@
 								<Build-Time>${maven.build.timestamp}</Build-Time>
 								<Include-Resource>
 									{maven-resources}, {maven-dependencies},
-									resources/README.md=../README.md,
-									resources/LICENSE.txt=../LICENSE.txt,
+									resources/README.md=../docs/README.md,
+									resources/LICENSE.txt=../docs/LICENSE.txt,
 									@tabulas-core_${scala.version.binary}-${project.version}.jar,
 									@tabulas-ext_${scala.version.binary}-${project.version}.jar
 								</Include-Resource>
@@ -136,8 +136,8 @@
 								<Build-Time>${maven.build.timestamp}</Build-Time>
 								<Include-Resource>
 									{maven-resources}, {maven-dependencies},
-									resources/README.md=../README.md,
-									resources/LICENSE.txt=../LICENSE.txt,
+									resources/README.md=../docs/README.md,
+									resources/LICENSE.txt=../docs/LICENSE.txt,
 									@tabulas-core_${scala.version.binary}-${project.version}.jar,
 									@tabulas-ext_${scala.version.binary}-${project.version}.jar,
 									@minimal-json-${jsonparser.version}.jar,
