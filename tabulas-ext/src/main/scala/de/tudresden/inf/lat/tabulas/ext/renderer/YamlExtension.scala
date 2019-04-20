@@ -29,8 +29,7 @@ case class YamlExtension() extends Extension {
         Seq(YamlParser(), JsonParser(), SimpleFormatParser())
       ).parse(new FileReader(inputFileName)).get
       val output = new BufferedWriter(new FileWriter(outputFileName))
-      val renderer = YamlRenderer(output)
-      renderer.render(tableMap)
+      YamlRenderer().render(output, tableMap)
       true
     }
     result

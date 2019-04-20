@@ -30,8 +30,7 @@ case class PropertiesExtension() extends Extension {
         Seq(SimpleFormatParser(), JsonParser(), YamlParser())
       ).parse(new FileReader(inputFileName)).get
       val output = new BufferedWriter(new FileWriter(outputFileName))
-      val renderer = SimpleFormatRenderer(output)
-      renderer.render(tableMap)
+      SimpleFormatRenderer().render(output, tableMap)
       true
     }
     result

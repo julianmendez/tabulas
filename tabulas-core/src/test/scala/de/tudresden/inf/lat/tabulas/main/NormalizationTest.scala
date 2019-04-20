@@ -34,8 +34,8 @@ class NormalizationTest extends FunSuite {
     val tableMap = SimpleFormatParser().parse(new FileReader(getPath(inputFileName))).get
     val expectedResult = MainTest().readFile(expectedFileName)
     val writer = new StringWriter()
-    val renderer = SimpleFormatRenderer(writer)
-    renderer.render(tableMap)
+    val renderer = SimpleFormatRenderer()
+    renderer.render(writer, tableMap)
     assert(expectedResult === writer.toString)
   }
 
@@ -53,8 +53,8 @@ class NormalizationTest extends FunSuite {
         val tableMap = SimpleFormatParser().parse(new FileReader(getPath(inputFileName))).get
         val expectedResult = MainTest().readFile(expectedFileName)
         val writer = new StringWriter()
-        val renderer = SimpleFormatRenderer(writer)
-        renderer.render(tableMap)
+        val renderer = SimpleFormatRenderer()
+        renderer.render(writer, tableMap)
         assert(expectedResult === writer.toString)
       }
       )
@@ -71,8 +71,8 @@ class NormalizationTest extends FunSuite {
         val tableMap = SimpleFormatParser().parse(new FileReader(getPath(inputFileName))).get
         val expectedResult = MainTest().readFile(expectedFileName)
         val writer = new StringWriter()
-        val renderer = SimpleFormatRenderer(writer, ParserConstant.EqualsFieldSign)
-        renderer.render(tableMap)
+        val renderer = SimpleFormatRenderer(ParserConstant.EqualsFieldSign)
+        renderer.render(writer, tableMap)
         assert(expectedResult === writer.toString)
       })
   }

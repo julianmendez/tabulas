@@ -8,13 +8,9 @@ import de.tudresden.inf.lat.tabulas.table.{Table, TableMap}
 
 /** Renderer of a table in simple format.
   */
-case class SimpleFormatRenderer(output: Writer, fieldSign: String) extends Renderer {
+case class SimpleFormatRenderer(fieldSign: String) extends Renderer {
 
-  override def render(tableMap: TableMap): Unit = {
-    render(output, tableMap)
-  }
-
-  def render(output: Writer, tableMap: TableMap): Unit = {
+  override def render(output: Writer, tableMap: TableMap): Unit = {
     output.write(SimpleFormatRenderer.Header)
     tableMap.getTableIds.foreach(tableName => {
       output.write(ParserConstant.NewLine)
@@ -22,7 +18,7 @@ case class SimpleFormatRenderer(output: Writer, fieldSign: String) extends Rende
       output.write(ParserConstant.TypeSelectionToken + ParserConstant.Space + fieldSign)
       val table: Table = tableMap.getTable(tableName).get
       val record = MetadataHelper().getMetadataAsRecord(tableName, table)
-      val recordRenderer = SimpleFormatRecordRenderer(output, table.getPrefixMap, fieldSign)
+      val recordRenderer = SimpleFormatRecordRenderer(table.getPrefixMap, fieldSign)
       recordRenderer.render(output, record, SimpleFormatRenderer.MetadataTokens)
       renderAllRecords(recordRenderer, output, table)
     })
@@ -55,6 +51,6 @@ object SimpleFormatRenderer {
     ParserConstant.CommentSymbol + " " + ParserConstant.SpecificationFormat + " " +
     ParserConstant.SpecificationVersion + ParserConstant.NewLine
 
-  def apply(output: Writer): SimpleFormatRenderer = new SimpleFormatRenderer(output, ParserConstant.ColonFieldSign)
+  def apply(): SimpleFormatRenderer = new SimpleFormatRenderer(ParserConstant.ColonFieldSign)
 
 }

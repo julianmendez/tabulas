@@ -11,7 +11,7 @@ import de.tudresden.inf.lat.tabulas.table.PrefixMap
 
 /** Renderer of a table in simple format.
   */
-case class SimpleFormatRecordRenderer(output: Writer, prefixMap: PrefixMap, fieldSign: String) extends RecordRenderer {
+case class SimpleFormatRecordRenderer(prefixMap: PrefixMap, fieldSign: String) extends RecordRenderer {
 
   def renderNew(output: Writer): Unit = {
     output.write(ParserConstant.NewLine)
@@ -19,11 +19,7 @@ case class SimpleFormatRecordRenderer(output: Writer, prefixMap: PrefixMap, fiel
     output.write(fieldSign)
   }
 
-  override def render(record: Record, fields: Seq[String]): Unit = {
-    render(output, record, fields)
-  }
-
-  def render(output: Writer, record: Record, fields: Seq[String]): Unit = {
+  override def render(output: Writer, record: Record, fields: Seq[String]): Unit = {
     fields.foreach(field => {
       val optValue: Option[PrimitiveTypeValue] = record.get(field)
       if (optValue.isDefined) {
@@ -79,8 +75,3 @@ case class SimpleFormatRecordRenderer(output: Writer, prefixMap: PrefixMap, fiel
 
 }
 
-object SimpleFormatRecordRenderer {
-
-  def apply(output: Writer, prefixMap: PrefixMap): SimpleFormatRecordRenderer = new SimpleFormatRecordRenderer(output, prefixMap, ParserConstant.ColonFieldSign)
-
-}

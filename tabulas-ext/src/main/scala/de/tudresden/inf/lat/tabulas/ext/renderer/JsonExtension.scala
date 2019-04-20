@@ -29,8 +29,7 @@ case class JsonExtension() extends Extension {
         Seq(JsonParser(), YamlParser(), SimpleFormatParser())
       ).parse(new FileReader(inputFileName)).get
       val output = new BufferedWriter(new FileWriter(outputFileName))
-      val renderer = JsonRenderer(output)
-      renderer.render(tableMap)
+      JsonRenderer().render(output, tableMap)
       true
     }
     result

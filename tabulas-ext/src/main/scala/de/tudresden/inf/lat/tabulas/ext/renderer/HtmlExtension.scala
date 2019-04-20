@@ -26,8 +26,7 @@ case class HtmlExtension() extends Extension {
       val outputFileName = arguments(1)
       val tableMap = MultiParser().parse(new FileReader(inputFileName)).get
       val output = new BufferedWriter(new FileWriter(outputFileName))
-      val renderer = HtmlRenderer(output)
-      renderer.render(tableMap)
+      HtmlRenderer().render(output, tableMap)
       true
     }
     result

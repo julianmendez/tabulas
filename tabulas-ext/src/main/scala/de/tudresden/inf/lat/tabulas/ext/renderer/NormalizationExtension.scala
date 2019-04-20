@@ -4,6 +4,7 @@ package de.tudresden.inf.lat.tabulas.ext.renderer
 import java.io.{BufferedWriter, FileReader, FileWriter}
 import java.util.Objects
 
+import de.tudresden.inf.lat.tabulas.ext.parser.{JsonParser, MultiParser, YamlParser}
 import de.tudresden.inf.lat.tabulas.extension.Extension
 import de.tudresden.inf.lat.tabulas.parser.SimpleFormatParser
 import de.tudresden.inf.lat.tabulas.renderer.SimpleFormatRenderer
@@ -26,10 +27,12 @@ case class NormalizationExtension() extends Extension {
     } else {
       val inputFileName = arguments(0)
       val outputFileName = inputFileName
-      val tableMap = SimpleFormatParser().parse(new FileReader(inputFileName)).get
+      val tableMap = MultiParser(
+        Seq(SimpleFormatParser(), JsonParser(), YamlParser())
+      ).parse(new FileReader(inputFileName)).get
       val output = new BufferedWriter(new FileWriter(outputFileName))
-      val renderer = SimpleFormatRenderer(output)
-      renderer.render(tableMap)
+      val renderer = SimpleFormatRenderer()
+      renderer.render(output, tableMap)
       true
     }
     result

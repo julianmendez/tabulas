@@ -50,8 +50,8 @@ class MainTest extends FunSuite {
   def assertContent(tableMap: TableMap, fileName: String): Unit = {
     // Store the table map
     val writer = new StringWriter()
-    val renderer = SimpleFormatRenderer(writer)
-    renderer.render(tableMap)
+    val renderer = SimpleFormatRenderer()
+    renderer.render(writer, tableMap)
 
     // Read the expected output
     val expectedOutput: String = readFile(fileName)
@@ -76,7 +76,7 @@ class MainTest extends FunSuite {
     // a computed value
 
     // Read the table map
-    val oldTableMap = new SimpleFormatParser().parse(new FileReader(getPath(InputFileName).getFile)).get
+    val oldTableMap = SimpleFormatParser().parse(new FileReader(getPath(InputFileName).getFile)).get
 
     // Make a copy of the tableMap
     val tableMap: TableMapImpl = TableMapImpl(oldTableMap)

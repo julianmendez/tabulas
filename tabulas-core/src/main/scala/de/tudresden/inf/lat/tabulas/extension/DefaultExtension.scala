@@ -25,8 +25,8 @@ case class DefaultExtension() extends Extension {
       val outputFileName = arguments(1)
       val tableMap = SimpleFormatParser().parse(new FileReader(inputFileName)).get
       val output = new BufferedWriter(new FileWriter(outputFileName))
-      val renderer = SimpleFormatRenderer(output)
-      renderer.render(tableMap)
+      val renderer = SimpleFormatRenderer()
+      renderer.render(output, tableMap)
       true
     }
     result

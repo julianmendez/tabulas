@@ -11,13 +11,9 @@ import de.tudresden.inf.lat.tabulas.table.{Table, TableMap}
 
 /** Renderer of a table.
   */
-case class WikitextRenderer(output: Writer) extends Renderer {
+case class WikitextRenderer() extends Renderer {
 
-  override def render(tableMap: TableMap): Unit = {
-    render(output, tableMap)
-  }
-
-  def render(output: Writer, tableMap: TableMap): Unit = {
+  override def render(output: Writer, tableMap: TableMap): Unit = {
     output.write("\n")
     tableMap.getTableIds.foreach(tableId => {
       val table: Table = tableMap.getTable(tableId).get
@@ -110,8 +106,3 @@ case class WikitextRenderer(output: Writer) extends Renderer {
 
 }
 
-object WikitextRenderer {
-
-  def apply(): WikitextRenderer = new WikitextRenderer(new OutputStreamWriter(System.out))
-
-}

@@ -27,8 +27,7 @@ case class SqlExtension() extends Extension {
       val outputFileName = arguments(1)
       val tableMap = MultiParser().parse(new FileReader(inputFileName)).get
       val output = new BufferedWriter(new FileWriter(outputFileName))
-      val renderer = SqlRenderer(output)
-      renderer.render(tableMap)
+      SqlRenderer().render(output, tableMap)
       true
     }
     result

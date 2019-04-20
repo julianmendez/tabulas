@@ -1,6 +1,8 @@
 
 package de.tudresden.inf.lat.tabulas.renderer
 
+import java.io.Writer
+
 import de.tudresden.inf.lat.tabulas.table.TableMap
 
 /** Renderer.
@@ -8,7 +10,7 @@ import de.tudresden.inf.lat.tabulas.table.TableMap
   */
 trait Renderer {
 
-  def render(table: TableMap): Unit
+  def render(writer:Writer, table: TableMap): Unit
 
 }
 

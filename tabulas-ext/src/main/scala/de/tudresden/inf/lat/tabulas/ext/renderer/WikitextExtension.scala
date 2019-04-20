@@ -6,7 +6,6 @@ import java.util.Objects
 
 import de.tudresden.inf.lat.tabulas.ext.parser.MultiParser
 import de.tudresden.inf.lat.tabulas.extension.Extension
-import de.tudresden.inf.lat.tabulas.parser.SimpleFormatParser
 
 import scala.util.Try
 
@@ -27,8 +26,7 @@ case class WikitextExtension() extends Extension {
       val outputFileName = arguments(1)
       val tableMap = MultiParser().parse(new FileReader(inputFileName)).get
       val output = new BufferedWriter(new FileWriter(outputFileName))
-      val renderer = WikitextRenderer(output)
-      renderer.render(tableMap)
+      WikitextRenderer().render(output, tableMap)
       true
     }
     result

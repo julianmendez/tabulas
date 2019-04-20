@@ -1,7 +1,7 @@
 
 package de.tudresden.inf.lat.tabulas.ext.renderer
 
-import java.io.{OutputStreamWriter, Writer}
+import java.io.Writer
 import java.util.Objects
 
 import de.tudresden.inf.lat.tabulas.datatype._
@@ -10,7 +10,7 @@ import de.tudresden.inf.lat.tabulas.table.{Table, TableMap}
 
 /** Renderer of a table that creates an HTML document.
   */
-case class HtmlRenderer(output: Writer) extends Renderer {
+case class HtmlRenderer() extends Renderer {
 
   final val Prefix: String = "<?xml version=\"1.0\" encoding=\"utf-8\"?>" +
     "\n<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.1//EN\" \"https://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd\">" +
@@ -34,11 +34,7 @@ case class HtmlRenderer(output: Writer) extends Renderer {
     "\n</html>" +
     "\n"
 
-  override def render(tableMap: TableMap): Unit = {
-    render(output, tableMap)
-  }
-
-  def render(output: Writer, tableMap: TableMap): Unit = {
+  override def render(output: Writer, tableMap: TableMap): Unit = {
     output.write(Prefix)
     tableMap.getTableIds.foreach(tableName => {
       val table: Table = tableMap.getTable(tableName).get
@@ -134,8 +130,3 @@ case class HtmlRenderer(output: Writer) extends Renderer {
 
 }
 
-object HtmlRenderer {
-
-  def apply(): HtmlRenderer = new HtmlRenderer(new OutputStreamWriter(System.out))
-
-}

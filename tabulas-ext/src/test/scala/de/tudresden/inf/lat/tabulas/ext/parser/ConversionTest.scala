@@ -71,8 +71,7 @@ class ConversionTest extends FunSuite {
     val tableMap = SimpleFormatParser().parse(getFileReader(InputFileName0)).get
     val expectedResult = readFile(ExpectedOutputFileName0)
     val writer = new StringWriter()
-    val renderer = SimpleFormatRenderer(writer)
-    renderer.render(tableMap)
+    SimpleFormatRenderer().render(writer, tableMap)
     assert(expectedResult === writer.toString)
   }
 
@@ -85,8 +84,7 @@ class ConversionTest extends FunSuite {
       val tableMap = SimpleFormatParser().parse(getFileReader(pair._1)).get
       val expectedResult = readFile(pair._2)
       val writer = new StringWriter()
-      val renderer = JsonRenderer(writer)
-      renderer.render(tableMap)
+      JsonRenderer().render(writer, tableMap)
       assert(expectedResult === writer.toString)
     })
   }
@@ -100,8 +98,7 @@ class ConversionTest extends FunSuite {
       val tableMap = JsonParser().parse(getFileReader(pair._1)).get
       val expectedResult = readFile(pair._2)
       val writer = new StringWriter()
-      val renderer = SimpleFormatRenderer(writer)
-      renderer.render(tableMap)
+      SimpleFormatRenderer().render(writer, tableMap)
       assert(expectedResult === writer.toString)
     })
   }
@@ -114,8 +111,7 @@ class ConversionTest extends FunSuite {
       val tableMap = SimpleFormatParser().parse(getFileReader(pair._1)).get
       val expectedResult = readFile(pair._2)
       val writer = new StringWriter()
-      val renderer = YamlRenderer(writer)
-      renderer.render(tableMap)
+      YamlRenderer().render(writer, tableMap)
       assert(expectedResult === writer.toString)
     })
   }
@@ -128,8 +124,7 @@ class ConversionTest extends FunSuite {
       val tableMap = YamlParser().parse(getFileReader(pair._1)).get
       val expectedResult = readFile(pair._2)
       val writer = new StringWriter()
-      val renderer = SimpleFormatRenderer(writer)
-      renderer.render(tableMap)
+      SimpleFormatRenderer().render(writer, tableMap)
       assert(expectedResult === writer.toString)
     })
   }

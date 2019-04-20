@@ -1,6 +1,8 @@
 
 package de.tudresden.inf.lat.tabulas.renderer
 
+import java.io.Writer
+
 import de.tudresden.inf.lat.tabulas.datatype.Record
 
 /** Record renderer.
@@ -8,7 +10,7 @@ import de.tudresden.inf.lat.tabulas.datatype.Record
   */
 trait RecordRenderer {
 
-  def render(record: Record, fields: Seq[String]): Unit
+  def render(writer: Writer, record: Record, fields: Seq[String]): Unit
 
 }
 

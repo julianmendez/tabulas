@@ -14,7 +14,7 @@ import scala.util.Try
 
 /** Renderer that creates a YAML file.
   */
-case class YamlRenderer(output: Writer) extends Renderer {
+case class YamlRenderer() extends Renderer {
 
   final val ColonChar = ":"
   final val SpaceChar = " "
@@ -197,7 +197,7 @@ case class YamlRenderer(output: Writer) extends Renderer {
     })
   }
 
-  def render(output: Writer, tableMap: TableMap): Unit = {
+  override def render(output: Writer, tableMap: TableMap): Unit = {
     tableMap.getTableIds.foreach(tableId => {
       val table: Table = tableMap.getTable(tableId).get
       output.write(BeginningOfDocument)
@@ -209,9 +209,6 @@ case class YamlRenderer(output: Writer) extends Renderer {
     output.flush()
   }
 
-  override def render(tableMap: TableMap): Unit = {
-    render(output, tableMap)
-  }
 
 }
 
@@ -223,7 +220,5 @@ object YamlRenderer {
     ParserConstant.PrefixMapToken,
     ParserConstant.SortingOrderDeclarationToken
   )
-
-  def apply(): YamlRenderer = new YamlRenderer(new OutputStreamWriter(System.out))
 
 }

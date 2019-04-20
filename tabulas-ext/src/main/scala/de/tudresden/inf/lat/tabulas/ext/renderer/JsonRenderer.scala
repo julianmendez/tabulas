@@ -11,7 +11,7 @@ import de.tudresden.inf.lat.tabulas.table.{Table, TableMap}
 
 /** Renderer that creates a JSON file.
   */
-case class JsonRenderer(output: Writer) extends Renderer {
+case class JsonRenderer() extends Renderer {
 
   final val OpenBrace = "{"
   final val CloseBrace = "}"
@@ -168,7 +168,7 @@ case class JsonRenderer(output: Writer) extends Renderer {
   }
 
 
-  def render(output: Writer, tableMap: TableMap): Unit = {
+  override def render(output: Writer, tableMap: TableMap): Unit = {
     output.write(OpenSquareBracket + NewLine + NewLine)
     val list = tableMap.getTableIds
     list.indices.foreach(index => {
@@ -182,10 +182,6 @@ case class JsonRenderer(output: Writer) extends Renderer {
     output.flush()
   }
 
-  override def render(tableMap: TableMap): Unit = {
-    render(output, tableMap)
-  }
-
 }
 
 object JsonRenderer {
@@ -196,7 +192,5 @@ object JsonRenderer {
     ParserConstant.PrefixMapToken,
     ParserConstant.SortingOrderDeclarationToken
   )
-
-  def apply(): JsonRenderer = new JsonRenderer(new OutputStreamWriter(System.out))
 
 }
