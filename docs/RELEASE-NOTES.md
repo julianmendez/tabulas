@@ -1,4 +1,4 @@
-
+---
 
 - type :
     name : release_notes
@@ -29,6 +29,7 @@
   - executes `normalize` extension, if no extension is given
   - shows a warning instead of stopping when the normalization finds duplicated identifiers
   - includes a `prefix` map to shorten URIs
+  - change in the Parser and Renderer traits
   - uses the Scala collections and changes its traits accordingly
   - exports only immutable classes
   - uses [ScalaTest](http://www.scalatest.org) for unit tests
@@ -39,10 +40,11 @@
   - List_Decimal
   - Empty
   new_readers :
+  - (`parseyaml`) YAML
   - (`parsejson`) JSON
   new_writers :
-  - (`json`) JSON
   - (`yaml`) YAML
+  - (`json`) JSON
   - (`oldformat`) Tabula format using the equals sign
   build : (`$ mvn clean install`)
   release : (`tabulas-distribution/target/tabulas-0.3.0.jar`)
