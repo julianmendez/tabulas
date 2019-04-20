@@ -21,25 +21,25 @@ case class MetadataHelper() {
   }
 
   private def getTypeEntry(typeName: String): PrimitiveTypeValue = {
-    new StringValue(typeName)
+    StringValue(typeName)
   }
 
   private def getNameEntry(typeName: String): PrimitiveTypeValue = {
-    new StringValue(typeName)
+    StringValue(typeName)
   }
 
   private def getDefEntry(table: Table): PrimitiveTypeValue = {
     val list = table.getType.getFields
       .map(key => key + ParserConstant.TypeSign + table.getType.getFieldType(key).get)
-      .map(x => new StringValue(x))
-    new ParameterizedListValue(StringType(), list)
+      .map(x => StringValue(x))
+    ParameterizedListValue(StringType(), list)
   }
 
   private def getPrefixEntry(table: Table): PrimitiveTypeValue = {
     val list = table.getPrefixMap.getKeysAsStream
       .map(key => key + ParserConstant.TypeSign + table.getPrefixMap.get(key).get)
-      .map(x => new StringValue(x))
-    new ParameterizedListValue(StringType(), list)
+      .map(x => StringValue(x))
+    ParameterizedListValue(StringType(), list)
   }
 
   private def getOrderEntry(table: Table): PrimitiveTypeValue = {
@@ -53,7 +53,7 @@ case class MetadataHelper() {
         prefix + elem
       })
       .map(x => StringValue(x))
-    new ParameterizedListValue(StringType(), list)
+    ParameterizedListValue(StringType(), list)
   }
 
 }

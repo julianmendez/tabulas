@@ -60,7 +60,7 @@ object ParameterizedListValue {
     */
   def apply(parameter: PrimitiveType): ParameterizedListValue = {
     Objects.requireNonNull(parameter)
-    new ParameterizedListValue(parameter, Seq())
+    ParameterizedListValue(parameter, Seq())
   }
 
   /** Constructs a new parameterized list value using another parameterized
@@ -70,7 +70,7 @@ object ParameterizedListValue {
     */
   def apply(other: ParameterizedListValue): ParameterizedListValue = {
     Objects.requireNonNull(other)
-    new ParameterizedListValue(other.getParameter, other.getList)
+    ParameterizedListValue(other.getParameter, other.getList)
   }
 
 }

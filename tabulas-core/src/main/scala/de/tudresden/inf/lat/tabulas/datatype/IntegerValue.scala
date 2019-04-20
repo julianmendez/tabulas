@@ -45,7 +45,7 @@ case class IntegerValue(number: BigInteger) extends PrimitiveTypeValue {
 
 object IntegerValue {
 
-  def apply(): IntegerValue = new IntegerValue(BigInteger.ZERO)
+  def apply(): IntegerValue = IntegerValue(BigInteger.ZERO)
 
   /** Constructs a new integer value using a string.
     *
@@ -57,7 +57,7 @@ object IntegerValue {
   def apply(str: String): IntegerValue = {
     Objects.requireNonNull(str)
     try {
-      new IntegerValue(new BigInteger(str))
+      IntegerValue(new BigInteger(str))
     } catch {
       case e: NumberFormatException => throw new ParseException(e.getMessage, e)
     }

@@ -17,7 +17,7 @@ case class URIValue(uri: URI) extends PrimitiveTypeValue {
 
   def getUriNoLabel: URI = {
     val uriStr = uri.toString
-    val pos: Int = uriStr.lastIndexOf(SpecialSymbol)
+    val pos = uriStr.lastIndexOf(SpecialSymbol)
     val result = if (pos == -1) {
       uri
     } else {
@@ -28,8 +28,8 @@ case class URIValue(uri: URI) extends PrimitiveTypeValue {
 
   def getLabel: String = {
     val uriStr = uri.toString
-    val pos: Int = uriStr.lastIndexOf(SpecialSymbol)
-    val result: String = if (pos == -1) {
+    val pos = uriStr.lastIndexOf(SpecialSymbol)
+    val result = if (pos == -1) {
       ""
     } else {
       uriStr.substring(pos + SpecialSymbol.length())
@@ -66,7 +66,7 @@ case class URIValue(uri: URI) extends PrimitiveTypeValue {
 object URIValue {
 
   def apply(): URIValue = {
-    new URIValue(createURI(""))
+    URIValue(createURI(""))
   }
 
   /** Constructs a new URI value using a string.
@@ -75,7 +75,7 @@ object URIValue {
     */
   def apply(uriStr: String): URIValue = {
     Objects.requireNonNull(uriStr)
-    new URIValue(createURI(uriStr))
+    URIValue(createURI(uriStr))
   }
 
   def createURI(uriStr: String): URI = {

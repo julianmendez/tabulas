@@ -30,15 +30,15 @@ object PrimitiveTypeFactory {
 
   def apply(): PrimitiveTypeFactory = {
     val map = Seq(
-      new EmptyType(),
-      new StringType(),
-      new ParameterizedListType(new StringType()),
-      new URIType(),
-      new ParameterizedListType(new URIType()),
-      new IntegerType(),
-      new ParameterizedListType(new IntegerType()),
-      new DecimalType(),
-      new ParameterizedListType(new DecimalType())
+      EmptyType(),
+      StringType(),
+      ParameterizedListType(StringType()),
+      URIType(),
+      ParameterizedListType(URIType()),
+      IntegerType(),
+      ParameterizedListType(IntegerType()),
+      DecimalType(),
+      ParameterizedListType(DecimalType())
     )
       .map(primType => (primType.getTypeName, primType))
       .toMap

@@ -21,7 +21,7 @@ case class CompositeTypeImpl(fields: Seq[String], fieldType: Map[String, String]
     } else {
       val list = fields ++ Seq(field)
       val map = fieldType + (field -> typeStr)
-      new CompositeTypeImpl(list, map)
+      CompositeTypeImpl(list, map)
     }
   }
 
@@ -38,7 +38,7 @@ case class CompositeTypeImpl(fields: Seq[String], fieldType: Map[String, String]
 
 object CompositeTypeImpl {
 
-  def apply(): CompositeTypeImpl = new CompositeTypeImpl(Seq(), Map())
+  def apply(): CompositeTypeImpl = CompositeTypeImpl(Seq(), Map())
 
   /** Constructs a new composite type using another one.
     *
@@ -49,7 +49,7 @@ object CompositeTypeImpl {
     val map = otherType.getFields
       .map(field => (field, otherType.getFieldType(field).get))
       .toMap
-    new CompositeTypeImpl(otherType.getFields, map)
+    CompositeTypeImpl(otherType.getFields, map)
   }
 
 }
