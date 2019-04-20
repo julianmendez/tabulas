@@ -68,7 +68,7 @@ case class ExtensionManager(extensions: Seq[Extension]) extends Extension {
   override def getHelp: String = {
     val result = extensions.map(extension => {
       extension.getExtensionName + Space + extension.getHelp
-    }).mkString("" + NewLine)
+    }).mkString("" + NewLine + NewLine)
     result
   }
 
