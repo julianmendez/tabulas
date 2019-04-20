@@ -4,6 +4,8 @@
 # https://travis-ci.org/
 #
 
+---
+
 language: scala
 
 scala:
@@ -21,4 +23,8 @@ after_success:
 
 sudo: false
 
+branches:
+  only:
+  - gh-pages
+  - master
 
