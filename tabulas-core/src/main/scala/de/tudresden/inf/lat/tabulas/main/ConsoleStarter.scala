@@ -24,7 +24,8 @@ case class ConsoleStarter() {
 
     val manager = ExtensionManager(extensions)
     try {
-      manager.process(args)
+      manager.process(args).get
+
     } catch {
       case e: ExtensionException =>
         print(getTitleAndVersion + "\n")
