@@ -26,7 +26,7 @@ case class ExampleExtension() extends Extension {
       val inputFileName = ExampleFileName
       val inputStream = getClass.getResourceAsStream(inputFileName)
       val outputFileName = arguments(0)
-      val tableMap = MultiParser().parse(new FileReader(inputFileName)).get
+      val tableMap = MultiParser().parse(new InputStreamReader(inputStream)).get
       val output = new BufferedWriter(new FileWriter(outputFileName))
       YamlRenderer().render(output, tableMap)
       true
