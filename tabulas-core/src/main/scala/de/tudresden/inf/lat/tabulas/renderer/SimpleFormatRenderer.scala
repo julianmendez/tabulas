@@ -16,7 +16,7 @@ case class SimpleFormatRenderer(fieldSign: String) extends Renderer {
       output.write(ParserConstant.NewLine)
       output.write(ParserConstant.NewLine)
       output.write(ParserConstant.TypeSelectionToken + ParserConstant.Space + fieldSign)
-      val table: Table = tableMap.getTable(tableName).get
+      val table = tableMap.getTable(tableName).get
       val record = MetadataHelper().getMetadataAsRecord(tableName, table)
       val recordRenderer = SimpleFormatRecordRenderer(table.getPrefixMap, fieldSign)
       recordRenderer.render(output, record, SimpleFormatRenderer.MetadataTokens)

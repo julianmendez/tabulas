@@ -37,7 +37,7 @@ case class ExtensionManager(extensions: Seq[Extension]) extends Extension {
       throw ExtensionException("No extension name was given.")
 
     } else {
-      val command: String = arguments(0)
+      val command = arguments(0)
       val newArguments = new mutable.ArrayBuffer[String]()
       newArguments ++= arguments
       newArguments.remove(0)

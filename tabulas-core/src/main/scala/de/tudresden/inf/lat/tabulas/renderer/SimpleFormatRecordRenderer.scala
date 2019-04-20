@@ -38,7 +38,7 @@ case class SimpleFormatRecordRenderer(prefixMap: PrefixMap, fieldSign: String) e
       output.write(field)
       output.write(ParserConstant.Space + fieldSign)
       if (value.getType.isList) {
-        val hasUris: Boolean = value match {
+        val hasUris = value match {
           case list: ParameterizedListValue =>
             list.getParameter.equals(URIType())
           case _ =>
