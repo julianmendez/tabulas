@@ -8,18 +8,20 @@
 *System to manage human-readable tables using files*
 
 
-**Tabulas** is a system to manage human-readable tables using files. Tabulas is a [Scala](https://www.scala-lang.org/) reimplementation of [Tabula](https://github.com/julianmendez/tabula), which is implemented in Java.
-Its default representation is **Tabula/Properties**, which is a type of file format that is similar to a [Java Properties](https://docs.oracle.com/javase/8/docs/api/java/util/Properties.html#load-java.io.Reader-) file,
+**Tabulas** is a system to manage human-readable tables using files. 
+Tabulas is a [Scala](https://www.scala-lang.org/) reimplementation of [Tabula](https://github.com/julianmendez/tabula), which is implemented in Java.
+There are three alternatives to represent the content:
+- **Tabula/Properties**, which is a type of file format that is similar to a [Java Properties](https://docs.oracle.com/javase/8/docs/api/java/util/Properties.html#load-java.io.Reader-) file,
 but allows defining the same property for different objects.
-Alternative representations are the **Tabula/JSON**, using the [JSON](https://json.org) format,
-and **Tabulas/YAML**, using the [YAML](https://yaml.org) format.
+- **Tabula/JSON**, using the [JSON](https://json.org) format,
+- **Tabulas/YAML**, using the [YAML](https://yaml.org) format.
 
 
 ## Download
 
-* [executable JAR file](https://sourceforge.net/projects/latitude/files/tabulas/0.2.0/tabulas-0.2.0.jar/download)
-* [The Central Repository](https://repo1.maven.org/maven2/de/tu-dresden/inf/lat/tabulas/)
-* as dependency:
+- [executable JAR file](https://sourceforge.net/projects/latitude/files/tabulas/0.2.0/tabulas-0.2.0.jar/download)
+- [The Central Repository](https://repo1.maven.org/maven2/de/tu-dresden/inf/lat/tabulas/)
+- as dependency:
 
 ```xml
 <dependency>
@@ -36,7 +38,8 @@ This describes the project as it is in the `master` branch.
 
 In this section, the Tabula format is explained using the Tabula/Properties representation.
 
-The Tabula format has *primitive types* and *composite types*. Unless something different is stated in the [release notes](https://github.com/julianmendez/tabula/blob/master/RELEASE-NOTES.md), the primitive types are:
+The Tabula format has *primitive types* and *composite types*. 
+Unless something different is stated in the [release notes](https://github.com/julianmendez/tabula/blob/master/RELEASE-NOTES.md), the primitive types are:
 
 - `String`: any string without any newline (`'\n'` 0x0A, `'\r'` 0x0D), and not ending in backslash (`'\'` 0x5C), neither in blanks (`'\t'` 0x08, `' '` 0x20)
 - `URI`: any valid Uniform Resource Identifier
@@ -207,6 +210,7 @@ Some serializers and some deserializers cannot map completely the content of a T
 
 The given example (as Tabula/Properties) is converted to a YAML file (i.e. Tabula/YAML) as follows:
 ```yaml
+
 ---
 
 - type :
@@ -265,11 +269,10 @@ Each extension registers at the beginning of the execution and is available to b
 
 The following example contains some of the extensions listed by the application, when no parameters are given.
 
-- `simple` *(input)* *(output)* : create a Tabula/Properties file (this is the default format)
-- `oldformat` *(input)* *(output)* : create an old Tabula/Properties file, i.e. using the equals sign instead of colon
-- `parsejson` *(input)* *(output)* : create a Tabula/Properties file by parsing a Tabula/JSON file
-- `json` *(input)* *(output)* : create a Tabula/JSON file
 - `yaml` *(input)* *(output)* : create a Tabula/YAML file
+- `json` *(input)* *(output)* : create a Tabula/JSON file
+- `properties` *(input)* *(output)* : create a Tabula/Properties file
+- `oldformat` *(input)* *(output)* : create an old Tabula/Properties file, i.e. using the equals sign instead of colon
 
 The command line application can be executed with:
 
