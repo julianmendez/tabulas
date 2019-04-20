@@ -76,7 +76,7 @@ class MainTest extends FunSuite {
     // a computed value
 
     // Read the table map
-    val oldTableMap = SimpleFormatParser().parse(new FileReader(getPath(InputFileName).getFile)).get
+    val oldTableMap: TableMapImpl = SimpleFormatParser().parse(new FileReader(getPath(InputFileName).getFile)).get
 
     // Make a copy of the tableMap
     val tableMap: TableMapImpl = TableMapImpl(oldTableMap)
@@ -94,7 +94,7 @@ class MainTest extends FunSuite {
 
     // Make a copy of type
     // val newType: CompositeTypeImpl = new CompositeTypeImpl(oldType)
-    var newType = oldType.getFields
+    var newType: CompositeTypeImpl = oldType.getFields
       .foldLeft(CompositeTypeImpl())((compType, field) => compType.declareField(field, oldType.getFieldType(field).get).get)
 
     // Add new declaration with number of authors
