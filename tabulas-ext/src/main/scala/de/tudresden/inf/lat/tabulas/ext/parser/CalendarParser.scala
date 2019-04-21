@@ -5,7 +5,7 @@ import java.util.Objects
 
 import de.tudresden.inf.lat.tabulas.datatype._
 import de.tudresden.inf.lat.tabulas.parser.Parser
-import de.tudresden.inf.lat.tabulas.table.{RecordImpl, TableImpl, TableMap, TableMapImpl}
+import de.tudresden.inf.lat.tabulas.table.{RecordImpl, TableImpl, TableMapImpl}
 
 import scala.collection.mutable
 import scala.util.Try
@@ -55,11 +55,11 @@ case class CalendarParser() extends Parser {
   final val BeginKeyword: String = "BEGIN"
   final val EndKeyword: String = "END"
 
-  override def parse(input: Reader): Try[TableMap] = Try {
+  override def parse(input: Reader): Try[TableMapImpl] = Try {
     parseMap(new BufferedReader(input))
   }
 
-  def parseMap(input: BufferedReader): TableMap = {
+  def parseMap(input: BufferedReader): TableMapImpl = {
     val map = new mutable.TreeMap[String, TableImpl]()
 
     map.put(CalendarTypeLabel, TableImpl(SimplifiedCompositeType(CalendarTypeFields)))

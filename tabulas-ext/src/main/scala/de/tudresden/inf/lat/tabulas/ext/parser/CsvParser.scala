@@ -1,12 +1,12 @@
 
 package de.tudresden.inf.lat.tabulas.ext.parser
 
-import java.io.{BufferedReader, InputStreamReader, Reader}
+import java.io.{BufferedReader, Reader}
 import java.util.Objects
 
 import de.tudresden.inf.lat.tabulas.datatype.{CompositeTypeImpl, ParseException, StringValue}
 import de.tudresden.inf.lat.tabulas.parser.{Parser, ParserConstant}
-import de.tudresden.inf.lat.tabulas.table.{RecordImpl, TableImpl, TableMap, TableMapImpl}
+import de.tudresden.inf.lat.tabulas.table.{RecordImpl, TableImpl, TableMapImpl}
 
 import scala.collection.mutable
 import scala.util.Try
@@ -24,11 +24,11 @@ case class CsvParser() extends Parser {
   final val DefaultFieldType: String = "String"
   final val Underscore: String = "" + UnderscoreChar
 
-  override def parse(input: Reader): Try[TableMap] = Try {
+  override def parse(input: Reader): Try[TableMapImpl] = Try {
     parseMap(new BufferedReader(input))
   }
 
-  def parseMap(input: BufferedReader): TableMap = {
+  def parseMap(input: BufferedReader): TableMapImpl = {
     var lineCounter = 0
     var line = input.readLine()
     lineCounter += 1

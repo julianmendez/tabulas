@@ -6,7 +6,7 @@ import java.io._
 import com.eclipsesource.json.{Json, JsonValue}
 import de.tudresden.inf.lat.tabulas.parser.{Parser, ParserConstant, SimpleFormatParser}
 import de.tudresden.inf.lat.tabulas.renderer.SimpleFormatRenderer
-import de.tudresden.inf.lat.tabulas.table.TableMap
+import de.tudresden.inf.lat.tabulas.table.TableMapImpl
 
 import scala.collection.JavaConverters._
 import scala.util.Try
@@ -15,7 +15,7 @@ import scala.util.Try
   */
 case class JsonParser() extends Parser {
 
-  override def parse(input: Reader): Try[TableMap] = Try {
+  override def parse(input: Reader): Try[TableMapImpl] = Try {
     val buffer = transformDocument(input)
     val newReader = new BufferedReader(
       new InputStreamReader(new ByteArrayInputStream(buffer.getBytes())))

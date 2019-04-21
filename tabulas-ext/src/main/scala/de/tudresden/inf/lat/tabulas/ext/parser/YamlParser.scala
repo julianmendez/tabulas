@@ -5,7 +5,7 @@ import java.io._
 
 import de.tudresden.inf.lat.tabulas.parser.{Parser, ParserConstant, SimpleFormatParser}
 import de.tudresden.inf.lat.tabulas.renderer.SimpleFormatRenderer
-import de.tudresden.inf.lat.tabulas.table.TableMap
+import de.tudresden.inf.lat.tabulas.table.TableMapImpl
 import org.snakeyaml.engine.v1.api.{Load, LoadSettingsBuilder}
 
 import scala.collection.JavaConverters._
@@ -15,7 +15,7 @@ import scala.util.Try
   */
 case class YamlParser() extends Parser {
 
-  override def parse(input: Reader): Try[TableMap] = Try {
+  override def parse(input: Reader): Try[TableMapImpl] = Try {
     val buffer = transformDocument(input)
     val newReader = new BufferedReader(
       new InputStreamReader(new ByteArrayInputStream(buffer.getBytes())))
