@@ -34,8 +34,20 @@ object TableMapImpl {
     * @param otherTableMap
     * other table map
     */
-  def apply(otherTableMap: TableMapImpl): TableMapImpl = {
-    TableMapImpl(otherTableMap.mapOfTables)
+  def apply(otherTableMap: TableMap): TableMapImpl = {
+    val result = otherTableMap match {
+
+      case otherTableMapImpl: TableMapImpl =>
+        TableMapImpl(otherTableMapImpl.mapOfTables)
+
+      case _ =>
+        val mapOfTables = otherTableMap
+          .getTableIds
+          .map(tableId => (tableId, otherTableMap.getTable(tableId).get))
+          .toMap
+        TableMapImpl(mapOfTables)
+    }
+    result
   }
 
 }
