@@ -1,8 +1,6 @@
 
 package de.tudresden.inf.lat.tabulas.table
 
-import scala.collection.mutable
-
 /** This is the default implementation of a table map.
   *
   */
@@ -18,9 +16,7 @@ case class TableMapImpl(mapOfTables: Map[String, Table]) extends TableMap {
   }
 
   override def getTableIds: Seq[String] = {
-    val result = new mutable.ArrayBuffer[String]()
-    result ++= mapOfTables.keySet
-    result
+    mapOfTables.keySet.toSeq
   }
 
   override def getTable(id: String): Option[Table] = {
