@@ -22,8 +22,8 @@ case class SimpleFormatParser() extends Parser {
     val result = if (Objects.isNull(line)) {
       0
     } else {
-      val posA: Int = line.indexOf(ParserConstant.ColonFieldSign)
-      val posB: Int = line.indexOf(ParserConstant.EqualsFieldSign)
+      val posA = line.indexOf(ParserConstant.ColonFieldSign)
+      val posB = line.indexOf(ParserConstant.EqualsFieldSign)
       val res = if (posA == -1 && posB == -1) {
         line.length
       } else {
@@ -51,8 +51,8 @@ case class SimpleFormatParser() extends Parser {
   }
 
   def hasKey(line: String, key: String): Boolean = {
-    val optKey: Option[String] = getKey(line)
-    val result: Boolean = optKey.isDefined && (optKey.get == key)
+    val optKey = getKey(line)
+    val result = optKey.isDefined && (optKey.get == key)
     result
   }
 
@@ -66,17 +66,17 @@ case class SimpleFormatParser() extends Parser {
   }
 
   def parseTypes(line: String, lineCounter: Int): CompositeTypeImpl = {
-    var result: CompositeTypeImpl = CompositeTypeImpl()
-    val stok: StringTokenizer = new StringTokenizer(getValue(line).get)
-    val factory: PrimitiveTypeFactory = PrimitiveTypeFactory()
+    var result = CompositeTypeImpl()
+    val stok = new StringTokenizer(getValue(line).get)
+    val factory = PrimitiveTypeFactory()
     while (stok.hasMoreTokens) {
       val token = stok.nextToken()
       val pos = token.indexOf(ParserConstant.TypeSign)
       if (pos == -1) {
         throw ParseException("Field '" + line + "' does not have a type. (line " + lineCounter + ")")
       } else {
-        val key: String = token.substring(0, pos)
-        val value: String = token.substring(pos + ParserConstant.TypeSign.length(), token.length())
+        val key = token.substring(0, pos)
+        val value = token.substring(pos + ParserConstant.TypeSign.length(), token.length())
         if (factory.contains(value)) {
           result = result.declareField(key, value).get
         } else {
@@ -90,7 +90,7 @@ case class SimpleFormatParser() extends Parser {
   def parsePrefixMap(line: String, lineCounter: Int): PrefixMap = {
     val mapOfUris = mutable.HashMap[URI, URI]()
     val listOfUris = mutable.ArrayBuffer[URI]()
-    val stok: StringTokenizer = new StringTokenizer(getValue(line).get)
+    val stok = new StringTokenizer(getValue(line).get)
     while (stok.hasMoreTokens) {
       val token = stok.nextToken()
       val pos = token.indexOf(ParserConstant.PrefixSign)
@@ -115,7 +115,7 @@ case class SimpleFormatParser() extends Parser {
       result = StringValue()
     } else {
       try {
-        val optTypeStr: Option[String] = type0.getFieldType(key)
+        val optTypeStr = type0.getFieldType(key)
         optTypeStr match {
           case Some(typeStr) =>
             val optPrimType = PrimitiveTypeFactory().getType(typeStr)
@@ -168,9 +168,9 @@ case class SimpleFormatParser() extends Parser {
   }
 
   def readMultiLine(input: BufferedReader, lineCounter0: Int): Pair = {
-    var lineCounter: Int = lineCounter0
-    var result: Pair = Pair(lineCounter, None)
-    var line: String = input.readLine()
+    var lineCounter = lineCounter0
+    var result = Pair(lineCounter, None)
+    var line = input.readLine()
     if (Objects.isNull(line)) {
       result = Pair(lineCounter, None)
     } else {
@@ -208,9 +208,9 @@ case class SimpleFormatParser() extends Parser {
     var recordIdsOfCurrentTable = mutable.TreeSet[String]()
     var optCurrentId: Option[String] = None
     var record = RecordImpl()
-    var lineCounter: Int = 0
-    var isDefiningType: Boolean = false
-    var mustAddRecord: Boolean = false
+    var lineCounter = 0
+    var isDefiningType = false
+    var mustAddRecord = false
 
     val pairs = getMultiLines(input)
     pairs.foreach(pair => {
@@ -312,7 +312,7 @@ case class SimpleFormatParser() extends Parser {
   }
 
   private def asUri(uriStr: String, lineCounter: Int): URI = {
-    val result: URI = try {
+    val result = try {
       new URI(uriStr)
     } catch {
       case e: URISyntaxException => throw ParseException("String '" + uriStr + "' is not a valid URI. (line " + lineCounter + ")")
@@ -324,9 +324,9 @@ case class SimpleFormatParser() extends Parser {
     var result = table
     val fieldsWithReverseOrder = new mutable.TreeSet[String]()
     val list = new mutable.ArrayBuffer[String]
-    val stok: StringTokenizer = new StringTokenizer(getValue(line).get)
+    val stok = new StringTokenizer(getValue(line).get)
     while (stok.hasMoreTokens) {
-      var token: String = stok.nextToken()
+      var token = stok.nextToken()
       if (token.startsWith(ParserConstant.StandardOrderSign)) {
         token = token.substring(ParserConstant.StandardOrderSign
           .length())
@@ -343,7 +343,7 @@ case class SimpleFormatParser() extends Parser {
   }
 
   private def isIdProperty(line: String): Boolean = {
-    val optKey: Option[String] = getKey(line)
+    val optKey = getKey(line)
     val result = if (optKey.isDefined) {
       optKey.get.equals(ParserConstant.IdKeyword)
     } else {
@@ -353,8 +353,8 @@ case class SimpleFormatParser() extends Parser {
   }
 
   private def getIdProperty(line: String): Option[String] = {
-    val optKey: Option[String] = getKey(line)
-    val optValueStr: Option[String] = getValue(line)
+    val optKey = getKey(line)
+    val optValueStr = getValue(line)
     val result = if (optKey.isDefined && optValueStr.isDefined && optKey.get.equals(ParserConstant.IdKeyword)) {
       Some(optValueStr.get)
     } else {
@@ -370,12 +370,12 @@ case class SimpleFormatParser() extends Parser {
         + lineCounter + ")")
     }
 
-    val optKey: Option[String] = getKey(line)
-    val optValueStr: Option[String] = getValue(line)
+    val optKey = getKey(line)
+    val optValueStr = getValue(line)
     val result = if (optKey.isDefined && optValueStr.isDefined) {
-      val key: String = optKey.get
-      val valueStr: String = optValueStr.get
-      val value: PrimitiveTypeValue = getTypedValue(key, valueStr, currentTable.getType, currentTable.getPrefixMap, lineCounter)
+      val key = optKey.get
+      val valueStr = optValueStr.get
+      val value = getTypedValue(key, valueStr, currentTable.getType, currentTable.getPrefixMap, lineCounter)
       if (key.equals(ParserConstant.IdKeyword)) {
         if (recordIdsOfCurrentTable.contains(valueStr)) {
           throw ParseException("Identifier '"
