@@ -13,14 +13,14 @@ import scala.util.Try
 
 /** Parser for JSON format.
   */
-case class JsonParser() extends Parser {
+case class JsonParser(permissive: Boolean) extends Parser {
 
   override def parse(input: Reader): Try[TableMapImpl] = Try {
     val buffer = transformDocument(input)
     val newReader = new BufferedReader(
       new InputStreamReader(new ByteArrayInputStream(buffer.getBytes())))
 
-    SimpleFormatParser().parse(newReader).get
+    SimpleFormatParser(permissive).parse(newReader).get
   }
 
   def transformDocument(reader: Reader): String = {
@@ -82,5 +82,11 @@ case class JsonParser() extends Parser {
     }
     result
   }
+
+}
+
+object JsonParser {
+
+  def apply(): JsonParser = JsonParser(false)
 
 }

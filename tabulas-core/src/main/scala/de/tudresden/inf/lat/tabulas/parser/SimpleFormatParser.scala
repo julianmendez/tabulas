@@ -414,6 +414,6 @@ case class SimpleFormatParser(permissive: Boolean) extends Parser {
 
 object SimpleFormatParser {
 
-  def apply(): SimpleFormatParser = new SimpleFormatParser(permissive = false)
+  def apply(): SimpleFormatParser = SimpleFormatParser(permissive = false)
 
 }
