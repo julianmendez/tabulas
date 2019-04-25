@@ -16,7 +16,7 @@ import scala.util.Try
 /** Parser of a table in simple format.
   *
   */
-case class SimpleFormatParser() extends Parser {
+case class SimpleFormatParser(permissive: Boolean) extends Parser {
 
   def getKeyLength(line: String): Int = {
     val result = if (Objects.isNull(line)) {
@@ -109,13 +109,13 @@ case class SimpleFormatParser() extends Parser {
     result
   }
 
-  def getTypedValue(key: String, value: String, type0: CompositeType, prefixMap: PrefixMap, lineCounter: Int): PrimitiveTypeValue = {
+  def getTypedValue(key: String, value: String, tableType: CompositeType, prefixMap: PrefixMap, lineCounter: Int): PrimitiveTypeValue = {
     var result: PrimitiveTypeValue = StringValue()
     if (Objects.isNull(key)) {
       result = StringValue()
     } else {
       try {
-        val optTypeStr = type0.getFieldType(key)
+        val optTypeStr = tableType.getFieldType(key)
         optTypeStr match {
           case Some(typeStr) =>
             val optPrimType = PrimitiveTypeFactory().getType(typeStr)
@@ -143,7 +143,11 @@ case class SimpleFormatParser() extends Parser {
             }
 
           case None =>
-            throw ParseException("Key '" + key + "' has an undefined type.")
+            if (permissive) {
+              result = StringType().parse(value)
+            } else {
+              throw ParseException("Key '" + key + "' has an undefined type.")
+            }
         }
       } catch {
         case e: ParseException => throw new ParseException(e.getMessage + " (line "
@@ -228,7 +232,7 @@ case class SimpleFormatParser() extends Parser {
         if (isDefiningType &&
           (hasKey(line, ParserConstant.TypeNameToken) ||
             hasKey(line, ParserConstant.TypeSelectionToken))) {
-          val optTableName: Option[String] = getValue(line)
+          val optTableName = getValue(line)
           if (optTableName.isDefined && optTableName.get.trim.nonEmpty) {
             tableName = optTableName.get
             if (!mapOfTables.get(tableName).isDefined) {
@@ -264,6 +268,16 @@ case class SimpleFormatParser() extends Parser {
 
         } else {
           record = parseProperty(line, currentTable, recordIdsOfCurrentTable, record, lineCounter)
+          if (permissive) {
+            val declaredFields = currentTable.tableType.getFields
+            record.getMap.keySet
+              .filter(newKey => !declaredFields.contains(newKey))
+              .foreach(newKey => {
+                val oldType = CompositeTypeImpl(currentTable.tableType)
+                val newType = oldType.declareField(newKey, StringType().getTypeName).get
+                currentTable = TableImpl(newType, currentTable)
+              })
+          }
           if (isIdProperty(line)) {
             val successful = if (optCurrentId.isEmpty) {
               optCurrentId = getIdProperty(line)
@@ -395,5 +409,11 @@ case class SimpleFormatParser() extends Parser {
   // scalastyle:on
 
   case class Pair(lineCounter: Int, line: Option[String])
+
+}
+
+object SimpleFormatParser {
+
+  def apply(): SimpleFormatParser = new SimpleFormatParser(permissive = false)
 
 }
