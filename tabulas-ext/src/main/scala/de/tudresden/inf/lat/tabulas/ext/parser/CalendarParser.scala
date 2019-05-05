@@ -59,6 +59,8 @@ case class CalendarParser() extends Parser {
     parseMap(new BufferedReader(input))
   }
 
+  // scalastyle:off method.length
+  // scalastyle:off cyclomatic.complexity
   def parseMap(input: BufferedReader): TableMapImpl = {
     val map = new mutable.TreeMap[String, TableImpl]()
 
@@ -76,13 +78,13 @@ case class CalendarParser() extends Parser {
     val tableIdStack = new MyStack[String]()
     val recordStack = new MyStack[RecordImpl]()
     val tableStack = new MyStack[TableImpl]()
-    val generatedIds: Seq[Int] = new mutable.ArrayBuffer[Int]()
+    val generatedIds = new mutable.ArrayBuffer[Int]()
 
-    val lines: Seq[Pair] = preload(input)
-    var lineCounter: Int = 0
-    var firstTime: Boolean = true
-    for (pair: Pair <- lines) {
-      val line: String = pair.getLine
+    val lines = preload(input)
+    var lineCounter = 0
+    var firstTime = true
+    lines.foreach(pair => {
+      val line = pair.getLine
       lineCounter = pair.getLineCounter
       if (Objects.nonNull(line) && !line.trim().isEmpty) {
         if (isBeginLine(line)) {
@@ -98,7 +100,7 @@ case class CalendarParser() extends Parser {
           currentRecord.set(GeneratedIdFieldName, new StringValue(
             getGeneratedId(generatedIds, tableIdStack.size)))
           currentTableId = value
-          val optCurrentTable: Option[TableImpl] = map.get(value)
+          val optCurrentTable = map.get(value)
           if (optCurrentTable.isEmpty) {
             throw ParseException("Unknown type '" + value
               + "' (line " + lineCounter + ").")
@@ -106,10 +108,10 @@ case class CalendarParser() extends Parser {
           currentTable = optCurrentTable.get
 
         } else if (isEndLine(line)) {
-          val foreignKey: String = currentRecord.get(GeneratedIdFieldName)
+          val foreignKey = currentRecord.get(GeneratedIdFieldName)
             .get.render()
           currentTable.add(currentRecord)
-          val value: String = getValue(line).get
+          val value = getValue(line).get
           if (Objects.isNull(map.get(value))) {
             throw ParseException("Unknown type '" + value
               + "' (line " + lineCounter + ").")
@@ -125,7 +127,7 @@ case class CalendarParser() extends Parser {
           currentTableId = tableIdStack.pop()
           currentTable = tableStack.pop()
           currentRecord = recordStack.pop()
-          val optSubItems: Option[PrimitiveTypeValue] = currentRecord.get(SubItemsFieldName)
+          val optSubItems = currentRecord.get(SubItemsFieldName)
           if (optSubItems.isDefined) {
             currentRecord.set(SubItemsFieldName, new StringValue(optSubItems.get.render() + SpaceChar + foreignKey))
 
@@ -140,19 +142,21 @@ case class CalendarParser() extends Parser {
 
         }
       }
-    }
+    })
 
     if (Objects.nonNull(currentTable) && Objects.nonNull(currentRecord)) {
       currentTable.add(currentRecord)
     }
 
-    if (!tableStack.isEmpty) {
+    if (tableStack.nonEmpty) {
       throw ParseException("Too few " + EndKeyword
         + " keywords  (line " + lineCounter + ").")
     }
 
     TableMapImpl(map.toMap)
   }
+  // scalastyle:on cyclomatic.complexity
+  // scalastyle:on method.length
 
   def isBeginLine(line: String): Boolean = {
     Objects.nonNull(line) && line.trim().startsWith(BeginKeyword)
@@ -187,13 +191,12 @@ case class CalendarParser() extends Parser {
         + lineCounter + ")")
     }
 
-    val optKey: Option[String] = getKey(line)
-    val optValueStr: Option[String] = getValue(line)
+    val optKey = getKey(line)
+    val optValueStr = getValue(line)
     if (optKey.isDefined && optValueStr.isDefined) {
-      val key: String = optKey.get
-      val valueStr: String = optValueStr.get
-      val value: PrimitiveTypeValue = getTypedValue(key, valueStr,
-        currentTable.getType, lineCounter)
+      val key = optKey.get
+      val valueStr = optValueStr.get
+      val value = getTypedValue(key, valueStr, currentTable.getType, lineCounter)
       record.set(key, value)
     }
   }
@@ -202,11 +205,11 @@ case class CalendarParser() extends Parser {
     val result = if (Objects.isNull(line)) {
       None
     } else {
-      val pos: Int = line.indexOf(ColonChar)
+      val pos = line.indexOf(ColonChar)
       val res = if (pos == -1) {
         Some(line)
       } else {
-        val pos2: Int = line.indexOf(SemicolonChar)
+        val pos2 = line.indexOf(SemicolonChar)
         val lastPos = if (pos2 >= 0 && pos2 < pos) {
           pos2
         } else {
@@ -224,7 +227,7 @@ case class CalendarParser() extends Parser {
       StringValue()
     } else {
       try {
-        val optTypeStr: Option[String] = type0.getFieldType(key)
+        val optTypeStr = type0.getFieldType(key)
         val primType = if (optTypeStr.isDefined) {
           PrimitiveTypeFactory().getType(optTypeStr.get).get // caught by the try
         } else {
@@ -240,10 +243,10 @@ case class CalendarParser() extends Parser {
   }
 
   def getValue(line: String): Option[String] = {
-    var result = if (Objects.isNull(line)) {
+    val result = if (Objects.isNull(line)) {
       None
     } else {
-      val pos: Int = line.indexOf(ColonChar)
+      val pos = line.indexOf(ColonChar)
       val res = if (pos == -1) {
         Some("")
       } else {
@@ -260,7 +263,7 @@ case class CalendarParser() extends Parser {
     while (level >= auxGeneratedIds.size) {
       auxGeneratedIds += FirstGeneratedIndex
     }
-    val newValue: Int = generatedIds(level) + 1
+    val newValue = generatedIds(level) + 1
     while (level < auxGeneratedIds.size) {
       auxGeneratedIds.remove(auxGeneratedIds.size - 1)
     }
@@ -285,7 +288,7 @@ case class CalendarParser() extends Parser {
     }
 
     def pop(): A = {
-      iterator.next() // this throws an NoSuchElementException in an empty stack
+      iterator.next() // this throws a NoSuchElementException in an empty stack
       val result: A = remove(0)
       result
     }
