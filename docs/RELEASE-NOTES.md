@@ -33,6 +33,7 @@
   - uses the Scala collections and changes its traits accordingly
   - exports only immutable classes
   - uses [ScalaTest](http://www.scalatest.org) for unit tests
+  - excludes the experimental calendar parser
   new_types :
   - Integer
   - List_Integer
@@ -74,7 +75,7 @@
   new_readers :
   - (`simple` / `normalize`) Tabula format
   - (`parsecsv`) comma-separated values
-  - (`parsecalendar`) calendar
+  - (`parsecalendar`) calendar parser
   new_writers :
   - (`simple` / `normalize`) Tabula format
   - (`csv`) comma-separated values
