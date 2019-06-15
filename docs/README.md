@@ -26,7 +26,7 @@ but allows defining the same property for different objects.
 ```xml
 <dependency>
   <groupId>de.tu-dresden.inf.lat.tabulas</groupId>
-  <artifactId>tabulas-ext</artifactId>
+  <artifactId>tabulas-ext_2.12</artifactId>
   <version>1.0.0</version>
 </dependency>
 ```
@@ -322,7 +322,7 @@ and on the main directory:
 
 ```
 $ cd target
-$ jar -cf bundle.jar tabulas-parent-*
+$ jar -cf bundle.jar tabulas-parent*
 ```
 
 The version number is updated with:
