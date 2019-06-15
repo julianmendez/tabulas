@@ -17,8 +17,8 @@
 
 
 
-- version : v0.3.0
-  date : (*unreleased*)
+- version : v1.0.0
+  date : (*2019-06-15*)
   new_features :
   - preserves newline characters in strings and lists
   - uses the colon (`':'`) in the default serialization instead of equals sign (`'='`), but accepts both symbols in the parser, and there is a renderer for the old format
@@ -33,7 +33,7 @@
   - uses the Scala collections and changes its traits accordingly
   - exports only immutable classes
   - uses [ScalaTest](http://www.scalatest.org) for unit tests
-  - excludes the experimental calendar parser
+  - excludes the experimental calendar parser (`parsecalendar`)
   new_types :
   - Integer
   - List_Integer
@@ -41,14 +41,16 @@
   - List_Decimal
   - Empty
   new_readers :
-  - (`parseyaml`) YAML
-  - (`parsejson`) JSON
+  - YAML (autodetected)
+  - JSON (autodetected)
+  - Properties (now autodetected)
   new_writers :
   - (`yaml`) YAML
   - (`json`) JSON
+  - (`properties`) Properties
   - (`oldformat`) Tabula format using the equals sign
   build : (`$ mvn clean install`)
-  release : (`tabulas-distribution/target/tabulas-0.3.0.jar`)
+  release : (`tabulas-distribution/target/tabulas-1.0.0.jar`)
 
 
 - version : v0.2.0

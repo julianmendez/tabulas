@@ -19,7 +19,7 @@ but allows defining the same property for different objects.
 
 ## Download
 
-- [executable JAR file](https://sourceforge.net/projects/latitude/files/tabulas/0.2.0/tabulas-0.2.0.jar/download)
+- [executable JAR file](https://sourceforge.net/projects/latitude/files/tabulas/1.0.0/tabulas-1.0.0.jar/download)
 - [The Central Repository](https://repo1.maven.org/maven2/de/tu-dresden/inf/lat/tabulas/)
 - as dependency:
 
@@ -27,7 +27,7 @@ but allows defining the same property for different objects.
 <dependency>
   <groupId>de.tu-dresden.inf.lat.tabulas</groupId>
   <artifactId>tabulas-ext</artifactId>
-  <version>0.2.0</version>
+  <version>1.0.0</version>
 </dependency>
 ```
 
