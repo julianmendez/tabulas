@@ -12,8 +12,7 @@ scala:
   - 2.12.8
 
 jdk:
-  - openjdk11
-  - oraclejdk11
+  - openjdk8
 
 install:
   - mvn install -DskipTests=true -Dmaven.javadoc.skip=false -B -V
