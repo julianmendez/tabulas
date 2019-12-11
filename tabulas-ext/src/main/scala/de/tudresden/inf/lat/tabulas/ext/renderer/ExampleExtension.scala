@@ -17,7 +17,7 @@ case class ExampleExtension() extends Extension {
   final val Name: String = "example"
   final val Help: String = "(output) : create a Tabula/YAML example file"
   final val RequiredArguments: Int = 1
-  final val ExampleFileName = "/resources/example.yaml"
+  final val ExampleFileName = "/resources/example.tab.yaml"
 
   override def process(arguments: Seq[String]): Try[Boolean] = Try {
     val result = if (Objects.isNull(arguments) || arguments.size != RequiredArguments) {
