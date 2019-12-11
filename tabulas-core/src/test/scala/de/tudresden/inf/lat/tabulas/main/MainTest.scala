@@ -19,9 +19,9 @@ class MainTest extends FunSuite {
 
   final val CorePrefix = "core/"
 
-  final val InputFileName: String = CorePrefix + "example.properties"
-  final val ExpectedOutputFileName: String = CorePrefix + "example-expected.properties"
-  final val ModifiedOutputFileName: String = CorePrefix + "example-modified.properties"
+  final val InputFileName: String = CorePrefix + "example.tab.properties"
+  final val ExpectedOutputFileName: String = CorePrefix + "example-expected.tab.properties"
+  final val ModifiedOutputFileName: String = CorePrefix + "example-modified.tab.properties"
 
   final val TypeNameRecord: String = "record"
   final val FieldNameAuthors: String = "authors"
