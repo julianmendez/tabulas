@@ -4,11 +4,9 @@
 [![maven central](https://maven-badges.herokuapp.com/maven-central/de.tu-dresden.inf.lat.tabulas/tabulas-parent_2.12/badge.svg)](https://search.maven.org/#search|ga|1|g%3A%22de.tu-dresden.inf.lat.tabulas%22)
 [![license](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-
 *System to manage human-readable tables using files*
 
-
-**Tabulas** is a system to manage human-readable tables using files. 
+**Tabulas** is a system to manage human-readable tables using files.
 Tabulas is a [Scala](https://www.scala-lang.org/) implementation based on the [Tabula](https://github.com/julianmendez/tabula) format.
 There are three alternatives to represent the content:
 - **Tabula/Properties**, which is a type of file format that is similar to a [Java Properties](https://docs.oracle.com/javase/8/docs/api/java/util/Properties.html#load-java.io.Reader-) file,
@@ -38,7 +36,7 @@ This describes the project as it is in the `master` branch.
 
 In this section, the Tabula format is explained using the Tabula/Properties representation.
 
-The Tabula format has *primitive types* and *composite types*. 
+The Tabula format has *primitive types* and *composite types*.
 Unless something different is stated in the release notes, the primitive types are:
 
 - `String`: any string without any newline (`'\n'` 0x0A, `'\r'` 0x0D), and not ending in backslash (`'\'` 0x5C), neither in blanks (`'\t'` 0x08, `' '` 0x20)
@@ -128,10 +126,9 @@ The formatter normalizes the values and present them differently according to th
 
 This is an example of a library file. Each book record contains an identifier (`id`), a title (`title`), the authors (`authors`), a link to the abstract on the web (`web`), and a list of links to the documents (`documents`). This file is ordered by identifier.
 
-
 ```properties
-# simple format 1.0.0
 
+# simple format 1.0.0
 
 type :
  name : record
@@ -146,7 +143,6 @@ type :
  order : \
   +id
 
-
 new :
  id : arXiv:1412.2223
  title : A topological approach to non-Archimedean Mathematics
@@ -158,7 +154,6 @@ new :
   https://arxiv.org/pdf/1412.2223#pdf \
   https://arxiv.org/ps/1412.2223#ps \
   https://arxiv.org/format/1412.2223#other
-
 
 new :
  id : arXiv:1412.3313
@@ -188,7 +183,6 @@ This project also includes some converters from and to other formats.
 Every deserializer (parser) and serializer (renderer) is registered as an extension.
 Some serializers and some deserializers cannot map completely the content of a Tabula file.
 
-
 | serializer   | stores metadata   | multiple tables |
 |:-------------|:------------------|:----------------|
 | YAML         | yes               | yes             |
@@ -198,13 +192,11 @@ Some serializers and some deserializers cannot map completely the content of a T
 | CSV          | no                | no              |
 | SQL          | no                | no              |
 
-
 | deserializer | requires metadata | multiple tables |
 |:-------------|:------------------|:----------------|
 | YAML         | yes               | yes             |
 | JSON         | yes               | yes             |
 | CSV          | no                | no              |
-
 
 The given example (as Tabula/Properties) is converted to a YAML file (i.e. Tabula/YAML) as follows:
 ```yaml
@@ -224,7 +216,6 @@ The given example (as Tabula/Properties) is converted to a YAML file (i.e. Tabul
     order :
     - +id
 
-
 - id : arXiv:1412.2223
   title : A topological approach to non-Archimedean Mathematics
   authors :
@@ -236,7 +227,6 @@ The given example (as Tabula/Properties) is converted to a YAML file (i.e. Tabul
   - https://arxiv.org/ps/1412.2223#ps
   - https://arxiv.org/format/1412.2223#other
 
-
 - id : arXiv:1412.3313
   title : Infinitary stability theory
   authors :
@@ -246,8 +236,6 @@ The given example (as Tabula/Properties) is converted to a YAML file (i.e. Tabul
   - https://arxiv.org/pdf/1412.3313#pdf
   - https://arxiv.org/ps/1412.3313#ps
   - https://arxiv.org/format/1412.3313#other
-
-
 
 ```
 
