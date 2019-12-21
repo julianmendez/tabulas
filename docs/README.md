@@ -128,6 +128,7 @@ This is an example of a library file. Each book record contains an identifier (`
 
 ```properties
 
+
 # simple format 1.0.0
 
 type :
