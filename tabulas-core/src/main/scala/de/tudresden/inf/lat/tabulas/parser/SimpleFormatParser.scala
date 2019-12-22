@@ -105,7 +105,7 @@ case class SimpleFormatParser(permissive: Boolean) extends Parser {
         listOfUris += keyPair
       }
     }
-    val result = PrefixMapImpl(mapOfUris.toMap, listOfUris)
+    val result = PrefixMapImpl(mapOfUris.toMap, listOfUris.toSeq)
     result
   }
 
@@ -351,7 +351,7 @@ case class SimpleFormatParser(permissive: Boolean) extends Parser {
       }
       list += token
     }
-    result = result.copy(sortingOrder = list)
+    result = result.copy(sortingOrder = list.toSeq)
     result = result.copy(fieldsWithReverseOrder = fieldsWithReverseOrder.toSet)
     result
   }

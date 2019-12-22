@@ -27,7 +27,7 @@ case class RecordComparator() extends Comparator[Record] {
   }
 
   def getSortingOrder: Seq[String] = {
-    this._sortingOrder
+    this._sortingOrder.toSeq
   }
 
   def getFieldsWithReverseOrder: Set[String] = {

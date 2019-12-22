@@ -50,7 +50,7 @@ case class ExtensionManager(extensions: Seq[Extension]) extends Extension {
 
       } else {
         try {
-          optExtension.get.process(newArguments).get
+          optExtension.get.process(newArguments.toSeq).get
 
         } catch {
           case e@(_: ParseException | _: UncheckedIOException | _: IOException) =>

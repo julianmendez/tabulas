@@ -66,7 +66,7 @@ case class CsvParser() extends Parser {
   }
 
   def getColumns(line0: String): Seq[String] = {
-    val result = new mutable.ArrayBuffer[String]()
+    val columns = new mutable.ArrayBuffer[String]()
     val line = if (Objects.isNull(line0)) {
       ""
     } else {
@@ -79,16 +79,16 @@ case class CsvParser() extends Parser {
       if (ch == QuotesChar) {
         betweenQuotes = !betweenQuotes
       } else if ((ch == CommaChar) && !betweenQuotes) {
-        result += current.toString
+        columns += current.toString
         current = new StringBuffer()
       } else {
         current.append(ch)
       }
     }
     if (!current.toString.isEmpty) {
-      result += current.toString
+      columns += current.toString
     }
-
+    val result = columns.toSeq
     result
   }
 
@@ -101,7 +101,7 @@ case class CsvParser() extends Parser {
   }
 
   def normalizeHeaders(headers: Seq[String], lineCounter: Int): Seq[String] = {
-    val result = new mutable.ArrayBuffer[String]()
+    val headers = new mutable.ArrayBuffer[String]()
     var idCount = 0
     for (header: String <- headers) {
       val fieldName = normalize(header)
@@ -114,9 +114,10 @@ case class CsvParser() extends Parser {
             + ParserConstant.IdKeyword + "') (line "
             + lineCounter + ")")
       } else {
-        result += fieldName
+        headers += fieldName
       }
     }
+    val result = headers.toSeq
     result
   }
 
