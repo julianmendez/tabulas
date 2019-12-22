@@ -4,11 +4,11 @@ import java.io.{FileReader, StringWriter}
 
 import de.tudresden.inf.lat.tabulas.parser.{ParserConstant, SimpleFormatParser}
 import de.tudresden.inf.lat.tabulas.renderer.SimpleFormatRenderer
-import org.scalatest.FunSuite
+import org.scalatest.funsuite.AnyFunSuite
 
 /** This is a test of normalization of files.
-  */
-class NormalizationTest extends FunSuite {
+ */
+class NormalizationTest extends AnyFunSuite {
 
   final val InputFileName0: String = "core/example.tab.properties"
   final val ExpectedOutputFileName0: String = "core/example-expected.tab.properties"
@@ -36,7 +36,8 @@ class NormalizationTest extends FunSuite {
     val writer = new StringWriter()
     val renderer = SimpleFormatRenderer()
     renderer.render(writer, tableMap)
-    assert(expectedResult === writer.toString)
+    val obtainedResult = writer.toString
+    assert(obtainedResult === expectedResult)
   }
 
   test("test normalization") {
@@ -55,7 +56,8 @@ class NormalizationTest extends FunSuite {
         val writer = new StringWriter()
         val renderer = SimpleFormatRenderer()
         renderer.render(writer, tableMap)
-        assert(expectedResult === writer.toString)
+        val obtainedResult = writer.toString
+        assert(obtainedResult === expectedResult)
       }
       )
   }
@@ -73,7 +75,8 @@ class NormalizationTest extends FunSuite {
         val writer = new StringWriter()
         val renderer = SimpleFormatRenderer(ParserConstant.EqualsFieldSign)
         renderer.render(writer, tableMap)
-        assert(expectedResult === writer.toString)
+        val obtainedResult = writer.toString
+        assert(obtainedResult === expectedResult)
       })
   }
 

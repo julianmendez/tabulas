@@ -9,13 +9,13 @@ import de.tudresden.inf.lat.tabulas.datatype._
 import de.tudresden.inf.lat.tabulas.parser.SimpleFormatParser
 import de.tudresden.inf.lat.tabulas.renderer.SimpleFormatRenderer
 import de.tudresden.inf.lat.tabulas.table._
-import org.scalatest.FunSuite
+import org.scalatest.funsuite.AnyFunSuite
 
 import scala.collection.JavaConverters._
 
 /** This is a test of modification of a Tabula file.
-  */
-class MainTest extends FunSuite {
+ */
+class MainTest extends AnyFunSuite {
 
   final val CorePrefix = "core/"
 
@@ -31,11 +31,11 @@ class MainTest extends FunSuite {
 
 
   /**
-    * Returns the number of authors for a given record.
-    *
-    * @param record record
-    * @return the number of authors for a given record
-    */
+   * Returns the number of authors for a given record.
+   *
+   * @param record record
+   * @return the number of authors for a given record
+   */
   def computeFieldValue(record: Record): StringValue = {
     val value: PrimitiveTypeValue = record.get(FieldNameAuthors).get
     val size: Int = if (Objects.isNull(value)) {
@@ -56,8 +56,10 @@ class MainTest extends FunSuite {
     // Read the expected output
     val expectedOutput: String = readFile(fileName)
 
+    val obtainedOutput: String = writer.toString
+
     // Compare the expected output with the actual output
-    assert(expectedOutput === writer.toString)
+    assert(obtainedOutput === expectedOutput)
   }
 
   def readFile(fileName: String): String = {

@@ -7,13 +7,13 @@ import java.nio.file.{Files, Paths}
 import de.tudresden.inf.lat.tabulas.ext.renderer.{JsonRenderer, YamlRenderer}
 import de.tudresden.inf.lat.tabulas.parser.SimpleFormatParser
 import de.tudresden.inf.lat.tabulas.renderer.SimpleFormatRenderer
-import org.scalatest.FunSuite
+import org.scalatest.funsuite.AnyFunSuite
 
 import scala.collection.JavaConverters._
 
 /** This is a test of conversion.
   */
-class ConversionTest extends FunSuite {
+class ConversionTest extends AnyFunSuite {
 
   final val ExtPrefix = "ext/"
 
@@ -72,7 +72,8 @@ class ConversionTest extends FunSuite {
     val expectedResult = readFile(ExpectedOutputFileName0)
     val writer = new StringWriter()
     SimpleFormatRenderer().render(writer, tableMap)
-    assert(expectedResult === writer.toString)
+    val obtainedResult = writer.toString
+    assert(obtainedResult === expectedResult)
   }
 
   test("rendering JSON") {
@@ -85,7 +86,8 @@ class ConversionTest extends FunSuite {
       val expectedResult = readFile(pair._2)
       val writer = new StringWriter()
       JsonRenderer().render(writer, tableMap)
-      assert(expectedResult === writer.toString)
+      val obtainedResult = writer.toString
+      assert(obtainedResult === expectedResult)
     })
   }
 
@@ -99,7 +101,8 @@ class ConversionTest extends FunSuite {
       val expectedResult = readFile(pair._2)
       val writer = new StringWriter()
       SimpleFormatRenderer().render(writer, tableMap)
-      assert(expectedResult === writer.toString)
+      val obtainedResult = writer.toString
+      assert(obtainedResult === expectedResult)
     })
   }
 
@@ -112,7 +115,8 @@ class ConversionTest extends FunSuite {
       val expectedResult = readFile(pair._2)
       val writer = new StringWriter()
       YamlRenderer().render(writer, tableMap)
-      assert(expectedResult === writer.toString)
+      val obtainedResult = writer.toString
+      assert(obtainedResult === expectedResult)
     })
   }
 
@@ -125,7 +129,8 @@ class ConversionTest extends FunSuite {
       val expectedResult = readFile(pair._2)
       val writer = new StringWriter()
       SimpleFormatRenderer().render(writer, tableMap)
-      assert(expectedResult === writer.toString)
+      val obtainedResult = writer.toString
+      assert(obtainedResult === expectedResult)
     })
   }
 
