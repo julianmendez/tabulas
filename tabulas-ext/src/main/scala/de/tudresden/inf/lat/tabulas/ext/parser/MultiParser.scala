@@ -14,7 +14,7 @@ case class MultiParser(parsers: Seq[Parser]) extends Parser {
 
   override def parse(input: Reader): Try[TableMap] = Try {
     val content = readContent(input)
-    val res = parsers.par.map(parser => parser.parse(new StringReader(content))).seq
+    val res = parsers.map(parser => parser.parse(new StringReader(content)))
     val result = if (res.exists(content => content.isSuccess)) {
       res.find(content => content.isSuccess).get.get
     } else {

@@ -38,9 +38,8 @@ case class NormalizationExtension() extends Extension {
 
       val normalizers = Seq(PropertiesNormalizer(), JsonNormalizer(), YamlNormalizer())
 
-      val res = normalizers.par
+      val res = normalizers
         .map(normalizer => NormalizerPair(normalizer, normalizer.parse(new StringReader(content))))
-        .seq
 
       val maybeBestNormalizerPair = res
         .find(pair => pair.content.isSuccess)
