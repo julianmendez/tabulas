@@ -6,6 +6,7 @@
     - version:String
     - date:String
     - new_features:List_String
+    - bug_fixes:List_String
     - new_types:List_String
     - new_readers:List_String
     - new_writers:List_String
@@ -14,6 +15,17 @@
     prefix :
 
     order :
+
+- version : v1.1.0
+  date : (*unreleased*)
+  new_features :
+  - compiled with Scala 2.13.1
+  - requires `scala-library-2.13.1.jar`
+  - its artifact identifiers include the Scala version as suffix (`_2.13`)
+  bug_fixes :
+  - respects the order of the defined URI prefixes when they are expanded
+  build : (`$ mvn clean install`)
+  release : (`tabulas-distribution/target/tabulas-1.1.0.jar`)
 
 - version : v1.0.0
   date : (*2019-06-15*)

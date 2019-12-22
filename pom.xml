@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>de.tu-dresden.inf.lat.tabulas</groupId>
-	<artifactId>tabulas-parent_2.12</artifactId>
+	<artifactId>tabulas-parent_2.13</artifactId>
 	<version>1.0.0</version>
 	<packaging>pom</packaging>
 
@@ -56,8 +56,8 @@
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 
-		<scala.version.binary>2.12</scala.version.binary>
-		<scala.version>2.12.8</scala.version>
+		<scala.version.binary>2.13</scala.version.binary>
+		<scala.version>2.13.1</scala.version>
 		<jsonparser.version>0.9.5</jsonparser.version>
 		<yamlparser.version>1.0</yamlparser.version>
 	</properties>

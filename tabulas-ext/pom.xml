@@ -3,7 +3,7 @@
 
 	<modelVersion>4.0.0</modelVersion>
 
-	<artifactId>tabulas-ext_2.12</artifactId>
+	<artifactId>tabulas-ext_2.13</artifactId>
 	<packaging>jar</packaging>
 
 	<dependencies>
@@ -38,7 +38,7 @@
 
 	<parent>
 		<groupId>de.tu-dresden.inf.lat.tabulas</groupId>
-		<artifactId>tabulas-parent_2.12</artifactId>
+		<artifactId>tabulas-parent_2.13</artifactId>
 		<version>1.0.0</version>
 	</parent>
 
