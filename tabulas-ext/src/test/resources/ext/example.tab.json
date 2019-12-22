@@ -15,8 +15,8 @@
   "year:String"
  ],
  "prefix" : [
-  "partarx:https://arxiv",
-  "arxiv:https://arxiv.org/"
+  "arxiv:https://arxiv.org/",
+  "partarx:https://arxiv"
  ],
  "order" : [
   "+id"

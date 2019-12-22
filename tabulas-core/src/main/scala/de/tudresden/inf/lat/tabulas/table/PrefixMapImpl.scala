@@ -65,7 +65,7 @@ case class PrefixMapImpl(prefixMap: Map[URI, URI], keyList: Seq[URI]) extends Pr
 
   override def getPrefixFor(uri: URI): Option[URI] = {
     val uriStr = uri.toString
-    val result = prefixMap.keySet.find(e => uriStr.startsWith(prefixMap.get(e).get.toString))
+    val result = keyList.find(e => uriStr.startsWith(prefixMap.get(e).get.toString))
     result
   }
 
