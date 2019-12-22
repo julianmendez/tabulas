@@ -2,7 +2,7 @@
 
 lazy val commonSettings = Seq(
   organization := "de.tu-dresden.inf.lat.tabulas",
-  version := "1.0.0",
+  version := "1.1.0",
   scalaVersion := "2.13.1",
   libraryDependencies += "org.scalatest" %% "scalatest" % "3.1.0" % "test",
   resolvers += Resolver.mavenLocal,

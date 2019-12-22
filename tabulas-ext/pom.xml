@@ -39,7 +39,7 @@
 	<parent>
 		<groupId>de.tu-dresden.inf.lat.tabulas</groupId>
 		<artifactId>tabulas-parent_2.13</artifactId>
-		<version>1.0.0</version>
+		<version>1.1.0</version>
 	</parent>
 
 	<properties>
