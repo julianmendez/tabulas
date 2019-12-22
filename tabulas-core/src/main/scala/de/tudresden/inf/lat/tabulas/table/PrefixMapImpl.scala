@@ -17,17 +17,24 @@ case class PrefixMapImpl(prefixMap: Map[URI, URI], keyList: Seq[URI]) extends Pr
   }
 
   override def getWithoutPrefix(uri: URI): URI = {
-    var result = uri
     val uriStr = uri.toString
-    if (uriStr.startsWith(PrefixAmpersand)) {
+    val result = if (uriStr.startsWith(PrefixAmpersand)) {
       val pos = uriStr.indexOf(PrefixSemicolon, PrefixAmpersand.length())
-      if (pos != -1) {
+      val res = if (pos == -1) {
+        uri
+      } else {
         val prefix = URI.create(uriStr.substring(PrefixAmpersand.length(), pos))
         val optExpansion = prefixMap.get(prefix)
-        if (optExpansion.isDefined) {
-          result = URI.create(optExpansion.get.toString + uriStr.substring(pos + PrefixSemicolon.length))
+        val value = if (optExpansion.isDefined) {
+          URI.create(optExpansion.get.toString + uriStr.substring(pos + PrefixSemicolon.length))
+        } else {
+          uri
         }
+        value
       }
+      res
+    } else {
+      uri
     }
     result
   }
