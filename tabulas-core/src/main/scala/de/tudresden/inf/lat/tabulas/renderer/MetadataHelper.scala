@@ -37,7 +37,7 @@ case class MetadataHelper() {
 
   private def getPrefixEntry(table: Table): PrimitiveTypeValue = {
     val list = table.getPrefixMap.getKeys
-      .map(key => key + ParserConstant.TypeSign + table.getPrefixMap.get(key).get)
+      .map(key => key.toString + ParserConstant.TypeSign + table.getPrefixMap.get(key).get)
       .map(x => StringValue(x))
     ParameterizedListValue(StringType(), list)
   }

@@ -23,7 +23,7 @@ case class ParameterizedListType(parameter: PrimitiveType) extends PrimitiveType
   override def parse(str: String): ParameterizedListValue = {
     val list = str.split("\\s+")
       .map(part => parameter.parse(part))
-    ParameterizedListValue(parameter, list)
+    ParameterizedListValue(parameter, list.toIndexedSeq)
   }
 
   override def toString: String = {

@@ -132,10 +132,10 @@ case class SimpleFormatParser(permissive: Boolean) extends Parser {
                   val uri = URI.create(elem)
                   new URIValue(prefixMap.getWithoutPrefix(uri))
                 })
-                result = ParameterizedListValue(URIType(), newList)
+                result = ParameterizedListValue(URIType(), newList.toIndexedSeq)
               } else {
                 val newList = lines.map(x => param.parse(x))
-                result = ParameterizedListValue(param, newList)
+                result = ParameterizedListValue(param, newList.toIndexedSeq)
               }
 
             } else {
