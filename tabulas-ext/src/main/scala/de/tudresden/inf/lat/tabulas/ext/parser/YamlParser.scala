@@ -8,7 +8,7 @@ import de.tudresden.inf.lat.tabulas.renderer.SimpleFormatRenderer
 import de.tudresden.inf.lat.tabulas.table.TableMapImpl
 import org.snakeyaml.engine.v1.api.{Load, LoadSettingsBuilder}
 
-import scala.jdk.CollectionConverters._
+import scala.jdk.CollectionConverters.{IteratorHasAsScala, ListHasAsScala, MapHasAsScala}
 import scala.util.Try
 
 /** Parser for YAML format.
