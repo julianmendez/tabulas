@@ -61,7 +61,7 @@ case class RecordComparator() extends Comparator[Record] {
 
   def compareValues(optValue0: Option[PrimitiveTypeValue], optValue1: Option[PrimitiveTypeValue], hasReverseOrder: Boolean): Int = {
     val result: Int = if (hasReverseOrder) {
-      compareValues(optValue1, optValue0, false)
+      compareValues(optValue1, optValue0, hasReverseOrder = false)
     } else {
       val res = if (optValue0.isDefined) {
         if (optValue1.isDefined) {

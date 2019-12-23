@@ -1,7 +1,7 @@
 
 package de.tudresden.inf.lat.tabulas.ext.renderer
 
-import java.io.{OutputStreamWriter, Writer}
+import java.io.Writer
 import java.text.SimpleDateFormat
 import java.util.Objects
 
