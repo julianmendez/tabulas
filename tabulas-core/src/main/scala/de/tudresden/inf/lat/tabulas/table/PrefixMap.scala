@@ -54,10 +54,10 @@ trait PrefixMap {
     */
   def getPrefixFor(uri: URI): Option[URI]
 
-  /** Returns a stream to iterate on the keys.
+  /** Returns a sequence to iterate on the keys.
     *
-    * @return a stream to iterate on the keys
+    * @return a sequence to iterate on the keys
     */
-  def getKeysAsStream: Stream[URI]
+  def getKeys: Seq[URI]
 
 }

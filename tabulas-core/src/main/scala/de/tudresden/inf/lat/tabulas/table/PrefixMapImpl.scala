@@ -69,8 +69,8 @@ case class PrefixMapImpl(prefixMap: Map[URI, URI], keyList: Seq[URI]) extends Pr
     result
   }
 
-  override def getKeysAsStream: Stream[URI] = {
-    keyList.toStream
+  override def getKeys: Seq[URI] = {
+    keyList
   }
 
   override def toString: String = {
