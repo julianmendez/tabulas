@@ -73,7 +73,7 @@ case class YamlParser(permissive: Boolean) extends Parser {
 
     } else {
       val prefixForValue = value match {
-        case _: java.util.List[Any] => ""
+        case _: java.util.List[_] => ""
         case _ => ParserConstant.Space
       }
       ParserConstant.Space + prefix + prefixForValue + asString(value) + ParserConstant.NewLine
@@ -103,7 +103,7 @@ case class YamlParser(permissive: Boolean) extends Parser {
     } else {
       value match {
         case valueStr: String => valueStr
-        case valueList: java.util.List[String] =>
+        case valueList: java.util.List[_] =>
           itemSeparator + valueList.asScala.mkString(itemSeparator)
         case _ => value.toString
       }
