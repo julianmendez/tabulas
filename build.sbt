@@ -1,3 +1,4 @@
+import sbt.Keys.scalacOptions
 
 
 lazy val commonSettings = Seq(
@@ -7,7 +8,8 @@ lazy val commonSettings = Seq(
   libraryDependencies += "org.scalatest" %% "scalatest" % "3.1.0" % "test",
   resolvers += Resolver.mavenLocal,
   publishTo := Some(Resolver.mavenLocal),
-  publishMavenStyle := true
+  publishMavenStyle := true,
+  scalacOptions ++= Seq("-deprecation", "-feature")
 )
 
 lazy val tabulas_core = project
