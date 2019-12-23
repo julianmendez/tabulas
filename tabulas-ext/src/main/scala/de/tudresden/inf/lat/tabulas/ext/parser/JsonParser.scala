@@ -8,7 +8,7 @@ import de.tudresden.inf.lat.tabulas.parser.{Parser, ParserConstant, SimpleFormat
 import de.tudresden.inf.lat.tabulas.renderer.SimpleFormatRenderer
 import de.tudresden.inf.lat.tabulas.table.TableMapImpl
 
-import scala.collection.JavaConverters._
+import scala.jdk.CollectionConverters.CollectionHasAsScala
 import scala.util.Try
 
 /** Parser for JSON format.
