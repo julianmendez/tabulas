@@ -46,3 +46,5 @@ case class CsvExtension() extends Extension {
   }
 
 }
+
+object CsvExtension {}

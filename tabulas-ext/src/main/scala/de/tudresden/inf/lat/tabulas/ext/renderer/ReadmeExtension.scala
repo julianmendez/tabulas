@@ -56,3 +56,5 @@ case class ReadmeExtension() extends Extension {
   }
 
 }
+
+object ReadmeExtension {}

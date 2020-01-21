@@ -77,3 +77,5 @@ case class ExtensionManager(extensions: Seq[Extension]) extends Extension {
   }
 
 }
+
+object ExtensionManager {}

@@ -130,3 +130,4 @@ case class HtmlRenderer() extends Renderer {
 
 }
 
+object HtmlRenderer {}

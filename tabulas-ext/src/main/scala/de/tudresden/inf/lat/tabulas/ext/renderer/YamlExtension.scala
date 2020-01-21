@@ -48,3 +48,5 @@ case class YamlExtension() extends Extension {
   }
 
 }
+
+object YamlExtension {}

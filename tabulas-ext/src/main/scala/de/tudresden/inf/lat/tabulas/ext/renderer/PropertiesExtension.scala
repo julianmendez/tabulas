@@ -49,3 +49,5 @@ case class PropertiesExtension() extends Extension {
   }
 
 }
+
+object PropertiesExtension {}

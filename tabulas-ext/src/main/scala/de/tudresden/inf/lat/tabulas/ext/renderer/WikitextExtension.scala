@@ -45,3 +45,5 @@ case class WikitextExtension() extends Extension {
   }
 
 }
+
+object WikitextExtension {}

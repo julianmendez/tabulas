@@ -33,3 +33,5 @@ case class URIType() extends PrimitiveType {
   }
 
 }
+
+object URIType {}

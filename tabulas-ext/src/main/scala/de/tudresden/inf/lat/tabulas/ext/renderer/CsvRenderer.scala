@@ -139,3 +139,4 @@ case class CsvRenderer() extends Renderer {
 
 }
 
+object CsvRenderer {}

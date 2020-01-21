@@ -75,3 +75,4 @@ case class SimpleFormatRecordRenderer(prefixMap: PrefixMap, fieldSign: String) e
 
 }
 
+object SimpleFormatRecordRenderer {}

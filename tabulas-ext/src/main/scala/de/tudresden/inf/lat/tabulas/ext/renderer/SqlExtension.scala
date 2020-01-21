@@ -46,3 +46,5 @@ case class SqlExtension() extends Extension {
   }
 
 }
+
+object SqlExtension {}

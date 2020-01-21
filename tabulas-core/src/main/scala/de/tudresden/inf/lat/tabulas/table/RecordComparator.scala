@@ -86,3 +86,5 @@ case class RecordComparator() extends Comparator[Record] {
   }
 
 }
+
+object RecordComparator {}

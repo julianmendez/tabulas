@@ -210,3 +210,4 @@ case class SqlRenderer() extends Renderer {
 
 }
 
+object SqlRenderer {}

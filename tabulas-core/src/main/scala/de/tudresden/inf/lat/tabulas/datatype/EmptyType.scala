@@ -29,3 +29,5 @@ case class EmptyType() extends PrimitiveType {
   }
 
 }
+
+object EmptyType {}

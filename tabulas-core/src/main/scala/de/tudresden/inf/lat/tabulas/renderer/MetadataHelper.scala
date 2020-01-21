@@ -57,3 +57,5 @@ case class MetadataHelper() {
   }
 
 }
+
+object MetadataHelper {}

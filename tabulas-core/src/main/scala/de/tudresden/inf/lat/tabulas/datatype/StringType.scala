@@ -29,3 +29,5 @@ case class StringType() extends PrimitiveType {
   }
 
 }
+
+object StringType {}

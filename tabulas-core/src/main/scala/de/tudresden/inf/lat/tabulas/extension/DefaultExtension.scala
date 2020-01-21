@@ -45,3 +45,5 @@ case class DefaultExtension() extends Extension {
   }
 
 }
+
+object DefaultExtension {}

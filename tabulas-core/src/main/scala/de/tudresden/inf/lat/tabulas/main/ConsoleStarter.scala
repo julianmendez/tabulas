@@ -43,3 +43,5 @@ case class ConsoleStarter() {
   }
 
 }
+
+object ConsoleStarter {}

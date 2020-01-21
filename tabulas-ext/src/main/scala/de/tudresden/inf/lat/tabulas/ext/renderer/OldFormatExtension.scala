@@ -50,3 +50,5 @@ case class OldFormatExtension() extends Extension {
   }
 
 }
+
+object OldFormatExtension {}

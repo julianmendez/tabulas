@@ -48,3 +48,5 @@ case class GuessExtension() extends Extension {
   }
 
 }
+
+object GuessExtension {}

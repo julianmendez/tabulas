@@ -49,3 +49,4 @@ case class JsonExtension() extends Extension {
 
 }
 
+object JsonExtension {}

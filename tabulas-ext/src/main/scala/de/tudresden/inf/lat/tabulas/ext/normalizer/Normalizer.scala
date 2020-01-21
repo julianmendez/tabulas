@@ -21,6 +21,8 @@ case class YamlNormalizer() extends Normalizer {
 
 }
 
+object YamlNormalizer {}
+
 case class JsonNormalizer() extends Normalizer {
 
   override def parse(input: Reader): Try[TableMap] = JsonParser().parse(input)
@@ -29,6 +31,8 @@ case class JsonNormalizer() extends Normalizer {
 
 }
 
+object JsonNormalizer {}
+
 case class PropertiesNormalizer() extends Normalizer {
 
   override def parse(input: Reader): Try[TableMap] = SimpleFormatParser().parse(input)
@@ -36,3 +40,5 @@ case class PropertiesNormalizer() extends Normalizer {
   override def render(output: Writer, tableMap: TableMap): Unit = SimpleFormatRenderer().render(output, tableMap)
 
 }
+
+object PropertiesNormalizer {}

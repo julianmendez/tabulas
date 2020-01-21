@@ -29,3 +29,5 @@ case class IntegerType() extends PrimitiveType {
   }
 
 }
+
+object IntegerType {}

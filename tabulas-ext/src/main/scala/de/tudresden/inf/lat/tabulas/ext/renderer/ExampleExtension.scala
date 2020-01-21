@@ -47,3 +47,5 @@ case class ExampleExtension() extends Extension {
   }
 
 }
+
+object ExampleExtension {}

@@ -29,3 +29,5 @@ case class DecimalType() extends PrimitiveType {
   }
 
 }
+
+object DecimalType {}

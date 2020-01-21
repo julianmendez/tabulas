@@ -45,3 +45,5 @@ case class HtmlExtension() extends Extension {
   }
 
 }
+
+object HtmlExtension {}

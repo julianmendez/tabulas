@@ -106,3 +106,4 @@ case class WikitextRenderer() extends Renderer {
 
 }
 
+object WikitextRenderer {}

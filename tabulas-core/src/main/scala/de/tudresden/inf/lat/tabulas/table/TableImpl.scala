@@ -5,6 +5,7 @@ import de.tudresden.inf.lat.tabulas.datatype.{CompositeType, Record}
 
 import scala.collection.mutable
 
+
 case class EmptyCompositeType() extends CompositeType {
 
   override def getFields: Seq[String] = Seq()
@@ -12,6 +13,9 @@ case class EmptyCompositeType() extends CompositeType {
   override def getFieldType(field: String): Option[String] = None
 
 }
+
+object EmptyCompositeType {}
+
 
 /** This is the default implementation of a sorted table.
   */

@@ -44,3 +44,5 @@ case class YamlParserExtension() extends Extension {
   }
 
 }
+
+object YamlParserExtension {}

@@ -87,4 +87,9 @@ case class NormalizationExtension() extends Extension {
 
 }
 
+object NormalizationExtension {}
+
+
 case class NormalizerPair(normalizer: Normalizer, content: Try[TableMap])
+
+object NormalizerPair {}

@@ -45,3 +45,5 @@ case class CsvParserExtension() extends Extension {
   }
 
 }
+
+object CsvParserExtension {}

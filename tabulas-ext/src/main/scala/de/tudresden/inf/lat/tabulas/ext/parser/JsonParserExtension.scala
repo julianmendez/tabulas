@@ -43,3 +43,5 @@ case class JsonParserExtension() extends Extension {
   }
 
 }
+
+object JsonParserExtension {}

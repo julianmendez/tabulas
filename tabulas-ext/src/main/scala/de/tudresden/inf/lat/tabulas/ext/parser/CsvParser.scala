@@ -147,3 +147,5 @@ case class CsvParser() extends Parser {
   }
 
 }
+
+object CsvParser {}

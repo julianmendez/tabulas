@@ -35,3 +35,5 @@ case class ParameterizedListType(parameter: PrimitiveType) extends PrimitiveType
   }
 
 }
+
+object ParameterizedListType {}
