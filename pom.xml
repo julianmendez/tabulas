@@ -19,24 +19,46 @@
 		<dependencies>
 
 			<dependency>
+				<!--
+				Scala
+				[[https://www.scala-lang.org]]
+				[[https://github.com/scala/scala]]
+				[[https://repo1.maven.org/maven2/org/scala-lang/scalap/]]
+				-->
 				<groupId>org.scala-lang</groupId>
 				<artifactId>scalap</artifactId>
 				<version>${scala.version}</version>
 			</dependency>
 
 			<dependency>
+				<!--
+				JSON parser
+				[[https://github.com/ralfstx/minimal-json]]
+				[[https://repo1.maven.org/maven2/com/eclipsesource/minimal-json/minimal-json/]]
+				-->
 				<groupId>com.eclipsesource.minimal-json</groupId>
 				<artifactId>minimal-json</artifactId>
 				<version>${jsonparser.version}</version>
 			</dependency>
 
 			<dependency>
+				<!--
+				YAML 1.2 parser
+				[[https://bitbucket.org/asomov/snakeyaml-engine]]
+				[[https://repo1.maven.org/maven2/org/snakeyaml/snakeyaml-engine/]]
+				-->
 				<groupId>org.snakeyaml</groupId>
 				<artifactId>snakeyaml-engine</artifactId>
 				<version>${yamlparser.version}</version>
 			</dependency>
 
 			<dependency>
+				<!--
+				ScalaTest
+				[[http://www.scalatest.org]]
+				[[https://github.com/scalatest/scalatest]]
+				[[https://repo1.maven.org/maven2/org/scalatest/scalatest_2.13/]]
+				-->
 				<groupId>org.scalatest</groupId>
 				<artifactId>scalatest_${scala.version.binary}</artifactId>
 				<version>3.1.0</version>
@@ -57,7 +79,7 @@
 		<maven.compiler.target>1.8</maven.compiler.target>
 
 		<scala.version.binary>2.13</scala.version.binary>
-		<scala.version>2.13.1</scala.version>
+		<scala.version>2.13.2</scala.version>
 		<jsonparser.version>0.9.5</jsonparser.version>
 		<yamlparser.version>1.0</yamlparser.version>
 	</properties>

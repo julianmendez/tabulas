@@ -19,8 +19,8 @@
 - version : v1.1.0
   date : (*unreleased*)
   new_features :
-  - compiled with Scala 2.13.1
-  - requires `scala-library-2.13.1.jar`
+  - compiled with Scala 2.13.2
+  - requires `scala-library-2.13.2.jar`
   - its artifact identifiers include the Scala version as suffix (`_2.13`)
   bug_fixes :
   - respects the order of the defined URI prefixes when they are expanded

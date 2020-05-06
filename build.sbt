@@ -4,8 +4,19 @@ import sbt.Keys.scalacOptions
 lazy val commonSettings = Seq(
   organization := "de.tu-dresden.inf.lat.tabulas",
   version := "1.1.0",
-  scalaVersion := "2.13.1",
+
+  // Scala
+  // [[https://www.scala-lang.org]]
+  // [[https://github.com/scala/scala]]
+  // [[https://repo1.maven.org/maven2/org/scala-lang/scalap/]]
+  scalaVersion := "2.13.2",
+
+  // ScalaTest
+  // [[http://www.scalatest.org]]
+  // [[https://github.com/scalatest/scalatest]]
+  // [[https://repo1.maven.org/maven2/org/scalatest/scalatest_2.13/]]
   libraryDependencies += "org.scalatest" %% "scalatest" % "3.1.0" % "test",
+
   resolvers += Resolver.mavenLocal,
   publishTo := Some(Resolver.mavenLocal),
   publishMavenStyle := true,
@@ -26,7 +37,15 @@ lazy val tabulas_ext = project
   .dependsOn(tabulas_core)
   .settings(
     commonSettings,
+
+    // JSON parser
+    // [[https://github.com/ralfstx/minimal-json]]
+    // [[https://repo1.maven.org/maven2/com/eclipsesource/minimal-json/minimal-json/]]
     libraryDependencies += "com.eclipsesource.minimal-json" % "minimal-json" % "0.9.5",
+
+    // YAML 1.2 parser
+    // [[https://bitbucket.org/asomov/snakeyaml-engine]]
+    // [[https://repo1.maven.org/maven2/org/snakeyaml/snakeyaml-engine/]]
     libraryDependencies += "org.snakeyaml" % "snakeyaml-engine" % "1.0"
   )
 
