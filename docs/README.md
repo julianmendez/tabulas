@@ -1,7 +1,7 @@
 # [Tabulas](https://julianmendez.github.io/tabulas/)
 
 [![build](https://travis-ci.org/julianmendez/tabulas.png?branch=master)](https://travis-ci.org/julianmendez/tabulas)
-[![maven central](https://maven-badges.herokuapp.com/maven-central/de.tu-dresden.inf.lat.tabulas/tabulas-parent_2.12/badge.svg)](https://search.maven.org/#search|ga|1|g%3A%22de.tu-dresden.inf.lat.tabulas%22)
+[![maven central](https://maven-badges.herokuapp.com/maven-central/de.tu-dresden.inf.lat.tabulas/tabulas-parent_2.13/badge.svg)](https://search.maven.org/#search|ga|1|g%3A%22de.tu-dresden.inf.lat.tabulas%22)
 [![license](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
 *System to manage human-readable tables using files*
@@ -9,32 +9,30 @@
 **Tabulas** is a system to manage human-readable tables using files.
 Tabulas is a [Scala](https://www.scala-lang.org/) implementation based on the [Tabula](https://github.com/julianmendez/tabula) format.
 There are three alternatives to represent the content:
-- **Tabula/Properties**, which is a type of file format that is similar to a [Java Properties](https://docs.oracle.com/javase/8/docs/api/java/util/Properties.html#load-java.io.Reader-) file,
-but allows defining the same property for different objects.
-- **Tabula/JSON**, using the [JSON](https://json.org) format,
-- **Tabula/YAML**, using the [YAML](https://yaml.org) format.
+- **Tabula.YAML**, using the [YAML](https://yaml.org) format,
+- **Tabula.JSON**, using the [JSON](https://json.org) format,
+- **Tabula.Properties**, using a sort of [Java Properties](https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/Properties.html#load-java.io.Reader-) syntax,
+but defining the same property name for multiple objects.
 
 
 ## Download
 
-- [executable JAR file](https://sourceforge.net/projects/latitude/files/tabulas/1.0.0/tabulas-1.0.0.jar/download)
+- [executable JAR file](https://sourceforge.net/projects/latitude/files/tabulas/1.1.0/tabulas-1.1.0.jar/download)
 - [The Central Repository](https://repo1.maven.org/maven2/de/tu-dresden/inf/lat/tabulas/)
 - as dependency:
 
 ```xml
 <dependency>
   <groupId>de.tu-dresden.inf.lat.tabulas</groupId>
-  <artifactId>tabulas-ext_2.12</artifactId>
-  <version>1.0.0</version>
+  <artifactId>tabulas-ext_2.13</artifactId>
+  <version>1.1.0</version>
 </dependency>
 ```
 
 
 ## Format
 
-This describes the project as it is in the `master` branch.
-
-In this section, the Tabula format is explained using the Tabula/Properties representation.
+In this section, the Tabula format is explained using the Tabula.Properties representation.
 
 The Tabula format has *primitive types* and *composite types*.
 Unless something different is stated in the release notes, the primitive types are:
@@ -46,7 +44,10 @@ Unless something different is stated in the release notes, the primitive types a
 - `List_`... (e.g. `List_String`): list of space-separated values, for the types above
 - `Empty`: type that ignores any given value
 
-With this format it is possible to define one or many composite *types*. Each type is defined by its *fields*. The *instances* of each type are listed just after the type definition. The type name can be any Tabula String.
+With this format it is possible to define one or many composite *types*.
+Each type is defined by its *fields*.
+The *instances* of each type are listed just after the type definition.
+The type name can be any Tabula String.
 The field name can be any Tabula String that does not contain a colon (`':'` 0x3A) neither an equals sign (`'='` 0x3D), and that is not the words `type` or `new`.
 
 Each type is defined as follows:
@@ -70,9 +71,11 @@ Each type has its *fields*, defined as follow:
 
 where each *FIELD_NAME* can be any identifier,
 and each *FIELD_TYPE* can be any of the primitive types.
-No space must be left before or after the colon. For example, it is `FIELD_NAME_0:FIELD_TYPE_0` and not `FIELD_NAME_0: FIELD_TYPE_0`.
+No space must be left before or after the colon.
+For example, it is `FIELD_NAME_0:FIELD_TYPE_0` and not `FIELD_NAME_0: FIELD_TYPE_0`.
 
-The URIs can be shortened by using prefixes. The prefixes are URIs themselves without colons, because the colon (`:`) is used to define the association.
+The URIs can be shortened by using prefixes.
+The prefixes are URIs themselves without colons, because the colon (`:`) is used to define the association.
 
 ```properties
  prefix : \
@@ -83,7 +86,9 @@ The URIs can be shortened by using prefixes. The prefixes are URIs themselves wi
 ```
 
 No space must be left before or after the colon.
-They are applied using the declaration order during parsing and serialization. Although the serialization shortens every possible URI using the prefixes, it is possible to expand all of them by adding the empty prefix with an empty value, i.e. a colon (`:`) alone, and it has to be the first prefix. This could be useful to rename the prefixes.
+They are applied using the declaration order during parsing and serialization.
+Although the serialization shortens every possible URI using the prefixes, it is possible to expand all of them by adding the empty prefix with an empty value, i.e. a colon (`:`) alone, and it has to be the first prefix.
+This could be useful to rename the prefixes.
 
 The order in which the instances are shown is defined as follows:
 
@@ -95,7 +100,8 @@ The order in which the instances are shown is defined as follows:
   ['-'|'+']FIELD_NAME_a_k
 ```
 
-where the `+` and the `-` are used to denote whether the reverse order should be used. For example:
+where the `+` and the `-` are used to denote whether the reverse order should be used.
+For example:
 
 ```properties
 order : \
@@ -117,14 +123,19 @@ new :
 
 where each *FIELD_NAME* is one of the already declared field names in the type and each *VALUE* contains a String accoding to the field type.
 
-The *values* can be any Tabula String. The blanks (`'\t'` 0x08, `' '` 0x20) at the beginning and at the end are removed. To declare a multi-line value, each line must finish with backslash (`'\'` 0x5C), except the last one.
+The *values* can be any Tabula String.
+The blanks (`'\t'` 0x08, `' '` 0x20) at the beginning and at the end are removed.
+To declare a multi-line value, each line must finish with backslash (`'\'` 0x5C), except the last one.
 
-The formatter normalizes the values and present them differently according to the declared type. For example, the values of fields with type `List_`... (e.g. `List_String`) will be presented as multi-line values.
+The formatter normalizes the values and present them differently according to the declared type.
+For example, the values of fields with type `List_`... (e.g. `List_String`) will be presented as multi-line values.
 
 
 ## Example
 
-This is an example of a library file. Each book record contains an identifier (`id`), a title (`title`), the authors (`authors`), a link to the abstract on the web (`web`), and a list of links to the documents (`documents`). This file is ordered by identifier.
+This is an example of a library file.
+Each book record contains an identifier (`id`), a title (`title`), the authors (`authors`), a link to the abstract on the web (`web`), and a list of links to the documents (`documents`).
+This file is ordered by identifier.
 
 ```properties
 
@@ -168,14 +179,14 @@ new :
 
 ```
 
-The unit tests include an example like [this one](https://github.com/julianmendez/tabulas/blob/master/tabulas-ext/src/test/resources/ext/miniexample.properties).
+The unit tests include an example like [this one](https://github.com/julianmendez/tabulas/blob/master/tabulas-ext/src/test/resources/ext/miniexample.tab.properties).
 
 For example, the [MainTest](https://github.com/julianmendez/tabulas/blob/master/tabulas-core/src/test/scala/de/tudresden/inf/lat/tabulas/main/MainTest.scala) class does the following steps:
 
-- read the [example file](https://github.com/julianmendez/tabulas/blob/master/tabulas-core/src/test/resources/core/example.properties)
+- read the [example file](https://github.com/julianmendez/tabulas/blob/master/tabulas-core/src/test/resources/core/example.tab.properties)
 - add a new field `numberOfAuthors`
 - add to each record the number of authors
-- compare the [expected result](https://github.com/julianmendez/tabulas/blob/master/tabulas-core/src/test/resources/core/example-modified.properties)
+- compare the [expected result](https://github.com/julianmendez/tabulas/blob/master/tabulas-core/src/test/resources/core/example-modified.tab.properties)
 
 
 ## Other formats
@@ -199,7 +210,7 @@ Some serializers and some deserializers cannot map completely the content of a T
 | JSON         | yes               | yes             |
 | CSV          | no                | no              |
 
-The given example (as Tabula/Properties) is converted to a YAML file (i.e. Tabula/YAML) as follows:
+The given example (as Tabula.Properties) is converted to a YAML file (i.e. Tabula.YAML) as follows:
 ```yaml
 
 ---
@@ -240,9 +251,10 @@ The given example (as Tabula/Properties) is converted to a YAML file (i.e. Tabul
 
 ```
 
-The unit tests also include the [previous example](https://github.com/julianmendez/tabulas/blob/master/tabulas-ext/src/test/resources/ext/miniexample.yaml).
+The unit tests also include the [previous example](https://github.com/julianmendez/tabulas/blob/master/tabulas-ext/src/test/resources/ext/miniexample.tab.yaml).
 
-Please note that there should be no spaces in the elements of the `def` section. For example, the definition is `id:String` and not `id : String`.
+Please note that there should be no spaces in the elements of the `def` section.
+For example, the definition is `id:String` and not `id : String`.
 
 A YAML file can be easily converted to a JSON file using a [Python](https://www.python.org) script like
 [yaml_to_json.py](https://github.com/julianmendez/tabulas/blob/master/tabulas-ext/src/main/python/yaml_to_json.py).
@@ -256,10 +268,10 @@ Each extension registers at the beginning of the execution and is available to b
 
 The following example contains some of the extensions listed by the application, when no parameters are given.
 
-- `yaml` *(input)* *(output)* : create a Tabula/YAML file
-- `json` *(input)* *(output)* : create a Tabula/JSON file
-- `properties` *(input)* *(output)* : create a Tabula/Properties file
-- `oldformat` *(input)* *(output)* : create an old Tabula/Properties file, i.e. using the equals sign instead of colon
+- `yaml` *(input)* *(output)* : create a Tabula.YAML file
+- `json` *(input)* *(output)* : create a Tabula.JSON file
+- `properties` *(input)* *(output)* : create a Tabula.Properties file
+- `oldformat` *(input)* *(output)* : create an old Tabula.Properties file, i.e. using the equals sign instead of colon
 
 The command line application can be executed with:
 
@@ -280,7 +292,8 @@ $ mvn clean install
 ```
 
 The created executable library, its sources, and its Javadoc will be in `tabulas-distribution/target`.
-This executable JAR file requires the [Scala library](https://search.maven.org/#search|gav|1|g%3A%22org.scala-lang%22%20AND%20a%3A%22scala-library%22) in the same directory. The required version is shown in the release notes.
+This executable JAR file requires the [Scala library](https://search.maven.org/#search|gav|1|g%3A%22org.scala-lang%22%20AND%20a%3A%22scala-library%22) in the same directory.
+The required version is shown in the release notes.
 
 To compile the project offline, first download the dependencies:
 
