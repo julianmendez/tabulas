@@ -126,9 +126,14 @@
 						</args>
 						<compilerPlugins>
 							<compilerPlugin>
+								<!--
+								GenJavadoc
+								[[https://github.com/lightbend/genjavadoc]]
+								[[https://repo1.maven.org/maven2/com/typesafe/genjavadoc/]]
+								-->
 								<groupId>com.typesafe.genjavadoc</groupId>
 								<artifactId>genjavadoc-plugin_${scala.version}</artifactId>
-								<version>0.15</version>
+								<version>0.16</version>
 							</compilerPlugin>
 						</compilerPlugins>
 					</configuration>
