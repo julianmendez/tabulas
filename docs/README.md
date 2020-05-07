@@ -225,8 +225,8 @@ The given example as Tabula.Properties:
 
 ```properties
 
-
 # simple format 1.0.0
+
 
 type :
  name : record
@@ -241,22 +241,25 @@ type :
  order : \
   +id
 
+
 new :
  id : arXiv:1412.2223
  title : A topological approach to non-Archimedean Mathematics
  authors : \
   Vieri Benci \
   Lorenzo Luperi Baglini
- web : https://arxiv.org/abs/1412.2223
+ web : &arxiv;abs/1412.2223
  documents : \
-  https://arxiv.org/pdf/1412.2223#pdf \
-  https://arxiv.org/ps/1412.2223#ps \
-  https://arxiv.org/format/1412.2223#other
+  &arxiv;pdf/1412.2223#pdf \
+  &arxiv;ps/1412.2223#ps \
+  &arxiv;format/1412.2223#other
+
 
 new :
  id : arXiv:1412.3313
  title : Infinitary stability theory
- authors : Sebastien Vasey
+ authors : \
+  Sebastien Vasey
  web : &arxiv;abs/1412.3313
  documents : \
   &arxiv;pdf/1412.3313#pdf \
