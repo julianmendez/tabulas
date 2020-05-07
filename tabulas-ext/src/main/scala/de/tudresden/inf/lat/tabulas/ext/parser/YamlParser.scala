@@ -6,7 +6,7 @@ import java.io._
 import de.tudresden.inf.lat.tabulas.parser.{Parser, ParserConstant, SimpleFormatParser}
 import de.tudresden.inf.lat.tabulas.renderer.SimpleFormatRenderer
 import de.tudresden.inf.lat.tabulas.table.TableMapImpl
-import org.snakeyaml.engine.v1.api.{Load, LoadSettingsBuilder}
+import org.snakeyaml.engine.v2.api.{Load, LoadSettings}
 
 import scala.jdk.CollectionConverters.{IteratorHasAsScala, ListHasAsScala, MapHasAsScala}
 import scala.util.Try
@@ -24,7 +24,8 @@ case class YamlParser(permissive: Boolean) extends Parser {
   }
 
   def transformDocument(reader: Reader): String = {
-    val settings = new LoadSettingsBuilder().build
+    val builder = LoadSettings.builder()
+    val settings = builder.build()
     val load = new Load(settings)
     val yaml = load.loadAllFromReader(reader)
     val parts = yaml.iterator().asScala.toSeq
@@ -51,7 +52,7 @@ case class YamlParser(permissive: Boolean) extends Parser {
         ParserConstant.ColonFieldSign + ParserConstant.NewLine
 
     }
-    val middle = mapOfEntries.map(pair => {
+    val middle = mapOfEntries.toIndexedSeq.map(pair => {
       val keyAny = pair._1
       val valueAny = pair._2
       val key = keyAny.asInstanceOf[String]
@@ -84,7 +85,7 @@ case class YamlParser(permissive: Boolean) extends Parser {
 
   def renderMetadata(metadataAny: Any): String = {
     val metadata = metadataAny.asInstanceOf[java.util.Map[String, Any]].asScala
-    val result = ParserConstant.NewLine + metadata.map(pair => {
+    val result = ParserConstant.NewLine + metadata.toIndexedSeq.map(pair => {
       val key = pair._1
       val value = pair._2
       val line = ParserConstant.Space + key + ParserConstant.Space + ParserConstant.ColonFieldSign +

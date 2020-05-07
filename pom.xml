@@ -81,7 +81,7 @@
 		<scala.version.binary>2.13</scala.version.binary>
 		<scala.version>2.13.2</scala.version>
 		<jsonparser.version>0.9.5</jsonparser.version>
-		<yamlparser.version>1.0</yamlparser.version>
+		<yamlparser.version>2.1</yamlparser.version>
 	</properties>
 
 	<build>

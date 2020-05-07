@@ -54,7 +54,7 @@ lazy val tabulas_ext = project
       * [[https://bitbucket.org/asomov/snakeyaml-engine]]
       * [[https://repo1.maven.org/maven2/org/snakeyaml/snakeyaml-engine/]]
       */
-    libraryDependencies += "org.snakeyaml" % "snakeyaml-engine" % "1.0"
+    libraryDependencies += "org.snakeyaml" % "snakeyaml-engine" % "2.1"
   )
 
 lazy val tabulas_distribution = project
