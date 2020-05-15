@@ -10,13 +10,13 @@ import de.tudresden.inf.lat.tabulas.parser.SimpleFormatParser
 
 import scala.util.Try
 
-/** This models an extension that writes the output in Tabula/JSON.
+/** This models an extension that writes the output in Tabula.JSON.
   *
   */
 case class JsonExtension() extends Extension {
 
   final val Name: String = "json"
-  final val Help: String = "(input) (output) : create a Tabula/JSON file"
+  final val Help: String = "(input) (output) : create a Tabula.JSON file"
   final val RequiredArguments: Int = 2
 
   override def process(arguments: Seq[String]): Try[Boolean] = Try {

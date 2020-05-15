@@ -13,7 +13,7 @@ import scala.util.Try
 case class JsonParserExtension() extends Extension {
 
   final val Name: String = "parsejson"
-  final val Help: String = "(input) (output) : create a Tabula/Properties file by parsing a Tabula/JSON file"
+  final val Help: String = "(input) (output) : create a Tabula.Properties file by parsing a Tabula.JSON file"
   final val RequiredArguments: Int = 2
 
   override def process(arguments: Seq[String]): Try[Boolean] = Try {

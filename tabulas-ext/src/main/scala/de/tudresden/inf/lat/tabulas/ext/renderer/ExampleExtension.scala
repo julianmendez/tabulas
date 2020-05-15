@@ -9,13 +9,13 @@ import de.tudresden.inf.lat.tabulas.extension.Extension
 
 import scala.util.Try
 
-/** This models an extension that writes an example of Tabula/YAML.
+/** This models an extension that writes an example of Tabula.YAML.
   *
   */
 case class ExampleExtension() extends Extension {
 
   final val Name: String = "example"
-  final val Help: String = "(output) : create a Tabula/YAML example file"
+  final val Help: String = "(output) : create a Tabula.YAML example file"
   final val RequiredArguments: Int = 1
   final val ExampleFileName = "/resources/example.tab.yaml"
 

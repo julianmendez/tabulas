@@ -10,13 +10,13 @@ import de.tudresden.inf.lat.tabulas.parser.SimpleFormatParser
 
 import scala.util.Try
 
-/** This models an extension that writes the output in Tabula/YAML by reading a file with possibly undeclared fields.
+/** This models an extension that writes the output in Tabula.YAML by reading a file with possibly undeclared fields.
   *
   */
 case class GuessExtension() extends Extension {
 
   final val Name: String = "guess"
-  final val Help: String = "(input) (output) : create a Tabula/YAML file by reading a file with possibly undeclared fields"
+  final val Help: String = "(input) (output) : create a Tabula.YAML file by reading a file with possibly undeclared fields"
   final val RequiredArguments: Int = 2
 
   override def process(arguments: Seq[String]): Try[Boolean] = Try {

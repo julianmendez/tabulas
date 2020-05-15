@@ -10,13 +10,13 @@ import de.tudresden.inf.lat.tabulas.parser.SimpleFormatParser
 
 import scala.util.Try
 
-/** This models an extension that writes the output in Tabula/YAML.
+/** This models an extension that writes the output in Tabula.YAML.
   *
   */
 case class YamlExtension() extends Extension {
 
   final val Name: String = "yaml"
-  final val Help: String = "(input) (output) : create a Tabula/YAML file"
+  final val Help: String = "(input) (output) : create a Tabula.YAML file"
   final val RequiredArguments: Int = 2
 
   override def process(arguments: Seq[String]): Try[Boolean] = Try {

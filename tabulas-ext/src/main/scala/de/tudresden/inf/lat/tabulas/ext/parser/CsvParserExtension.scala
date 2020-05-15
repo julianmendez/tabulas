@@ -15,7 +15,7 @@ import scala.util.Try
 case class CsvParserExtension() extends Extension {
 
   final val Name: String = "parsecsv"
-  final val Help: String = "(input) (output) : create a Tabula/Properties file by parsing a comma-separated values (CSV) file"
+  final val Help: String = "(input) (output) : create a Tabula.Properties file by parsing a comma-separated values (CSV) file"
   final val RequiredArguments: Int = 2
 
   override def process(arguments: Seq[String]): Try[Boolean] = Try {

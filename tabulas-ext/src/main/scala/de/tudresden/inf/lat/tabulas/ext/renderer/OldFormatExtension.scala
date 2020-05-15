@@ -17,7 +17,7 @@ import scala.util.Try
 case class OldFormatExtension() extends Extension {
 
   final val Name: String = "oldformat"
-  final val Help: String = "(input) (output) : create an old Tabula/Properties file, i.e. using the equals sign instead of colon"
+  final val Help: String = "(input) (output) : create an old Tabula.Properties file, i.e. using the equals sign instead of colon"
   final val RequiredArguments: Int = 2
 
   override def process(arguments: Seq[String]): Try[Boolean] = Try {

@@ -14,7 +14,7 @@ import scala.util.Try
 case class YamlParserExtension() extends Extension {
 
   final val Name: String = "parseyaml"
-  final val Help: String = "(input) (output) : create a Tabula/Properties file by parsing a Tabula/YAML file"
+  final val Help: String = "(input) (output) : create a Tabula.Properties file by parsing a Tabula.YAML file"
   final val RequiredArguments: Int = 2
 
   override def process(arguments: Seq[String]): Try[Boolean] = Try {

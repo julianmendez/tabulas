@@ -14,7 +14,7 @@ import scala.util.Try
 case class DefaultExtension() extends Extension {
 
   final val Name: String = "simple"
-  final val Help: String = "(input) (output) : create a Tabula/Properties file (this is the default format)"
+  final val Help: String = "(input) (output) : create a Tabula.Properties file (this is the default format)"
   final val RequiredArguments: Int = 2
 
   override def process(arguments: Seq[String]): Try[Boolean] = Try {
