@@ -19,7 +19,7 @@ import scala.util.{Failure, Success, Try}
 case class NormalizationExtension() extends Extension {
 
   final val Name: String = "normalize"
-  final val Help: String = "(input) : normalize a Tabula file in its own format (e.g. Tabulas/JSON -> Tabulas/JSON, Tabula.YAML -> Tabula.YAML)"
+  final val Help: String = "(input) : normalize a Tabula file in its own format (e.g. Tabula.JSON -> Tabula.JSON, Tabula.YAML -> Tabula.YAML)"
   final val RequiredArguments: Int = 1
 
   final val HyphenChar = "-"
