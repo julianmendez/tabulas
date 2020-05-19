@@ -188,7 +188,6 @@ This file is ordered by identifier.
 
 ```
 
-
 The unit tests include an example like [this one](https://github.com/julianmendez/tabulas/blob/master/tabulas-ext/src/test/resources/ext/miniexample.tab.properties).
 
 For example, the [MainTest](https://github.com/julianmendez/tabulas/blob/master/tabulas-core/src/test/scala/de/tudresden/inf/lat/tabulas/main/MainTest.scala) class does the following steps:
@@ -222,11 +221,10 @@ Some serializers and some deserializers cannot map completely the content of a T
 
 The given example as Tabula.Properties:
 
-
 ```properties
 
-# simple format 1.0.0
 
+# simple format 1.0.0
 
 type :
  name : record
@@ -241,7 +239,6 @@ type :
  order : \
   +id
 
-
 new :
  id : arXiv:1412.2223
  title : A topological approach to non-Archimedean Mathematics
@@ -253,7 +250,6 @@ new :
   &arxiv;pdf/1412.2223#pdf \
   &arxiv;ps/1412.2223#ps \
   &arxiv;format/1412.2223#other
-
 
 new :
  id : arXiv:1412.3313
@@ -267,7 +263,6 @@ new :
   &arxiv;format/1412.3313#other
 
 ```
-
 
 The unit tests also include the [previous example](https://github.com/julianmendez/tabulas/blob/master/tabulas-ext/src/test/resources/ext/miniexample.tab.yaml).
 

@@ -24,6 +24,8 @@
   - its artifact identifiers include the Scala version as suffix (`_2.13`)
   bug_fixes :
   - respects the order of the defined URI prefixes when they are expanded
+  new_writers :
+  - (`rxyaml`) Rx YAML schema
   build : (`$ mvn clean install`)
   release : (`tabulas-distribution/target/tabulas-1.1.0.jar`)
 

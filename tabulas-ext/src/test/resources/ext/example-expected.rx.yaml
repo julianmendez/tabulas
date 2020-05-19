@@ -1,0 +1,14 @@
+---
+
+type: "//rec"
+optional:
+  id: "//str"
+  title: "//str"
+  authors: "//arr"
+  web: "//str"
+  documents: "//arr"
+  keywords: "//arr"
+  year: "//str"
+
+
+
