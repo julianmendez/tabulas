@@ -1,7 +1,7 @@
 
 package de.tudresden.inf.lat.tabulas.ext.renderer
 
-import java.io.{OutputStreamWriter, Writer}
+import java.io.Writer
 import java.util.Objects
 
 import de.tudresden.inf.lat.tabulas.datatype._
@@ -11,7 +11,7 @@ import de.tudresden.inf.lat.tabulas.table.{Table, TableMap}
 
 /** Renderer that creates a JSON file.
   */
-case class JsonRenderer() extends Renderer {
+case class JsonRenderer(withMetadata: Boolean) extends Renderer {
 
   final val OpenBrace = "{"
   final val CloseBrace = "}"
@@ -143,17 +143,19 @@ case class JsonRenderer() extends Renderer {
     })
   }
 
-  def renderMetadata(output: Writer, typeName: String, table: Table): Unit = {
-    output.write(NewLine + OpenBrace + NewLine)
-    output.write(addQuotes(ParserConstant.TypeSelectionToken))
-    output.write(SpaceChar + ColonChar)
-    writeAsStringIfNotEmpty(output, ParserConstant.TypeSelectionToken, StringValue())
-    val record = MetadataHelper().getMetadataAsRecord(typeName, table)
-    output.write(NewLine + OpenBrace + NewLine)
-    render(output, record, JsonRenderer.MetadataTokens)
-    output.write(CloseBrace + NewLine)
-    val maybeComma = if (table.getRecords.nonEmpty) CommaChar else ""
-    output.write(CloseBrace + maybeComma + NewLine + NewLine)
+  def renderMetadataIfNecessary(output: Writer, typeName: String, table: Table): Unit = {
+    if (withMetadata) {
+      output.write(NewLine + OpenBrace + NewLine)
+      output.write(addQuotes(ParserConstant.TypeSelectionToken))
+      output.write(SpaceChar + ColonChar)
+      writeAsStringIfNotEmpty(output, ParserConstant.TypeSelectionToken, StringValue())
+      val record = MetadataHelper().getMetadataAsRecord(typeName, table)
+      output.write(NewLine + OpenBrace + NewLine)
+      render(output, record, JsonRenderer.MetadataTokens)
+      output.write(CloseBrace + NewLine)
+      val maybeComma = if (table.getRecords.nonEmpty) CommaChar else ""
+      output.write(CloseBrace + maybeComma + NewLine + NewLine)
+    }
   }
 
   def renderAllRecords(output: Writer, table: CompositeTypeValue, hasMoreTables: Boolean): Unit = {
@@ -174,7 +176,7 @@ case class JsonRenderer() extends Renderer {
     list.indices.foreach(index => {
       val tableId = list(index)
       val table: Table = tableMap.getTable(tableId).get
-      renderMetadata(output, tableId, table)
+      renderMetadataIfNecessary(output, tableId, table)
       val hasMoreTables = index < list.length - 1
       renderAllRecords(output, table, hasMoreTables)
     })
@@ -192,5 +194,7 @@ object JsonRenderer {
     ParserConstant.PrefixMapToken,
     ParserConstant.SortingOrderDeclarationToken
   )
+
+  def apply(): JsonRenderer = JsonRenderer(true)
 
 }

@@ -14,7 +14,7 @@ import scala.util.Try
 
 /** Renderer that creates a YAML file.
   */
-case class YamlRenderer() extends Renderer {
+case class YamlRenderer(withMetadata: Boolean) extends Renderer {
 
   final val ColonChar = ":"
   final val SpaceChar = " "
@@ -180,11 +180,13 @@ case class YamlRenderer() extends Renderer {
     })
   }
 
-  def renderMetadata(output: Writer, typeName: String, table: Table): Unit = {
-    val record = MetadataHelper().getMetadataAsRecord(typeName, table)
-    output.write(HyphenSpace + ParserConstant.TypeSelectionToken + SpaceChar + ColonChar + NewLine)
-    render(output, record, YamlRenderer.MetadataTokens, TwoSpaces)
-    output.write(NewLine + NewLine)
+  def renderMetadataIfNecessary(output: Writer, typeName: String, table: Table): Unit = {
+    if (withMetadata) {
+      val record = MetadataHelper().getMetadataAsRecord(typeName, table)
+      output.write(HyphenSpace + ParserConstant.TypeSelectionToken + SpaceChar + ColonChar + NewLine)
+      render(output, record, YamlRenderer.MetadataTokens, TwoSpaces)
+      output.write(NewLine + NewLine)
+    }
   }
 
   def renderAllRecords(output: Writer, table: CompositeTypeValue): Unit = {
@@ -202,7 +204,7 @@ case class YamlRenderer() extends Renderer {
       val table: Table = tableMap.getTable(tableId).get
       output.write(BeginningOfDocument)
       output.write(NewLine + NewLine)
-      renderMetadata(output, tableId, table)
+      renderMetadataIfNecessary(output, tableId, table)
       renderAllRecords(output, table)
     })
     output.write(NewLine + NewLine)
@@ -220,5 +222,7 @@ object YamlRenderer {
     ParserConstant.PrefixMapToken,
     ParserConstant.SortingOrderDeclarationToken
   )
+
+  def apply(): YamlRenderer = YamlRenderer(true)
 
 }

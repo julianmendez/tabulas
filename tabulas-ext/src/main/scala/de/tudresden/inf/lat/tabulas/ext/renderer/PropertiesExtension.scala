@@ -16,21 +16,28 @@ import scala.util.Try
   */
 case class PropertiesExtension() extends Extension {
 
-  final val Name: String = "properties"
-  final val Help: String = "(input) (output) : create a Tabula.Properties file"
+  final val Name: String = "simple"
+  final val OptionNoMeta: String = "--nometa"
+  final val Help: String = "[" + OptionNoMeta + "] (input) (output) : create a Tabula.Properties file," +
+    " if the option " + OptionNoMeta + " is set, the metadata is not included"
   final val RequiredArguments: Int = 2
 
   override def process(arguments: Seq[String]): Try[Boolean] = Try {
-    val result = if (Objects.isNull(arguments) || arguments.size != RequiredArguments) {
+    val result = if (Objects.isNull(arguments)
+      || arguments.size < RequiredArguments
+      || (arguments.size == RequiredArguments + 1 && !(arguments(0) == OptionNoMeta))
+      || (arguments.size > RequiredArguments + 1)) {
       false
     } else {
-      val inputFileName = arguments(0)
-      val outputFileName = arguments(1)
+      val withMetadata = !(arguments.size == RequiredArguments + 1 && arguments(0) == OptionNoMeta)
+      val startIndex = arguments.size - RequiredArguments
+      val inputFileName = arguments(startIndex)
+      val outputFileName = arguments(startIndex + 1)
       val tableMap = MultiParser(
         Seq(SimpleFormatParser(), JsonParser(), YamlParser())
       ).parse(new FileReader(inputFileName)).get
       val output = new BufferedWriter(new FileWriter(outputFileName))
-      SimpleFormatRenderer().render(output, tableMap)
+      SimpleFormatRenderer(withMetadata).render(output, tableMap)
       true
     }
     result
