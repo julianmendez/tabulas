@@ -4,7 +4,7 @@ import java.io.{FileReader, StringWriter}
 import java.net.URL
 import java.nio.file.{Files, Paths}
 
-import de.tudresden.inf.lat.tabulas.ext.renderer.{JsonRenderer, RxRenderer, YamlRenderer}
+import de.tudresden.inf.lat.tabulas.ext.renderer.{JsonRenderer, RxYamlRenderer, YamlRenderer}
 import de.tudresden.inf.lat.tabulas.parser.SimpleFormatParser
 import de.tudresden.inf.lat.tabulas.renderer.SimpleFormatRenderer
 import org.scalatest.funsuite.AnyFunSuite
@@ -149,7 +149,7 @@ class ConversionTest extends AnyFunSuite {
       val tableMap = YamlParser().parse(getFileReader(pair._1)).get
       val expectedResult = readFile(pair._2)
       val writer = new StringWriter()
-      RxRenderer().render(writer, tableMap)
+      RxYamlRenderer().render(writer, tableMap)
       val obtainedResult = writer.toString
       assert(obtainedResult === expectedResult)
     })

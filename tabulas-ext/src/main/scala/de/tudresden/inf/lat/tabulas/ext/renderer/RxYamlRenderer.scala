@@ -10,7 +10,7 @@ import de.tudresden.inf.lat.tabulas.table.{Table, TableMap}
 
 /** Renderer that creates an Rx YAML schema file.
   */
-case class RxRenderer() extends Renderer {
+case class RxYamlRenderer() extends Renderer {
 
   final val ColonChar = ":"
   final val SpaceChar = " "
@@ -106,4 +106,4 @@ case class RxRenderer() extends Renderer {
 
 }
 
-object RxRenderer {}
+object RxYamlRenderer {}

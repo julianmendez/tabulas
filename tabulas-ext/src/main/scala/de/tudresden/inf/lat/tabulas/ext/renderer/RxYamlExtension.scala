@@ -13,7 +13,7 @@ import scala.util.Try
 /** This extension exports the metadata as an Rx YAML schema.
   *
   */
-case class RxExtension() extends Extension {
+case class RxYamlExtension() extends Extension {
 
   final val Name: String = "rxyaml"
   final val Help: String = "(input) (output) : export metadata as an Rx YAML schema"
@@ -29,7 +29,7 @@ case class RxExtension() extends Extension {
         Seq(YamlParser(), JsonParser(), SimpleFormatParser())
       ).parse(new FileReader(inputFileName)).get
       val output = new BufferedWriter(new FileWriter(outputFileName))
-      YamlRenderer().render(output, tableMap)
+      RxYamlRenderer().render(output, tableMap)
       true
     }
     result
@@ -49,4 +49,4 @@ case class RxExtension() extends Extension {
 
 }
 
-object RxExtension {}
+object RxYamlExtension {}

@@ -15,7 +15,7 @@ object Main {
     */
   def main(args: Array[String]): Unit = {
     val extensions = Seq(
-      RxExtension(),
+      RxYamlExtension(),
       YamlExtension(),
       GuessExtension(),
       JsonExtension(),
