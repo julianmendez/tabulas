@@ -20,7 +20,7 @@ def main(argv):
             try:
                 data = yaml.safe_load(input_file)
                 with open(output_file_name, 'w') as output_file:
-                    yaml.dump(data, output_file, default_flow_style=False, sort_keys=False)
+                    yaml.safe_dump(data, output_file, default_flow_style=False, sort_keys=False, explicit_start=True)
             except yaml.YAMLError as exception:
                 print(exception)
     else:
