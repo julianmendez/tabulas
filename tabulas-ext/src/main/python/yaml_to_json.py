@@ -18,7 +18,7 @@ def main(argv):
         output_file_name = argv[2]
         with open(input_file_name, 'r') as input_file:
             try:
-                data = yaml.load(input_file)
+                data = yaml.safe_load(input_file)
                 with open(output_file_name, 'w') as output_file:
                     json.dump(data, output_file, indent=1)
             except yaml.YAMLError as exception:
