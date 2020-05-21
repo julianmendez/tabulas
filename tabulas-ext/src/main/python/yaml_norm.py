@@ -13,9 +13,18 @@ import yaml
 
 
 def main(argv):
-    if (len(argv) == 3):
+    help = "usage: python3 " + argv[0] + " (YAML input/output file)\n" + \
+        "       python3 " + argv[0] + " (YAML input file) (YAML output file)\n" + \
+        "\n" + \
+        "This normalizes a YAML file.\n"
+
+    if (len(argv) == 2 or len(argv) == 3):
         input_file_name = argv[1]
-        output_file_name = argv[2]
+        if (len(argv) == 3):
+            output_file_name = argv[2]
+        else:
+            output_file_name = input_file_name
+
         with open(input_file_name, 'r') as input_file:
             try:
                 data = yaml.safe_load(input_file)
@@ -24,7 +33,7 @@ def main(argv):
             except yaml.YAMLError as exception:
                 print(exception)
     else:
-        print("usage: python3 " + argv[0] + " <YAML input file> <YAML output file>")
+        print(help)
 
 
 if __name__ == "__main__":
