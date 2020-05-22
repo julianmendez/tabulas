@@ -13,6 +13,10 @@ import yaml
 
 
 def main(argv):
+    help = "usage: python3 " + argv[0] + " (YAML input file) (JSON output file)\n" + \
+        "\n" + \
+        "This converts a YAML file to a JSON file.\n"
+
     if (len(argv) == 3):
         input_file_name = argv[1]
         output_file_name = argv[2]
@@ -24,7 +28,7 @@ def main(argv):
             except yaml.YAMLError as exception:
                 print(exception)
     else:
-        print("usage: python3 " + argv[0] + " <YAML input file> <JSON output file>")
+        print(help)
 
 
 if __name__ == "__main__":
