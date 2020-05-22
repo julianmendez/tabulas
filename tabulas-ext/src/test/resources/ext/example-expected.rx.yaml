@@ -1,5 +1,4 @@
 ---
-
 type: "//rec"
 optional:
   id: "//str"

@@ -1,12 +1,10 @@
 ---
-
 type: "//rec"
 optional:
   id: "//str"
   size: "//int"
 
 ---
-
 type: "//rec"
 optional:
   id: "//str"

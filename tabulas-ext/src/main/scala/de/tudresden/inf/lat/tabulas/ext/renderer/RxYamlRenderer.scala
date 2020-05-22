@@ -60,7 +60,7 @@ case class RxYamlRenderer() extends Renderer {
     tableMap.getTableIds.foreach(tableId => {
       val table: Table = tableMap.getTable(tableId).get
       output.write(BeginningOfDocument)
-      output.write(NewLine + NewLine)
+      output.write(NewLine)
       renderMetadata(output, tableId, table)
     })
     output.write(NewLine + NewLine)
