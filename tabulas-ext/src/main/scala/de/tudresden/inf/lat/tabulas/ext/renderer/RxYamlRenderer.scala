@@ -101,8 +101,9 @@ case class RxYamlRenderer() extends Renderer {
     result
   }
 
-  def addQuotes(text: String): String = QuotationMark + text + QuotationMark
-
+  def addQuotes(text: String): String = {
+    QuotationMark + escapeString(text) + QuotationMark
+  }
 
 }
 
