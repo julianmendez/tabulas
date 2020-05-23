@@ -1,13 +1,21 @@
 ---
-type: "//rec"
-optional:
-  id: "//str"
-  title: "//str"
-  authors: "//arr"
-  web: "//str"
-  documents: "//arr"
-  keywords: "//arr"
-  year: "//str"
+type: //arr
+contents:
+  type: //rec
+  optional:
+    id: //str
+    title: //str
+    authors:
+      type: //arr
+      contents: //str
+    web: //str
+    documents:
+      type: //arr
+      contents: //str
+    keywords:
+      type: //arr
+      contents: //str
+    year: //str
 
 
 

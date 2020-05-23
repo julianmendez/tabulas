@@ -35,6 +35,7 @@ case class RxYamlRenderer() extends Renderer {
   final val Slash = "/"
 
   final val RxType = "type"
+  final val RxContents = "contents"
   final val RxOptional = "optional"
   final val RxNil = "//nil"
   final val RxNum = "//num"
@@ -56,6 +57,13 @@ case class RxYamlRenderer() extends Renderer {
     (ParameterizedListType(DecimalType()).getTypeName, RxArr)
   ).toMap
 
+  final val ArrayItemTranslation: Map[String, String] = Seq(
+    (ParameterizedListType(StringType()).getTypeName, RxStr),
+    (ParameterizedListType(URIType()).getTypeName, RxStr),
+    (ParameterizedListType(IntegerType()).getTypeName, RxInt),
+    (ParameterizedListType(DecimalType()).getTypeName, RxNum)
+  ).toMap
+
   override def render(output: Writer, tableMap: TableMap): Unit = {
     tableMap.getTableIds.foreach(tableId => {
       val table: Table = tableMap.getTable(tableId).get
@@ -69,8 +77,11 @@ case class RxYamlRenderer() extends Renderer {
 
   def renderMetadata(output: Writer, typeName: String, table: Table): Unit = {
     val record = MetadataHelper().getMetadataAsRecord(typeName, table)
-    output.write(RxType + ColonChar + SpaceChar + addQuotes(RxRec) + NewLine)
-    output.write(RxOptional + ColonChar + NewLine)
+    output.write(indent(0) + RxType + ColonChar + SpaceChar + RxArr + NewLine)
+    output.write(indent(0) + RxContents + ColonChar + NewLine)
+
+    output.write(indent(1) + RxType + ColonChar + SpaceChar + RxRec + NewLine)
+    output.write(indent(1) + RxOptional + ColonChar + NewLine)
 
     val list = record.get(ParserConstant.TypeDefinitionToken).get.renderAsList()
     list.foreach(pair => {
@@ -78,11 +89,22 @@ case class RxYamlRenderer() extends Renderer {
       val field = parts(0)
       val value = parts(1)
       val translation = Translation.getOrElse(value, RxAny)
-      output.write(TwoSpaces + escapeString(field) + ColonChar + SpaceChar + addQuotes(translation) + NewLine)
+      val arrayItemTranslation = ArrayItemTranslation.get(value)
+
+      if (arrayItemTranslation.isDefined) {
+        output.write(indent(2) + escapeString(field) + ColonChar + NewLine)
+        output.write(indent(3) + RxType + ColonChar + SpaceChar + translation + NewLine)
+        output.write(indent(3) + RxContents + ColonChar + SpaceChar + arrayItemTranslation.get + NewLine)
+      } else {
+        output.write(indent(2) + escapeString(field) + ColonChar + SpaceChar + translation + NewLine)
+      }
+
     })
 
     output.write(NewLine)
   }
+
+  def indent(n: Int): String = TwoSpaces * n
 
   def escapeString(str: String): String = {
     val result = str.flatMap(ch => {

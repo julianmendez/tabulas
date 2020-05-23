@@ -1,14 +1,18 @@
 ---
-type: "//rec"
-optional:
-  id: "//str"
-  size: "//int"
+type: //arr
+contents:
+  type: //rec
+  optional:
+    id: //str
+    size: //int
 
 ---
-type: "//rec"
-optional:
-  id: "//str"
-  vartype: "//str"
+type: //arr
+contents:
+  type: //rec
+  optional:
+    id: //str
+    vartype: //str
 
 
 
