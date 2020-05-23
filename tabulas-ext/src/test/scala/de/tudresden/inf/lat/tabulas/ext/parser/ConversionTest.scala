@@ -4,7 +4,7 @@ import java.io.{FileReader, StringWriter}
 import java.net.URL
 import java.nio.file.{Files, Paths}
 
-import de.tudresden.inf.lat.tabulas.ext.renderer.{JsonRenderer, RxYamlRenderer, YamlRenderer}
+import de.tudresden.inf.lat.tabulas.ext.renderer.{JsonRenderer, JsonSchemaRenderer, RxYamlRenderer, YamlRenderer}
 import de.tudresden.inf.lat.tabulas.parser.SimpleFormatParser
 import de.tudresden.inf.lat.tabulas.renderer.SimpleFormatRenderer
 import org.scalatest.funsuite.AnyFunSuite
@@ -55,6 +55,9 @@ class ConversionTest extends AnyFunSuite {
 
   final val InputFileName12: String = ExtPrefix + "multiple_tables.tab.yaml"
   final val ExpectedOutputFileName12: String = ExtPrefix + "multiple_tables-expected.rx.yaml"
+
+  final val InputFileName13: String = ExtPrefix + "example.tab.yaml"
+  final val ExpectedOutputFileName13: String = ExtPrefix + "example-expected.sc.json"
 
 
 
@@ -151,6 +154,20 @@ class ConversionTest extends AnyFunSuite {
       val writer = new StringWriter()
       RxYamlRenderer().render(writer, tableMap)
       val obtainedResult = writer.toString
+      assert(obtainedResult === expectedResult)
+    })
+  }
+
+  test("rendering JSON Schema") {
+    Seq(
+      (InputFileName13, ExpectedOutputFileName13)
+    ).foreach(pair => {
+      val tableMap = YamlParser().parse(getFileReader(pair._1)).get
+      val expectedResult = readFile(pair._2)
+      val writer = new StringWriter()
+      JsonSchemaRenderer().render(writer, tableMap)
+      val obtainedResult = writer.toString
+      println(obtainedResult)
       assert(obtainedResult === expectedResult)
     })
   }

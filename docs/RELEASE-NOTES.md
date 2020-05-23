@@ -25,7 +25,8 @@
   bug_fixes :
   - respects the order of the defined URI prefixes when they are expanded
   new_writers :
-  - (`rxyaml`) Rx YAML schema
+  - (`rxyaml`) [Rx](http://rx.codesimply.com/) YAML schema
+  - (`jsonschema`) [JSON Schema](https://json-schema.org/)
   build : (`$ mvn clean install`)
   release : (`tabulas-distribution/target/tabulas-1.1.0.jar`)
 

@@ -18,6 +18,7 @@ object Main {
       RxYamlExtension(),
       YamlExtension(),
       GuessExtension(),
+      JsonSchemaExtension(),
       JsonExtension(),
       PropertiesExtension(),
       OldFormatExtension(),
