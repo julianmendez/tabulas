@@ -43,6 +43,7 @@ case class JsonSchemaRenderer() extends Renderer {
   final val JscSchemaKey = "$schema"
   final val JscSchemaValue = "http://json-schema.org/draft-06/schema#"
   final val JscSchemaNewValue = "http://json-schema.org/draft/2019-09/schema#"
+  final val JscTitle = "title"
   final val JscType = "type"
   final val JscProperties = "properties"
   final val JscItems = "items"
@@ -80,8 +81,12 @@ case class JsonSchemaRenderer() extends Renderer {
     output.flush()
   }
 
-  def closeBrace(output: Writer, tab: Int, withComma: Boolean): Unit = {
-    (0 until tab).foreach(_ => output.write(TwoSpaces))
+  def indent(output: Writer, n: Int): Unit = {
+    (0 until n).foreach(_ => output.write(TwoSpaces))
+  }
+
+  def closeBrace(output: Writer, ind: Int, withComma: Boolean): Unit = {
+    indent(output, ind)
     output.write(CloseBrace)
     if (withComma) {
       output.write(CommaChar)
@@ -89,16 +94,17 @@ case class JsonSchemaRenderer() extends Renderer {
     output.write(NewLine)
   }
 
-  def openBrace(output: Writer, tab: Int, key: String): Unit = {
-    (0 until tab).foreach(_ => output.write(TwoSpaces))
-    output.write(addQuotes(key))
-    output.write(ColonChar + SpaceChar)
-    output.write(OpenBrace)
-    output.write(NewLine)
+  def openBrace(output: Writer, ind: Int, key: String): Unit = {
+    indent(output, ind)
+    if (key.nonEmpty) {
+      output.write(addQuotes(key))
+      output.write(ColonChar + SpaceChar)
+    }
+    output.write(OpenBrace + NewLine)
   }
 
-  def renderKeyValue(output: Writer, tab: Int, key: String, value: String, withComma: Boolean): Unit = {
-    (0 until tab).foreach(_ => output.write(TwoSpaces))
+  def renderKeyValue(output: Writer, ind: Int, key: String, value: String, withComma: Boolean): Unit = {
+    indent(output, ind)
     output.write(addQuotes(key))
     output.write(ColonChar + SpaceChar)
     output.write(addQuotes(value))
@@ -111,15 +117,15 @@ case class JsonSchemaRenderer() extends Renderer {
   def renderMetadata(output: Writer, typeName: String, table: Table): Unit = {
     val record = MetadataHelper().getMetadataAsRecord(typeName, table)
 
-    output.write(OpenBrace + NewLine)
+    val indentation = 0
+    openBrace(output, indentation, key = "")
+    renderKeyValue(output, indentation + 1, JscSchemaKey, JscSchemaValue, withComma = true)
+    renderKeyValue(output, indentation + 1, JscTitle, typeName, withComma = true)
+    renderKeyValue(output, indentation + 1, JscType, JscArray, withComma = true)
+    openBrace(output, indentation + 1, JscItems)
 
-    val tab = 1
-    renderKeyValue(output, tab, JscSchemaKey, JscSchemaValue, withComma = true)
-    renderKeyValue(output, tab, JscType, JscArray, withComma = true)
-    openBrace(output, tab, JscItems)
-
-    renderKeyValue(output, tab + 1, JscType, JscObject, withComma = true)
-    openBrace(output, tab + 1, JscProperties)
+    renderKeyValue(output, indentation + 2, JscType, JscObject, withComma = true)
+    openBrace(output, indentation + 2, JscProperties)
 
     val list = record.get(ParserConstant.TypeDefinitionToken).get.renderAsList()
     list.indices.foreach(index => {
@@ -130,23 +136,22 @@ case class JsonSchemaRenderer() extends Renderer {
       val translation = Translation.getOrElse(value, JscObject)
       val arrayItemTranslation = ArrayItemTranslation.get(value)
 
-      openBrace(output, tab + 2, escapeString(field))
-      renderKeyValue(output, tab + 3, JscType, translation, withComma = arrayItemTranslation.isDefined)
+      openBrace(output, indentation + 3, escapeString(field))
+      renderKeyValue(output, indentation + 4, JscType, translation, withComma = arrayItemTranslation.isDefined)
 
       if (arrayItemTranslation.isDefined) {
-        openBrace(output, tab + 3, JscItems)
-        renderKeyValue(output, tab + 4, JscType, arrayItemTranslation.get, withComma = false)
-        closeBrace(output, tab + 3, withComma = false)
+        openBrace(output, indentation + 4, JscItems)
+        renderKeyValue(output, indentation + 5, JscType, arrayItemTranslation.get, withComma = false)
+        closeBrace(output, indentation + 4, withComma = false)
       }
 
-      closeBrace(output, tab + 2, withComma = (index < list.size - 1))
+      closeBrace(output, indentation + 3, withComma = (index < list.size - 1))
     })
 
-    closeBrace(output, tab + 1, withComma = false)
-
-    closeBrace(output, tab, withComma = false)
-
-    output.write(CloseBrace + NewLine + NewLine)
+    closeBrace(output, indentation + 2, withComma = false)
+    closeBrace(output, indentation + 1, withComma = false)
+    closeBrace(output, indentation, withComma = false)
+    output.write(NewLine)
   }
 
   def addQuotes(str: String): String = {

@@ -57,7 +57,7 @@ class ConversionTest extends AnyFunSuite {
   final val ExpectedOutputFileName12: String = ExtPrefix + "multiple_tables-expected.rx.yaml"
 
   final val InputFileName13: String = ExtPrefix + "example.tab.yaml"
-  final val ExpectedOutputFileName13: String = ExtPrefix + "example-expected.sc.json"
+  final val ExpectedOutputFileName13: String = ExtPrefix + "example-expected.schema.json"
 
 
   final val NewLine: String = "\n"
