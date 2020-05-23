@@ -42,10 +42,12 @@ case class JsonSchemaRenderer() extends Renderer {
 
   final val JscSchemaKey = "$schema"
   final val JscSchemaValue = "http://json-schema.org/draft-06/schema#"
-  final val JscSchemaNewValue = "http://json-schema.org/draft/2019-09/schema#"
+  final val JscSchemaNextValue = "http://json-schema.org/draft/2019-09/schema#"
   final val JscTitle = "title"
   final val JscType = "type"
   final val JscProperties = "properties"
+  final val JscAdditionalProperties = "additionalProperties"
+  final val JscFalse = "false"
   final val JscItems = "items"
   final val JscNull = "null"
   final val JscNumber = "number"
@@ -81,12 +83,25 @@ case class JsonSchemaRenderer() extends Renderer {
     output.flush()
   }
 
-  def indent(output: Writer, n: Int): Unit = {
-    (0 until n).foreach(_ => output.write(TwoSpaces))
+  def indent(output: Writer, indentation: Int): Unit = {
+    (0 until indentation).foreach(_ => output.write(TwoSpaces))
   }
 
-  def closeBrace(output: Writer, ind: Int, withComma: Boolean): Unit = {
-    indent(output, ind)
+  def renderKey(output: Writer, indentation: Int, key: String): Unit = {
+    indent(output, indentation)
+    if (key.nonEmpty) {
+      output.write(addQuotes(key))
+      output.write(ColonChar + SpaceChar)
+    }
+  }
+
+  def openBrace(output: Writer, indentation: Int, key: String): Unit = {
+    renderKey(output, indentation, key)
+    output.write(OpenBrace + NewLine)
+  }
+
+  def closeBrace(output: Writer, indentation: Int, withComma: Boolean): Unit = {
+    indent(output, indentation)
     output.write(CloseBrace)
     if (withComma) {
       output.write(CommaChar)
@@ -94,19 +109,8 @@ case class JsonSchemaRenderer() extends Renderer {
     output.write(NewLine)
   }
 
-  def openBrace(output: Writer, ind: Int, key: String): Unit = {
-    indent(output, ind)
-    if (key.nonEmpty) {
-      output.write(addQuotes(key))
-      output.write(ColonChar + SpaceChar)
-    }
-    output.write(OpenBrace + NewLine)
-  }
-
-  def renderKeyValue(output: Writer, ind: Int, key: String, value: String, withComma: Boolean): Unit = {
-    indent(output, ind)
-    output.write(addQuotes(key))
-    output.write(ColonChar + SpaceChar)
+  def renderKeyValue(output: Writer, indentation: Int, key: String, value: String, withComma: Boolean): Unit = {
+    renderKey(output, indentation, key)
     output.write(addQuotes(value))
     if (withComma) {
       output.write(CommaChar)
@@ -123,10 +127,11 @@ case class JsonSchemaRenderer() extends Renderer {
     renderKeyValue(output, indentation + 1, JscTitle, typeName, withComma = true)
     renderKeyValue(output, indentation + 1, JscType, JscArray, withComma = true)
     openBrace(output, indentation + 1, JscItems)
-
     renderKeyValue(output, indentation + 2, JscType, JscObject, withComma = true)
-    openBrace(output, indentation + 2, JscProperties)
+    renderKey(output, indentation + 2, JscAdditionalProperties)
+    output.write(JscFalse + CommaChar + NewLine)
 
+    openBrace(output, indentation + 2, JscProperties)
     val list = record.get(ParserConstant.TypeDefinitionToken).get.renderAsList()
     list.indices.foreach(index => {
       val pair = list(index)
