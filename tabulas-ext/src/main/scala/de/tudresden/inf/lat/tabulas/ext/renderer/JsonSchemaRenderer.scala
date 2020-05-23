@@ -41,9 +41,9 @@ case class JsonSchemaRenderer() extends Renderer {
   final val Slash = "/"
 
   final val JscSchemaKey = "$schema"
-  final val JscSchemaVal = "http://json-schema.org/draft/2019-09/schema#"
+  final val JscSchemaValue = "http://json-schema.org/draft-06/schema#"
+  final val JscSchemaNewValue = "http://json-schema.org/draft/2019-09/schema#"
   final val JscType = "type"
-  final val JscRequired = "required"
   final val JscProperties = "properties"
   final val JscItems = "items"
   final val JscNull = "null"
@@ -114,9 +114,12 @@ case class JsonSchemaRenderer() extends Renderer {
     output.write(OpenBrace + NewLine)
 
     val tab = 1
-    renderKeyValue(output, tab, JscSchemaKey, JscSchemaVal, withComma = true)
-    renderKeyValue(output, tab, JscType, JscObject, withComma = true)
-    openBrace(output, tab, JscProperties)
+    renderKeyValue(output, tab, JscSchemaKey, JscSchemaValue, withComma = true)
+    renderKeyValue(output, tab, JscType, JscArray, withComma = true)
+    openBrace(output, tab, JscItems)
+
+    renderKeyValue(output, tab + 1, JscType, JscObject, withComma = true)
+    openBrace(output, tab + 1, JscProperties)
 
     val list = record.get(ParserConstant.TypeDefinitionToken).get.renderAsList()
     list.indices.foreach(index => {
@@ -127,17 +130,19 @@ case class JsonSchemaRenderer() extends Renderer {
       val translation = Translation.getOrElse(value, JscObject)
       val arrayItemTranslation = ArrayItemTranslation.get(value)
 
-      openBrace(output, tab + 1, escapeString(field))
-      renderKeyValue(output, tab + 2, JscType, translation, withComma = arrayItemTranslation.isDefined)
+      openBrace(output, tab + 2, escapeString(field))
+      renderKeyValue(output, tab + 3, JscType, translation, withComma = arrayItemTranslation.isDefined)
 
       if (arrayItemTranslation.isDefined) {
-        openBrace(output, tab + 2, JscItems)
-        renderKeyValue(output, tab + 3, JscType, arrayItemTranslation.get, withComma = false)
-        closeBrace(output, tab + 2, withComma = false)
+        openBrace(output, tab + 3, JscItems)
+        renderKeyValue(output, tab + 4, JscType, arrayItemTranslation.get, withComma = false)
+        closeBrace(output, tab + 3, withComma = false)
       }
 
-      closeBrace(output, tab + 1, withComma = (index < list.size - 1))
+      closeBrace(output, tab + 2, withComma = (index < list.size - 1))
     })
+
+    closeBrace(output, tab + 1, withComma = false)
 
     closeBrace(output, tab, withComma = false)
 

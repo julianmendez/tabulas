@@ -60,21 +60,20 @@ class ConversionTest extends AnyFunSuite {
   final val ExpectedOutputFileName13: String = ExtPrefix + "example-expected.sc.json"
 
 
-
   final val NewLine: String = "\n"
 
   def getFileReader(inputFileName: String): FileReader = {
     new FileReader(getPath(inputFileName).getFile)
   }
 
-  def getPath(fileName: String): URL = {
-    getClass.getClassLoader.getResource(fileName)
-  }
-
   def readFile(fileName: String): String = {
     val path = Paths.get(getPath(fileName).toURI)
     val result = Files.readAllLines(path).asScala.mkString(NewLine) + NewLine
     result
+  }
+
+  def getPath(fileName: String): URL = {
+    getClass.getClassLoader.getResource(fileName)
   }
 
   test("normalization") {
@@ -167,7 +166,6 @@ class ConversionTest extends AnyFunSuite {
       val writer = new StringWriter()
       JsonSchemaRenderer().render(writer, tableMap)
       val obtainedResult = writer.toString
-      println(obtainedResult)
       assert(obtainedResult === expectedResult)
     })
   }
