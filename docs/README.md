@@ -14,6 +14,10 @@ There are three alternatives to represent the content:
 - **Tabula.Properties**, using a sort of [Java Properties](https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/Properties.html#load-java.io.Reader-) syntax,
 but defining the same property name for multiple objects.
 
+In addition, there are two alternatives to export the metadata as schema:
+- **JSON Schema**, for [JSON Schema](https://json-schema.org/), a vocabulary to annotate and validate JSON documents
+- **Rx YAML**, for [Rx](http://rx.codesimply.com/), schemata tool for JSON/YAML
+
 
 ## Download
 
@@ -146,7 +150,7 @@ For example, the values of fields with type `List_`... (e.g. `List_String`) will
 
 This is an example of a library file.
 Each book record contains an identifier (`id`), a title (`title`), the authors (`authors`), a link to the abstract on the web (`web`), and a list of links to the documents (`documents`).
-This file is ordered by identifier.
+The entries are ordered by identifier.
 
 ```yaml
 
@@ -204,20 +208,24 @@ This project also includes some converters from and to other formats.
 Every deserializer (parser) and serializer (renderer) is registered as an extension.
 Some serializers and some deserializers cannot map completely the content of a Tabula file.
 
-| serializer   | stores metadata   | multiple tables |
-|:-------------|:------------------|:----------------|
-| YAML         | yes               | yes             |
-| JSON         | yes               | yes             |
-| HTML         | no                | yes             |
-| [Wikitext](https://www.mediawiki.org/wiki/Specs/wikitext/1.0.0) | no | yes |
-| CSV          | no                | no              |
-| SQL          | no                | no              |
+| serializer   | stores metadata   | stores entries |
+|:-------------|:------------------|:---------------|
+| YAML         | yes               | yes            |
+| JSON         | yes               | yes            |
+| JSON Schema  | yes               | no             |
+| Rx YAML      | yes               | no             |
+| HTML         | no                | yes            |
+| Wikitext     | no                | yes            |
+| CSV          | no                | yes            |
+| SQL          | no                | yes            |
 
-| deserializer | requires metadata | multiple tables |
-|:-------------|:------------------|:----------------|
-| YAML         | yes               | yes             |
-| JSON         | yes               | yes             |
-| CSV          | no                | no              |
+([Wikitext](https://www.mediawiki.org/wiki/Specs/wikitext/1.0.0): is a wiki markup language)
+
+| deserializer | requires metadata |
+|:-------------|:------------------|
+| YAML         | yes               |
+| JSON         | yes               |
+| CSV          | no                |
 
 The given example as Tabula.Properties:
 
@@ -226,38 +234,38 @@ The given example as Tabula.Properties:
 
 # simple format 1.0.0
 
-type :
- name : record
- def : \
+type =
+ name = record
+ def = \
   id:String \
   title:String \
   authors:List_String \
   web:URI \
   documents:List_URI
- prefix : \
+ prefix = \
   arxiv:https://arxiv.org/
- order : \
+ order = \
   +id
 
-new :
- id : arXiv:1412.2223
- title : A topological approach to non-Archimedean Mathematics
- authors : \
+new =
+ id = arXiv:1412.2223
+ title = A topological approach to non-Archimedean Mathematics
+ authors = \
   Vieri Benci \
   Lorenzo Luperi Baglini
- web : &arxiv;abs/1412.2223
- documents : \
+ web = &arxiv;abs/1412.2223
+ documents = \
   &arxiv;pdf/1412.2223#pdf \
   &arxiv;ps/1412.2223#ps \
   &arxiv;format/1412.2223#other
 
-new :
- id : arXiv:1412.3313
- title : Infinitary stability theory
- authors : \
+new =
+ id = arXiv:1412.3313
+ title = Infinitary stability theory
+ authors = \
   Sebastien Vasey
- web : &arxiv;abs/1412.3313
- documents : \
+ web = &arxiv;abs/1412.3313
+ documents = \
   &arxiv;pdf/1412.3313#pdf \
   &arxiv;ps/1412.3313#ps \
   &arxiv;format/1412.3313#other
@@ -279,7 +287,7 @@ The command line application can be used to execute the different readers and wr
 They are implemented as *extensions*.
 Each extension registers at the beginning of the execution and is available to be executed from the command line.
 
-The following example contains some of the extensions listed by the application, when no parameters are given.
+The following example contains some extensions listed by the application, when no parameters are given.
 
 - `yaml` *(input)* *(output)* : create a Tabula.YAML file
 - `json` *(input)* *(output)* : create a Tabula.JSON file
