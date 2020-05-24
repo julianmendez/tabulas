@@ -3,7 +3,7 @@ package de.tudresden.inf.lat.tabulas.extension
 import java.io.{BufferedWriter, FileReader, FileWriter}
 import java.util.Objects
 
-import de.tudresden.inf.lat.tabulas.parser.SimpleFormatParser
+import de.tudresden.inf.lat.tabulas.parser.{ParserConstant, SimpleFormatParser}
 import de.tudresden.inf.lat.tabulas.renderer.SimpleFormatRenderer
 
 import scala.util.Try
@@ -31,6 +31,9 @@ case class DefaultExtension() extends Extension {
       val inputFileName = arguments(startIndex)
       val outputFileName = arguments(startIndex + 1)
       val tableMap = SimpleFormatParser().parse(new FileReader(inputFileName)).get
+      if (tableMap.getTableIds.length != 1) {
+        println(ParserConstant.WarningDeprecationOfMultipleTables)
+      }
       val output = new BufferedWriter(new FileWriter(outputFileName))
       val renderer = SimpleFormatRenderer(withMetadata)
       renderer.render(output, tableMap)

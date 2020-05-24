@@ -6,6 +6,7 @@ import java.util.Objects
 
 import de.tudresden.inf.lat.tabulas.ext.renderer.YamlRenderer
 import de.tudresden.inf.lat.tabulas.extension.Extension
+import de.tudresden.inf.lat.tabulas.parser.ParserConstant
 
 import scala.util.Try
 
@@ -24,6 +25,9 @@ case class YamlParserExtension() extends Extension {
       val inputFileName = arguments(0)
       val outputFileName = arguments(1)
       val tableMap = YamlParser().parse(new FileReader(inputFileName)).get
+      if (tableMap .getTableIds.length != 1) {
+        println(ParserConstant.WarningDeprecationOfMultipleTables)
+      }
       val output = new BufferedWriter(new FileWriter(outputFileName))
       YamlRenderer().render(output, tableMap)
       true

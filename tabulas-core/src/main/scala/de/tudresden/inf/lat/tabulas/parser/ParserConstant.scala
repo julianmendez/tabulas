@@ -26,5 +26,8 @@ object ParserConstant {
   final val TypeDefinitionToken: String = "def"
   final val TypeSign: String = ":"
 
+  final val DeprecationOfMultipleTables = "Deprecation of Multiple Tables"
+  final val WarningDeprecationOfMultipleTables = "WARNING: Using multiple tables is deprecated and they are no longer supported in newer versions."
+
 }
 

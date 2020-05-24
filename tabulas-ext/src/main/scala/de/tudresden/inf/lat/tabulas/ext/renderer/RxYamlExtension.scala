@@ -16,7 +16,10 @@ import scala.util.Try
 case class RxYamlExtension() extends Extension {
 
   final val Name: String = "rxyaml"
-  final val Help: String = "(input) (output) : export metadata as an Rx YAML schema"
+  final val Help: String = "(input) (output) : given a Tabula file with exactly one table," +
+    "this extension exports the metadata of that table only as an Rx YAML schema. " +
+    "See also Deprecation of Multiple Tables."
+
   final val RequiredArguments: Int = 2
 
   override def process(arguments: Seq[String]): Try[Boolean] = Try {
@@ -28,9 +31,14 @@ case class RxYamlExtension() extends Extension {
       val tableMap = MultiParser(
         Seq(YamlParser(), JsonParser(), SimpleFormatParser())
       ).parse(new FileReader(inputFileName)).get
-      val output = new BufferedWriter(new FileWriter(outputFileName))
-      RxYamlRenderer().render(output, tableMap)
-      true
+      val res = if (tableMap.getTableIds.length == 1) {
+        val output = new BufferedWriter(new FileWriter(outputFileName))
+        RxYamlRenderer().render(output, tableMap)
+        true
+      } else {
+        false
+      }
+      res
     }
     result
   }

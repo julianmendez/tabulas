@@ -59,6 +59,9 @@ case class NormalizationExtension() extends Extension {
       }
 
       val tableMap = acceptedNormalizerPair.content.get
+      if (tableMap.getTableIds.length != 1) {
+        println(ParserConstant.WarningDeprecationOfMultipleTables)
+      }
       val normalizer = acceptedNormalizerPair.normalizer
 
       val output = new BufferedWriter(new FileWriter(outputFileName))

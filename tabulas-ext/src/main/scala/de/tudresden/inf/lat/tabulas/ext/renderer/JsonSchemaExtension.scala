@@ -6,7 +6,7 @@ import java.util.Objects
 
 import de.tudresden.inf.lat.tabulas.ext.parser.{JsonParser, MultiParser, YamlParser}
 import de.tudresden.inf.lat.tabulas.extension.Extension
-import de.tudresden.inf.lat.tabulas.parser.SimpleFormatParser
+import de.tudresden.inf.lat.tabulas.parser.{ParserConstant, SimpleFormatParser}
 
 import scala.util.Try
 
@@ -16,7 +16,9 @@ import scala.util.Try
 case class JsonSchemaExtension() extends Extension {
 
   final val Name: String = "jsonschema"
-  final val Help: String = "(input) (output) : export metadata as a JSON Schema file"
+  final val Help: String = "(input) (output) : given a Tabula.JSON file with exactly one table," +
+    "this extension exports the metadata of that table only as a JSON Schema file. " +
+    "See " + ParserConstant.DeprecationOfMultipleTables + "."
   final val RequiredArguments: Int = 2
 
   override def process(arguments: Seq[String]): Try[Boolean] = Try {
@@ -28,9 +30,14 @@ case class JsonSchemaExtension() extends Extension {
       val tableMap = MultiParser(
         Seq(YamlParser(), JsonParser(), SimpleFormatParser())
       ).parse(new FileReader(inputFileName)).get
-      val output = new BufferedWriter(new FileWriter(outputFileName))
-      JsonSchemaRenderer().render(output, tableMap)
-      true
+      val res = if (tableMap.getTableIds.length == 1) {
+        val output = new BufferedWriter(new FileWriter(outputFileName))
+        JsonSchemaRenderer().render(output, tableMap)
+        true
+      } else {
+        false
+      }
+      res
     }
     result
   }

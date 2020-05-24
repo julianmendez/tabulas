@@ -6,7 +6,7 @@ import java.util.Objects
 
 import de.tudresden.inf.lat.tabulas.ext.parser.MultiParser
 import de.tudresden.inf.lat.tabulas.extension.Extension
-import de.tudresden.inf.lat.tabulas.parser.SimpleFormatParser
+import de.tudresden.inf.lat.tabulas.parser.{ParserConstant, SimpleFormatParser}
 
 import scala.util.Try
 
@@ -26,6 +26,9 @@ case class SqlExtension() extends Extension {
       val inputFileName = arguments(0)
       val outputFileName = arguments(1)
       val tableMap = MultiParser().parse(new FileReader(inputFileName)).get
+      if (tableMap .getTableIds.length != 1) {
+        println(ParserConstant.WarningDeprecationOfMultipleTables)
+      }
       val output = new BufferedWriter(new FileWriter(outputFileName))
       SqlRenderer().render(output, tableMap)
       true

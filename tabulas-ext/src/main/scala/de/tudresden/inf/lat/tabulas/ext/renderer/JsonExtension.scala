@@ -6,7 +6,7 @@ import java.util.Objects
 
 import de.tudresden.inf.lat.tabulas.ext.parser.{JsonParser, MultiParser, YamlParser}
 import de.tudresden.inf.lat.tabulas.extension.Extension
-import de.tudresden.inf.lat.tabulas.parser.SimpleFormatParser
+import de.tudresden.inf.lat.tabulas.parser.{ParserConstant, SimpleFormatParser}
 
 import scala.util.Try
 
@@ -35,6 +35,9 @@ case class JsonExtension() extends Extension {
       val tableMap = MultiParser(
         Seq(JsonParser(), YamlParser(), SimpleFormatParser())
       ).parse(new FileReader(inputFileName)).get
+      if (tableMap .getTableIds.length != 1) {
+        println(ParserConstant.WarningDeprecationOfMultipleTables)
+      }
       val output = new BufferedWriter(new FileWriter(outputFileName))
       JsonRenderer(withMetadata).render(output, tableMap)
       true
