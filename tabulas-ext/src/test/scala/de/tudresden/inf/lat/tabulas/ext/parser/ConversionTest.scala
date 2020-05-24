@@ -53,11 +53,8 @@ class ConversionTest extends AnyFunSuite {
   final val InputFileName11: String = ExtPrefix + "example.tab.yaml"
   final val ExpectedOutputFileName11: String = ExtPrefix + "example-expected.rx.yaml"
 
-  final val InputFileName12: String = ExtPrefix + "multiple_tables.tab.yaml"
-  final val ExpectedOutputFileName12: String = ExtPrefix + "multiple_tables-expected.rx.yaml"
-
-  final val InputFileName13: String = ExtPrefix + "example.tab.yaml"
-  final val ExpectedOutputFileName13: String = ExtPrefix + "example-expected.schema.json"
+  final val InputFileName12: String = ExtPrefix + "example.tab.yaml"
+  final val ExpectedOutputFileName12: String = ExtPrefix + "example-expected.schema.json"
 
 
   final val NewLine: String = "\n"
@@ -146,7 +143,6 @@ class ConversionTest extends AnyFunSuite {
   test("rendering Rx") {
     Seq(
       (InputFileName11, ExpectedOutputFileName11),
-      (InputFileName12, ExpectedOutputFileName12)
     ).foreach(pair => {
       val tableMap = YamlParser().parse(getFileReader(pair._1)).get
       val expectedResult = readFile(pair._2)
@@ -159,7 +155,7 @@ class ConversionTest extends AnyFunSuite {
 
   test("rendering JSON Schema") {
     Seq(
-      (InputFileName13, ExpectedOutputFileName13)
+      (InputFileName12, ExpectedOutputFileName12)
     ).foreach(pair => {
       val tableMap = YamlParser().parse(getFileReader(pair._1)).get
       val expectedResult = readFile(pair._2)

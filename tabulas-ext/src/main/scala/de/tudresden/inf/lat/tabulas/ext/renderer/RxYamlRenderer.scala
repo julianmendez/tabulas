@@ -66,12 +66,14 @@ case class RxYamlRenderer() extends Renderer {
 
   override def render(output: Writer, tableMap: TableMap): Unit = {
     tableMap.getTableIds.foreach(tableId => {
-      val table: Table = tableMap.getTable(tableId).get
-      output.write(BeginningOfDocument)
-      output.write(NewLine)
-      renderMetadata(output, tableId, table)
+      renderTable(output, tableId, tableMap.getTable(tableId).get)
     })
-    output.write(NewLine + NewLine)
+  }
+
+  def renderTable(output: Writer, tableId: String, table: Table): Unit = {
+    output.write(BeginningOfDocument)
+    output.write(NewLine)
+    renderMetadata(output, tableId, table)
     output.flush()
   }
 
@@ -100,8 +102,6 @@ case class RxYamlRenderer() extends Renderer {
       }
 
     })
-
-    output.write(NewLine)
   }
 
   def indent(n: Int): String = TwoSpaces * n
