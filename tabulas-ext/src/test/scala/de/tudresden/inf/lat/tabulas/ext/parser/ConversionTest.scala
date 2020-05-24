@@ -63,14 +63,14 @@ class ConversionTest extends AnyFunSuite {
     new FileReader(getPath(inputFileName).getFile)
   }
 
+  def getPath(fileName: String): URL = {
+    getClass.getClassLoader.getResource(fileName)
+  }
+
   def readFile(fileName: String): String = {
     val path = Paths.get(getPath(fileName).toURI)
     val result = Files.readAllLines(path).asScala.mkString(NewLine) + NewLine
     result
-  }
-
-  def getPath(fileName: String): URL = {
-    getClass.getClassLoader.getResource(fileName)
   }
 
   test("normalization") {
@@ -142,7 +142,7 @@ class ConversionTest extends AnyFunSuite {
 
   test("rendering Rx") {
     Seq(
-      (InputFileName11, ExpectedOutputFileName11),
+      (InputFileName11, ExpectedOutputFileName11)
     ).foreach(pair => {
       val tableMap = YamlParser().parse(getFileReader(pair._1)).get
       val expectedResult = readFile(pair._2)
