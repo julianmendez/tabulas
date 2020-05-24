@@ -19,12 +19,15 @@ case class CsvRenderer() extends Renderer {
   final val Comma: String = ","
 
   override def render(output: Writer, tableMap: TableMap): Unit = {
-    tableMap.getTableIds.foreach(tableName => {
-      val table: Table = tableMap.getTable(tableName).get
-      renderTypeSelection(output, tableName, table)
-      renderTypeDefinition(output, table)
-      renderAllRecords(output, table)
+    tableMap.getTableIds.foreach(tableId => {
+      renderTable(output, tableId, tableMap.getTable(tableId).get)
     })
+  }
+
+  def renderTable(output: Writer, tableId: String, table: Table): Unit = {
+    renderTypeSelection(output, tableId, table)
+    renderTypeDefinition(output, table)
+    renderAllRecords(output, table)
     output.flush()
   }
 
@@ -76,6 +79,10 @@ case class CsvRenderer() extends Renderer {
     result
   }
 
+  def sanitize(str: String): String = {
+    str.replace(Quotes, QuotesReplacement)
+  }
+
   def writeParameterizedListIfNotEmpty(output: Writer, field: String, list: ParameterizedListValue): Boolean = {
     val result = if (Objects.nonNull(list) && !list.isEmpty) {
       output.write(Quotes)
@@ -90,10 +97,6 @@ case class CsvRenderer() extends Renderer {
       false
     }
     result
-  }
-
-  def sanitize(str: String): String = {
-    str.replace(Quotes, QuotesReplacement)
   }
 
   def writeLinkIfNotEmpty(output: Writer, field: String, link: URIValue): Boolean = {

@@ -36,17 +36,22 @@ case class HtmlRenderer() extends Renderer {
 
   override def render(output: Writer, tableMap: TableMap): Unit = {
     output.write(Prefix)
-    tableMap.getTableIds.foreach(tableName => {
-      val table: Table = tableMap.getTable(tableName).get
-      renderAllRecords(output, table)
+
+    tableMap.getTableIds.foreach(tableId => {
+      renderTable(output, tableId, tableMap.getTable(tableId).get)
     })
+
     output.write("\n")
     output.write("\n")
     output.write(Suffix)
     output.flush()
   }
 
-  def renderAllRecords(output: Writer, table: Table): Unit = {
+  def renderTable(output: Writer, tableId: String, table: Table): Unit = {
+    renderTable(output, table)
+  }
+
+  def renderTable(output: Writer, table: Table): Unit = {
     val list: Seq[Record] = table.getRecords
     output.write("<table summary=\"\">\n")
     list.foreach(record => {

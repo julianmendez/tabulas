@@ -77,9 +77,12 @@ case class JsonSchemaRenderer() extends Renderer {
 
   override def render(output: Writer, tableMap: TableMap): Unit = {
     tableMap.getTableIds.foreach(tableId => {
-      val table: Table = tableMap.getTable(tableId).get
-      renderMetadata(output, tableId, table)
+      renderTable(output, tableId, tableMap.getTable(tableId).get)
     })
+  }
+
+  def renderTable(output: Writer, tableId: String, table: Table): Unit = {
+    renderMetadata(output, tableId, table)
     output.flush()
   }
 

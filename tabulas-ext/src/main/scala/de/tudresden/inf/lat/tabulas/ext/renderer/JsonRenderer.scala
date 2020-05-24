@@ -158,32 +158,36 @@ case class JsonRenderer(withMetadata: Boolean) extends Renderer {
     }
   }
 
-  def renderAllRecords(output: Writer, table: CompositeTypeValue, hasMoreTables: Boolean): Unit = {
+  def renderAllRecords(output: Writer, table: CompositeTypeValue): Unit = {
     val list: Seq[Record] = table.getRecords
     list.indices.foreach(index => {
       output.write(NewLine + OpenBrace + NewLine)
       val record = list(index)
       render(output, record, table.getType.getFields)
-      val maybeComma = if (index < list.length - 1 || hasMoreTables) CommaChar else ""
-      output.write(CloseBrace + maybeComma + NewLine + NewLine)
+      val maybeComma = if (index < list.length - 1) CommaChar + NewLine + NewLine else ""
+      output.write(CloseBrace + maybeComma)
     })
   }
-
 
   override def render(output: Writer, tableMap: TableMap): Unit = {
     output.write(OpenSquareBracket + NewLine + NewLine)
     val list = tableMap.getTableIds
     list.indices.foreach(index => {
       val tableId = list(index)
-      val table: Table = tableMap.getTable(tableId).get
-      renderMetadataIfNecessary(output, tableId, table)
-      val hasMoreTables = index < list.length - 1
-      renderAllRecords(output, table, hasMoreTables)
+
+      renderTable(output, tableId, tableMap.getTable(tableId).get)
+
+      val maybeComma = if (index < list.length - 1) CommaChar else ""
+      output.write(maybeComma + NewLine + NewLine)
     })
     output.write(NewLine + CloseSquareBracket + NewLine + NewLine + NewLine)
     output.flush()
   }
 
+  def renderTable(output: Writer, tableId: String, table: Table): Unit = {
+    renderMetadataIfNecessary(output, tableId, table)
+    renderAllRecords(output, table)
+  }
 }
 
 object JsonRenderer {

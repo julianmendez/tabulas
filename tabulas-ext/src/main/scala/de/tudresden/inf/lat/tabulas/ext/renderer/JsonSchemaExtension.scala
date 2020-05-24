@@ -16,7 +16,7 @@ import scala.util.Try
 case class JsonSchemaExtension() extends Extension {
 
   final val Name: String = "jsonschema"
-  final val Help: String = "(input) (output) : given a Tabula.JSON file with exactly one table," +
+  final val Help: String = "(input) (output) : given a Tabula.JSON file with exactly one table, " +
     "this extension exports the metadata of that table only as a JSON Schema file. " +
     "See " + ParserConstant.DeprecationOfMultipleTables + "."
   final val RequiredArguments: Int = 2

@@ -14,17 +14,16 @@ import de.tudresden.inf.lat.tabulas.table.{Table, TableMap}
 case class WikitextRenderer() extends Renderer {
 
   override def render(output: Writer, tableMap: TableMap): Unit = {
-    output.write("\n")
     tableMap.getTableIds.foreach(tableId => {
-      val table: Table = tableMap.getTable(tableId).get
-      renderAllRecords(output, table)
+      renderTable(output, tableId, tableMap.getTable(tableId).get)
     })
-    output.write("\n")
-    output.write("\n")
-    output.flush()
   }
 
-  def renderAllRecords(output: Writer, table: CompositeTypeValue): Unit = {
+  def renderTable(output: Writer, tableId: String, table: Table): Unit = {
+    renderTable(output, table)
+  }
+
+  def renderTable(output: Writer, table: Table): Unit = {
     val list: Seq[Record] = table.getRecords
     output.write("{|\n")
     output.write("|-\n")
@@ -33,6 +32,7 @@ case class WikitextRenderer() extends Renderer {
       output.write("|-\n")
     })
     output.write("|}\n")
+    output.flush()
   }
 
   def render(output: Writer, record: Record, fields: Seq[String]): Unit = {

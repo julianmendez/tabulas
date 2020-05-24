@@ -16,7 +16,7 @@ import scala.util.Try
 case class RxYamlExtension() extends Extension {
 
   final val Name: String = "rxyaml"
-  final val Help: String = "(input) (output) : given a Tabula file with exactly one table," +
+  final val Help: String = "(input) (output) : given a Tabula file with exactly one table, " +
     "this extension exports the metadata of that table only as an Rx YAML schema. " +
     "See also Deprecation of Multiple Tables."
 

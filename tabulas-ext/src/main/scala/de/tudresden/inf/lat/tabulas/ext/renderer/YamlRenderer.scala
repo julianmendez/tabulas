@@ -199,18 +199,19 @@ case class YamlRenderer(withMetadata: Boolean) extends Renderer {
     })
   }
 
-  override def render(output: Writer, tableMap: TableMap): Unit = {
-    tableMap.getTableIds.foreach(tableId => {
-      val table: Table = tableMap.getTable(tableId).get
-      output.write(BeginningOfDocument)
-      output.write(NewLine + NewLine)
-      renderMetadataIfNecessary(output, tableId, table)
-      renderAllRecords(output, table)
-    })
+  def renderTable(output: Writer, tableId: String, table: Table): Unit = {
+    output.write(BeginningOfDocument)
     output.write(NewLine + NewLine)
+    renderMetadataIfNecessary(output, tableId, table)
+    renderAllRecords(output, table)
     output.flush()
   }
 
+  override def render(output: Writer, tableMap: TableMap): Unit = {
+    tableMap.getTableIds.foreach(tableId => {
+      renderTable(output, tableId, tableMap.getTable(tableId).get)
+    })
+  }
 
 }
 
