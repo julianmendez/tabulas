@@ -164,7 +164,7 @@ case class YamlRenderer(withMetadata: Boolean) extends Renderer {
       val optValue: Option[PrimitiveTypeValue] = record.get(field)
       val value: PrimitiveTypeValue = optValue.get
       val spaces = if (index > 0) TwoSpaces else ""
-      val prefix = spaces + escapeString(field) + SpaceChar + ColonChar
+      val prefix = spaces + escapeString(field) + ColonChar
       val tabPrefixSp = tabulation + prefix + SpaceChar
       value match {
         case list: ParameterizedListValue =>
@@ -183,7 +183,7 @@ case class YamlRenderer(withMetadata: Boolean) extends Renderer {
   def renderMetadataIfNecessary(output: Writer, typeName: String, table: Table): Unit = {
     if (withMetadata) {
       val record = MetadataHelper().getMetadataAsRecord(typeName, table)
-      output.write(HyphenSpace + ParserConstant.TypeSelectionToken + SpaceChar + ColonChar + NewLine)
+      output.write(HyphenSpace + ParserConstant.TypeSelectionToken + ColonChar + NewLine)
       render(output, record, YamlRenderer.MetadataTokens, TwoSpaces)
       output.write(NewLine + NewLine)
     }
