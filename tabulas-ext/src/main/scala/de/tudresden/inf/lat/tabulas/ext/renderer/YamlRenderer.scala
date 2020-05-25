@@ -185,7 +185,7 @@ case class YamlRenderer(withMetadata: Boolean) extends Renderer {
       val record = MetadataHelper().getMetadataAsRecord(typeName, table)
       output.write(HyphenSpace + ParserConstant.TypeSelectionToken + ColonChar + NewLine)
       render(output, record, YamlRenderer.MetadataTokens, TwoSpaces)
-      output.write(NewLine + NewLine)
+      output.write(NewLine)
     }
   }
 
@@ -195,13 +195,13 @@ case class YamlRenderer(withMetadata: Boolean) extends Renderer {
       val record = list(index)
       output.write(HyphenChar + SpaceChar)
       render(output, record, table.getType.getFields, "")
-      output.write(NewLine + NewLine)
+      output.write(NewLine)
     })
   }
 
   def renderTable(output: Writer, tableId: String, table: Table): Unit = {
     output.write(BeginningOfDocument)
-    output.write(NewLine + NewLine)
+    output.write(NewLine)
     renderMetadataIfNecessary(output, tableId, table)
     renderAllRecords(output, table)
     output.flush()
