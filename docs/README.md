@@ -67,9 +67,8 @@ Each type is defined as follows:
 ```yaml
 
 ---
-
-- type :
-    name : TYPE_NAME
+- type:
+    name: TYPE_NAME
 ```
 
 where *TYPE_NAME* can be any identifier.
@@ -77,7 +76,7 @@ where *TYPE_NAME* can be any identifier.
 The fields are defined as follows:
 
 ```yaml
-    def :
+    def:
     - FIELD_NAME_0:FIELD_TYPE_0
     - FIELD_NAME_1:FIELD_TYPE_1
       ...
@@ -93,7 +92,7 @@ The URIs can be shortened by using prefixes.
 The prefixes are URIs themselves without colons, because the colon (`:`) is used to define the association.
 
 ```yaml
-    prefix :
+    prefix:
     - PREFIX_0:URI_0
     - PREFIX_1:URI_1
     - ...
@@ -109,7 +108,7 @@ This could be useful to rename the prefixes.
 The order in which the instances are shown is defined as follows:
 
 ```yaml
-    order :
+    order:
     - ('-'|'+')FIELD_NAME_a_0
     - ('-'|'+')FIELD_NAME_a_1
       ...
@@ -120,7 +119,7 @@ where the `+` and the `-` are used to denote whether the reverse order should be
 For example:
 
 ```yaml
-    order :
+    order:
     - +id
     - -author
 ```
@@ -130,10 +129,10 @@ orders the instances by `id` (ascending) and then by author (descending).
 The instances come just after the type definition, with the following syntax:
 
 ```yaml
-- FIELD_NAME_0 : VALUE_0
-  FIELD_NAME_1 : VALUE_1
+- FIELD_NAME_0: VALUE_0
+  FIELD_NAME_1: VALUE_1
   ...
-  FIELD_NAME_n : VALUE_n
+  FIELD_NAME_n: VALUE_n
 ```
 
 where each *FIELD_NAME* is one of the already declared field names in the type and each *VALUE* contains a String according to the field type.
@@ -155,37 +154,36 @@ The entries are ordered by identifier.
 ```yaml
 
 ---
-
-- type :
-    name : record
-    def :
+- type:
+    name: record
+    def:
     - id:String
     - title:String
     - authors:List_String
     - web:URI
     - documents:List_URI
-    prefix :
+    prefix:
     - arxiv:https://arxiv.org/
-    order :
+    order:
     - +id
 
-- id : arXiv:1412.2223
-  title : A topological approach to non-Archimedean Mathematics
-  authors :
+- id: arXiv:1412.2223
+  title: A topological approach to non-Archimedean Mathematics
+  authors:
   - Vieri Benci
   - Lorenzo Luperi Baglini
-  web : https://arxiv.org/abs/1412.2223
-  documents :
+  web: https://arxiv.org/abs/1412.2223
+  documents:
   - https://arxiv.org/pdf/1412.2223#pdf
   - https://arxiv.org/ps/1412.2223#ps
   - https://arxiv.org/format/1412.2223#other
 
-- id : arXiv:1412.3313
-  title : Infinitary stability theory
-  authors :
+- id: arXiv:1412.3313
+  title: Infinitary stability theory
+  authors:
   - Sebastien Vasey
-  web : https://arxiv.org/abs/1412.3313
-  documents :
+  web: https://arxiv.org/abs/1412.3313
+  documents:
   - https://arxiv.org/pdf/1412.3313#pdf
   - https://arxiv.org/ps/1412.3313#ps
   - https://arxiv.org/format/1412.3313#other
@@ -234,38 +232,38 @@ The given example as Tabula.Properties:
 
 # simple format 1.0.0
 
-type =
- name = record
- def = \
+type:
+ name: record
+ def: \
   id:String \
   title:String \
   authors:List_String \
   web:URI \
   documents:List_URI
- prefix = \
+ prefix: \
   arxiv:https://arxiv.org/
- order = \
+ order: \
   +id
 
-new =
- id = arXiv:1412.2223
- title = A topological approach to non-Archimedean Mathematics
- authors = \
+new:
+ id: arXiv:1412.2223
+ title: A topological approach to non-Archimedean Mathematics
+ authors: \
   Vieri Benci \
   Lorenzo Luperi Baglini
- web = &arxiv;abs/1412.2223
- documents = \
+ web: &arxiv;abs/1412.2223
+ documents: \
   &arxiv;pdf/1412.2223#pdf \
   &arxiv;ps/1412.2223#ps \
   &arxiv;format/1412.2223#other
 
-new =
- id = arXiv:1412.3313
- title = Infinitary stability theory
- authors = \
+new:
+ id: arXiv:1412.3313
+ title: Infinitary stability theory
+ authors: \
   Sebastien Vasey
- web = &arxiv;abs/1412.3313
- documents = \
+ web: &arxiv;abs/1412.3313
+ documents: \
   &arxiv;pdf/1412.3313#pdf \
   &arxiv;ps/1412.3313#ps \
   &arxiv;format/1412.3313#other
@@ -275,7 +273,7 @@ new =
 The unit tests also include the [previous example](https://github.com/julianmendez/tabulas/blob/master/tabulas-ext/src/test/resources/ext/miniexample.tab.yaml).
 
 Please note that there should be no spaces in the elements of the `def` section.
-For example, the definition is `id:String` and not `id : String`.
+For example, the definition is `id:String` and not `id: String`.
 
 A YAML file can be easily converted to a JSON file using a [Python](https://www.python.org) script like
 [yaml_to_json.py](https://github.com/julianmendez/tabulas/blob/master/tabulas-ext/src/main/python/yaml_to_json.py).
@@ -289,10 +287,10 @@ Each extension registers at the beginning of the execution and is available to b
 
 The following example contains some extensions listed by the application, when no parameters are given.
 
-- `yaml` *(input)* *(output)* : create a Tabula.YAML file
-- `json` *(input)* *(output)* : create a Tabula.JSON file
-- `properties` *(input)* *(output)* : create a Tabula.Properties file
-- `oldformat` *(input)* *(output)* : create an old Tabula.Properties file, i.e. using the equals sign instead of colon
+- `yaml` *(input)* *(output)*: create a Tabula.YAML file
+- `json` *(input)* *(output)*: create a Tabula.JSON file
+- `properties` *(input)* *(output)*: create a Tabula.Properties file
+- `oldformat` *(input)* *(output)*: create an old Tabula.Properties file, i.e. using the equals sign instead of colon
 
 The command line application can be executed with:
 
