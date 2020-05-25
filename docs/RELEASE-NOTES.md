@@ -15,6 +15,7 @@
     - (`jsonschema`) [JSON Schema](https://json-schema.org/)
   - build: (`$ mvn clean install`)
   - release: (`tabulas-distribution/target/tabulas-1.1.0.jar`)
+
 - - version: v1.0.0
   - date: (*2019-06-15*)
   - new_features:
@@ -53,6 +54,7 @@
     - (`oldformat`) Tabula format using the equals sign
   - build: (`$ mvn clean install`)
   - release: (`tabulas-distribution/target/tabulas-1.0.0.jar`)
+
 - - version: v0.2.0
   - date: (*2016-12-12*)
   - new_features:
@@ -61,6 +63,7 @@
     - requires `scala-library-2.11.0.jar`
   - build: (`$ mvn clean install`)
   - release: (`tabulas-distribution/target/tabulas-0.2.0.jar`)
+
 - - version: v0.1.0
   - date: (*2015-12-21*)
   - new_features:
