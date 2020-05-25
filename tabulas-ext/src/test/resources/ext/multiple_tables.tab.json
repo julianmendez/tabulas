@@ -2,16 +2,16 @@
 
 
 {
-"type" :
+"type":
 {
- "name" : "value",
- "def" : [
+ "name": "value",
+ "def": [
   "id:String",
   "size:Integer"
  ],
- "prefix" : [
+ "prefix": [
  ],
- "order" : [
+ "order": [
   "+size",
   "-id"
  ]
@@ -20,64 +20,64 @@
 
 
 {
- "id" : "boolean",
- "size" : 1
+ "id": "boolean",
+ "size": 1
 },
 
 
 {
- "id" : "byte",
- "size" : 8
+ "id": "byte",
+ "size": 8
 },
 
 
 {
- "id" : "short",
- "size" : 16
+ "id": "short",
+ "size": 16
 },
 
 
 {
- "id" : "char",
- "size" : 16
+ "id": "char",
+ "size": 16
 },
 
 
 {
- "id" : "int",
- "size" : 32
+ "id": "int",
+ "size": 32
 },
 
 
 {
- "id" : "float",
- "size" : 32
+ "id": "float",
+ "size": 32
 },
 
 
 {
- "id" : "long",
- "size" : 64
+ "id": "long",
+ "size": 64
 },
 
 
 {
- "id" : "double",
- "size" : 64
+ "id": "double",
+ "size": 64
 },
 
 
 {
-"type" :
+"type":
 {
- "name" : "variable",
- "def" : [
+ "name": "variable",
+ "def": [
   "id:String",
   "vartype:String"
  ],
- "prefix" : [
+ "prefix": [
  ],
- "order" : [
+ "order": [
   "+id"
  ]
 }
@@ -85,20 +85,20 @@
 
 
 {
- "id" : "x0",
- "vartype" : "long"
+ "id": "x0",
+ "vartype": "long"
 },
 
 
 {
- "id" : "x1",
- "vartype" : "int"
+ "id": "x1",
+ "vartype": "int"
 },
 
 
 {
- "id" : "x2",
- "vartype" : "short"
+ "id": "x2",
+ "vartype": "short"
 }
 
 

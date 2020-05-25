@@ -127,7 +127,7 @@ case class JsonRenderer(withMetadata: Boolean) extends Renderer {
       val field = newList(index)
       val optValue: Option[PrimitiveTypeValue] = record.get(field)
       val value: PrimitiveTypeValue = optValue.get
-      val prefix = SpaceChar + addQuotes(field) + SpaceChar + ColonChar + SpaceChar
+      val prefix = SpaceChar + addQuotes(field) + ColonChar + SpaceChar
       value match {
         case list: ParameterizedListValue =>
           writeParameterizedListIfNotEmpty(output, prefix, list)
@@ -147,7 +147,7 @@ case class JsonRenderer(withMetadata: Boolean) extends Renderer {
     if (withMetadata) {
       output.write(NewLine + OpenBrace + NewLine)
       output.write(addQuotes(ParserConstant.TypeSelectionToken))
-      output.write(SpaceChar + ColonChar)
+      output.write(ColonChar)
       writeAsStringIfNotEmpty(output, ParserConstant.TypeSelectionToken, StringValue())
       val record = MetadataHelper().getMetadataAsRecord(typeName, table)
       output.write(NewLine + OpenBrace + NewLine)
