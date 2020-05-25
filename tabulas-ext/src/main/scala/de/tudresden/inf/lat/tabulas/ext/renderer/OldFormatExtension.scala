@@ -30,7 +30,7 @@ case class OldFormatExtension() extends Extension {
         Seq(SimpleFormatParser(), JsonParser(), YamlParser())
       ).parse(new FileReader(inputFileName)).get
       val output = new BufferedWriter(new FileWriter(outputFileName))
-      val renderer = SimpleFormatRenderer(ParserConstant.EqualsFieldSign)
+      val renderer = SimpleFormatRenderer(ParserConstant.Space + ParserConstant.EqualsFieldSign)
       renderer.render(output, tableMap)
       true
     }

@@ -394,7 +394,7 @@ case class SimpleFormatParser(permissive: Boolean) extends Parser {
         if (recordIdsOfCurrentTable.contains(valueStr)) {
           throw ParseException("Identifier '"
             + ParserConstant.IdKeyword + ParserConstant.Space
-            + ParserConstant.EqualsFieldSign + ParserConstant.Space
+            + ParserConstant.ColonFieldSign + ParserConstant.Space
             + valueStr + "' is duplicated (line " + lineCounter
             + ").")
         }

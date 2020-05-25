@@ -25,7 +25,7 @@ case class SimpleFormatRenderer(fieldSign: String, withMetadata: Boolean) extend
 
   def renderMetadataIfNecessary(output: Writer, typeName: String, table: Table, recordRenderer: RecordRenderer): Unit = {
     if (withMetadata) {
-      output.write(ParserConstant.TypeSelectionToken + ParserConstant.Space + fieldSign)
+      output.write(ParserConstant.TypeSelectionToken + fieldSign)
       val record = MetadataHelper().getMetadataAsRecord(typeName, table)
       recordRenderer.render(output, record, SimpleFormatRenderer.MetadataTokens)
 
@@ -58,10 +58,10 @@ object SimpleFormatRenderer {
     ParserConstant.CommentSymbol + " " + ParserConstant.SpecificationFormat + " " +
     ParserConstant.SpecificationVersion + ParserConstant.NewLine
 
-  def apply(): SimpleFormatRenderer = new SimpleFormatRenderer(ParserConstant.ColonFieldSign, withMetadata = true)
+  def apply(): SimpleFormatRenderer = SimpleFormatRenderer(ParserConstant.ColonFieldSign, withMetadata = true)
 
-  def apply(withMetadata: Boolean): SimpleFormatRenderer = new SimpleFormatRenderer(ParserConstant.ColonFieldSign, withMetadata)
+  def apply(withMetadata: Boolean): SimpleFormatRenderer = SimpleFormatRenderer(ParserConstant.ColonFieldSign, withMetadata)
 
-  def apply(fieldSign: String): SimpleFormatRenderer = new SimpleFormatRenderer(fieldSign, withMetadata = true)
+  def apply(fieldSign: String): SimpleFormatRenderer = SimpleFormatRenderer(fieldSign, withMetadata = true)
 
 }
