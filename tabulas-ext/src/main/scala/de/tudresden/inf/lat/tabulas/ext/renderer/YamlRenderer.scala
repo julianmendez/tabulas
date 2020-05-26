@@ -45,6 +45,7 @@ case class YamlRenderer(withMetadata: Boolean) extends Renderer {
 
   final val ColonSpace = ": "
   final val SpaceHash = " #"
+  final val Apostrophe = "'"
 
   final val SpecialCharSeq = Seq(
     ":", "{", "}", "[", "]", ",", "&", "*", "#", "?", "|", "-", "<", ">", "=", "!", "%", "@", "`"
@@ -78,26 +79,52 @@ case class YamlRenderer(withMetadata: Boolean) extends Renderer {
     result
   }
 
-  def requiresQuotes(text: String): Boolean = {
-    val isABoolean = Try {
+  def startsWithSpecialChar(text: String): Boolean = {
+    SpecialCharSeq.exists(specialChar => text.trim.startsWith(specialChar))
+  }
+
+  def mayUseApostrophes(text: String): Boolean = {
+    val result = isBoolean(text) ||
+      isNumber(text) ||
+      isDate(text)
+    result
+  }
+
+  def isBoolean(text: String): Boolean = {
+    Try {
       text.toBoolean
     }.isSuccess
-    val isANumber = Try {
+  }
+
+  def isNumber(text: String): Boolean = {
+    Try {
       BigDecimal(text)
     }.isSuccess
-    val isADate = Try {
+  }
+
+  def isDate(text: String): Boolean = {
+    Try {
       new SimpleDateFormat("yyyy-MM-dd").format(text)
     }.isSuccess
-    val trimmedText = text.trim
-    val startsWithSpecialChar = SpecialCharSeq.exists(specialChar => trimmedText.startsWith(specialChar))
-    val result = isABoolean || isANumber || isADate ||
-      startsWithSpecialChar || text.contains(ColonSpace) || text.contains(SpaceHash)
+  }
+
+  def requiresQuotesOrApostrophes(text: String): Boolean = {
+    val result = isBoolean(text) ||
+      isNumber(text) ||
+      isDate(text) ||
+      startsWithSpecialChar(text) ||
+      text.contains(ColonSpace) ||
+      text.contains(SpaceHash)
     result
   }
 
   def addQuotesIfNeeded(text: String): String = {
-    val result = if (requiresQuotes(text)) {
-      QuotationMark + text + QuotationMark
+    val result = if (requiresQuotesOrApostrophes(text)) {
+      if (mayUseApostrophes(text)) {
+        Apostrophe + text + Apostrophe
+      } else {
+        QuotationMark + text + QuotationMark
+      }
     } else {
       text
     }
@@ -127,12 +154,15 @@ case class YamlRenderer(withMetadata: Boolean) extends Renderer {
         if (value.getType.equals(URIType())) {
           val link: URIValue = URIType().castInstance(value)
           writeLinkIfNotEmpty(output, tabulation + TwoSpaces + HyphenSpace, link)
+
         } else if (value.getType.equals(IntegerType())) {
           val intVal: IntegerValue = IntegerType().castInstance(value)
           writeAsIntegerIfNotEmpty(output, tabulation + TwoSpaces + HyphenSpace, intVal)
+
         } else {
           val strVal: StringValue = StringType().castInstance(value)
           writeAsStringIfNotEmpty(output, tabulation + TwoSpaces + HyphenSpace, strVal)
+
         }
         val maybeNewLine = if (index < newList.length - 1) NewLine else ""
         output.write(maybeNewLine)
@@ -169,10 +199,13 @@ case class YamlRenderer(withMetadata: Boolean) extends Renderer {
       value match {
         case list: ParameterizedListValue =>
           writeParameterizedListIfNotEmpty(output, prefix, list, tabulation)
+
         case link: URIValue =>
           writeLinkIfNotEmpty(output, tabPrefixSp, link)
+
         case number: IntegerValue =>
           writeAsIntegerIfNotEmpty(output, tabPrefixSp, number)
+
         case _ =>
           writeAsStringIfNotEmpty(output, tabPrefixSp, value)
       }
@@ -185,7 +218,6 @@ case class YamlRenderer(withMetadata: Boolean) extends Renderer {
       val record = MetadataHelper().getMetadataAsRecord(typeName, table)
       output.write(HyphenSpace + ParserConstant.TypeSelectionToken + ColonChar + NewLine)
       render(output, record, YamlRenderer.MetadataTokens, TwoSpaces)
-      output.write(NewLine)
     }
   }
 
@@ -195,7 +227,6 @@ case class YamlRenderer(withMetadata: Boolean) extends Renderer {
       val record = list(index)
       output.write(HyphenChar + SpaceChar)
       render(output, record, table.getType.getFields, "")
-      output.write(NewLine)
     })
   }
 

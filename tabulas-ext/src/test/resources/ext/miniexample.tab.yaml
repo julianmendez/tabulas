@@ -11,7 +11,6 @@
     - arxiv:https://arxiv.org/
     order:
     - +id
-
 - id: arXiv:1412.2223
   title: A topological approach to non-Archimedean Mathematics
   authors:
@@ -22,7 +21,6 @@
   - https://arxiv.org/pdf/1412.2223#pdf
   - https://arxiv.org/ps/1412.2223#ps
   - https://arxiv.org/format/1412.2223#other
-
 - id: arXiv:1412.3313
   title: Infinitary stability theory
   authors:
@@ -32,4 +30,3 @@
   - https://arxiv.org/pdf/1412.3313#pdf
   - https://arxiv.org/ps/1412.3313#ps
   - https://arxiv.org/format/1412.3313#other
-

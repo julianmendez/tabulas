@@ -14,7 +14,6 @@
     - partarx:https://arxiv
     order:
     - +id
-
 - id: arXiv:1412.2223
   title: A topological approach to non-Archimedean Mathematics
   authors:
@@ -28,8 +27,7 @@
   keywords:
   - topology
   - Archimedes
-  year: "2015"
-
+  year: '2015'
 - id: arXiv:1412.2953
   title: Boole's Principles of Symbolical Reasoning
   authors:
@@ -43,8 +41,7 @@
   keywords:
   - Boolean logic
   - reasoning
-  year: "2014"
-
+  year: '2014'
 - id: arXiv:1412.3313
   title: Infinitary stability theory
   authors:
@@ -57,5 +54,4 @@
   keywords:
   - infinity
   - stability theory
-  year: "2016"
-
+  year: '2016'
