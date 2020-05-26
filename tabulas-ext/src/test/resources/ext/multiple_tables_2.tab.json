@@ -6,7 +6,6 @@
     "id:String",
     "size:Integer"
    ],
-   "prefix": null,
    "order": [
     "+size",
     "-id"
@@ -52,7 +51,6 @@
     "id:String",
     "vartype:String"
    ],
-   "prefix": [],
    "order": [
     "+id"
    ]

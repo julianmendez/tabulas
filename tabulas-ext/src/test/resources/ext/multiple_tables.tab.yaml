@@ -4,8 +4,6 @@
     def:
     - id:String
     - size:Integer
-    prefix:
-
     order:
     - +size
     - "-id"
@@ -40,8 +38,6 @@
     def:
     - id:String
     - vartype:String
-    prefix:
-
     order:
     - +id
 
