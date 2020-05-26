@@ -59,8 +59,13 @@ case class JsonRenderer(withMetadata: Boolean) extends Renderer {
     result
   }
 
-  def writeAsIntegerIfNotEmpty(output: Writer, prefix: String, value: PrimitiveTypeValue): Boolean = {
+  def indent(output: Writer, indentation: Int): Unit = {
+    (0 until indentation).foreach(_ => output.write(SpaceChar))
+  }
+
+  def writeAsIntegerIfNotEmpty(output: Writer, indentation: Int, prefix: String, value: PrimitiveTypeValue): Boolean = {
     val result = if (Objects.nonNull(value) && !value.toString.trim().isEmpty) {
+      indent(output, indentation)
       output.write(prefix)
       output.write(escapeString(value.toString))
       true
@@ -70,8 +75,9 @@ case class JsonRenderer(withMetadata: Boolean) extends Renderer {
     result
   }
 
-  def writeAsStringIfNotEmpty(output: Writer, prefix: String, value: PrimitiveTypeValue): Boolean = {
+  def writeAsStringIfNotEmpty(output: Writer, indentation: Int, prefix: String, value: PrimitiveTypeValue): Boolean = {
     val result = if (Objects.nonNull(value) && !value.toString.trim().isEmpty) {
+      indent(output, indentation)
       output.write(prefix)
       output.write(addQuotes(value.toString))
       true
@@ -81,27 +87,36 @@ case class JsonRenderer(withMetadata: Boolean) extends Renderer {
     result
   }
 
-  def writeParameterizedListIfNotEmpty(output: Writer, prefix: String, list: ParameterizedListValue): Boolean = {
+  def writeParameterizedListIfNotEmpty(output: Writer, indentation: Int, prefix: String, list: ParameterizedListValue): Boolean = {
     val result = if (Objects.nonNull(list)) {
+      indent(output, indentation)
       output.write(prefix)
-      output.write(OpenSquareBracket + NewLine)
+      output.write(OpenSquareBracket)
       val newList = list.getList
-      newList.indices.foreach(index => {
-        val value = newList(index)
-        if (value.getType.equals(URIType())) {
-          val link: URIValue = URIType().castInstance(value)
-          writeLinkIfNotEmpty(output, SpaceChar + SpaceChar, link)
-        } else if (value.getType.equals(IntegerType())) {
-          val intVal: IntegerValue = IntegerType().castInstance(value)
-          writeAsIntegerIfNotEmpty(output, SpaceChar + SpaceChar, intVal)
-        } else {
-          val strVal: StringValue = StringType().castInstance(value)
-          writeAsStringIfNotEmpty(output, SpaceChar + SpaceChar, strVal)
-        }
-        val maybeComma = if (index < newList.length - 1) CommaChar else ""
-        output.write(maybeComma + NewLine)
-      })
-      output.write(SpaceChar + CloseSquareBracket)
+      if (newList.nonEmpty) {
+        output.write(NewLine)
+        newList.indices.foreach(index => {
+          val value = newList(index)
+          if (value.getType.equals(URIType())) {
+            val link: URIValue = URIType().castInstance(value)
+            writeLinkIfNotEmpty(output, indentation, SpaceChar, link)
+
+          } else if (value.getType.equals(IntegerType())) {
+            val intVal: IntegerValue = IntegerType().castInstance(value)
+            writeAsIntegerIfNotEmpty(output, indentation, SpaceChar, intVal)
+
+          } else {
+            val strVal: StringValue = StringType().castInstance(value)
+            writeAsStringIfNotEmpty(output, indentation, SpaceChar, strVal)
+
+          }
+          val maybeComma = if (index < newList.length - 1) CommaChar else ""
+          output.write(maybeComma + NewLine)
+        })
+
+        indent(output, indentation)
+      }
+      output.write(CloseSquareBracket)
       true
     } else {
       false
@@ -109,9 +124,10 @@ case class JsonRenderer(withMetadata: Boolean) extends Renderer {
     result
   }
 
-  def writeLinkIfNotEmpty(output: Writer, prefix: String, link: URIValue): Boolean = {
+  def writeLinkIfNotEmpty(output: Writer, indentation: Int, prefix: String, link: URIValue): Boolean = {
     val result = if (Objects.nonNull(link) && !link.isEmpty) {
       val fragment = if (link.getLabel.isEmpty) "" else HashChar + link.getLabel
+      indent(output, indentation)
       output.write(prefix)
       output.write(addQuotes(link.getUriNoLabel.toString + fragment))
       true
@@ -121,56 +137,72 @@ case class JsonRenderer(withMetadata: Boolean) extends Renderer {
     result
   }
 
-  def render(output: Writer, record: Record, fields: Seq[String]): Unit = {
+  def render(output: Writer, indentation: Int, record: Record, fields: Seq[String]): Unit = {
     val newList = fields.filter(field => record.get(field).isDefined)
     newList.indices.foreach(index => {
       val field = newList(index)
       val optValue: Option[PrimitiveTypeValue] = record.get(field)
       val value: PrimitiveTypeValue = optValue.get
-      val prefix = SpaceChar + addQuotes(field) + ColonChar + SpaceChar
+
+      val prefix = addQuotes(field) + ColonChar + SpaceChar
+
       value match {
         case list: ParameterizedListValue =>
-          writeParameterizedListIfNotEmpty(output, prefix, list)
+          writeParameterizedListIfNotEmpty(output, indentation + 1, prefix, list)
+
         case link: URIValue =>
-          writeLinkIfNotEmpty(output, prefix, link)
+          writeLinkIfNotEmpty(output, indentation + 1, prefix, link)
+
         case number: IntegerValue =>
-          writeAsIntegerIfNotEmpty(output, prefix, number)
+          writeAsIntegerIfNotEmpty(output, indentation + 1, prefix, number)
+
         case _ =>
-          writeAsStringIfNotEmpty(output, prefix, value)
+          writeAsStringIfNotEmpty(output, indentation + 1, prefix, value)
       }
       val maybeComma = if (index < newList.length - 1) CommaChar else ""
       output.write(maybeComma + NewLine)
     })
   }
 
-  def renderMetadataIfNecessary(output: Writer, typeName: String, table: Table): Unit = {
+  def renderMetadataIfNecessary(output: Writer, indentation: Int, typeName: String, table: Table): Unit = {
     if (withMetadata) {
-      output.write(NewLine + OpenBrace + NewLine)
+      indent(output, indentation)
+      output.write(OpenBrace + NewLine)
+
+      indent(output, indentation + 1)
       output.write(addQuotes(ParserConstant.TypeSelectionToken))
-      output.write(ColonChar)
-      writeAsStringIfNotEmpty(output, ParserConstant.TypeSelectionToken, StringValue())
+      output.write(ColonChar + SpaceChar + OpenBrace + NewLine)
+
       val record = MetadataHelper().getMetadataAsRecord(typeName, table)
-      output.write(NewLine + OpenBrace + NewLine)
-      render(output, record, JsonRenderer.MetadataTokens)
+      render(output, indentation + 1, record, JsonRenderer.MetadataTokens)
+
+      indent(output, indentation + 1)
       output.write(CloseBrace + NewLine)
+
       val maybeComma = if (table.getRecords.nonEmpty) CommaChar else ""
-      output.write(CloseBrace + maybeComma + NewLine + NewLine)
+      indent(output, indentation)
+      output.write(CloseBrace + maybeComma + NewLine)
     }
   }
 
-  def renderAllRecords(output: Writer, table: CompositeTypeValue): Unit = {
+  def renderAllRecords(output: Writer, indentation: Int, table: CompositeTypeValue): Unit = {
     val list: Seq[Record] = table.getRecords
     list.indices.foreach(index => {
-      output.write(NewLine + OpenBrace + NewLine)
+
+      indent(output, indentation)
+      output.write(OpenBrace + NewLine)
+
       val record = list(index)
-      render(output, record, table.getType.getFields)
-      val maybeComma = if (index < list.length - 1) CommaChar + NewLine + NewLine else ""
+      render(output, indentation, record, table.getType.getFields)
+      val maybeComma = if (index < list.length - 1) CommaChar + NewLine else ""
+
+      indent(output, indentation)
       output.write(CloseBrace + maybeComma)
     })
   }
 
   override def render(output: Writer, tableMap: TableMap): Unit = {
-    output.write(OpenSquareBracket + NewLine + NewLine)
+    output.write(OpenSquareBracket + NewLine)
     val list = tableMap.getTableIds
     list.indices.foreach(index => {
       val tableId = list(index)
@@ -178,15 +210,16 @@ case class JsonRenderer(withMetadata: Boolean) extends Renderer {
       renderTable(output, tableId, tableMap.getTable(tableId).get)
 
       val maybeComma = if (index < list.length - 1) CommaChar else ""
-      output.write(maybeComma + NewLine + NewLine)
+      output.write(maybeComma + NewLine)
     })
-    output.write(NewLine + CloseSquareBracket + NewLine + NewLine + NewLine)
+    output.write(CloseSquareBracket + NewLine)
     output.flush()
   }
 
   def renderTable(output: Writer, tableId: String, table: Table): Unit = {
-    renderMetadataIfNecessary(output, tableId, table)
-    renderAllRecords(output, table)
+    val indentation = 0
+    renderMetadataIfNecessary(output, indentation + 1, tableId, table)
+    renderAllRecords(output, indentation + 1, table)
   }
 }
 
