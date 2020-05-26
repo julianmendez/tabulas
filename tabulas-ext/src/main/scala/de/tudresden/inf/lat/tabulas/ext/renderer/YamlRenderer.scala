@@ -51,6 +51,9 @@ case class YamlRenderer(withMetadata: Boolean) extends Renderer {
     ":", "{", "}", "[", "]", ",", "&", "*", "#", "?", "|", "-", "<", ">", "=", "!", "%", "@", "`"
   )
 
+  final val BeautifyingNewLine = NewLine
+  // this is just to make the output more readable
+
   def escapeString(str: String): String = {
     val result = str.flatMap(ch => {
       "" + ch match {
@@ -218,6 +221,8 @@ case class YamlRenderer(withMetadata: Boolean) extends Renderer {
       val record = MetadataHelper().getMetadataAsRecord(typeName, table)
       output.write(HyphenSpace + ParserConstant.TypeSelectionToken + ColonChar + NewLine)
       render(output, record, YamlRenderer.MetadataTokens, TwoSpaces)
+
+      output.write(BeautifyingNewLine)
     }
   }
 
@@ -227,6 +232,8 @@ case class YamlRenderer(withMetadata: Boolean) extends Renderer {
       val record = list(index)
       output.write(HyphenChar + SpaceChar)
       render(output, record, table.getType.getFields, "")
+
+      output.write(BeautifyingNewLine)
     })
   }
 

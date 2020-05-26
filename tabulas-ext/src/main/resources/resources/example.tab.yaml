@@ -1,23 +1,18 @@
 ---
-
-- type :
-    name : example
-    def :
+- type:
+    name: example
+    def:
     - name:String
     - uri:URI
     - list:List_String
-    prefix :
+    prefix:
     - pref:https://some.prefix.org
-    order :
+    order:
     - +name
 
-
-- name : simple example
-  uri : https://some.uri.org
-  list :
+- name: simple example
+  uri: https://some.uri.org
+  list:
   - simple
   - example
-
-
-
 
