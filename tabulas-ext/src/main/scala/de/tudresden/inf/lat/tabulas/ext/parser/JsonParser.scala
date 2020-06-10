@@ -70,8 +70,7 @@ case class JsonParser(permissive: Boolean) extends Parser {
       ParserConstant.Space + asString(value)
 
     }
-    val result = prefix + middle + ParserConstant.NewLine
-    result
+    prefix + middle + ParserConstant.NewLine
   }
 
   def asString(value: JsonValue): String = {

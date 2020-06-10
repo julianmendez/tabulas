@@ -40,8 +40,7 @@ case class ConsoleStarter() {
     val packg = this.getClass.getPackage
     val name = Option(packg.getImplementationTitle).getOrElse("")
     val version = Option(packg.getImplementationVersion).getOrElse("")
-    val result = (name + " " + version).trim
-    result
+    (name + " " + version).trim
   }
 
 }

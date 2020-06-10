@@ -87,10 +87,9 @@ case class YamlRenderer(withMetadata: Boolean) extends Renderer {
   }
 
   def mayUseApostrophes(text: String): Boolean = {
-    val result = isBoolean(text) ||
+    isBoolean(text) ||
       isNumber(text) ||
       isDate(text)
-    result
   }
 
   def isBoolean(text: String): Boolean = {
@@ -112,13 +111,12 @@ case class YamlRenderer(withMetadata: Boolean) extends Renderer {
   }
 
   def requiresQuotesOrApostrophes(text: String): Boolean = {
-    val result = isBoolean(text) ||
+    isBoolean(text) ||
       isNumber(text) ||
       isDate(text) ||
       startsWithSpecialChar(text) ||
       text.contains(ColonSpace) ||
       text.contains(SpaceHash)
-    result
   }
 
   def addQuotesIfNeeded(text: String): String = {

@@ -61,8 +61,7 @@ case class CsvParser() extends Parser {
       }
     }
 
-    val result: TableMapImpl = TableMapImpl(Map() ++ Seq((DefaultTableName, currentTable)))
-    result
+    TableMapImpl(Map() ++ Seq((DefaultTableName, currentTable)))
   }
 
   def getColumns(line0: String): Seq[String] = {
@@ -88,16 +87,14 @@ case class CsvParser() extends Parser {
     if (!current.toString.isEmpty) {
       columns += current.toString
     }
-    val result = columns.toSeq
-    result
+    columns.toSeq
   }
 
   private def createSortedTable(fields: Seq[String]): TableImpl = {
     val tableType = fields
       .foldLeft(CompositeTypeImpl())((compType, field) => compType.declareField(field, DefaultFieldType).get)
 
-    val result = TableImpl(tableType)
-    result
+    TableImpl(tableType)
   }
 
   def normalizeHeaders(headers: Seq[String], lineCounter: Int): Seq[String] = {
@@ -117,8 +114,7 @@ case class CsvParser() extends Parser {
         headers += fieldName
       }
     }
-    val result = headers.toSeq
-    result
+    headers.toSeq
   }
 
   def normalize(fieldName: String): String = {
