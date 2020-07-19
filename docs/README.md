@@ -1,7 +1,7 @@
 # [Tabulas](https://julianmendez.github.io/tabulas/)
 
 [![build](https://travis-ci.org/julianmendez/tabulas.png?branch=master)](https://travis-ci.org/julianmendez/tabulas)
-[![maven central](https://maven-badges.herokuapp.com/maven-central/de.tu-dresden.inf.lat.tabulas/tabulas-parent_2.12/badge.svg)](https://search.maven.org/#search|ga|1|g%3A%22de.tu-dresden.inf.lat.tabulas%22)
+[![maven central](https://maven-badges.herokuapp.com/maven-central/de.tu-dresden.inf.lat.tabulas/tabulas-parent_2.13/badge.svg)](https://search.maven.org/#search|ga|1|g%3A%22de.tu-dresden.inf.lat.tabulas%22)
 [![license](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
 *System to manage human-readable tables using files*
@@ -21,15 +21,15 @@ In addition, there are two alternatives to export the metadata as schema:
 
 ## Download
 
-- [executable JAR file](https://sourceforge.net/projects/latitude/files/tabulas/1.0.0/tabulas-1.0.0.jar/download)
+- [executable JAR file](https://sourceforge.net/projects/latitude/files/tabulas/1.1.0/tabulas-1.1.0.jar/download)
 - [The Central Repository](https://repo1.maven.org/maven2/de/tu-dresden/inf/lat/tabulas/)
 - as dependency:
 
 ```xml
 <dependency>
   <groupId>de.tu-dresden.inf.lat.tabulas</groupId>
-  <artifactId>tabulas-ext_2.12</artifactId>
-  <version>1.0.0</version>
+  <artifactId>tabulas-ext_2.13</artifactId>
+  <version>1.1.0</version>
 </dependency>
 ```
 
