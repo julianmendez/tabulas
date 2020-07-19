@@ -4,7 +4,7 @@
     def:
     - name:String
     - uri:URI
-    - list:List_String
+    - items:List_String
     prefix:
     - pref:https://some.prefix.org
     order:
@@ -12,7 +12,7 @@
 
 - name: simple example
   uri: https://some.uri.org
-  list:
+  items:
   - simple
   - example
 
