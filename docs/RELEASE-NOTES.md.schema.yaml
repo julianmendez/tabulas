@@ -16,7 +16,7 @@ items:
         type: array
         items:
           type: string
-      deprecated:
+      deprecated_features:
         type: array
         items:
           type: string

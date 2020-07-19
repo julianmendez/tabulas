@@ -5,7 +5,7 @@
     - compiled with Scala 2.13.3
     - requires `scala-library-2.13.3.jar`
     - its artifact identifiers include the Scala version as suffix (`_2.13`)
-  - deprecated:
+  - deprecated_features:
     - use of multiple tables is deprecated and they are no longer supported in newer
       versions
   - bug_fixes:
