@@ -11,7 +11,7 @@ lazy val commonSettings = Seq(
     * [[https://github.com/scala/scala]]
     * [[https://repo1.maven.org/maven2/org/scala-lang/scalap/]]
     */
-  scalaVersion := "2.13.2",
+  scalaVersion := "2.13.3",
 
   /**
     * ScalaTest
