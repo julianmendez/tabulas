@@ -1,7 +1,7 @@
 
 package de.tudresden.inf.lat.tabulas.ext.renderer
 
-import java.io.{OutputStreamWriter, Writer}
+import java.io.Writer
 import java.util.Objects
 
 import de.tudresden.inf.lat.tabulas.datatype._
@@ -35,31 +35,34 @@ case class SqlRenderer() extends Renderer {
 
   override def render(output: Writer, tableMap: TableMap): Unit = {
     renderPrefix(output)
-    tableMap.getTableIds.foreach(tableName => {
-      val table: Table = tableMap.getTable(tableName).get
-      renderTypes(output, tableName, table)
-      renderAllRecords(output, tableName, table)
-      renderOrder(output, tableName, table)
+
+    tableMap.getTableIds.foreach(tableId => {
+      renderTable(output, tableId, tableMap.getTable(tableId).get)
     })
-    output.write(ParserConstant.NewLine)
+  }
+
+  def renderTable(output: Writer, tableId: String, table: Table): Unit = {
+    renderTypes(output, tableId, table)
+    renderAllRecords(output, tableId, table)
+    renderOrder(output, tableId, table)
     output.flush()
   }
 
-  def renderAllRecords(output: Writer, tableName: String, table: CompositeTypeValue): Unit = {
+  def renderAllRecords(output: Writer, tableId: String, table: CompositeTypeValue): Unit = {
     val list: Seq[Record] = table.getRecords
     output.write(ParserConstant.NewLine)
     list.foreach(record => {
-      render(output, tableName, record, table.getType.getFields)
+      render(output, tableId, record, table.getType.getFields)
       output.write(ParserConstant.NewLine)
     })
     output.write(ParserConstant.NewLine)
   }
 
-  def render(output: Writer, tableName: String, record: Record, fields: Seq[String]): Unit = {
+  def render(output: Writer, tableId: String, record: Record, fields: Seq[String]): Unit = {
     output.write(ParserConstant.NewLine)
     output.write(InsertInto)
     output.write(ParserConstant.Space)
-    output.write(tableName)
+    output.write(tableId)
     output.write(ParserConstant.Space)
     output.write(Values)
     output.write(ParserConstant.Space)
@@ -125,6 +128,10 @@ case class SqlRenderer() extends Renderer {
     result
   }
 
+  def sanitize(str: String): String = {
+    str.replace(Apostrophe, ApostropheReplacement)
+  }
+
   def writeLinkIfNotEmpty(output: Writer, prefix: String, link: URIValue): Boolean = {
     val result = if (Objects.nonNull(link) && !link.isEmpty) {
       output.write(prefix)
@@ -137,10 +144,6 @@ case class SqlRenderer() extends Renderer {
       false
     }
     result
-  }
-
-  def sanitize(str: String): String = {
-    str.replace(Apostrophe, ApostropheReplacement)
   }
 
   def renderTypes(output: Writer, tableName: String, table: CompositeTypeValue): Unit = {

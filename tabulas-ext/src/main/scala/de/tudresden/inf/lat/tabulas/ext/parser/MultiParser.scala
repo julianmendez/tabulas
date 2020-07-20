@@ -26,8 +26,7 @@ case class MultiParser(parsers: Seq[Parser]) extends Parser {
   @throws[IOException]
   def readContent(input: Reader): String = {
     val reader = new BufferedReader(input)
-    val result = reader.lines.toArray.mkString(ParserConstant.NewLine)
-    result
+    reader.lines.toArray.mkString(ParserConstant.NewLine)
   }
 }
 

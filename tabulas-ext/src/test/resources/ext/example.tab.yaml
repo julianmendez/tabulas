@@ -1,8 +1,7 @@
 ---
-
-- type :
-    name : record
-    def :
+- type:
+    name: record
+    def:
     - id:String
     - title:String
     - authors:List_URI
@@ -10,59 +9,53 @@
     - documents:List_URI
     - keywords:List_String
     - year:String
-    prefix :
+    prefix:
     - arxiv:https://arxiv.org/
     - partarx:https://arxiv
-    order :
+    order:
     - +id
 
-
-- id : arXiv:1412.2223
-  title : A topological approach to non-Archimedean Mathematics
-  authors :
+- id: arXiv:1412.2223
+  title: A topological approach to non-Archimedean Mathematics
+  authors:
   - https://arxiv.org/find/math/1/au:+Benci_V/0/1/0/all/0/1#Vieri_Benci
   - https://arxiv.org/find/math/1/au:+Baglini_L/0/1/0/all/0/1#Lorenzo_Luperi_Baglini
-  web : https://arxiv.org/abs/1412.2223#web
-  documents :
+  web: https://arxiv.org/abs/1412.2223#web
+  documents:
   - https://arxiv.org/pdf/1412.2223#pdf
   - https://arxiv.org/ps/1412.2223#ps
   - https://arxiv.org/format/1412.2223#other
-  keywords :
+  keywords:
   - topology
   - Archimedes
-  year : "2015"
+  year: '2015'
 
-
-- id : arXiv:1412.2953
-  title : Boole's Principles of Symbolical Reasoning
-  authors :
+- id: arXiv:1412.2953
+  title: Boole's Principles of Symbolical Reasoning
+  authors:
   - https://arxiv.org/find/math/1/au:+Burris_S/0/1/0/all/0/1#Stanley_Burris
   - https://arxiv.org/find/math/1/au:+Sankappanavar_H/0/1/0/all/0/1#H.P._Sankappanavar
-  web : https://arxiv.org/abs/1412.2953#web
-  documents :
+  web: https://arxiv.org/abs/1412.2953#web
+  documents:
   - https://arxiv.org/pdf/1412.2953#pdf
   - https://arxiv.org/ps/1412.2953#ps
   - https://arxiv.org/format/1412.2953#other
-  keywords :
+  keywords:
   - Boolean logic
   - reasoning
-  year : "2014"
+  year: '2014'
 
-
-- id : arXiv:1412.3313
-  title : Infinitary stability theory
-  authors :
+- id: arXiv:1412.3313
+  title: Infinitary stability theory
+  authors:
   - https://arxiv.org/find/math/1/au:+Vasey_S/0/1/0/all/0/1#Sebastien_Vasey
-  web : https://arxiv.org/abs/1412.3313#web
-  documents :
+  web: https://arxiv.org/abs/1412.3313#web
+  documents:
   - https://arxiv.org/pdf/1412.3313#pdf
   - https://arxiv.org/ps/1412.3313#ps
   - https://arxiv.org/format/1412.3313#other
-  keywords :
+  keywords:
   - infinity
   - stability theory
-  year : "2016"
-
-
-
+  year: '2016'
 

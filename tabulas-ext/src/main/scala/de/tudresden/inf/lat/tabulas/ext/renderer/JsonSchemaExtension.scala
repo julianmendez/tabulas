@@ -7,32 +7,37 @@ import java.util.Objects
 import de.tudresden.inf.lat.tabulas.ext.parser.{JsonParser, MultiParser, YamlParser}
 import de.tudresden.inf.lat.tabulas.extension.Extension
 import de.tudresden.inf.lat.tabulas.parser.{ParserConstant, SimpleFormatParser}
-import de.tudresden.inf.lat.tabulas.renderer.SimpleFormatRenderer
 
 import scala.util.Try
 
-/** Default extension. It reads and writes using the default format.
+/** This extension exports the metadata as an Rx YAML schema.
   *
   */
-case class OldFormatExtension() extends Extension {
+case class JsonSchemaExtension() extends Extension {
 
-  final val Name: String = "oldformat"
-  final val Help: String = "(input) (output) : create an old Tabula.Properties file, i.e. using the equals sign instead of colon"
+  final val Name: String = "jsonschema"
+  final val Help: String = "(input) (output) : given a Tabula.JSON file with exactly one table, " +
+    "this extension exports the metadata of that table only as a JSON Schema file. " +
+    "See " + ParserConstant.DeprecationOfMultipleTables + "."
   final val RequiredArguments: Int = 2
 
   override def process(arguments: Seq[String]): Try[Boolean] = Try {
-    val result: Boolean = if (Objects.isNull(arguments) || arguments.size != RequiredArguments) {
+    val result = if (Objects.isNull(arguments) || arguments.size != RequiredArguments) {
       false
     } else {
       val inputFileName = arguments(0)
       val outputFileName = arguments(1)
       val tableMap = MultiParser(
-        Seq(SimpleFormatParser(), JsonParser(), YamlParser())
+        Seq(YamlParser(), JsonParser(), SimpleFormatParser())
       ).parse(new FileReader(inputFileName)).get
-      val output = new BufferedWriter(new FileWriter(outputFileName))
-      val renderer = SimpleFormatRenderer(ParserConstant.Space + ParserConstant.EqualsFieldSign)
-      renderer.render(output, tableMap)
-      true
+      val res = if (tableMap.getTableIds.length == 1) {
+        val output = new BufferedWriter(new FileWriter(outputFileName))
+        JsonSchemaRenderer().render(output, tableMap)
+        true
+      } else {
+        false
+      }
+      res
     }
     result
   }
@@ -51,4 +56,4 @@ case class OldFormatExtension() extends Extension {
 
 }
 
-object OldFormatExtension {}
+object JsonSchemaExtension {}

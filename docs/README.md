@@ -1,7 +1,7 @@
 # [Tabulas](https://julianmendez.github.io/tabulas/)
 
 [![build](https://travis-ci.org/julianmendez/tabulas.png?branch=master)](https://travis-ci.org/julianmendez/tabulas)
-[![maven central](https://maven-badges.herokuapp.com/maven-central/de.tu-dresden.inf.lat.tabulas/tabulas-parent_2.12/badge.svg)](https://search.maven.org/#search|ga|1|g%3A%22de.tu-dresden.inf.lat.tabulas%22)
+[![maven central](https://maven-badges.herokuapp.com/maven-central/de.tu-dresden.inf.lat.tabulas/tabulas-parent_2.13/badge.svg)](https://search.maven.org/#search|ga|1|g%3A%22de.tu-dresden.inf.lat.tabulas%22)
 [![license](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
 *System to manage human-readable tables using files*
@@ -14,18 +14,22 @@ There are three alternatives to represent the content:
 - **Tabula.Properties**, using a sort of [Java Properties](https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/Properties.html#load-java.io.Reader-) syntax,
 but defining the same property name for multiple objects.
 
+In addition, there are two alternatives to export the metadata as schema:
+- **JSON Schema**, for [JSON Schema](https://json-schema.org/), a vocabulary to annotate and validate JSON documents
+- **Rx YAML**, for [Rx](http://rx.codesimply.com/), schemata tool for JSON/YAML
+
 
 ## Download
 
-- [executable JAR file](https://sourceforge.net/projects/latitude/files/tabulas/1.0.0/tabulas-1.0.0.jar/download)
+- [executable JAR file](https://sourceforge.net/projects/latitude/files/tabulas/1.1.0/tabulas-1.1.0.jar/download)
 - [The Central Repository](https://repo1.maven.org/maven2/de/tu-dresden/inf/lat/tabulas/)
 - as dependency:
 
 ```xml
 <dependency>
   <groupId>de.tu-dresden.inf.lat.tabulas</groupId>
-  <artifactId>tabulas-ext_2.12</artifactId>
-  <version>1.0.0</version>
+  <artifactId>tabulas-ext_2.13</artifactId>
+  <version>1.1.0</version>
 </dependency>
 ```
 
@@ -63,9 +67,8 @@ Each type is defined as follows:
 ```yaml
 
 ---
-
-- type :
-    name : TYPE_NAME
+- type:
+    name: TYPE_NAME
 ```
 
 where *TYPE_NAME* can be any identifier.
@@ -73,7 +76,7 @@ where *TYPE_NAME* can be any identifier.
 The fields are defined as follows:
 
 ```yaml
-    def :
+    def:
     - FIELD_NAME_0:FIELD_TYPE_0
     - FIELD_NAME_1:FIELD_TYPE_1
       ...
@@ -89,7 +92,7 @@ The URIs can be shortened by using prefixes.
 The prefixes are URIs themselves without colons, because the colon (`:`) is used to define the association.
 
 ```yaml
-    prefix :
+    prefix:
     - PREFIX_0:URI_0
     - PREFIX_1:URI_1
     - ...
@@ -105,7 +108,7 @@ This could be useful to rename the prefixes.
 The order in which the instances are shown is defined as follows:
 
 ```yaml
-    order :
+    order:
     - ('-'|'+')FIELD_NAME_a_0
     - ('-'|'+')FIELD_NAME_a_1
       ...
@@ -116,7 +119,7 @@ where the `+` and the `-` are used to denote whether the reverse order should be
 For example:
 
 ```yaml
-    order :
+    order:
     - +id
     - -author
 ```
@@ -126,10 +129,10 @@ orders the instances by `id` (ascending) and then by author (descending).
 The instances come just after the type definition, with the following syntax:
 
 ```yaml
-- FIELD_NAME_0 : VALUE_0
-  FIELD_NAME_1 : VALUE_1
+- FIELD_NAME_0: VALUE_0
+  FIELD_NAME_1: VALUE_1
   ...
-  FIELD_NAME_n : VALUE_n
+  FIELD_NAME_n: VALUE_n
 ```
 
 where each *FIELD_NAME* is one of the already declared field names in the type and each *VALUE* contains a String according to the field type.
@@ -146,48 +149,46 @@ For example, the values of fields with type `List_`... (e.g. `List_String`) will
 
 This is an example of a library file.
 Each book record contains an identifier (`id`), a title (`title`), the authors (`authors`), a link to the abstract on the web (`web`), and a list of links to the documents (`documents`).
-This file is ordered by identifier.
+The entries are ordered by identifier.
 
 ```yaml
 
 ---
-
-- type :
-    name : record
-    def :
+- type:
+    name: record
+    def:
     - id:String
     - title:String
     - authors:List_String
     - web:URI
     - documents:List_URI
-    prefix :
+    prefix:
     - arxiv:https://arxiv.org/
-    order :
+    order:
     - +id
 
-- id : arXiv:1412.2223
-  title : A topological approach to non-Archimedean Mathematics
-  authors :
+- id: arXiv:1412.2223
+  title: A topological approach to non-Archimedean Mathematics
+  authors:
   - Vieri Benci
   - Lorenzo Luperi Baglini
-  web : https://arxiv.org/abs/1412.2223
-  documents :
+  web: https://arxiv.org/abs/1412.2223
+  documents:
   - https://arxiv.org/pdf/1412.2223#pdf
   - https://arxiv.org/ps/1412.2223#ps
   - https://arxiv.org/format/1412.2223#other
 
-- id : arXiv:1412.3313
-  title : Infinitary stability theory
-  authors :
+- id: arXiv:1412.3313
+  title: Infinitary stability theory
+  authors:
   - Sebastien Vasey
-  web : https://arxiv.org/abs/1412.3313
-  documents :
+  web: https://arxiv.org/abs/1412.3313
+  documents:
   - https://arxiv.org/pdf/1412.3313#pdf
   - https://arxiv.org/ps/1412.3313#ps
   - https://arxiv.org/format/1412.3313#other
 
 ```
-
 
 The unit tests include an example like [this one](https://github.com/julianmendez/tabulas/blob/master/tabulas-ext/src/test/resources/ext/miniexample.tab.properties).
 
@@ -205,74 +206,74 @@ This project also includes some converters from and to other formats.
 Every deserializer (parser) and serializer (renderer) is registered as an extension.
 Some serializers and some deserializers cannot map completely the content of a Tabula file.
 
-| serializer   | stores metadata   | multiple tables |
-|:-------------|:------------------|:----------------|
-| YAML         | yes               | yes             |
-| JSON         | yes               | yes             |
-| HTML         | no                | yes             |
-| [Wikitext](https://www.mediawiki.org/wiki/Specs/wikitext/1.0.0) | no | yes |
-| CSV          | no                | no              |
-| SQL          | no                | no              |
+| serializer   | stores metadata   | stores entries |
+|:-------------|:------------------|:---------------|
+| YAML         | yes               | yes            |
+| JSON         | yes               | yes            |
+| JSON Schema  | yes               | no             |
+| Rx YAML      | yes               | no             |
+| HTML         | no                | yes            |
+| Wikitext     | no                | yes            |
+| CSV          | no                | yes            |
+| SQL          | no                | yes            |
 
-| deserializer | requires metadata | multiple tables |
-|:-------------|:------------------|:----------------|
-| YAML         | yes               | yes             |
-| JSON         | yes               | yes             |
-| CSV          | no                | no              |
+([Wikitext](https://www.mediawiki.org/wiki/Specs/wikitext/1.0.0): is a wiki markup language)
+
+| deserializer | requires metadata |
+|:-------------|:------------------|
+| YAML         | yes               |
+| JSON         | yes               |
+| CSV          | no                |
 
 The given example as Tabula.Properties:
 
-
 ```properties
+
 
 # simple format 1.0.0
 
-
-type :
- name : record
- def : \
+type:
+ name: record
+ def: \
   id:String \
   title:String \
   authors:List_String \
   web:URI \
   documents:List_URI
- prefix : \
+ prefix: \
   arxiv:https://arxiv.org/
- order : \
+ order: \
   +id
 
-
-new :
- id : arXiv:1412.2223
- title : A topological approach to non-Archimedean Mathematics
- authors : \
+new:
+ id: arXiv:1412.2223
+ title: A topological approach to non-Archimedean Mathematics
+ authors: \
   Vieri Benci \
   Lorenzo Luperi Baglini
- web : &arxiv;abs/1412.2223
- documents : \
+ web: &arxiv;abs/1412.2223
+ documents: \
   &arxiv;pdf/1412.2223#pdf \
   &arxiv;ps/1412.2223#ps \
   &arxiv;format/1412.2223#other
 
-
-new :
- id : arXiv:1412.3313
- title : Infinitary stability theory
- authors : \
+new:
+ id: arXiv:1412.3313
+ title: Infinitary stability theory
+ authors: \
   Sebastien Vasey
- web : &arxiv;abs/1412.3313
- documents : \
+ web: &arxiv;abs/1412.3313
+ documents: \
   &arxiv;pdf/1412.3313#pdf \
   &arxiv;ps/1412.3313#ps \
   &arxiv;format/1412.3313#other
 
 ```
 
-
 The unit tests also include the [previous example](https://github.com/julianmendez/tabulas/blob/master/tabulas-ext/src/test/resources/ext/miniexample.tab.yaml).
 
 Please note that there should be no spaces in the elements of the `def` section.
-For example, the definition is `id:String` and not `id : String`.
+For example, the definition is `id:String` and not `id: String`.
 
 A YAML file can be easily converted to a JSON file using a [Python](https://www.python.org) script like
 [yaml_to_json.py](https://github.com/julianmendez/tabulas/blob/master/tabulas-ext/src/main/python/yaml_to_json.py).
@@ -284,12 +285,12 @@ The command line application can be used to execute the different readers and wr
 They are implemented as *extensions*.
 Each extension registers at the beginning of the execution and is available to be executed from the command line.
 
-The following example contains some of the extensions listed by the application, when no parameters are given.
+The following example contains some extensions listed by the application, when no parameters are given.
 
-- `yaml` *(input)* *(output)* : create a Tabula.YAML file
-- `json` *(input)* *(output)* : create a Tabula.JSON file
-- `properties` *(input)* *(output)* : create a Tabula.Properties file
-- `oldformat` *(input)* *(output)* : create an old Tabula.Properties file, i.e. using the equals sign instead of colon
+- `yaml` *(input)* *(output)*: create a Tabula.YAML file
+- `json` *(input)* *(output)*: create a Tabula.JSON file
+- `properties` *(input)* *(output)*: create a Tabula.Properties file
+- `oldformat` *(input)* *(output)*: create an old Tabula.Properties file, i.e. using the equals sign instead of colon
 
 The command line application can be executed with:
 

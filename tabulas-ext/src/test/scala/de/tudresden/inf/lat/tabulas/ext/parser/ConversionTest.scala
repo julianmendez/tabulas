@@ -4,7 +4,7 @@ import java.io.{FileReader, StringWriter}
 import java.net.URL
 import java.nio.file.{Files, Paths}
 
-import de.tudresden.inf.lat.tabulas.ext.renderer.{JsonRenderer, YamlRenderer}
+import de.tudresden.inf.lat.tabulas.ext.renderer.{JsonRenderer, JsonSchemaRenderer, RxYamlRenderer, YamlRenderer}
 import de.tudresden.inf.lat.tabulas.parser.SimpleFormatParser
 import de.tudresden.inf.lat.tabulas.renderer.SimpleFormatRenderer
 import org.scalatest.funsuite.AnyFunSuite
@@ -49,6 +49,12 @@ class ConversionTest extends AnyFunSuite {
 
   final val InputFileName10: String = ExtPrefix + "multiple_tables.tab.yaml"
   final val ExpectedOutputFileName10: String = ExtPrefix + "multiple_tables-expected.tab.properties"
+
+  final val InputFileName11: String = ExtPrefix + "example.tab.yaml"
+  final val ExpectedOutputFileName11: String = ExtPrefix + "example-expected.rx.yaml"
+
+  final val InputFileName12: String = ExtPrefix + "example.tab.yaml"
+  final val ExpectedOutputFileName12: String = ExtPrefix + "example-expected.schema.json"
 
 
   final val NewLine: String = "\n"
@@ -133,6 +139,33 @@ class ConversionTest extends AnyFunSuite {
       assert(obtainedResult === expectedResult)
     })
   }
+
+  test("rendering Rx") {
+    Seq(
+      (InputFileName11, ExpectedOutputFileName11)
+    ).foreach(pair => {
+      val tableMap = YamlParser().parse(getFileReader(pair._1)).get
+      val expectedResult = readFile(pair._2)
+      val writer = new StringWriter()
+      RxYamlRenderer().render(writer, tableMap)
+      val obtainedResult = writer.toString
+      assert(obtainedResult === expectedResult)
+    })
+  }
+
+  test("rendering JSON Schema") {
+    Seq(
+      (InputFileName12, ExpectedOutputFileName12)
+    ).foreach(pair => {
+      val tableMap = YamlParser().parse(getFileReader(pair._1)).get
+      val expectedResult = readFile(pair._2)
+      val writer = new StringWriter()
+      JsonSchemaRenderer().render(writer, tableMap)
+      val obtainedResult = writer.toString
+      assert(obtainedResult === expectedResult)
+    })
+  }
+
 
 }
 

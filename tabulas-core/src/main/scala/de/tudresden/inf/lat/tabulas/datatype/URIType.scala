@@ -16,8 +16,7 @@ case class URIType() extends PrimitiveType {
 
   def castInstance(value: PrimitiveTypeValue): URIValue = {
     Objects.requireNonNull(value)
-    val result = parse(value.render())
-    result
+    parse(value.render())
   }
 
   override def parse(str: String): URIValue = {

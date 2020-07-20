@@ -7,7 +7,7 @@ import de.tudresden.inf.lat.tabulas.renderer.SimpleFormatRenderer
 import org.scalatest.funsuite.AnyFunSuite
 
 /** This is a test of normalization of files.
- */
+  */
 class NormalizationTest extends AnyFunSuite {
 
   final val InputFileName0: String = "core/example.tab.properties"
@@ -73,7 +73,7 @@ class NormalizationTest extends AnyFunSuite {
         val tableMap = SimpleFormatParser().parse(new FileReader(getPath(inputFileName))).get
         val expectedResult = MainTest().readFile(expectedFileName)
         val writer = new StringWriter()
-        val renderer = SimpleFormatRenderer(ParserConstant.EqualsFieldSign)
+        val renderer = SimpleFormatRenderer(ParserConstant.Space + ParserConstant.EqualsFieldSign)
         renderer.render(writer, tableMap)
         val obtainedResult = writer.toString
         assert(obtainedResult === expectedResult)

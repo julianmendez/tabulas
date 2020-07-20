@@ -3,6 +3,7 @@ package de.tudresden.inf.lat.tabulas.main
 import java.util.Objects
 
 import de.tudresden.inf.lat.tabulas.extension.{Extension, ExtensionException, ExtensionManager}
+import de.tudresden.inf.lat.tabulas.parser.ParserConstant
 
 /** An object of this class runs the application with the given arguments.
   */
@@ -10,8 +11,9 @@ case class ConsoleStarter() {
 
   private final val ErrorPrefix: String = "ERROR: "
 
-  private final val help = "\nusage: java -jar (jarname) (extension) (input) (output)\n" + //
-    "\n\nThe available extensions are:" + "\n"
+  private final val help = "\nusage: java -jar (jarname) (extension) (input) (output)\n" +
+    "\n\n" + ParserConstant.WarningDeprecationOfMultipleTables + "\n\n" +
+    "\n\nThe available extensions are:\n"
 
   /** Executes the application
     *
@@ -38,8 +40,7 @@ case class ConsoleStarter() {
     val packg = this.getClass.getPackage
     val name = Option(packg.getImplementationTitle).getOrElse("")
     val version = Option(packg.getImplementationVersion).getOrElse("")
-    val result = (name + " " + version).trim
-    result
+    (name + " " + version).trim
   }
 
 }

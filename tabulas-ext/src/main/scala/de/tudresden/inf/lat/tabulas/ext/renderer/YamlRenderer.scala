@@ -14,7 +14,7 @@ import scala.util.Try
 
 /** Renderer that creates a YAML file.
   */
-case class YamlRenderer() extends Renderer {
+case class YamlRenderer(withMetadata: Boolean) extends Renderer {
 
   final val ColonChar = ":"
   final val SpaceChar = " "
@@ -45,10 +45,14 @@ case class YamlRenderer() extends Renderer {
 
   final val ColonSpace = ": "
   final val SpaceHash = " #"
+  final val Apostrophe = "'"
 
   final val SpecialCharSeq = Seq(
     ":", "{", "}", "[", "]", ",", "&", "*", "#", "?", "|", "-", "<", ">", "=", "!", "%", "@", "`"
   )
+
+  final val BeautifyingNewLine = NewLine
+  // this is just to make the output more readable
 
   def escapeString(str: String): String = {
     val result = str.flatMap(ch => {
@@ -78,26 +82,50 @@ case class YamlRenderer() extends Renderer {
     result
   }
 
-  def requiresQuotes(text: String): Boolean = {
-    val isABoolean = Try {
+  def startsWithSpecialChar(text: String): Boolean = {
+    SpecialCharSeq.exists(specialChar => text.trim.startsWith(specialChar))
+  }
+
+  def mayUseApostrophes(text: String): Boolean = {
+    isBoolean(text) ||
+      isNumber(text) ||
+      isDate(text)
+  }
+
+  def isBoolean(text: String): Boolean = {
+    Try {
       text.toBoolean
     }.isSuccess
-    val isANumber = Try {
+  }
+
+  def isNumber(text: String): Boolean = {
+    Try {
       BigDecimal(text)
     }.isSuccess
-    val isADate = Try {
+  }
+
+  def isDate(text: String): Boolean = {
+    Try {
       new SimpleDateFormat("yyyy-MM-dd").format(text)
     }.isSuccess
-    val trimmedText = text.trim
-    val startsWithSpecialChar = SpecialCharSeq.exists(specialChar => trimmedText.startsWith(specialChar))
-    val result = isABoolean || isANumber || isADate ||
-      startsWithSpecialChar || text.contains(ColonSpace) || text.contains(SpaceHash)
-    result
+  }
+
+  def requiresQuotesOrApostrophes(text: String): Boolean = {
+    isBoolean(text) ||
+      isNumber(text) ||
+      isDate(text) ||
+      startsWithSpecialChar(text) ||
+      text.contains(ColonSpace) ||
+      text.contains(SpaceHash)
   }
 
   def addQuotesIfNeeded(text: String): String = {
-    val result = if (requiresQuotes(text)) {
-      QuotationMark + text + QuotationMark
+    val result = if (requiresQuotesOrApostrophes(text)) {
+      if (mayUseApostrophes(text)) {
+        Apostrophe + text + Apostrophe
+      } else {
+        QuotationMark + text + QuotationMark
+      }
     } else {
       text
     }
@@ -127,12 +155,15 @@ case class YamlRenderer() extends Renderer {
         if (value.getType.equals(URIType())) {
           val link: URIValue = URIType().castInstance(value)
           writeLinkIfNotEmpty(output, tabulation + TwoSpaces + HyphenSpace, link)
+
         } else if (value.getType.equals(IntegerType())) {
           val intVal: IntegerValue = IntegerType().castInstance(value)
           writeAsIntegerIfNotEmpty(output, tabulation + TwoSpaces + HyphenSpace, intVal)
+
         } else {
           val strVal: StringValue = StringType().castInstance(value)
           writeAsStringIfNotEmpty(output, tabulation + TwoSpaces + HyphenSpace, strVal)
+
         }
         val maybeNewLine = if (index < newList.length - 1) NewLine else ""
         output.write(maybeNewLine)
@@ -164,15 +195,18 @@ case class YamlRenderer() extends Renderer {
       val optValue: Option[PrimitiveTypeValue] = record.get(field)
       val value: PrimitiveTypeValue = optValue.get
       val spaces = if (index > 0) TwoSpaces else ""
-      val prefix = spaces + escapeString(field) + SpaceChar + ColonChar
+      val prefix = spaces + escapeString(field) + ColonChar
       val tabPrefixSp = tabulation + prefix + SpaceChar
       value match {
         case list: ParameterizedListValue =>
           writeParameterizedListIfNotEmpty(output, prefix, list, tabulation)
+
         case link: URIValue =>
           writeLinkIfNotEmpty(output, tabPrefixSp, link)
+
         case number: IntegerValue =>
           writeAsIntegerIfNotEmpty(output, tabPrefixSp, number)
+
         case _ =>
           writeAsStringIfNotEmpty(output, tabPrefixSp, value)
       }
@@ -180,11 +214,14 @@ case class YamlRenderer() extends Renderer {
     })
   }
 
-  def renderMetadata(output: Writer, typeName: String, table: Table): Unit = {
-    val record = MetadataHelper().getMetadataAsRecord(typeName, table)
-    output.write(HyphenSpace + ParserConstant.TypeSelectionToken + SpaceChar + ColonChar + NewLine)
-    render(output, record, YamlRenderer.MetadataTokens, TwoSpaces)
-    output.write(NewLine + NewLine)
+  def renderMetadataIfNecessary(output: Writer, typeName: String, table: Table): Unit = {
+    if (withMetadata) {
+      val record = MetadataHelper().getMetadataAsRecord(typeName, table)
+      output.write(HyphenSpace + ParserConstant.TypeSelectionToken + ColonChar + NewLine)
+      render(output, record, YamlRenderer.MetadataTokens, TwoSpaces)
+
+      output.write(BeautifyingNewLine)
+    }
   }
 
   def renderAllRecords(output: Writer, table: CompositeTypeValue): Unit = {
@@ -193,22 +230,24 @@ case class YamlRenderer() extends Renderer {
       val record = list(index)
       output.write(HyphenChar + SpaceChar)
       render(output, record, table.getType.getFields, "")
-      output.write(NewLine + NewLine)
+
+      output.write(BeautifyingNewLine)
     })
+  }
+
+  def renderTable(output: Writer, tableId: String, table: Table): Unit = {
+    output.write(BeginningOfDocument)
+    output.write(NewLine)
+    renderMetadataIfNecessary(output, tableId, table)
+    renderAllRecords(output, table)
+    output.flush()
   }
 
   override def render(output: Writer, tableMap: TableMap): Unit = {
     tableMap.getTableIds.foreach(tableId => {
-      val table: Table = tableMap.getTable(tableId).get
-      output.write(BeginningOfDocument)
-      output.write(NewLine + NewLine)
-      renderMetadata(output, tableId, table)
-      renderAllRecords(output, table)
+      renderTable(output, tableId, tableMap.getTable(tableId).get)
     })
-    output.write(NewLine + NewLine)
-    output.flush()
   }
-
 
 }
 
@@ -220,5 +259,7 @@ object YamlRenderer {
     ParserConstant.PrefixMapToken,
     ParserConstant.SortingOrderDeclarationToken
   )
+
+  def apply(): YamlRenderer = YamlRenderer(true)
 
 }

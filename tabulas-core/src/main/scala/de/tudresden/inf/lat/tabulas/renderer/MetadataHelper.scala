@@ -15,8 +15,17 @@ case class MetadataHelper() {
     map.put(ParserConstant.TypeSelectionToken, getTypeEntry(typeName))
     map.put(ParserConstant.TypeNameToken, getNameEntry(typeName))
     map.put(ParserConstant.TypeDefinitionToken, getDefEntry(table))
-    map.put(ParserConstant.PrefixMapToken, getPrefixEntry(table))
-    map.put(ParserConstant.SortingOrderDeclarationToken, getOrderEntry(table))
+
+    val prefixEntry = getPrefixEntry(table)
+    if (prefixEntry.render().nonEmpty) {
+      map.put(ParserConstant.PrefixMapToken, prefixEntry)
+    }
+
+    val orderEntry = getOrderEntry(table)
+    if (orderEntry.render().nonEmpty) {
+      map.put(ParserConstant.SortingOrderDeclarationToken, getOrderEntry(table))
+    }
+
     RecordImpl(map.toMap)
   }
 

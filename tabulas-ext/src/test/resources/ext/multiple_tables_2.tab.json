@@ -1,106 +1,71 @@
 [
-
-
-{
-"type" :
-{
- "name" : "value",
- "def" : [
-  "id:String",
-  "size:Integer"
- ],
- "prefix" : null,
- "order" : [
-  "+size",
-  "-id"
- ]
-}
-},
-
-
-{
- "id" : "boolean",
- "size" : 1
-},
-
-
-{
- "id" : "byte",
- "size" : 8
-},
-
-
-{
- "id" : "short",
- "size" : 16
-},
-
-
-{
- "id" : "char",
- "size" : 16
-},
-
-
-{
- "id" : "int",
- "size" : 32
-},
-
-
-{
- "id" : "float",
- "size" : 32
-},
-
-
-{
- "id" : "long",
- "size" : 64
-},
-
-
-{
- "id" : "double",
- "size" : 64
-},
-
-
-{
-"type" :
-{
- "name" : "variable",
- "def" : [
-  "id:String",
-  "vartype:String"
- ],
- "prefix" : [
- ],
- "order" : [
-  "+id"
- ]
-}
-},
-
-
-{
- "id" : "x0",
- "vartype" : "long"
-},
-
-
-{
- "id" : "x1",
- "vartype" : "int"
-},
-
-
-{
- "id" : "x2",
- "vartype" : "short"
-}
-
-
+ {
+  "type": {
+   "name": "value",
+   "def": [
+    "id:String",
+    "size:Integer"
+   ],
+   "order": [
+    "+size",
+    "-id"
+   ]
+  }
+ },
+ {
+  "id": "boolean",
+  "size": 1
+ },
+ {
+  "id": "byte",
+  "size": 8
+ },
+ {
+  "id": "short",
+  "size": 16
+ },
+ {
+  "id": "char",
+  "size": 16
+ },
+ {
+  "id": "int",
+  "size": 32
+ },
+ {
+  "id": "float",
+  "size": 32
+ },
+ {
+  "id": "long",
+  "size": 64
+ },
+ {
+  "id": "double",
+  "size": 64
+ },
+ {
+  "type": {
+   "name": "variable",
+   "def": [
+    "id:String",
+    "vartype:String"
+   ],
+   "order": [
+    "+id"
+   ]
+  }
+ },
+ {
+  "id": "x0",
+  "vartype": "long"
+ },
+ {
+  "id": "x1",
+  "vartype": "int"
+ },
+ {
+  "id": "x2",
+  "vartype": "short"
+ }
 ]
-
-

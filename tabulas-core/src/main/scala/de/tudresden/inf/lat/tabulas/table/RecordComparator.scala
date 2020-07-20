@@ -35,7 +35,7 @@ case class RecordComparator() extends Comparator[Record] {
   }
 
   override def compare(record0: Record, record1: Record): Int = {
-    val result: Int = if (Objects.isNull(record0)) {
+    val result = if (Objects.isNull(record0)) {
       val res = if (Objects.isNull(record1)) {
         0
       } else {
@@ -47,9 +47,9 @@ case class RecordComparator() extends Comparator[Record] {
         1
       } else {
         var comparison = 0
-        val it: Iterator[String] = this._sortingOrder.iterator
+        val it = this._sortingOrder.iterator
         while (it.hasNext && (comparison == 0)) {
-          val token: String = it.next()
+          val token = it.next()
           comparison = compareValues(record0.get(token), record1.get(token), this._fieldsWithReverseOrder.contains(token))
         }
         comparison
@@ -60,7 +60,7 @@ case class RecordComparator() extends Comparator[Record] {
   }
 
   def compareValues(optValue0: Option[PrimitiveTypeValue], optValue1: Option[PrimitiveTypeValue], hasReverseOrder: Boolean): Int = {
-    val result: Int = if (hasReverseOrder) {
+    val result = if (hasReverseOrder) {
       compareValues(optValue1, optValue0, hasReverseOrder = false)
     } else {
       val res = if (optValue0.isDefined) {

@@ -15,7 +15,7 @@ case class SimpleFormatRecordRenderer(prefixMap: PrefixMap, fieldSign: String) e
 
   def renderNew(output: Writer): Unit = {
     output.write(ParserConstant.NewLine)
-    output.write(ParserConstant.NewRecordToken + ParserConstant.Space)
+    output.write(ParserConstant.NewRecordToken)
     output.write(fieldSign)
   }
 
@@ -36,7 +36,7 @@ case class SimpleFormatRecordRenderer(prefixMap: PrefixMap, fieldSign: String) e
       output.write(ParserConstant.NewLine)
       output.write(ParserConstant.Space)
       output.write(field)
-      output.write(ParserConstant.Space + fieldSign)
+      output.write(fieldSign)
       if (value.getType.isList) {
         val hasUris = value match {
           case list: ParameterizedListValue =>

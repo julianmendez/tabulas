@@ -51,15 +51,13 @@ case class TableImpl(
     val comparator = new RecordComparator(sortingOrder, fieldsWithReverseOrder)
     val ret = new mutable.ArrayBuffer[Record]
     ret ++= records
-    val result = ret.sortWith((record0, record1) => comparator.compare(record0, record1) < 0).toSeq
-    result
+    ret.sortWith((record0, record1) => comparator.compare(record0, record1) < 0).toSeq
   }
 
   override def toString: String = {
-    val result = "\ndef = " + tableType.toString + "\n\nprefix = " + prefixMap.toString +
+    "\ndef = " + tableType.toString + "\n\nprefix = " + prefixMap.toString +
       "\n\norder = " + sortingOrder.toString + " " +
       "\n\nreverseorder = " + fieldsWithReverseOrder.toString + "\n\nlist = " + records.toString
-    result
   }
 
 }

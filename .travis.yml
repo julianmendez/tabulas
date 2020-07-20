@@ -8,21 +8,25 @@
 
 language: scala
 
+os: linux
+
+dist: bionic
+
 scala:
-  - 2.13.2
+  - 2.13.3
 
 jdk:
   - openjdk11
   - openjdk14
+  - openjdk15
   - oraclejdk11
   - oraclejdk14
+  - oraclejdk15
 
 install:
   - mvn install -DskipTests=true -Dmaven.javadoc.skip=false -B -V
 
 after_success:
   - mvn clean cobertura:cobertura coveralls:report
-
-sudo: false
 
 

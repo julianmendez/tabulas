@@ -52,8 +52,7 @@ case class SimpleFormatParser(permissive: Boolean) extends Parser {
 
   def hasKey(line: String, key: String): Boolean = {
     val optKey = getKey(line)
-    val result = optKey.isDefined && (optKey.get == key)
-    result
+    optKey.isDefined && (optKey.get == key)
   }
 
   def getValue(line: String): Option[String] = {
@@ -105,8 +104,7 @@ case class SimpleFormatParser(permissive: Boolean) extends Parser {
         listOfUris += keyPair
       }
     }
-    val result = PrefixMapImpl(mapOfUris.toMap, listOfUris.toSeq)
-    result
+    PrefixMapImpl(mapOfUris.toMap, listOfUris.toSeq)
   }
 
   def getTypedValue(key: String, value: String, tableType: CompositeType, prefixMap: PrefixMap, lineCounter: Int): PrimitiveTypeValue = {
@@ -306,8 +304,7 @@ case class SimpleFormatParser(permissive: Boolean) extends Parser {
       mustAddRecord = false
     }
 
-    val result = TableMapImpl(mapOfTables.toMap)
-    result
+    TableMapImpl(mapOfTables.toMap)
   }
 
   override def parse(input: Reader): Try[TableMapImpl] = Try {
@@ -394,7 +391,7 @@ case class SimpleFormatParser(permissive: Boolean) extends Parser {
         if (recordIdsOfCurrentTable.contains(valueStr)) {
           throw ParseException("Identifier '"
             + ParserConstant.IdKeyword + ParserConstant.Space
-            + ParserConstant.EqualsFieldSign + ParserConstant.Space
+            + ParserConstant.ColonFieldSign + ParserConstant.Space
             + valueStr + "' is duplicated (line " + lineCounter
             + ").")
         }
