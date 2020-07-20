@@ -1,6 +1,6 @@
 ---
 - - version: v1.1.0
-  - date: (*unreleased*)
+  - date: (*2020-07-20*)
   - new_features:
     - compiled with Scala 2.13.3
     - requires `scala-library-2.13.3.jar`
