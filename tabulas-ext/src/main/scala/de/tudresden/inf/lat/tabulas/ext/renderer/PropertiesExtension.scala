@@ -12,8 +12,8 @@ import de.tudresden.inf.lat.tabulas.renderer.SimpleFormatRenderer
 import scala.util.Try
 
 /** Properties extension. It reads and writes using the Properties format.
-  *
-  */
+ *
+ */
 case class PropertiesExtension() extends Extension {
 
   final val Name: String = "simple"
@@ -36,7 +36,7 @@ case class PropertiesExtension() extends Extension {
       val tableMap = MultiParser(
         Seq(SimpleFormatParser(), JsonParser(), YamlParser())
       ).parse(new FileReader(inputFileName)).get
-      if (tableMap .getTableIds.length != 1) {
+      if (tableMap.getTableIds.length != 1) {
         println(ParserConstant.WarningDeprecationOfMultipleTables)
       }
       val output = new BufferedWriter(new FileWriter(outputFileName))

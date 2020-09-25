@@ -7,7 +7,7 @@ import de.tudresden.inf.lat.tabulas.table.{RecordImpl, Table}
 import scala.collection.mutable
 
 /** This helps in the serialization of metadata.
-  */
+ */
 case class MetadataHelper() {
 
   def getMetadataAsRecord(typeName: String, table: Table): RecordImpl = {

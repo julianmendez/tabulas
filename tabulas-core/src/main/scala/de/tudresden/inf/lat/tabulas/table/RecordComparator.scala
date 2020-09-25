@@ -8,8 +8,8 @@ import de.tudresden.inf.lat.tabulas.datatype.{PrimitiveTypeValue, Record}
 import scala.collection.mutable
 
 /** Comparator for records.
-  *
-  */
+ *
+ */
 case class RecordComparator() extends Comparator[Record] {
 
   private val _sortingOrder = new mutable.ArrayBuffer[String]

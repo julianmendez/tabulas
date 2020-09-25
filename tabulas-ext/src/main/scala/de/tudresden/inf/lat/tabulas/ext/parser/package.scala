@@ -2,8 +2,8 @@
 package de.tudresden.inf.lat.tabulas.ext
 
 /** Tabulas
-  * parser
-  */
+ * parser
+ */
 package object parser {
 }
 

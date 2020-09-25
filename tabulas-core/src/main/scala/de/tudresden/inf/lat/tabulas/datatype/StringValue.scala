@@ -2,8 +2,8 @@
 package de.tudresden.inf.lat.tabulas.datatype
 
 /** This models a string value.
-  *
-  */
+ *
+ */
 case class StringValue(str: String) extends PrimitiveTypeValue {
 
   override def getType: PrimitiveType = {
@@ -43,9 +43,9 @@ object StringValue {
   }
 
   /** Constructs a new string value using another string value.
-    *
-    * @param other a string value
-    */
+   *
+   * @param other a string value
+   */
   def apply(other: StringValue): StringValue = {
     new StringValue(other.getValue)
   }

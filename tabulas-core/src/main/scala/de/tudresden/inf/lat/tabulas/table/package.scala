@@ -2,8 +2,8 @@
 package de.tudresden.inf.lat.tabulas
 
 /** Tabulas
-  * table
-  */
+ * table
+ */
 package object table {
 }
 

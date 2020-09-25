@@ -4,8 +4,8 @@ package de.tudresden.inf.lat.tabulas.datatype
 import java.util.Objects
 
 /** This models a list of elements with a parameterized type.
-  *
-  */
+ *
+ */
 case class ParameterizedListValue(parameter: PrimitiveType, list: Seq[PrimitiveTypeValue])
   extends PrimitiveTypeValue {
 
@@ -38,12 +38,12 @@ case class ParameterizedListValue(parameter: PrimitiveType, list: Seq[PrimitiveT
     result
   }
 
-  def getList: Seq[PrimitiveTypeValue] = {
-    list
-  }
-
   override def isEmpty: Boolean = {
     getList.isEmpty
+  }
+
+  def getList: Seq[PrimitiveTypeValue] = {
+    list
   }
 
   def getParameter: PrimitiveType = {
@@ -55,19 +55,19 @@ case class ParameterizedListValue(parameter: PrimitiveType, list: Seq[PrimitiveT
 object ParameterizedListValue {
 
   /** Constructs a new parameterized list value.
-    *
-    * @param parameter primitive type
-    */
+   *
+   * @param parameter primitive type
+   */
   def apply(parameter: PrimitiveType): ParameterizedListValue = {
     Objects.requireNonNull(parameter)
     ParameterizedListValue(parameter, Seq())
   }
 
   /** Constructs a new parameterized list value using another parameterized
-    * list value.
-    *
-    * @param other parameterized list value
-    */
+   * list value.
+   *
+   * @param other parameterized list value
+   */
   def apply(other: ParameterizedListValue): ParameterizedListValue = {
     Objects.requireNonNull(other)
     ParameterizedListValue(other.getParameter, other.getList)

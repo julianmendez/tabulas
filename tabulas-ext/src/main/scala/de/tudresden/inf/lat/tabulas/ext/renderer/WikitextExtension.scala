@@ -11,8 +11,8 @@ import de.tudresden.inf.lat.tabulas.parser.ParserConstant
 import scala.util.Try
 
 /** This models an extension that writes the output in Wikitext.
-  *
-  */
+ *
+ */
 case class WikitextExtension() extends Extension {
 
   final val Name: String = "wikitext"
@@ -26,7 +26,7 @@ case class WikitextExtension() extends Extension {
       val inputFileName = arguments(0)
       val outputFileName = arguments(1)
       val tableMap = MultiParser().parse(new FileReader(inputFileName)).get
-      if (tableMap .getTableIds.length != 1) {
+      if (tableMap.getTableIds.length != 1) {
         println(ParserConstant.WarningDeprecationOfMultipleTables)
       }
       val output = new BufferedWriter(new FileWriter(outputFileName))

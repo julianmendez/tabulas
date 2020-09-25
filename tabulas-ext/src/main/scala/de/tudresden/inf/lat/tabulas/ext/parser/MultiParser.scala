@@ -9,7 +9,7 @@ import de.tudresden.inf.lat.tabulas.table.TableMap
 import scala.util.Try
 
 /** Parser for JSON, YAML, and Properties format.
-  */
+ */
 case class MultiParser(parsers: Seq[Parser]) extends Parser {
 
   override def parse(input: Reader): Try[TableMap] = Try {

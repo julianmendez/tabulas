@@ -9,7 +9,7 @@ import de.tudresden.inf.lat.tabulas.renderer.Renderer
 import de.tudresden.inf.lat.tabulas.table.{Table, TableMap}
 
 /** Renderer of a table that creates an HTML document.
-  */
+ */
 case class HtmlRenderer() extends Renderer {
 
   final val Prefix: String = "<?xml version=\"1.0\" encoding=\"utf-8\"?>" +

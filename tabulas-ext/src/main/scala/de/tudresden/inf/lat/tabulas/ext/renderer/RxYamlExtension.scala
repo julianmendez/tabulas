@@ -11,8 +11,8 @@ import de.tudresden.inf.lat.tabulas.parser.SimpleFormatParser
 import scala.util.Try
 
 /** This extension exports the metadata as an Rx YAML schema.
-  *
-  */
+ *
+ */
 case class RxYamlExtension() extends Extension {
 
   final val Name: String = "rxyaml"

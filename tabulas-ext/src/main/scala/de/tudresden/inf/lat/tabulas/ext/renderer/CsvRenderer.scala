@@ -10,7 +10,7 @@ import de.tudresden.inf.lat.tabulas.renderer.Renderer
 import de.tudresden.inf.lat.tabulas.table.{Table, TableMap}
 
 /** Renderer of tables in comma-separated values format.
-  */
+ */
 case class CsvRenderer() extends Renderer {
 
   final val Quotes: String = "\""
@@ -79,10 +79,6 @@ case class CsvRenderer() extends Renderer {
     result
   }
 
-  def sanitize(str: String): String = {
-    str.replace(Quotes, QuotesReplacement)
-  }
-
   def writeParameterizedListIfNotEmpty(output: Writer, field: String, list: ParameterizedListValue): Boolean = {
     val result = if (Objects.nonNull(list) && !list.isEmpty) {
       output.write(Quotes)
@@ -97,6 +93,10 @@ case class CsvRenderer() extends Renderer {
       false
     }
     result
+  }
+
+  def sanitize(str: String): String = {
+    str.replace(Quotes, QuotesReplacement)
   }
 
   def writeLinkIfNotEmpty(output: Writer, field: String, link: URIValue): Boolean = {

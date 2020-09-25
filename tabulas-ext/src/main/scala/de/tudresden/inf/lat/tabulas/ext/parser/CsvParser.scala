@@ -12,8 +12,8 @@ import scala.collection.mutable
 import scala.util.Try
 
 /** Parser of a table in comma-separated values format.
-  *
-  */
+ *
+ */
 case class CsvParser() extends Parser {
 
   final val UnderscoreChar: Char = '_'

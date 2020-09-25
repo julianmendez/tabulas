@@ -12,8 +12,8 @@ import de.tudresden.inf.lat.tabulas.renderer.SimpleFormatRenderer
 import scala.util.Try
 
 /** Default extension. It reads and writes using the default format.
-  *
-  */
+ *
+ */
 case class OldFormatExtension() extends Extension {
 
   final val Name: String = "oldformat"

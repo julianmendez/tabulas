@@ -2,8 +2,8 @@
 package de.tudresden.inf.lat.tabulas.datatype
 
 /** This models a empty value.
-  *
-  */
+ *
+ */
 case class EmptyValue() extends PrimitiveTypeValue {
 
   private val Value: String = ""

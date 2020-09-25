@@ -11,8 +11,8 @@ import de.tudresden.inf.lat.tabulas.parser.{ParserConstant, SimpleFormatParser}
 import scala.util.Try
 
 /** This models an extension that writes the output in Tabula.JSON.
-  *
-  */
+ *
+ */
 case class JsonExtension() extends Extension {
 
   final val Name: String = "json"
@@ -35,7 +35,7 @@ case class JsonExtension() extends Extension {
       val tableMap = MultiParser(
         Seq(JsonParser(), YamlParser(), SimpleFormatParser())
       ).parse(new FileReader(inputFileName)).get
-      if (tableMap .getTableIds.length != 1) {
+      if (tableMap.getTableIds.length != 1) {
         println(ParserConstant.WarningDeprecationOfMultipleTables)
       }
       val output = new BufferedWriter(new FileWriter(outputFileName))

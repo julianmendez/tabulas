@@ -12,7 +12,7 @@ import scala.jdk.CollectionConverters.CollectionHasAsScala
 import scala.util.Try
 
 /** Parser for JSON format.
-  */
+ */
 case class JsonParser(permissive: Boolean) extends Parser {
 
   override def parse(input: Reader): Try[TableMapImpl] = Try {

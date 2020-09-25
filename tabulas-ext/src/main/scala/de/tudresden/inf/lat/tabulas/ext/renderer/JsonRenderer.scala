@@ -10,7 +10,7 @@ import de.tudresden.inf.lat.tabulas.renderer.{MetadataHelper, Renderer}
 import de.tudresden.inf.lat.tabulas.table.{Table, TableMap}
 
 /** Renderer that creates a JSON file.
-  */
+ */
 case class JsonRenderer(withMetadata: Boolean) extends Renderer {
 
   final val OpenBrace = "{"

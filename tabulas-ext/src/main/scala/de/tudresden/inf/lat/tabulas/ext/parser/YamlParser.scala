@@ -12,7 +12,7 @@ import scala.jdk.CollectionConverters.{IteratorHasAsScala, ListHasAsScala, MapHa
 import scala.util.Try
 
 /** Parser for YAML format.
-  */
+ */
 case class YamlParser(permissive: Boolean) extends Parser {
 
   override def parse(input: Reader): Try[TableMapImpl] = Try {

@@ -10,7 +10,7 @@ import de.tudresden.inf.lat.tabulas.renderer.Renderer
 import de.tudresden.inf.lat.tabulas.table.{Table, TableMap}
 
 /** Renderer of tables in SQL format.
-  */
+ */
 case class SqlRenderer() extends Renderer {
 
   final val DefaultSize: Int = 0x800
@@ -112,6 +112,10 @@ case class SqlRenderer() extends Renderer {
     result
   }
 
+  def sanitize(str: String): String = {
+    str.replace(Apostrophe, ApostropheReplacement)
+  }
+
   def writeParameterizedListIfNotEmpty(output: Writer, field: String, list: ParameterizedListValue): Boolean = {
     val result = if (Objects.nonNull(list) && !list.isEmpty) {
       output.write(Apostrophe)
@@ -126,10 +130,6 @@ case class SqlRenderer() extends Renderer {
       false
     }
     result
-  }
-
-  def sanitize(str: String): String = {
-    str.replace(Apostrophe, ApostropheReplacement)
   }
 
   def writeLinkIfNotEmpty(output: Writer, prefix: String, link: URIValue): Boolean = {

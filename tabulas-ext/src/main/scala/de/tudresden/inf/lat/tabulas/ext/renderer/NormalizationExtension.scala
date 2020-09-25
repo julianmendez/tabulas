@@ -14,8 +14,8 @@ import de.tudresden.inf.lat.tabulas.table.TableMap
 import scala.util.{Failure, Success, Try}
 
 /** Normalization extension. It reads and writes using the same file.
-  *
-  */
+ *
+ */
 case class NormalizationExtension() extends Extension {
 
   final val Name: String = "normalize"

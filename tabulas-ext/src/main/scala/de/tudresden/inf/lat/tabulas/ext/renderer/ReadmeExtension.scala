@@ -10,8 +10,8 @@ import de.tudresden.inf.lat.tabulas.parser.ParserConstant
 import scala.util.Try
 
 /** This models an extension that outputs the README.md file.
-  *
-  */
+ *
+ */
 case class ReadmeExtension() extends Extension {
 
   final val Name: String = "readme"

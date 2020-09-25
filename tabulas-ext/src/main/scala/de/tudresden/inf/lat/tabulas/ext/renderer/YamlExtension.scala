@@ -11,8 +11,8 @@ import de.tudresden.inf.lat.tabulas.parser.{ParserConstant, SimpleFormatParser}
 import scala.util.Try
 
 /** This models an extension that writes the output in Tabula.YAML.
-  *
-  */
+ *
+ */
 case class YamlExtension() extends Extension {
 
   final val Name: String = "yaml"

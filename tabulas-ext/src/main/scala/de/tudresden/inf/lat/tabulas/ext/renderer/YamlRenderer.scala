@@ -13,7 +13,7 @@ import de.tudresden.inf.lat.tabulas.table.{Table, TableMap}
 import scala.util.Try
 
 /** Renderer that creates a YAML file.
-  */
+ */
 case class YamlRenderer(withMetadata: Boolean) extends Renderer {
 
   final val ColonChar = ":"

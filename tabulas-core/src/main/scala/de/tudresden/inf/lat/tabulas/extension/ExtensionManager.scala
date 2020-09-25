@@ -9,8 +9,8 @@ import scala.collection.mutable
 import scala.util.Try
 
 /** This models an extension that can execute other extensions.
-  *
-  */
+ *
+ */
 case class ExtensionManager(extensions: Seq[Extension]) extends Extension {
 
   final val Name: String = "ext"
@@ -24,9 +24,9 @@ case class ExtensionManager(extensions: Seq[Extension]) extends Extension {
   def getExtensionNames: Set[String] = _extensionMap.keySet
 
   /** Returns the extension map.
-    *
-    * @param extensions list of extensions
-    */
+   *
+   * @param extensions list of extensions
+   */
   def getExtensionMap(extensions: Seq[Extension]): Map[String, Extension] = {
     extensions.map(extension => (extension.getExtensionName, extension)).toMap
   }

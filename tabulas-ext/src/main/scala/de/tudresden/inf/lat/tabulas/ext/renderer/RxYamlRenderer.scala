@@ -9,7 +9,7 @@ import de.tudresden.inf.lat.tabulas.renderer.{MetadataHelper, Renderer}
 import de.tudresden.inf.lat.tabulas.table.{Table, TableMap}
 
 /** Renderer that creates an Rx YAML schema file.
-  */
+ */
 case class RxYamlRenderer() extends Renderer {
 
   final val ColonChar = ":"
@@ -106,6 +106,10 @@ case class RxYamlRenderer() extends Renderer {
 
   def indent(n: Int): String = TwoSpaces * n
 
+  def addQuotes(text: String): String = {
+    QuotationMark + escapeString(text) + QuotationMark
+  }
+
   def escapeString(str: String): String = {
     val result = str.flatMap(ch => {
       "" + ch match {
@@ -121,10 +125,6 @@ case class RxYamlRenderer() extends Renderer {
       }
     })
     result
-  }
-
-  def addQuotes(text: String): String = {
-    QuotationMark + escapeString(text) + QuotationMark
   }
 
 }

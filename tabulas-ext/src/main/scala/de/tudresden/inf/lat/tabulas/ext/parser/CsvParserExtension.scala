@@ -10,9 +10,9 @@ import de.tudresden.inf.lat.tabulas.parser.ParserConstant
 import scala.util.Try
 
 /** This models an extension that reads comma-separated values and writes them
-  * with the default format.
-  *
-  */
+ * with the default format.
+ *
+ */
 case class CsvParserExtension() extends Extension {
 
   final val Name: String = "parsecsv"
@@ -26,7 +26,7 @@ case class CsvParserExtension() extends Extension {
       val inputFileName = arguments(0)
       val outputFileName = arguments(1)
       val tableMap = CsvParser().parse(new FileReader(inputFileName)).get
-      if (tableMap .getTableIds.length != 1) {
+      if (tableMap.getTableIds.length != 1) {
         println(ParserConstant.WarningDeprecationOfMultipleTables)
       }
       val output = new BufferedWriter(new FileWriter(outputFileName))

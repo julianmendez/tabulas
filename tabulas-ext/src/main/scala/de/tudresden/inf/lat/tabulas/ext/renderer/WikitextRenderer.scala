@@ -10,7 +10,7 @@ import de.tudresden.inf.lat.tabulas.renderer.Renderer
 import de.tudresden.inf.lat.tabulas.table.{Table, TableMap}
 
 /** Renderer of a table.
-  */
+ */
 case class WikitextRenderer() extends Renderer {
 
   override def render(output: Writer, tableMap: TableMap): Unit = {

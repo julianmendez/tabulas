@@ -7,7 +7,7 @@ import de.tudresden.inf.lat.tabulas.renderer.SimpleFormatRenderer
 import org.scalatest.funsuite.AnyFunSuite
 
 /** This is a test of normalization of files.
-  */
+ */
 class NormalizationTest extends AnyFunSuite {
 
   final val InputFileName0: String = "core/example.tab.properties"

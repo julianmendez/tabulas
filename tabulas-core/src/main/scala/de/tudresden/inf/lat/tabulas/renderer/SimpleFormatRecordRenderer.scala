@@ -10,7 +10,7 @@ import de.tudresden.inf.lat.tabulas.parser.ParserConstant
 import de.tudresden.inf.lat.tabulas.table.PrefixMap
 
 /** Renderer of a table in simple format.
-  */
+ */
 case class SimpleFormatRecordRenderer(prefixMap: PrefixMap, fieldSign: String) extends RecordRenderer {
 
   def renderNew(output: Writer): Unit = {

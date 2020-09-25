@@ -18,14 +18,14 @@ object EmptyCompositeType {}
 
 
 /** This is the default implementation of a sorted table.
-  */
+ */
 case class TableImpl(
-  tableType: CompositeType,
-  prefixMap: PrefixMap,
-  sortingOrder: Seq[String],
-  fieldsWithReverseOrder: Set[String],
-  records: Seq[Record]
-) extends Table {
+                      tableType: CompositeType,
+                      prefixMap: PrefixMap,
+                      sortingOrder: Seq[String],
+                      fieldsWithReverseOrder: Set[String],
+                      records: Seq[Record]
+                    ) extends Table {
 
   def add(record: Record): TableImpl = {
     copy(tableType, prefixMap, sortingOrder, fieldsWithReverseOrder, records ++ Seq(record))

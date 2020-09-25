@@ -14,8 +14,8 @@ import scala.collection.mutable.ArrayBuffer
 import scala.util.Try
 
 /** Parser of a table in simple format.
-  *
-  */
+ *
+ */
 case class SimpleFormatParser(permissive: Boolean) extends Parser {
 
   def getKeyLength(line: String): Int = {
@@ -375,7 +375,7 @@ case class SimpleFormatParser(permissive: Boolean) extends Parser {
   }
 
   private def parseProperty(line: String, currentTable: TableImpl,
-    recordIdsOfCurrentTable: mutable.TreeSet[String], record: RecordImpl, lineCounter: Int): RecordImpl = {
+                            recordIdsOfCurrentTable: mutable.TreeSet[String], record: RecordImpl, lineCounter: Int): RecordImpl = {
     if (Objects.isNull(currentTable)) {
       throw ParseException("New record was not declared (line "
         + lineCounter + ")")

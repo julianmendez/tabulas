@@ -3,9 +3,9 @@ package de.tudresden.inf.lat.tabulas.table
 import java.net.URI
 
 /** An object of this class is a map of URI prefixes.
-  * This implementation iterates on the keys keeping the order in which they were added for the first time.
-  *
-  */
+ * This implementation iterates on the keys keeping the order in which they were added for the first time.
+ *
+ */
 case class PrefixMapImpl(prefixMap: Map[URI, URI], keyList: Seq[URI]) extends PrefixMap {
 
   override def isEmpty: Boolean = {

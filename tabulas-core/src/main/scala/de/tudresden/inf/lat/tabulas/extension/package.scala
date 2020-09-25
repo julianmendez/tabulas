@@ -2,8 +2,8 @@
 package de.tudresden.inf.lat.tabulas
 
 /** Tabulas
-  * design of extensions
-  */
+ * design of extensions
+ */
 package object extension {
 }
 

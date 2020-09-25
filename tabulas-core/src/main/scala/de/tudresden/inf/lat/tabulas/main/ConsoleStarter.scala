@@ -6,7 +6,7 @@ import de.tudresden.inf.lat.tabulas.extension.{Extension, ExtensionException, Ex
 import de.tudresden.inf.lat.tabulas.parser.ParserConstant
 
 /** An object of this class runs the application with the given arguments.
-  */
+ */
 case class ConsoleStarter() {
 
   private final val ErrorPrefix: String = "ERROR: "
@@ -16,10 +16,10 @@ case class ConsoleStarter() {
     "\n\nThe available extensions are:\n"
 
   /** Executes the application
-    *
-    * @param extensions extensions
-    * @param args       console arguments
-    */
+   *
+   * @param extensions extensions
+   * @param args       console arguments
+   */
   def run(extensions: Seq[Extension], args: Array[String]): Unit = {
     Objects.requireNonNull(extensions)
     Objects.requireNonNull(args)

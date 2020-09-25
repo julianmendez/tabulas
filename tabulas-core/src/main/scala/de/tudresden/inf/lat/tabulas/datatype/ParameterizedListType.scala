@@ -2,8 +2,8 @@
 package de.tudresden.inf.lat.tabulas.datatype
 
 /** This models the type of a list of elements with a parameterized type.
-  *
-  */
+ *
+ */
 case class ParameterizedListType(parameter: PrimitiveType) extends PrimitiveType {
 
   final val TypePrefix: String = "List_"

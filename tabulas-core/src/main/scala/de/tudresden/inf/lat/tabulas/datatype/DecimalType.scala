@@ -2,8 +2,8 @@
 package de.tudresden.inf.lat.tabulas.datatype
 
 /** This models the primitive data type Decimal.
-  *
-  */
+ *
+ */
 case class DecimalType() extends PrimitiveType {
 
   final val TypeName: String = "Decimal"

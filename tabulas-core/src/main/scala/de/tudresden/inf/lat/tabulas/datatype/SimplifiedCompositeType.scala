@@ -2,8 +2,8 @@
 package de.tudresden.inf.lat.tabulas.datatype
 
 /** This models a simplified composite type where the fields have the same type.
-  *
-  */
+ *
+ */
 case class SimplifiedCompositeType(dataType: CompositeTypeImpl) extends CompositeType {
 
   override def getFields: Seq[String] = {

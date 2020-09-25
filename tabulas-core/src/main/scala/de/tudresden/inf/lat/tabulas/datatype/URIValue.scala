@@ -5,8 +5,8 @@ import java.net.{URI, URISyntaxException}
 import java.util.Objects
 
 /** This models a URI.
-  *
-  */
+ *
+ */
 case class URIValue(uri: URI) extends PrimitiveTypeValue {
 
   final val SpecialSymbol: String = "#"
@@ -69,15 +69,6 @@ object URIValue {
     URIValue(createURI(""))
   }
 
-  /** Constructs a new URI value using a string.
-    *
-    * @param uriStr URI
-    */
-  def apply(uriStr: String): URIValue = {
-    Objects.requireNonNull(uriStr)
-    URIValue(createURI(uriStr))
-  }
-
   def createURI(uriStr: String): URI = {
     val result = try {
       new URI(uriStr)
@@ -87,10 +78,19 @@ object URIValue {
     result
   }
 
+  /** Constructs a new URI value using a string.
+   *
+   * @param uriStr URI
+   */
+  def apply(uriStr: String): URIValue = {
+    Objects.requireNonNull(uriStr)
+    URIValue(createURI(uriStr))
+  }
+
   /** Constructs a new URI value using another URI value.
-    *
-    * @param other URI value
-    */
+   *
+   * @param other URI value
+   */
   def apply(other: URIValue): URIValue = {
     new URIValue(other.getUri)
   }

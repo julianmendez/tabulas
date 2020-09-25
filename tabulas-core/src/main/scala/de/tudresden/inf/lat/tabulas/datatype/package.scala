@@ -2,8 +2,8 @@
 package de.tudresden.inf.lat.tabulas
 
 /** Tabulas
-  * data types
-  */
+ * data types
+ */
 package object datatype {
 }
 

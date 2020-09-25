@@ -2,8 +2,8 @@
 package de.tudresden.inf.lat.tabulas
 
 /** Tabulas
-  * renderer
-  */
+ * renderer
+ */
 package object renderer {
 }
 

@@ -2,7 +2,7 @@
 package de.tudresden.inf.lat.tabulas.parser
 
 /** Parser constants.
-  */
+ */
 object ParserConstant {
 
   final val SpecificationFormat = "simple format"

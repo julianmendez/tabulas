@@ -7,7 +7,7 @@ import de.tudresden.inf.lat.tabulas.parser.ParserConstant
 import de.tudresden.inf.lat.tabulas.table.{Table, TableMap}
 
 /** Renderer of a table in simple format.
-  */
+ */
 case class SimpleFormatRenderer(fieldSign: String, withMetadata: Boolean) extends Renderer {
 
   override def render(output: Writer, tableMap: TableMap): Unit = {

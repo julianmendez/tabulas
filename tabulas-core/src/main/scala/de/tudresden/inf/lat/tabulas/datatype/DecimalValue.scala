@@ -5,8 +5,8 @@ import java.math.BigDecimal
 import java.util.Objects
 
 /** This models a decimal value.
-  *
-  */
+ *
+ */
 case class DecimalValue(number: BigDecimal) extends PrimitiveTypeValue {
 
   override def getType: PrimitiveType = {
@@ -48,12 +48,12 @@ object DecimalValue {
   def apply(): DecimalValue = new DecimalValue(BigDecimal.ZERO)
 
   /** Constructs a new decimal value using a string.
-    *
-    * @param str string
-    * @throws ParseException
-    * <code>str</code> is not a valid representation of a decimal
-    * value.
-    */
+   *
+   * @param str string
+   * @throws ParseException
+   * <code>str</code> is not a valid representation of a decimal
+   * value.
+   */
   def apply(str: String): DecimalValue = {
     Objects.requireNonNull(str)
     try {

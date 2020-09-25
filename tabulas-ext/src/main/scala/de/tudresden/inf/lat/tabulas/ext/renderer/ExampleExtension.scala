@@ -11,8 +11,8 @@ import de.tudresden.inf.lat.tabulas.parser.ParserConstant
 import scala.util.Try
 
 /** This models an extension that writes an example of Tabula.YAML.
-  *
-  */
+ *
+ */
 case class ExampleExtension() extends Extension {
 
   final val Name: String = "example"
@@ -28,7 +28,7 @@ case class ExampleExtension() extends Extension {
       val inputStream = getClass.getResourceAsStream(inputFileName)
       val outputFileName = arguments(0)
       val tableMap = MultiParser().parse(new InputStreamReader(inputStream)).get
-      if (tableMap .getTableIds.length != 1) {
+      if (tableMap.getTableIds.length != 1) {
         println(ParserConstant.WarningDeprecationOfMultipleTables)
       }
       val output = new BufferedWriter(new FileWriter(outputFileName))

@@ -9,7 +9,7 @@ import de.tudresden.inf.lat.tabulas.renderer.{MetadataHelper, Renderer}
 import de.tudresden.inf.lat.tabulas.table.{Table, TableMap}
 
 /** Renderer that creates a JSON Schema file.
-  */
+ */
 case class JsonSchemaRenderer() extends Renderer {
 
   final val OpenBrace = "{"
