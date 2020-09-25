@@ -43,7 +43,7 @@ case class ReadmeExtension() extends Extension {
       ErrorMessageReadmeNotAvailable
     } else {
       val reader = new BufferedReader(new InputStreamReader(inputStream))
-      val content = reader.lines.toArray.mkString(ParserConstant.NewLine)
+      val content = reader.lines().toArray.mkString(ParserConstant.NewLine)
       content
     }
     result
