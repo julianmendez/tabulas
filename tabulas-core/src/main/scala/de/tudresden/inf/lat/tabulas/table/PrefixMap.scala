@@ -24,7 +24,7 @@ trait PrefixMap {
    *
    * @return the size of this prefix map
    */
-  def size(): Int
+  def size: Int
 
   /** Returns the expansion for the given prefix.
    *

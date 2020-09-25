@@ -19,17 +19,22 @@ case class ExtensionManager(extensions: Seq[Extension]) extends Extension {
   final val NewLine: Char = '\n'
   final val Space: Char = ' '
 
-  private val _extensionMap = getExtensionMap(extensions)
+  override val getExtensionName: String = Name
 
-  def getExtensionNames: Set[String] = _extensionMap.keySet
+  override val getHelp: String = {
+    val result = extensions.map(extension => {
+      "" + NewLine + Space + Space + extension.getExtensionName + Space + extension.getHelp
+    }).mkString("" + NewLine) + NewLine
+    result
+  }
 
-  /** Returns the extension map.
-   *
-   * @param extensions list of extensions
-   */
-  def getExtensionMap(extensions: Seq[Extension]): Map[String, Extension] = {
+  override val getRequiredArguments: Int = RequiredArguments
+
+  val getExtensionMap: Map[String, Extension] = {
     extensions.map(extension => (extension.getExtensionName, extension)).toMap
   }
+
+  val getExtensionNames: Set[String] = getExtensionMap.keySet
 
   override def process(arguments: Seq[String]): Try[Boolean] = Try {
     Objects.requireNonNull(arguments)
@@ -41,7 +46,7 @@ case class ExtensionManager(extensions: Seq[Extension]) extends Extension {
       val newArguments = new mutable.ArrayBuffer[String]()
       newArguments ++= arguments
       newArguments.remove(0)
-      val optExtension: Option[Extension] = this._extensionMap.get(command)
+      val optExtension: Option[Extension] = getExtensionMap.get(command)
       if (optExtension.isEmpty) {
         throw ExtensionException("Extension '" + command + "' was not found.")
 
@@ -61,21 +66,7 @@ case class ExtensionManager(extensions: Seq[Extension]) extends Extension {
     result
   }
 
-  override def getExtensionName: String = {
-    Name
-  }
-
-  override def getHelp: String = {
-    val result = extensions.map(extension => {
-      "" + NewLine + Space + Space + extension.getExtensionName + Space + extension.getHelp
-    }).mkString("" + NewLine) + NewLine
-    result
-  }
-
-  override def getRequiredArguments: Int = {
-    RequiredArguments
-  }
-
 }
 
 object ExtensionManager {}
+

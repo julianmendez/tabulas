@@ -135,7 +135,7 @@ case class JsonSchemaRenderer() extends Renderer {
     output.write(JscFalse + CommaChar + NewLine)
 
     openBrace(output, indentation + 2, JscProperties)
-    val list = record.get(ParserConstant.TypeDefinitionToken).get.renderAsList()
+    val list = record.get(ParserConstant.TypeDefinitionToken).get.renderAsList
     list.indices.foreach(index => {
       val pair = list(index)
       val parts = pair.split(ParserConstant.ColonFieldSign)

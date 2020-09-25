@@ -85,7 +85,7 @@ case class RxYamlRenderer() extends Renderer {
     output.write(indent(1) + RxType + ColonChar + SpaceChar + RxRec + NewLine)
     output.write(indent(1) + RxOptional + ColonChar + NewLine)
 
-    val list = record.get(ParserConstant.TypeDefinitionToken).get.renderAsList()
+    val list = record.get(ParserConstant.TypeDefinitionToken).get.renderAsList
     list.foreach(pair => {
       val parts = pair.split(ParserConstant.ColonFieldSign)
       val field = parts(0)

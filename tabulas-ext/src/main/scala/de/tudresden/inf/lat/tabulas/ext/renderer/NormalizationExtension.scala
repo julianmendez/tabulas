@@ -27,6 +27,12 @@ case class NormalizationExtension() extends Extension {
   final val Space = ParserConstant.Space
   final val NewLine = ParserConstant.NewLine
 
+  override val getExtensionName: String = Name
+
+  override val getHelp: String = Help
+
+  override val getRequiredArguments: Int = RequiredArguments
+
   override def process(arguments: Seq[String]): Try[Boolean] = Try {
     val result = if (Objects.isNull(arguments) || arguments.size != RequiredArguments) {
       false
@@ -74,18 +80,6 @@ case class NormalizationExtension() extends Extension {
   def formatMessage(normalizer: Normalizer, message: String): String = {
     NewLine + HyphenChar + Space + normalizer.getClass.getSimpleName +
       Space + ColonChar + Space + message
-  }
-
-  override def getExtensionName: String = {
-    Name
-  }
-
-  override def getHelp: String = {
-    Help
-  }
-
-  override def getRequiredArguments: Int = {
-    RequiredArguments
   }
 
 }

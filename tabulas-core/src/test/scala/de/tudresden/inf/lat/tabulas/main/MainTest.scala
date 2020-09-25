@@ -41,7 +41,7 @@ class MainTest extends AnyFunSuite {
     val size: Int = if (Objects.isNull(value)) {
       0
     } else {
-      value.renderAsList().size
+      value.renderAsList.size
     }
     val result = new StringValue("" + size)
     result

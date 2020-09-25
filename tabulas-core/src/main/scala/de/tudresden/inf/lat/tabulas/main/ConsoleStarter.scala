@@ -11,9 +11,16 @@ case class ConsoleStarter() {
 
   private final val ErrorPrefix: String = "ERROR: "
 
-  private final val help = "\nusage: java -jar (jarname) (extension) (input) (output)\n" +
+  private final val Help = "\nusage: java -jar (jarname) (extension) (input) (output)\n" +
     "\n\n" + ParserConstant.WarningDeprecationOfMultipleTables + "\n\n" +
     "\n\nThe available extensions are:\n"
+
+  val getTitleAndVersion: String = {
+    val packg = this.getClass.getPackage
+    val name = Option(packg.getImplementationTitle).getOrElse("")
+    val version = Option(packg.getImplementationVersion).getOrElse("")
+    (name + " " + version).trim
+  }
 
   /** Executes the application
    *
@@ -32,17 +39,11 @@ case class ConsoleStarter() {
       case e: ExtensionException =>
         print(getTitleAndVersion + "\n")
         print(ErrorPrefix + e.getMessage + "\n")
-        print(help + manager.getHelp + "\n")
+        print(Help + manager.getHelp + "\n")
     }
-  }
-
-  def getTitleAndVersion: String = {
-    val packg = this.getClass.getPackage
-    val name = Option(packg.getImplementationTitle).getOrElse("")
-    val version = Option(packg.getImplementationVersion).getOrElse("")
-    (name + " " + version).trim
   }
 
 }
 
 object ConsoleStarter {}
+

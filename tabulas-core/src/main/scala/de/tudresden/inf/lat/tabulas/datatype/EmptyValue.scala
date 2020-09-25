@@ -6,30 +6,18 @@ package de.tudresden.inf.lat.tabulas.datatype
  */
 case class EmptyValue() extends PrimitiveTypeValue {
 
-  private val Value: String = ""
+  override val getType: PrimitiveType = EmptyType()
 
-  override def getType: PrimitiveType = {
-    EmptyType()
-  }
+  override val isEmpty: Boolean = true
 
-  override def isEmpty: Boolean = {
-    true
-  }
+  override val render: String = ""
 
-  override def render(): String = {
-    Value
-  }
+  override val renderAsList: Seq[String] = List()
 
-  override def renderAsList(): Seq[String] = {
-    List()
-  }
+  override val toString: String = render
 
   override def compareTo(other: PrimitiveTypeValue): Int = {
     toString.compareTo(other.toString)
-  }
-
-  override def toString: String = {
-    Value
   }
 
 }

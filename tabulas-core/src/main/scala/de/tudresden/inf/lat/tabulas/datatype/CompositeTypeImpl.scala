@@ -10,6 +10,13 @@ import scala.util.Try
  */
 case class CompositeTypeImpl(fields: Seq[String], fieldType: Map[String, String]) extends CompositeType {
 
+  override val getFields: Seq[String] = fields
+
+  override val toString: String = {
+    getFields.map(field => field + ":" + getFieldType(field) + " ")
+      .mkString
+  }
+
   /** Declares a field.
    *
    * @param field   field name
@@ -23,13 +30,6 @@ case class CompositeTypeImpl(fields: Seq[String], fieldType: Map[String, String]
       val map = fieldType + (field -> typeStr)
       CompositeTypeImpl(list, map)
     }
-  }
-
-  override def getFields: Seq[String] = fields
-
-  override def toString: String = {
-    getFields.map(field => field + ":" + getFieldType(field) + " ")
-      .mkString
   }
 
   override def getFieldType(field: String): Option[String] = fieldType.get(field)

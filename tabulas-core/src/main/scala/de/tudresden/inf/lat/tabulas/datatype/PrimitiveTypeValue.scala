@@ -16,13 +16,13 @@ trait PrimitiveTypeValue extends Comparable[PrimitiveTypeValue] {
    *
    * @return a string representing this value
    */
-  def render(): String
+  def render: String
 
   /** Returns a list of strings representing this value.
    *
    * @return a list of strings representing this value
    */
-  def renderAsList(): Seq[String]
+  def renderAsList: Seq[String]
 
   /** Tell whether this value represents an empty value.
    *

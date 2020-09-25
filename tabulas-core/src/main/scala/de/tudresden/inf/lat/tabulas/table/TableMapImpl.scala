@@ -6,17 +6,15 @@ package de.tudresden.inf.lat.tabulas.table
  */
 case class TableMapImpl(mapOfTables: Map[String, Table]) extends TableMap {
 
-  def put(id: String, table: Table): TableMapImpl = {
-    TableMapImpl(mapOfTables ++ Seq((id, table)))
-  }
+  override val getTableIds: Seq[String] = mapOfTables.keySet.toSeq
 
-  override def toString: String = {
+  override val toString: String = {
     getTableIds.map(tableId => tableId + "=" + getTable(tableId) + "\n")
       .mkString
   }
 
-  override def getTableIds: Seq[String] = {
-    mapOfTables.keySet.toSeq
+  def put(id: String, table: Table): TableMapImpl = {
+    TableMapImpl(mapOfTables ++ Seq((id, table)))
   }
 
   override def getTable(id: String): Option[Table] = {

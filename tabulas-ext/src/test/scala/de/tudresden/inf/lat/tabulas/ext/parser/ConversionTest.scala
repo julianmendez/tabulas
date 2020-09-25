@@ -166,7 +166,5 @@ class ConversionTest extends AnyFunSuite {
     })
   }
 
-
 }
-
 

@@ -8,13 +8,13 @@ import java.net.URI
  */
 case class PrefixMapImpl(prefixMap: Map[URI, URI], keyList: Seq[URI]) extends PrefixMap {
 
-  override def isEmpty: Boolean = {
-    prefixMap.isEmpty
-  }
+  override val size: Int = prefixMap.size
 
-  override def size(): Int = {
-    prefixMap.size
-  }
+  override val isEmpty: Boolean = prefixMap.isEmpty
+
+  override val getKeys: Seq[URI] = keyList
+
+  override val toString: String = prefixMap.toString + " " + keyList.toString
 
   override def getWithoutPrefix(uri: URI): URI = {
     val uriStr = uri.toString
@@ -65,23 +65,14 @@ case class PrefixMapImpl(prefixMap: Map[URI, URI], keyList: Seq[URI]) extends Pr
 
   override def getPrefixFor(uri: URI): Option[URI] = {
     val uriStr = uri.toString
-    keyList.find(e => uriStr.startsWith(prefixMap.get(e).get.toString))
-  }
-
-  override def getKeys: Seq[URI] = {
-    keyList
-  }
-
-  override def toString: String = {
-    prefixMap.toString + " " + keyList.toString
+    keyList.find(e => uriStr.startsWith(prefixMap(e).toString))
   }
 
 }
 
 object PrefixMapImpl {
 
-  def apply(): PrefixMapImpl = {
-    PrefixMapImpl(Map(), Seq())
-  }
+  def apply(): PrefixMapImpl = PrefixMapImpl(Map(), Seq())
 
 }
+

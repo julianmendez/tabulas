@@ -8,6 +8,10 @@ import de.tudresden.inf.lat.tabulas.datatype.{PrimitiveTypeValue, Record}
  */
 case class RecordImpl(map: Map[String, PrimitiveTypeValue]) extends Record {
 
+  override val getProperties: Seq[String] = map.keys.toSeq
+
+  override val toString: String = map.toString
+
   override def get(key: String): Option[PrimitiveTypeValue] = {
     map.get(key)
   }
@@ -18,13 +22,6 @@ case class RecordImpl(map: Map[String, PrimitiveTypeValue]) extends Record {
     RecordImpl(map ++ Seq((key, value)))
   }
 
-  override def getProperties: Seq[String] = {
-    map.keys.toSeq
-  }
-
-  override def toString: String = {
-    map.toString
-  }
 
 }
 

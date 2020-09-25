@@ -6,20 +6,14 @@ package de.tudresden.inf.lat.tabulas.datatype
  */
 case class SimplifiedCompositeType(dataType: CompositeTypeImpl) extends CompositeType {
 
-  override def getFields: Seq[String] = {
-    dataType.getFields
-  }
+  override val getFields: Seq[String] = dataType.getFields
 
-  def getDataType: CompositeTypeImpl = {
-    dataType
-  }
+  override val toString: String = dataType.toString
+
+  val getDataType: CompositeTypeImpl = dataType
 
   override def getFieldType(field: String): Option[String] = {
     dataType.getFieldType(field)
-  }
-
-  override def toString: String = {
-    dataType.toString
   }
 
 }

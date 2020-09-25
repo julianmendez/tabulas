@@ -21,6 +21,12 @@ case class JsonSchemaExtension() extends Extension {
     "See " + ParserConstant.DeprecationOfMultipleTables + "."
   final val RequiredArguments: Int = 2
 
+  override val getExtensionName: String = Name
+
+  override val getHelp: String = Help
+
+  override val getRequiredArguments: Int = RequiredArguments
+
   override def process(arguments: Seq[String]): Try[Boolean] = Try {
     val result = if (Objects.isNull(arguments) || arguments.size != RequiredArguments) {
       false
@@ -40,18 +46,6 @@ case class JsonSchemaExtension() extends Extension {
       res
     }
     result
-  }
-
-  override def getExtensionName: String = {
-    Name
-  }
-
-  override def getHelp: String = {
-    Help
-  }
-
-  override def getRequiredArguments: Int = {
-    RequiredArguments
   }
 
 }

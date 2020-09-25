@@ -8,30 +8,22 @@ case class ParameterizedListType(parameter: PrimitiveType) extends PrimitiveType
 
   final val TypePrefix: String = "List_"
 
-  override def isList: Boolean = {
-    true
-  }
+  override val isList: Boolean = true
 
-  def getParameter: PrimitiveType = {
-    parameter
-  }
+  override val getTypeName: String = TypePrefix + parameter.getTypeName
+
+  override val toString: String = getTypeName
+
+  val getParameter: PrimitiveType = parameter
 
   def castInstance(value: PrimitiveTypeValue): ParameterizedListValue = {
-    parse(value.render())
+    parse(value.render)
   }
 
   override def parse(str: String): ParameterizedListValue = {
     val list = str.split("\\s+")
       .map(part => parameter.parse(part))
     ParameterizedListValue(parameter, list.toIndexedSeq)
-  }
-
-  override def toString: String = {
-    getTypeName
-  }
-
-  override def getTypeName: String = {
-    TypePrefix + parameter.getTypeName
   }
 
 }

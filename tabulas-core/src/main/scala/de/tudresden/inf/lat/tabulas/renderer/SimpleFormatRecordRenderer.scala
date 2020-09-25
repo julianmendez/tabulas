@@ -45,7 +45,7 @@ case class SimpleFormatRecordRenderer(prefixMap: PrefixMap, fieldSign: String) e
             false
         }
         value.getType
-        val list: Seq[String] = value.renderAsList()
+        val list: Seq[String] = value.renderAsList
         list.foreach(elem => {
           output.write(ParserConstant.Space + ParserConstant.LineContinuationSymbol)
           output.write(ParserConstant.NewLine)

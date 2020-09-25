@@ -233,12 +233,12 @@ case class SimpleFormatParser(permissive: Boolean) extends Parser {
           val optTableName = getValue(line)
           if (optTableName.isDefined && optTableName.get.trim.nonEmpty) {
             tableName = optTableName.get
-            if (!mapOfTables.get(tableName).isDefined) {
+            if (!mapOfTables.contains(tableName)) {
               mapOfTables.put(tableName, TableImpl())
               mapOfRecordIdsOfTables.put(tableName, new mutable.TreeSet[String]())
             }
-            currentTable = mapOfTables.get(tableName).get
-            recordIdsOfCurrentTable = mapOfRecordIdsOfTables.get(tableName).get
+            currentTable = mapOfTables(tableName)
+            recordIdsOfCurrentTable = mapOfRecordIdsOfTables(tableName)
           }
 
         } else if (isDefiningType && hasKey(line, ParserConstant.TypeDefinitionToken)) {

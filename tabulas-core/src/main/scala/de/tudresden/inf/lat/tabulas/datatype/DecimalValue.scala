@@ -9,37 +9,27 @@ import java.util.Objects
  */
 case class DecimalValue(number: BigDecimal) extends PrimitiveTypeValue {
 
-  override def getType: PrimitiveType = {
-    DecimalType()
-  }
+  override val getType: PrimitiveType = DecimalType()
 
-  override def isEmpty: Boolean = {
-    false
-  }
+  override val isEmpty: Boolean = false
 
-  override def renderAsList(): Seq[String] = {
-    List(render())
-  }
+  override val render: String = number.toString
 
-  override def render(): String = {
-    number.toString
-  }
+  override val renderAsList: Seq[String] = List(render)
 
   override def compareTo(other: PrimitiveTypeValue): Int = {
     val result = other match {
       case otherValue: DecimalValue =>
         number.compareTo(otherValue.getValue)
       case _ =>
-        render().compareTo(other.render())
+        render.compareTo(other.render)
     }
     result
   }
 
-  def getValue: BigDecimal = number
+  val getValue: BigDecimal = number
 
-  override def toString: String = {
-    number.toString
-  }
+  override val toString: String = number.toString
 
 }
 

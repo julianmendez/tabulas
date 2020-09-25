@@ -8,7 +8,7 @@ import scala.collection.mutable
 
 case class EmptyCompositeType() extends CompositeType {
 
-  override def getFields: Seq[String] = Seq()
+  override val getFields: Seq[String] = Seq()
 
   override def getFieldType(field: String): Option[String] = None
 
@@ -27,24 +27,22 @@ case class TableImpl(
                       records: Seq[Record]
                     ) extends Table {
 
+  override val getType: CompositeType = tableType
+
+  override val getPrefixMap: PrefixMap = prefixMap
+
+  override val getSortingOrder: Seq[String] = sortingOrder
+
+  override val getFieldsWithReverseOrder: Set[String] = fieldsWithReverseOrder
+
+  override val toString: String = {
+    "\ndef = " + tableType.toString + "\n\nprefix = " + prefixMap.toString +
+      "\n\norder = " + sortingOrder.toString + " " +
+      "\n\nreverseorder = " + fieldsWithReverseOrder.toString + "\n\nlist = " + records.toString
+  }
+
   def add(record: Record): TableImpl = {
     copy(tableType, prefixMap, sortingOrder, fieldsWithReverseOrder, records ++ Seq(record))
-  }
-
-  override def getType: CompositeType = {
-    tableType
-  }
-
-  override def getPrefixMap: PrefixMap = {
-    prefixMap
-  }
-
-  override def getSortingOrder: Seq[String] = {
-    sortingOrder
-  }
-
-  override def getFieldsWithReverseOrder: Set[String] = {
-    fieldsWithReverseOrder
   }
 
   override def getRecords: Seq[Record] = {
@@ -52,12 +50,6 @@ case class TableImpl(
     val ret = new mutable.ArrayBuffer[Record]
     ret ++= records
     ret.sortWith((record0, record1) => comparator.compare(record0, record1) < 0).toSeq
-  }
-
-  override def toString: String = {
-    "\ndef = " + tableType.toString + "\n\nprefix = " + prefixMap.toString +
-      "\n\norder = " + sortingOrder.toString + " " +
-      "\n\nreverseorder = " + fieldsWithReverseOrder.toString + "\n\nlist = " + records.toString
   }
 
 }

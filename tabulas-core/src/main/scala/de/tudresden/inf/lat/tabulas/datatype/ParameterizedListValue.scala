@@ -11,17 +11,17 @@ case class ParameterizedListValue(parameter: PrimitiveType, list: Seq[PrimitiveT
 
   final val Separator: String = " "
 
-  override def getType: PrimitiveType = {
-    ParameterizedListType(parameter)
-  }
+  override val getType: PrimitiveType = ParameterizedListType(parameter)
 
-  override def render(): String = {
-    renderAsList().mkString(Separator)
-  }
+  override val renderAsList: Seq[String] = list.map(_.render)
 
-  override def renderAsList(): Seq[String] = {
-    list.map(_.render())
-  }
+  override val render: String = renderAsList.mkString(Separator)
+
+  override val isEmpty: Boolean = list.isEmpty
+
+  val getList: Seq[PrimitiveTypeValue] = list
+
+  val getParameter: PrimitiveType = parameter
 
   override def compareTo(obj: PrimitiveTypeValue): Int = {
     val result = obj match {
@@ -36,18 +36,6 @@ case class ParameterizedListValue(parameter: PrimitiveType, list: Seq[PrimitiveT
         toString.compareTo(obj.toString)
     }
     result
-  }
-
-  override def isEmpty: Boolean = {
-    getList.isEmpty
-  }
-
-  def getList: Seq[PrimitiveTypeValue] = {
-    list
-  }
-
-  def getParameter: PrimitiveType = {
-    parameter
   }
 
 }

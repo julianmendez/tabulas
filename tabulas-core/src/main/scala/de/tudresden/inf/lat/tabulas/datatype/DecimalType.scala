@@ -8,26 +8,17 @@ case class DecimalType() extends PrimitiveType {
 
   final val TypeName: String = "Decimal"
 
-  override def isList: Boolean = {
-    false
-  }
+  override val isList: Boolean = false
 
-  def castInstance(value: PrimitiveTypeValue): DecimalValue = {
-    parse(value.render())
-  }
+  override val getTypeName: String = TypeName
 
-  override def parse(str: String): DecimalValue = {
-    DecimalValue(str)
-  }
+  override val toString: String = getTypeName
 
-  override def toString: String = {
-    getTypeName
-  }
+  def castInstance(value: PrimitiveTypeValue): DecimalValue = parse(value.render)
 
-  override def getTypeName: String = {
-    TypeName
-  }
+  override def parse(str: String): DecimalValue = DecimalValue(str)
 
 }
 
 object DecimalType {}
+

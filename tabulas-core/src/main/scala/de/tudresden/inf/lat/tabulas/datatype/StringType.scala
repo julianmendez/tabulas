@@ -8,25 +8,15 @@ case class StringType() extends PrimitiveType {
 
   final val TypeName: String = "String"
 
-  override def isList: Boolean = {
-    false
-  }
+  override val isList: Boolean = false
 
-  def castInstance(value: PrimitiveTypeValue): StringValue = {
-    parse(value.render())
-  }
+  override val getTypeName: String = TypeName
 
-  override def parse(str: String): StringValue = {
-    new StringValue(str)
-  }
+  override val toString: String = getTypeName
 
-  override def toString: String = {
-    getTypeName
-  }
+  def castInstance(value: PrimitiveTypeValue): StringValue = parse(value.render)
 
-  override def getTypeName: String = {
-    TypeName
-  }
+  override def parse(str: String): StringValue = new StringValue(str)
 
 }
 
