@@ -13,7 +13,7 @@ import scala.jdk.CollectionConverters.CollectionHasAsScala
 
 /** This is a test of conversion.
  */
-class ConversionTest extends AnyFunSuite {
+class ConversionSpec extends AnyFunSuite {
 
   final val ExtPrefix = "ext/"
 

@@ -15,7 +15,7 @@ import scala.jdk.CollectionConverters.CollectionHasAsScala
 
 /** This is a test of modification of a Tabula file.
  */
-class MainTest extends AnyFunSuite {
+class MainSpec extends AnyFunSuite {
 
   final val CorePrefix = "core/"
 
@@ -124,8 +124,8 @@ class MainTest extends AnyFunSuite {
 
 }
 
-object MainTest {
+object MainSpec {
 
-  def apply(): MainTest = new MainTest
+  def apply(): MainSpec = new MainSpec
 
 }

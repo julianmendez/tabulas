@@ -8,7 +8,7 @@ import org.scalatest.funsuite.AnyFunSuite
 
 /** This is a test of normalization of files.
  */
-class NormalizationTest extends AnyFunSuite {
+class NormalizationSpec extends AnyFunSuite {
 
   final val InputFileName0: String = "core/example.tab.properties"
   final val ExpectedOutputFileName0: String = "core/example-expected.tab.properties"
@@ -32,7 +32,7 @@ class NormalizationTest extends AnyFunSuite {
 
   def testOldFormatParsing(inputFileName: String, expectedFileName: String): Unit = {
     val tableMap = SimpleFormatParser().parse(new FileReader(getPath(inputFileName))).get
-    val expectedResult = MainTest().readFile(expectedFileName)
+    val expectedResult = MainSpec().readFile(expectedFileName)
     val writer = new StringWriter()
     val renderer = SimpleFormatRenderer()
     renderer.render(writer, tableMap)
@@ -52,7 +52,7 @@ class NormalizationTest extends AnyFunSuite {
         val inputFileName = pair._1
         val expectedFileName = pair._2
         val tableMap = SimpleFormatParser().parse(new FileReader(getPath(inputFileName))).get
-        val expectedResult = MainTest().readFile(expectedFileName)
+        val expectedResult = MainSpec().readFile(expectedFileName)
         val writer = new StringWriter()
         val renderer = SimpleFormatRenderer()
         renderer.render(writer, tableMap)
@@ -71,7 +71,7 @@ class NormalizationTest extends AnyFunSuite {
         val inputFileName = pair._1
         val expectedFileName = pair._2
         val tableMap = SimpleFormatParser().parse(new FileReader(getPath(inputFileName))).get
-        val expectedResult = MainTest().readFile(expectedFileName)
+        val expectedResult = MainSpec().readFile(expectedFileName)
         val writer = new StringWriter()
         val renderer = SimpleFormatRenderer(ParserConstant.Space + ParserConstant.EqualsFieldSign)
         renderer.render(writer, tableMap)
@@ -86,8 +86,8 @@ class NormalizationTest extends AnyFunSuite {
 
 }
 
-object NormalizationTest {
+object NormalizationSpec {
 
-  def apply(): NormalizationTest = new NormalizationTest
+  def apply(): NormalizationSpec = new NormalizationSpec
 
 }
