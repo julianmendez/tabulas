@@ -59,18 +59,18 @@ class ConversionSpec extends AnyFunSuite {
 
   final val NewLine: String = "\n"
 
+  def readFile(fileName: String): String = {
+    val path = Paths.get(getPath(fileName).toURI)
+    val result = Files.readAllLines(path).asScala.mkString(NewLine) + NewLine
+    result
+  }
+
   def getFileReader(inputFileName: String): FileReader = {
     new FileReader(getPath(inputFileName).getFile)
   }
 
   def getPath(fileName: String): URL = {
     getClass.getClassLoader.getResource(fileName)
-  }
-
-  def readFile(fileName: String): String = {
-    val path = Paths.get(getPath(fileName).toURI)
-    val result = Files.readAllLines(path).asScala.mkString(NewLine) + NewLine
-    result
   }
 
   test("normalization") {

@@ -1,6 +1,8 @@
 package de.tudresden.inf.lat.tabulas.main
 
 import java.io.{FileReader, StringWriter}
+import java.net.URL
+import java.nio.file.{Files, Paths}
 
 import de.tudresden.inf.lat.tabulas.parser.{ParserConstant, SimpleFormatParser}
 import de.tudresden.inf.lat.tabulas.renderer.SimpleFormatRenderer
@@ -30,10 +32,16 @@ class NormalizationSpec extends AnyFunSuite {
   final val InputFileName5: String = CorePrefix + "another_example.tab.properties"
   final val ExpectedOutputFileName5: String = CorePrefix + "another_example-old-expected.tab.properties"
 
-  final val NewLine: String = "\n"
+  def getFileReader(inputFileName: String): FileReader = {
+    new FileReader(getPath(inputFileName).getFile)
+  }
+
+  def getPath(fileName: String): URL = {
+    getClass.getClassLoader.getResource(fileName)
+  }
 
   def testOldFormatParsing(inputFileName: String, expectedFileName: String): Unit = {
-    val tableMap = SimpleFormatParser().parse(new FileReader(getPath(inputFileName))).get
+    val tableMap = SimpleFormatParser().parse(getFileReader(inputFileName)).get
     val expectedResult = MainSpec().readFile(expectedFileName)
     val writer = new StringWriter()
     val renderer = SimpleFormatRenderer()
@@ -53,7 +61,7 @@ class NormalizationSpec extends AnyFunSuite {
 
         val inputFileName = pair._1
         val expectedFileName = pair._2
-        val tableMap = SimpleFormatParser().parse(new FileReader(getPath(inputFileName))).get
+        val tableMap = SimpleFormatParser().parse(getFileReader(inputFileName)).get
         val expectedResult = MainSpec().readFile(expectedFileName)
         val writer = new StringWriter()
         val renderer = SimpleFormatRenderer()
@@ -72,7 +80,7 @@ class NormalizationSpec extends AnyFunSuite {
       .foreach(pair => {
         val inputFileName = pair._1
         val expectedFileName = pair._2
-        val tableMap = SimpleFormatParser().parse(new FileReader(getPath(inputFileName))).get
+        val tableMap = SimpleFormatParser().parse(getFileReader(inputFileName)).get
         val expectedResult = MainSpec().readFile(expectedFileName)
         val writer = new StringWriter()
         val renderer = SimpleFormatRenderer(ParserConstant.Space + ParserConstant.EqualsFieldSign)
@@ -80,10 +88,6 @@ class NormalizationSpec extends AnyFunSuite {
         val obtainedResult = writer.toString
         assert(obtainedResult === expectedResult)
       })
-  }
-
-  def getPath(fileName: String): String = {
-    getClass.getClassLoader.getResource(fileName).getFile
   }
 
 }

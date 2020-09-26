@@ -29,6 +29,19 @@ class MainSpec extends AnyFunSuite {
   final val TypeOfNumberOfAuthors: String = "String"
   final val NewLine: String = "\n"
 
+  def readFile(fileName: String): String = {
+    val path = Paths.get(getPath(fileName).toURI)
+    val result = Files.readAllLines(path).asScala.mkString(NewLine) + NewLine
+    result
+  }
+
+  def getFileReader(inputFileName: String): FileReader = {
+    new FileReader(getPath(inputFileName).getFile)
+  }
+
+  def getPath(fileName: String): URL = {
+    getClass.getClassLoader.getResource(fileName)
+  }
 
   /**
    * Returns the number of authors for a given record.
@@ -62,23 +75,13 @@ class MainSpec extends AnyFunSuite {
     assert(obtainedOutput === expectedOutput)
   }
 
-  def readFile(fileName: String): String = {
-    val path = Paths.get(getPath(fileName).toURI)
-    val result = Files.readAllLines(path).asScala.mkString(NewLine) + NewLine
-    result
-  }
-
-  def getPath(fileName: String): URL = {
-    getClass.getClassLoader.getResource(fileName)
-  }
-
   test("testAddNewField") {
 
     // This is an example of source code where the number of authors is
     // a computed value
 
     // Read the table map
-    val oldTableMap: TableMapImpl = SimpleFormatParser().parse(new FileReader(getPath(InputFileName).getFile)).get
+    val oldTableMap: TableMapImpl = SimpleFormatParser().parse(getFileReader(InputFileName)).get
 
     // Make a copy of the tableMap
     val tableMap: TableMapImpl = TableMapImpl(oldTableMap)
