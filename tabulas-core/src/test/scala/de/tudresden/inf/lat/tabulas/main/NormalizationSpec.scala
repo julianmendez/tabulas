@@ -10,23 +10,25 @@ import org.scalatest.funsuite.AnyFunSuite
  */
 class NormalizationSpec extends AnyFunSuite {
 
-  final val InputFileName0: String = "core/example.tab.properties"
-  final val ExpectedOutputFileName0: String = "core/example-expected.tab.properties"
+  final val CorePrefix: String = "core/"
 
-  final val InputFileName1: String = "core/multiple_tables.tab.properties"
-  final val ExpectedOutputFileName1: String = "core/multiple_tables-expected.tab.properties"
+  final val InputFileName0: String = CorePrefix + "example.tab.properties"
+  final val ExpectedOutputFileName0: String = CorePrefix + "example-expected.tab.properties"
 
-  final val InputFileName2: String = "core/another_example.tab.properties"
-  final val ExpectedOutputFileName2: String = "core/another_example-expected.tab.properties"
+  final val InputFileName1: String = CorePrefix + "multiple_tables.tab.properties"
+  final val ExpectedOutputFileName1: String = CorePrefix + "multiple_tables-expected.tab.properties"
 
-  final val InputFileName3: String = "core/example.tab.properties"
-  final val ExpectedOutputFileName3: String = "core/example-old-expected.tab.properties"
+  final val InputFileName2: String = CorePrefix + "another_example.tab.properties"
+  final val ExpectedOutputFileName2: String = CorePrefix + "another_example-expected.tab.properties"
 
-  final val InputFileName4: String = "core/multiple_tables.tab.properties"
-  final val ExpectedOutputFileName4: String = "core/multiple_tables-old-expected.tab.properties"
+  final val InputFileName3: String = CorePrefix + "example.tab.properties"
+  final val ExpectedOutputFileName3: String = CorePrefix + "example-old-expected.tab.properties"
 
-  final val InputFileName5: String = "core/another_example.tab.properties"
-  final val ExpectedOutputFileName5: String = "core/another_example-old-expected.tab.properties"
+  final val InputFileName4: String = CorePrefix + "multiple_tables.tab.properties"
+  final val ExpectedOutputFileName4: String = CorePrefix + "multiple_tables-old-expected.tab.properties"
+
+  final val InputFileName5: String = CorePrefix + "another_example.tab.properties"
+  final val ExpectedOutputFileName5: String = CorePrefix + "another_example-old-expected.tab.properties"
 
   final val NewLine: String = "\n"
 
