@@ -17,10 +17,8 @@ scala:
 
 jdk:
   - openjdk11
-  - openjdk14
   - openjdk15
   - oraclejdk11
-  - oraclejdk14
   - oraclejdk15
 
 install:
@@ -31,6 +29,5 @@ after_success:
   - sbt clean compile test package assembly
   - sbt "++ 0.27.0-RC1" scalaVersion sbtVersion version
   - sbt "++ 0.27.0-RC1" clean compile test package assembly
-  - mvn clean cobertura:cobertura coveralls:report
 
 
