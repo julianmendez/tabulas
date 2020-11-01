@@ -10,6 +10,7 @@ import de.tudresden.inf.lat.tabulas.renderer.SimpleFormatRenderer
 import org.scalatest.funsuite.AnyFunSuite
 
 import scala.jdk.CollectionConverters.CollectionHasAsScala
+import scala.language.implicitConversions
 
 /** This is a test of conversion.
  */

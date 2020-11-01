@@ -2,11 +2,12 @@ package de.tudresden.inf.lat.tabulas.main
 
 import java.io.{FileReader, StringWriter}
 import java.net.URL
-import java.nio.file.{Files, Paths}
 
 import de.tudresden.inf.lat.tabulas.parser.{ParserConstant, SimpleFormatParser}
 import de.tudresden.inf.lat.tabulas.renderer.SimpleFormatRenderer
 import org.scalatest.funsuite.AnyFunSuite
+
+import scala.language.implicitConversions
 
 /** This is a test of normalization of files.
  */
@@ -32,14 +33,6 @@ class NormalizationSpec extends AnyFunSuite {
   final val InputFileName5: String = CorePrefix + "another_example.tab.properties"
   final val ExpectedOutputFileName5: String = CorePrefix + "another_example-old-expected.tab.properties"
 
-  def getFileReader(inputFileName: String): FileReader = {
-    new FileReader(getPath(inputFileName).getFile)
-  }
-
-  def getPath(fileName: String): URL = {
-    getClass.getClassLoader.getResource(fileName)
-  }
-
   def testOldFormatParsing(inputFileName: String, expectedFileName: String): Unit = {
     val tableMap = SimpleFormatParser().parse(getFileReader(inputFileName)).get
     val expectedResult = MainSpec().readFile(expectedFileName)
@@ -48,6 +41,14 @@ class NormalizationSpec extends AnyFunSuite {
     renderer.render(writer, tableMap)
     val obtainedResult = writer.toString
     assert(obtainedResult === expectedResult)
+  }
+
+  def getFileReader(inputFileName: String): FileReader = {
+    new FileReader(getPath(inputFileName).getFile)
+  }
+
+  def getPath(fileName: String): URL = {
+    getClass.getClassLoader.getResource(fileName)
   }
 
   test("test normalization") {
