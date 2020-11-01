@@ -14,7 +14,6 @@ dist: bionic
 
 scala:
   - 2.13.3
-  - 0.27.0-RC1
 
 jdk:
   - openjdk11
@@ -26,12 +25,12 @@ jdk:
 
 install:
   - mvn install -DskipTests=true -Dmaven.javadoc.skip=false -B -V
+
+after_success:
   - sbt scalaVersion sbtVersion version
   - sbt "++ 0.27.0-RC1" scalaVersion sbtVersion version
   - sbt clean compile test assembly
   - sbt "++ 0.27.0-RC1" clean compile test assembly
-
-after_success:
   - mvn clean cobertura:cobertura coveralls:report
 
 
