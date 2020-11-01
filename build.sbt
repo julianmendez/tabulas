@@ -1,6 +1,9 @@
 import sbt.Keys.scalacOptions
 
 
+lazy val scala2 = "2.13.3"
+lazy val scala3 = "0.27.0-RC1"
+
 lazy val commonSettings = Seq(
   organization := "de.tu-dresden.inf.lat.tabulas",
   version := "1.1.0",
@@ -11,7 +14,8 @@ lazy val commonSettings = Seq(
     * [[https://github.com/scala/scala]]
     * [[https://repo1.maven.org/maven2/org/scala-lang/scalap/]]
     */
-  scalaVersion := "2.13.3",
+  crossScalaVersions := Seq(scala2, scala3),
+  scalaVersion := scala2,
 
   /**
     * ScalaTest
