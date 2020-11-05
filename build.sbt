@@ -79,7 +79,7 @@ lazy val root = project
   .dependsOn(tabulas_distribution)
   .settings(
     commonSettings,
-    mainClass in(Compile, run) := Some("de.tudresden.inf.lat.tabulas.ext.main.Main")
+    mainClass in assembly := Some("de.tudresden.inf.lat.tabulas.ext.main.Main")
   )
 
 
