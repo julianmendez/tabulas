@@ -17,9 +17,9 @@ scala:
 
 jdk:
   - openjdk11
-  - openjdk15
+  - openjdk14
   - oraclejdk11
-  - oraclejdk15
+  - oraclejdk14
 
 install:
   - mvn install -DskipTests=true -Dmaven.javadoc.skip=false -B -V
