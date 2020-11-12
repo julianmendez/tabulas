@@ -1,4 +1,15 @@
 ---
+- - version: v1.2.0
+  - date: (*unreleased*)
+  - new_features:
+    - compiled with Scala 2.13.3
+    - can be compiled with Scala 3
+    - requires `scala-library-2.13.3.jar`
+  - deprecated_features:
+    - use of multiple tables is no longer supported
+  - build: (`$ mvn clean install`)
+  - release: (`tabulas-distribution/target/tabulas-1.2.0.jar`)
+
 - - version: v1.1.0
   - date: (*2020-07-20*)
   - new_features:
