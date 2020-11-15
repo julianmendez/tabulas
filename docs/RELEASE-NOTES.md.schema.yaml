@@ -8,6 +8,8 @@ items:
     type: object
     additionalProperties: false
     properties:
+      schema:
+        type: string
       version:
         type: string
       date:
@@ -21,18 +23,6 @@ items:
         items:
           type: string
       bug_fixes:
-        type: array
-        items:
-          type: string
-      new_types:
-        type: array
-        items:
-          type: string
-      new_readers:
-        type: array
-        items:
-          type: string
-      new_writers:
         type: array
         items:
           type: string

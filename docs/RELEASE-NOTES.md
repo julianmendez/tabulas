@@ -11,24 +11,24 @@
   - release: (`tabulas-distribution/target/tabulas-1.2.0.jar`)
 
 - - version: v1.1.0
-  - date: (*2020-07-20*)
+  - date: (2020-07-20)
   - new_features:
     - compiled with Scala 2.13.3
     - requires `scala-library-2.13.3.jar`
     - its artifact identifiers include the Scala version as suffix (`_2.13`)
+    - new **writers**
+    - o (`rxyaml`) [Rx](http://rx.codesimply.com/) YAML schema
+    - o (`jsonschema`) [JSON Schema](https://json-schema.org/)
   - deprecated_features:
     - use of multiple tables is deprecated and they are no longer supported in newer
       versions
   - bug_fixes:
     - respects the order of the defined URI prefixes when they are expanded
-  - new_writers:
-    - (`rxyaml`) [Rx](http://rx.codesimply.com/) YAML schema
-    - (`jsonschema`) [JSON Schema](https://json-schema.org/)
   - build: (`$ mvn clean install`)
   - release: (`tabulas-distribution/target/tabulas-1.1.0.jar`)
 
 - - version: v1.0.0
-  - date: (*2019-06-15*)
+  - date: (2019-06-15)
   - new_features:
     - preserves newline characters in strings and lists
     - uses the colon (`':'`) in the default serialization instead of equals sign (`'='`),
@@ -47,27 +47,28 @@
     - uses the Scala collections and changes its traits accordingly
     - exports only immutable classes
     - uses [ScalaTest](http://www.scalatest.org) for unit tests
+    - new **types**
+    - o Integer
+    - o List_Integer
+    - o Decimal
+    - o List_Decimal
+    - o Empty
+    - new **readers**
+    - o YAML (autodetected)
+    - o JSON (autodetected)
+    - o Properties (now autodetected)
+    - new **writers**
+    - o (`yaml`) YAML
+    - o (`json`) JSON
+    - o (`properties`) Properties
+    - o (`oldformat`) Tabula format using the equals sign
+  - deprecated_features:
     - excludes the experimental calendar parser (`parsecalendar`)
-  - new_types:
-    - Integer
-    - List_Integer
-    - Decimal
-    - List_Decimal
-    - Empty
-  - new_readers:
-    - YAML (autodetected)
-    - JSON (autodetected)
-    - Properties (now autodetected)
-  - new_writers:
-    - (`yaml`) YAML
-    - (`json`) JSON
-    - (`properties`) Properties
-    - (`oldformat`) Tabula format using the equals sign
   - build: (`$ mvn clean install`)
   - release: (`tabulas-distribution/target/tabulas-1.0.0.jar`)
 
 - - version: v0.2.0
-  - date: (*2016-12-12*)
+  - date: (2016-12-12)
   - new_features:
     - coordinated with [Tabula 0.2.0](https://github.com/julianmendez/tabula)
     - compiled with Scala 2.11.0
@@ -76,27 +77,28 @@
   - release: (`tabulas-distribution/target/tabulas-0.2.0.jar`)
 
 - - version: v0.1.0
-  - date: (*2015-12-21*)
+  - date: (2015-12-21)
   - new_features:
     - coordinated with [Tabula 0.1.0](https://github.com/julianmendez/tabula)
     - compiled with Scala 2.11.0
     - requires `scala-library-2.11.0.jar`
-  - new_types:
-    - String
-    - List_String
-    - URI
-    - List_URI
-  - new_readers:
-    - (`simple` / `normalize`) Tabula format
-    - (`parsecsv`) comma-separated values
-    - (`parsecalendar`) calendar parser
-  - new_writers:
-    - (`simple` / `normalize`) Tabula format
-    - (`csv`) comma-separated values
-    - (`html`) HTML
-    - (`wikitext`) WikiText
-    - (`sql`) SQL
+    - new **types**
+    - o String
+    - o List_String
+    - o URI
+    - o List_URI
+    - new **readers**
+    - o (`simple` / `normalize`) Tabula format
+    - o (`parsecsv`) comma-separated values
+    - o (`parsecalendar`) calendar parser
+    - new **writers**
+    - o (`simple` / `normalize`) Tabula format
+    - o (`csv`) comma-separated values
+    - o (`html`) HTML
+    - o (`wikitext`) WikiText
+    - o (`sql`) SQL
   - build: (`$ mvn clean install`)
   - release: (`tabulas-distribution/target/tabulas-0.1.0.jar`)
+- - schema: RELEASE-NOTES.md.schema.yaml
 
 
