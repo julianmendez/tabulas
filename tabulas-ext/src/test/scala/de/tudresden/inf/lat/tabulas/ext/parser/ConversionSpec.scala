@@ -14,7 +14,7 @@ import scala.language.implicitConversions
 
 /** This is a test of conversion.
  */
-class ConversionSpec extends AnyFunSuite {
+case class ConversionSpec() extends AnyFunSuite {
 
   final val ExtPrefix = "ext/"
 
@@ -66,12 +66,12 @@ class ConversionSpec extends AnyFunSuite {
     result
   }
 
-  def getFileReader(inputFileName: String): FileReader = {
-    new FileReader(getPath(inputFileName).getFile)
-  }
-
   def getPath(fileName: String): URL = {
     getClass.getClassLoader.getResource(fileName)
+  }
+
+  def getFileReader(inputFileName: String): FileReader = {
+    new FileReader(getPath(inputFileName).getFile)
   }
 
   test("normalization") {
@@ -168,4 +168,6 @@ class ConversionSpec extends AnyFunSuite {
   }
 
 }
+
+object ConversionSpec {}
 

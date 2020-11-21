@@ -11,7 +11,7 @@ import scala.language.implicitConversions
 
 /** This is a test of normalization of files.
  */
-class NormalizationSpec extends AnyFunSuite {
+case class NormalizationSpec() extends AnyFunSuite {
 
   final val CorePrefix: String = "core/"
 
@@ -93,8 +93,5 @@ class NormalizationSpec extends AnyFunSuite {
 
 }
 
-object NormalizationSpec {
+object NormalizationSpec {}
 
-  def apply(): NormalizationSpec = new NormalizationSpec
-
-}

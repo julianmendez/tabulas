@@ -16,7 +16,7 @@ import scala.language.implicitConversions
 
 /** This is a test of modification of a Tabula file.
  */
-class MainSpec extends AnyFunSuite {
+case class MainSpec() extends AnyFunSuite {
 
   final val CorePrefix = "core/"
 
@@ -32,6 +32,10 @@ class MainSpec extends AnyFunSuite {
 
   def getFileReader(inputFileName: String): FileReader = {
     new FileReader(getPath(inputFileName).getFile)
+  }
+
+  def getPath(fileName: String): URL = {
+    getClass.getClassLoader.getResource(fileName)
   }
 
   /**
@@ -70,10 +74,6 @@ class MainSpec extends AnyFunSuite {
     val path = Paths.get(getPath(fileName).toURI)
     val result = Files.readAllLines(path).asScala.mkString(NewLine) + NewLine
     result
-  }
-
-  def getPath(fileName: String): URL = {
-    getClass.getClassLoader.getResource(fileName)
   }
 
   test("testAddNewField") {
@@ -128,8 +128,5 @@ class MainSpec extends AnyFunSuite {
 
 }
 
-object MainSpec {
+object MainSpec {}
 
-  def apply(): MainSpec = new MainSpec
-
-}
