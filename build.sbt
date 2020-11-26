@@ -6,23 +6,33 @@ lazy val scala3 = "3.0.0-M1"
 
 lazy val commonSettings = Seq(
   organization := "de.tu-dresden.inf.lat.tabulas",
+  normalizedName := "tabulas",
   version := "1.2.0-SNAPSHOT",
 
+  name := "tabulas",
+  description := "System to manage human-readable tables using files",
+  homepage := Some(url("https://github.com/julianmendez/tabulas")),
+  startYear := Some(2015),
+  licenses := Seq("Apache License Version 2.0" -> url("https://www.apache.org/licenses/LICENSE-2.0.txt")),
+  developers := List(
+    Developer("julianmendez", "Julian Mendez", "julian.mendez@gmail.com", new URL("https://julianmendez.github.io"))
+  ),
+
   /**
-    * Scala
-    * [[https://www.scala-lang.org]]
-    * [[https://github.com/scala/scala]]
-    * [[https://repo1.maven.org/maven2/org/scala-lang/scalap/]]
-    */
+   * Scala
+   * [[https://www.scala-lang.org]]
+   * [[https://github.com/scala/scala]]
+   * [[https://repo1.maven.org/maven2/org/scala-lang/scalap/]]
+   */
   crossScalaVersions := Seq(scala2, scala3),
   scalaVersion := scala2,
 
   /**
-    * ScalaTest
-    * [[http://www.scalatest.org]]
-    * [[https://github.com/scalatest/scalatest]]
-    * [[https://repo1.maven.org/maven2/org/scalatest/]]
-    */
+   * ScalaTest
+   * [[http://www.scalatest.org]]
+   * [[https://github.com/scalatest/scalatest]]
+   * [[https://repo1.maven.org/maven2/org/scalatest/]]
+   */
   libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.3" % "test",
 
   resolvers += Resolver.mavenLocal,
@@ -47,17 +57,17 @@ lazy val tabulas_ext = project
     commonSettings,
 
     /**
-      * JSON parser
-      * [[https://github.com/ralfstx/minimal-json]]
-      * [[https://repo1.maven.org/maven2/com/eclipsesource/minimal-json/minimal-json/]]
-      */
+     * JSON parser
+     * [[https://github.com/ralfstx/minimal-json]]
+     * [[https://repo1.maven.org/maven2/com/eclipsesource/minimal-json/minimal-json/]]
+     */
     libraryDependencies += "com.eclipsesource.minimal-json" % "minimal-json" % "0.9.5",
 
     /**
-      * YAML 1.2 parser
-      * [[https://bitbucket.org/asomov/snakeyaml-engine]]
-      * [[https://repo1.maven.org/maven2/org/snakeyaml/snakeyaml-engine/]]
-      */
+     * YAML 1.2 parser
+     * [[https://bitbucket.org/asomov/snakeyaml-engine]]
+     * [[https://repo1.maven.org/maven2/org/snakeyaml/snakeyaml-engine/]]
+     */
     libraryDependencies += "org.snakeyaml" % "snakeyaml-engine" % "2.1"
   )
 
