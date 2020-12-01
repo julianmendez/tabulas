@@ -17,7 +17,7 @@ case class PrimitiveTypeFactory(map: Map[String, PrimitiveType]) {
   /** Returns the type for the given name
    *
    * @param typeName type name
-   * @return
+   * @return the type
    */
   def getType(typeName: String): Option[PrimitiveType] = map.get(typeName)
 
