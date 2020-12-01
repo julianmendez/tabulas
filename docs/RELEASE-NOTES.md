@@ -2,9 +2,9 @@
 - - version: v1.2.0
   - date: (*unreleased*)
   - new_features:
-    - compiled with Scala 2.13.3
+    - compiled with Scala 2.13.4
     - can be compiled with Scala 3
-    - requires `scala-library-2.13.3.jar`
+    - requires `scala-library-2.13.4.jar`
   - deprecated_features:
     - use of multiple tables is no longer supported
   - build: mvn clean install

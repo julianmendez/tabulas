@@ -79,7 +79,7 @@
 		<maven.compiler.target>1.8</maven.compiler.target>
 
 		<scala.version.binary>2.13</scala.version.binary>
-		<scala.version>2.13.3</scala.version>
+		<scala.version>2.13.4</scala.version>
 		<jsonparser.version>0.9.5</jsonparser.version>
 		<yamlparser.version>2.1</yamlparser.version>
 	</properties>
