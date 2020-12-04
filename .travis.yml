@@ -22,7 +22,7 @@ jdk:
 #  - oraclejdk15
 
 install:
-  - mvn install -DskipTests=true -Dmaven.javadoc.skip=false -B -V
+  - mvn install -DskipTests=true -Dmaven.javadoc.skip=false -B -V -X
   - sbt scalaVersion sbtVersion version
   - sbt clean compile test package assembly
   - sbt "++ 3.0.0-M1" scalaVersion sbtVersion version

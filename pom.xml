@@ -90,35 +90,6 @@
 
 				<plugin>
 					<!--
-					[[https://repo1.maven.org/maven2/org/apache/maven/plugins/maven-javadoc-plugin/]]
-					-->
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-javadoc-plugin</artifactId>
-					<version>3.2.0</version>
-					<configuration>
-						<archive>
-							<manifest>
-								<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
-								<addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
-							</manifest>
-						</archive>
-					</configuration>
-					<executions>
-						<execution>
-							<id>javadoc-jar</id>
-							<phase>package</phase>
-							<goals>
-								<goal>jar</goal>
-							</goals>
-							<configuration>
-								<additionalparam>-Xdoclint:none</additionalparam>
-							</configuration>
-						</execution>
-					</executions>
-				</plugin>
-
-				<plugin>
-					<!--
 					[[https://repo1.maven.org/maven2/org/apache/felix/maven-bundle-plugin/]]
 					-->
 					<groupId>org.apache.felix</groupId>
