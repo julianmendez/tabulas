@@ -10,19 +10,19 @@ language: scala
 
 os: linux
 
-dist: bionic
+dist: focal
 
 scala:
   - 3.0.0-M2
 
 jdk:
   - openjdk11
-#  - openjdk15
+  - openjdk15
   - oraclejdk11
-#  - oraclejdk15
+  - oraclejdk15
 
 install:
-#  - mvn install -DskipTests=true -Dmaven.javadoc.skip=false -B -V -X
+  - mvn install -DskipTests=true -Dmaven.javadoc.skip=false -B -V
   - sbt scalaVersion sbtVersion version
   - sbt clean compile test package assembly
   - sbt "++ 2.13.4" scalaVersion sbtVersion version
