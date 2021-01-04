@@ -13,7 +13,7 @@ os: linux
 dist: focal
 
 scala:
-  - 3.0.0-M2
+  - 3.0.0-M3
 
 jdk:
   - openjdk11
