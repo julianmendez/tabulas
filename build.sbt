@@ -1,7 +1,7 @@
 import sbt.Keys.scalacOptions
 
 
-lazy val scala2 = "2.13.4"
+lazy val scala2 = "2.13.5"
 lazy val scala3 = "3.0.0-RC1"
 
 lazy val commonSettings = Seq(
