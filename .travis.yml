@@ -1,10 +1,5 @@
-
-#
-# Configuration file for Travis CI
-# https://travis-ci.org/
-#
-
 ---
+# Configuration file for Travis CI [[https://travis-ci.com]]
 
 language: scala
 
