@@ -8,7 +8,7 @@ os: linux
 dist: focal
 
 scala:
-  - 3.0.0-RC1
+  - 3.0.0-RC2
 
 jdk:
   - openjdk11
