@@ -1,8 +1,8 @@
 import sbt.Keys.scalacOptions
 
 
-lazy val scala2 = "2.13.5"
-lazy val scala3 = "3.0.0-RC2"
+lazy val scala2_13 = "2.13.5"
+lazy val scala3 = "3.0.0-RC3"
 
 lazy val commonSettings = Seq(
   organization := "de.tu-dresden.inf.lat.tabulas",
@@ -24,7 +24,7 @@ lazy val commonSettings = Seq(
    * [[https://github.com/scala/scala]]
    * [[https://repo1.maven.org/maven2/org/scala-lang/scalap/]]
    */
-  crossScalaVersions := Seq(scala2, scala3),
+  crossScalaVersions := Seq(scala2_13, scala3),
   scalaVersion := scala3,
 
   /**
@@ -33,7 +33,7 @@ lazy val commonSettings = Seq(
    * [[https://github.com/scalatest/scalatest]]
    * [[https://repo1.maven.org/maven2/org/scalatest/]]
    */
-  libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.7" % "test",
+  libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.8" % "test",
 
   resolvers += Resolver.mavenLocal,
   publishTo := Some(Resolver.mavenLocal),
