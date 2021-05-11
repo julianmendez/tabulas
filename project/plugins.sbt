@@ -14,11 +14,3 @@ addSbtPlugin("com.eed3si9n" % "sbt-assembly" % "0.15.0")
 addSbtPlugin("org.scalastyle" %% "scalastyle-sbt-plugin" % "1.0.0")
 
 
-/** sbt-dotty
- * This plugin provides support to compile with Dotty [[https://dotty.epfl.ch]].
- * [[https://github.com/lampepfl/dotty]]
- * [[https://repo1.maven.org/maven2/ch/epfl/lamp/]]
- */
-addSbtPlugin("ch.epfl.lamp" % "sbt-dotty" % "0.5.5")
-
-
