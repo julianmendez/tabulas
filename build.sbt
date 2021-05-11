@@ -78,8 +78,8 @@ lazy val tabulas_distribution = project
   .dependsOn(tabulas_core, tabulas_ext)
   .settings(
     commonSettings,
-    mainClass in assembly := Some("de.tudresden.inf.lat.tabulas.ext.main.Main"),
-    assemblyJarName in assembly := "tabulas-" + version.value + ".jar"
+    assembly / mainClass := Some("de.tudresden.inf.lat.tabulas.ext.main.Main"),
+    assembly / assemblyJarName := "tabulas-" + version.value + ".jar"
   )
 
 lazy val root = project
@@ -89,7 +89,7 @@ lazy val root = project
   .dependsOn(tabulas_distribution)
   .settings(
     commonSettings,
-    mainClass in assembly := Some("de.tudresden.inf.lat.tabulas.ext.main.Main")
+    assembly / mainClass := Some("de.tudresden.inf.lat.tabulas.ext.main.Main")
   )
 
 
