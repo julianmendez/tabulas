@@ -80,7 +80,7 @@
 
 		<scala.version.binary>2.13</scala.version.binary>
 		<scala.version>2.13.5</scala.version>
-		<genjavadoc.scala.version>2.13.4</genjavadoc.scala.version>
+		<genjavadoc.scala.version>2.13.5</genjavadoc.scala.version>
 		<jsonparser.version>0.9.5</jsonparser.version>
 		<yamlparser.version>2.1</yamlparser.version>
 	</properties>
@@ -179,7 +179,7 @@
 								-->
 								<groupId>com.typesafe.genjavadoc</groupId>
 								<artifactId>genjavadoc-plugin_${genjavadoc.scala.version}</artifactId>
-								<version>0.16</version>
+								<version>0.17</version>
 							</compilerPlugin>
 						</compilerPlugins>
 					</configuration>
