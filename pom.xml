@@ -82,7 +82,7 @@
 		<scala.version>2.13.5</scala.version>
 		<genjavadoc.scala.version>2.13.5</genjavadoc.scala.version>
 		<jsonparser.version>0.9.5</jsonparser.version>
-		<yamlparser.version>2.1</yamlparser.version>
+		<yamlparser.version>2.3</yamlparser.version>
 	</properties>
 
 	<build>
@@ -125,7 +125,7 @@
 					-->
 					<groupId>org.apache.felix</groupId>
 					<artifactId>maven-bundle-plugin</artifactId>
-					<version>5.1.1</version>
+					<version>5.1.2</version>
 				</plugin>
 
 				<plugin>
@@ -156,7 +156,7 @@
 					-->
 					<groupId>net.alchim31.maven</groupId>
 					<artifactId>scala-maven-plugin</artifactId>
-					<version>4.4.0</version>
+					<version>4.5.1</version>
 					<executions>
 						<execution>
 							<id>doc</id>
