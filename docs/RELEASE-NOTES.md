@@ -2,7 +2,7 @@
 - - version: v1.2.0
   - date: (unreleased)
   - new_features:
-    - compiled with Scala 2.13.5
+    - compiled with Scala 2.13.6
     - can be compiled with Scala 3
     - requires `scala-library-2.13.5.jar`
   - deprecated_features:
