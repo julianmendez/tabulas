@@ -18,9 +18,7 @@ jdk:
 
 install:
   - mvn install -DskipTests=true -Dmaven.javadoc.skip=false -B -V
-  - sbt '++ 3.0.0' scalaVersion sbtVersion version
-  - sbt '++ 3.0.0' clean compile test package assembly
-  - sbt '++ 2.13.6' scalaVersion sbtVersion version
-  - sbt '++ 2.13.6' clean compile test package assembly
+  - sbt '++ 3.0.0' scalaVersion sbtVersion version clean compile test package assembly
+  - sbt '++ 2.13.6' scalaVersion sbtVersion version clean compile test package assembly
 
 
