@@ -15,6 +15,9 @@ jobs:
         java:
         - 11
         - 15
+        scala:
+        - 2.13.6
+        - 3.0.0
     steps:
     - name: Check out
       uses: actions/checkout@v2
@@ -23,7 +26,9 @@ jobs:
       with:
         java-version: ${{ matrix.java }}
         distribution: adopt
-    - name: Build
+    - name: Build with Maven
       run: mvn --batch-mode --update-snapshots --show-version install
+    - name: Build with sbt
+      run: sbt '++ ${{ matrix.scala }}' scalaVersion sbtVersion version clean compile test package assembly
 
 
