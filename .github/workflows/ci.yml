@@ -2,7 +2,7 @@
 # CI configuration
 # https://docs.github.com/en/actions/guides/building-and-testing-java-with-maven
 
-name: Java CI
+name: Scala CI
 
 on:
 - push
