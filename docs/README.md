@@ -1,6 +1,6 @@
 # [Tabulas](https://julianmendez.github.io/tabulas/)
 
-[![build](https://github.com/julianmendez/tabulas/workflows/Java%20CI/badge.svg)](https://github.com/julianmendez/tabulas/actions)
+[![build](https://github.com/julianmendez/tabulas/workflows/Scala%20CI/badge.svg)](https://github.com/julianmendez/tabulas/actions)
 [![maven central](https://maven-badges.herokuapp.com/maven-central/de.tu-dresden.inf.lat.tabulas/tabulas-parent_2.13/badge.svg)](https://search.maven.org/#search|ga|1|g%3A%22de.tu-dresden.inf.lat.tabulas%22)
 [![license](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
