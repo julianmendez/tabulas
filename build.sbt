@@ -2,7 +2,7 @@ import sbt.Keys.scalacOptions
 
 
 lazy val scala2_13 = "2.13.6"
-lazy val scala3 = "3.0.0"
+lazy val scala3 = "3.0.2"
 
 lazy val commonSettings = Seq(
   organization := "de.tu-dresden.inf.lat.tabulas",
@@ -34,7 +34,7 @@ lazy val commonSettings = Seq(
    * [[https://github.com/scalatest/scalatest]]
    * [[https://repo1.maven.org/maven2/org/scalatest/]]
    */
-  libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.9" % "test",
+  libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.10" % "test",
 
   resolvers += Resolver.mavenLocal,
   publishTo := Some(Resolver.mavenLocal),
