@@ -3,7 +3,7 @@
   - date: (unreleased)
   - new_features:
     - compiled with Scala 2.13.6
-    - can be compiled with Scala 3.0.2
+    - can be compiled with Scala 3.1.0
     - requires `scala-library-2.13.6.jar`
   - deprecated_features:
     - use of multiple tables is no longer supported
