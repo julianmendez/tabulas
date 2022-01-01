@@ -11,7 +11,7 @@
 	<parent>
 		<groupId>de.tu-dresden.inf.lat</groupId>
 		<artifactId>lat-parent</artifactId>
-		<version>0.1.4</version>
+		<version>0.1.5</version>
 		<relativePath></relativePath>
 	</parent>
 
@@ -117,15 +117,6 @@
 							</configuration>
 						</execution>
 					</executions>
-				</plugin>
-
-				<plugin>
-					<!--
-					[[https://repo1.maven.org/maven2/org/apache/felix/maven-bundle-plugin/]]
-					-->
-					<groupId>org.apache.felix</groupId>
-					<artifactId>maven-bundle-plugin</artifactId>
-					<version>5.1.2</version>
 				</plugin>
 
 				<plugin>
