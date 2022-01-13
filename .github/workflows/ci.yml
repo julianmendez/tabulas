@@ -16,7 +16,7 @@ jobs:
         - 11
         - 17
         scala:
-        - 2.13.7
+        - 2.13.8
         - 3.1.0
     steps:
     - name: Check out
