@@ -3,8 +3,8 @@
   - date: (unreleased)
   - new_features:
     - compiles with Scala 2.13.10
-    - can be compiled with Scala 3.2.2
-    - requires `scala-library-2.13.8.jar`
+    - can be compiled with Scala 3.3.0
+    - requires `scala-library-2.13.10.jar`
   - deprecated_features:
     - use of multiple tables is no longer supported
   - build: mvn clean install
