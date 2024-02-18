@@ -11,7 +11,7 @@
 	<parent>
 		<groupId>de.tu-dresden.inf.lat</groupId>
 		<artifactId>lat-parent</artifactId>
-		<version>0.1.5</version>
+		<version>0.1.7</version>
 		<relativePath></relativePath>
 	</parent>
 
@@ -62,7 +62,7 @@
 				-->
 				<groupId>org.scalatest</groupId>
 				<artifactId>scalatest_${scala.version.binary}</artifactId>
-				<version>3.2.17</version>
+				<version>3.2.18</version>
 				<scope>test</scope>
 			</dependency>
 
@@ -82,7 +82,7 @@
 		<scala.version.binary>2.13</scala.version.binary>
 		<scala.version>2.13.12</scala.version>
 		<jsonparser.version>0.9.5</jsonparser.version>
-		<yamlparser.version>2.3</yamlparser.version>
+		<yamlparser.version>2.7</yamlparser.version>
 	</properties>
 
 	<build>
@@ -96,7 +96,7 @@
 					-->
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-javadoc-plugin</artifactId>
-					<version>3.3.1</version>
+					<version>3.6.3</version>
 					<configuration>
 						<archive>
 							<manifest>
@@ -147,7 +147,7 @@
 					-->
 					<groupId>net.alchim31.maven</groupId>
 					<artifactId>scala-maven-plugin</artifactId>
-					<version>4.5.4</version>
+					<version>4.8.1</version>
 					<executions>
 						<execution>
 							<id>doc</id>
