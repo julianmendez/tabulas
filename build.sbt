@@ -2,7 +2,7 @@ import sbt.Keys.scalacOptions
 
 lazy val scala2_13 = "2.13.12"
 
-lazy val scala3_3 = "3.3.1"
+lazy val scala3_4 = "3.4.0"
 
 lazy val commonSettings =
   Seq(
@@ -24,8 +24,8 @@ lazy val commonSettings =
      * [[https://repo1.maven.org/maven2/org/scala-lang/scalap/]]
      * [[https://repo1.maven.org/maven2/org/scala-lang/scala3-compiler_3/]]
      */
-    crossScalaVersions := Seq(scala2_13, scala3_3),
-    scalaVersion := scala3_3,
+    crossScalaVersions := Seq(scala2_13, scala3_4),
+    scalaVersion := scala3_4,
     /**
      * ScalaTest
      * [[http://www.scalatest.org]]
