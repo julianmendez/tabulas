@@ -1,28 +1,29 @@
 # [Tabulas](https://julianmendez.github.io/tabulas/)
 
-[![build](https://github.com/julianmendez/tabulas/workflows/Scala%20CI/badge.svg)](https://github.com/julianmendez/tabulas/actions)
-[![maven central](https://maven-badges.herokuapp.com/maven-central/de.tu-dresden.inf.lat.tabulas/tabulas-parent_2.13/badge.svg)](https://search.maven.org/#search|ga|1|g%3A%22de.tu-dresden.inf.lat.tabulas%22)
-[![license](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0.txt)
+[![license](https://img.shields.io/badge/License-Apache%202.0-blue.svg)][license]
+[![Maven Central](https://img.shields.io/maven-central/v/de.tu-dresden.inf.lat.tabulas/tabulas-parent_2.13.svg?label=Maven%20Central)][maven-central]
+[![build](https://github.com/julianmendez/tabulas/workflows/Scala%20CI/badge.svg)][build-status]
 
 *System to manage human-readable tables using files*
 
 **Tabulas** is a system to manage human-readable tables using files.
-Tabulas is a [Scala](https://www.scala-lang.org/) implementation based on the [Tabula](https://github.com/julianmendez/tabula) format.
+Tabulas is a [Scala][scala] implementation based on the [Tabula][tabula] format.
 There are three alternatives to represent the content:
-- **Tabula.YAML**, using the [YAML](https://yaml.org) format,
-- **Tabula.JSON**, using the [JSON](https://json.org) format,
-- **Tabula.Properties**, using a sort of [Java Properties](https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/Properties.html#load-java.io.Reader-) syntax,
+- **Tabula.YAML**, using the [YAML][yaml] format,
+- **Tabula.JSON**, using the [JSON][json] format,
+- **Tabula.Properties**, using a sort of [Java Properties][java-properties] syntax,
 but defining the same property name for multiple objects.
 
 In addition, there are two alternatives to export the metadata as schema:
-- **JSON Schema**, for [JSON Schema](https://json-schema.org/), a vocabulary to annotate and validate JSON documents
-- **Rx YAML**, for [Rx](http://rx.codesimply.com/), schemata tool for JSON/YAML
+- **JSON Schema**, for [JSON Schema][json-schema], a vocabulary to annotate and validate JSON
+  documents
+- **Rx YAML**, for [Rx][rx], schemata tool for JSON/YAML
 
 
 ## Download
 
-- [executable JAR file](https://sourceforge.net/projects/latitude/files/tabulas/1.1.0/tabulas-1.1.0.jar/download)
-- [The Central Repository](https://repo1.maven.org/maven2/de/tu-dresden/inf/lat/tabulas/)
+- [executable JAR file][executable-jar]
+- [The Central Repository][central-repository]
 - as dependency:
 
 ```xml
@@ -190,14 +191,14 @@ The entries are ordered by identifier.
 
 ```
 
-The unit tests include an example like [this one](https://github.com/julianmendez/tabulas/blob/master/tabulas-ext/src/test/resources/ext/miniexample.tab.properties).
+The unit tests include an example like [this one][miniexample-properties].
 
-For example, the [MainSpec](https://github.com/julianmendez/tabulas/blob/master/tabulas-core/src/test/scala/de/tudresden/inf/lat/tabulas/main/MainSpec.scala) class does the following steps:
+For example, the [MainSpec][main-spec] class does the following steps:
 
-- read the [example file](https://github.com/julianmendez/tabulas/blob/master/tabulas-core/src/test/resources/core/example.tab.properties)
+- read the [example file][example-properties]
 - add a new field `numberOfAuthors`
 - add to each record the number of authors
-- compare the [expected result](https://github.com/julianmendez/tabulas/blob/master/tabulas-core/src/test/resources/core/example-modified.tab.properties)
+- compare the [expected result][updated-example-properties]
 
 
 ## Other formats
@@ -217,7 +218,7 @@ Some serializers and some deserializers cannot map completely the content of a T
 | CSV          | no                | yes            |
 | SQL          | no                | yes            |
 
-([Wikitext](https://www.mediawiki.org/wiki/Specs/wikitext/1.0.0): is a wiki markup language)
+([Wikitext][wikitext]: is a wiki markup language)
 
 | deserializer | requires metadata |
 |:-------------|:------------------|
@@ -270,13 +271,13 @@ new:
 
 ```
 
-The unit tests also include the [previous example](https://github.com/julianmendez/tabulas/blob/master/tabulas-ext/src/test/resources/ext/miniexample.tab.yaml).
+The unit tests also include the [previous example][miniexample-yaml].
 
 Please note that there should be no spaces in the elements of the `def` section.
 For example, the definition is `id:String` and not `id: String`.
 
-A YAML file can be easily converted to a JSON file using a [Python](https://www.python.org) script like
-[yaml_to_json.py](https://github.com/julianmendez/tabulas/blob/master/tabulas-ext/src/main/python/yaml_to_json.py).
+A YAML file can be easily converted to a JSON file using a [Python][python] script like
+[yaml_to_json.py][yaml-to-json].
 
 
 ## Extensions
@@ -311,7 +312,7 @@ $ mvn clean install
 ```
 
 The created executable library, its sources, and its Javadoc will be in `tabulas-distribution/target`.
-This executable JAR file requires the [Scala library](https://search.maven.org/#search|gav|1|g%3A%22org.scala-lang%22%20AND%20a%3A%22scala-library%22) in the same directory.
+This executable JAR file requires the [Scala library][scala-library] in the same directory.
 The required version is shown in the release notes.
 
 To compile the project offline, first download the dependencies:
@@ -326,7 +327,7 @@ and once offline, use:
 $ mvn --offline clean install
 ```
 
-The bundles uploaded to [Sonatype](https://oss.sonatype.org/) are created with:
+The bundles uploaded to [Sonatype][sonatype] are created with:
 
 ```
 $ mvn clean install -DperformRelease=true
@@ -357,21 +358,46 @@ where *NEW_VERSION* is the new version.
 
 ## Author
 
-[Julian Mendez](https://julianmendez.github.io)
+[Julian Alfredo Mendez][author]
 
 
 ## License
 
-This software is distributed under the [Apache License Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt).
+This software is distributed under the [Apache License Version 2.0][license].
 
 
 ## Release notes
 
-See [release notes](https://julianmendez.github.io/tabulas/RELEASE-NOTES.html).
+See [release notes][release-notes].
 
 
 ## Contact
 
-In case you need more information, please contact @julianmendez .
+In case you need more information, please contact [julianmendez][author].
+
+[author]: https://julianmendez.github.io
+[central-repository]: https://repo1.maven.org/maven2/de/tu-dresden/inf/lat/tabulas/
+[license]: https://www.apache.org/licenses/LICENSE-2.0.txt
+[maven-central]: https://search.maven.org/artifact/de.tu-dresden.inf.lat.tabulas/tabulas-ext_2.13
+[build-status]: https://github.com/julianmendez/tabulas/actions
+[sonatype]: https://oss.sonatype.org
+[executable-jar]: https://sourceforge.net/projects/latitude/files/tabulas/1.1.0/tabulas-1.1.0.jar/download
+[release-notes]: https://julianmendez.github.io/tabulas/RELEASE-NOTES.html
+[scala-library]: https://search.maven.org/#search|gav|1|g%3A%22org.scala-lang%22%20AND%20a%3A%22scala-library%22
+[yaml-to-json]: https://github.com/julianmendez/tabulas/blob/master/tabulas-ext/src/main/python/yaml_to_json.py
+[example-properties]: https://github.com/julianmendez/tabulas/blob/master/tabulas-core/src/test/resources/core/example.tab.properties
+[updated-example-properties]: https://github.com/julianmendez/tabulas/blob/master/tabulas-core/src/test/resources/core/example-modified.tab.properties
+[miniexample-yaml]: https://github.com/julianmendez/tabulas/blob/master/tabulas-ext/src/test/resources/ext/miniexample.tab.yaml
+[miniexample-properties]: https://github.com/julianmendez/tabulas/blob/master/tabulas-ext/src/test/resources/ext/miniexample.tab.properties
+[main-spec]: https://github.com/julianmendez/tabulas/blob/master/tabulas-core/src/test/scala/de/tudresden/inf/lat/tabulas/main/MainSpec.scala
+[tabula]: https://github.com/julianmendez/tabula
+[wikitext]: https://www.mediawiki.org/wiki/Specs/wikitext/1.0.0
+[yaml]: https://yaml.org
+[json]: https://json.org
+[json-schema]: https://json-schema.org
+[rx]: https://rx.codesimply.com
+[java-properties]: https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Properties.html#load-java.io.Reader-
+[scala]: https://www.scala-lang.org
+[python]: https://www.python.org
 
 
