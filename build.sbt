@@ -1,8 +1,8 @@
 import sbt.Keys.scalacOptions
 
-lazy val scala2_13 = "2.13.12"
+lazy val scala2_13 = "2.13.14"
 
-lazy val scala3_4 = "3.4.0"
+lazy val scala3_4 = "3.4.2"
 
 lazy val commonSettings =
   Seq(
@@ -15,7 +15,7 @@ lazy val commonSettings =
     startYear := Some(2015),
     licenses := Seq("Apache License Version 2.0" -> url("https://www.apache.org/licenses/LICENSE-2.0.txt")),
     developers := List(
-      Developer("julianmendez", "Julian Mendez", "julian.mendez@gmail.com", new URL("https://julianmendez.github.io") )
+      Developer("julianmendez", "Julian Mendez", "julian.mendez@gmail.com", url("https://julianmendez.github.io"))
     ),
     /**
      * Scala
@@ -32,7 +32,7 @@ lazy val commonSettings =
      * [[https://github.com/scalatest/scalatest]]
      * [[https://repo1.maven.org/maven2/org/scalatest/]]
      */
-    libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.17" % "test",
+    libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.19" % "test",
     resolvers += Resolver.mavenLocal,
     publishTo := Some(Resolver.mavenLocal),
     publishMavenStyle := true,

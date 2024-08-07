@@ -14,11 +14,10 @@ jobs:
       matrix:
         java:
         - 11.0.21
-        - 17.0.9
         - 21.0.1
         scala:
-        - 2.13.12
-        - 3.4.0
+        - 2.13.14
+        - 3.4.2
     steps:
     - name: Check out
       uses: actions/checkout@v4
