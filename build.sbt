@@ -1,8 +1,10 @@
 import sbt.Keys.scalacOptions
 
-lazy val scala2_13 = "2.13.14"
+lazy val scala2_13 = "2.13.15"
 
-lazy val scala3_4 = "3.4.2"
+lazy val scala3_3 = "3.3.4"
+
+lazy val scala3_5 = "3.5.2"
 
 lazy val commonSettings =
   Seq(
@@ -24,8 +26,8 @@ lazy val commonSettings =
      * [[https://repo1.maven.org/maven2/org/scala-lang/scalap/]]
      * [[https://repo1.maven.org/maven2/org/scala-lang/scala3-compiler_3/]]
      */
-    crossScalaVersions := Seq(scala2_13, scala3_4),
-    scalaVersion := scala3_4,
+    crossScalaVersions := Seq(scala2_13, scala3_3, scala3_5),
+    scalaVersion := scala3_3,
     /**
      * ScalaTest
      * [[http://www.scalatest.org]]
@@ -66,7 +68,7 @@ lazy val tabulas_ext =
        * [[https://bitbucket.org/asomov/snakeyaml-engine]]
        * [[https://repo1.maven.org/maven2/org/snakeyaml/snakeyaml-engine/]]
        */
-      libraryDependencies += "org.snakeyaml" % "snakeyaml-engine" % "2.3"
+      libraryDependencies += "org.snakeyaml" % "snakeyaml-engine" % "2.8"
     )
 
 lazy val tabulas_distribution =
