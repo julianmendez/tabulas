@@ -62,7 +62,7 @@
 				-->
 				<groupId>org.scalatest</groupId>
 				<artifactId>scalatest_${scala.version.binary}</artifactId>
-				<version>3.2.19</version>
+				<version>3.3.0-SNAP4</version>
 				<scope>test</scope>
 			</dependency>
 
@@ -96,7 +96,7 @@
 					-->
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-javadoc-plugin</artifactId>
-					<version>3.6.3</version>
+					<version>3.11.2</version>
 					<configuration>
 						<archive>
 							<manifest>
@@ -147,7 +147,7 @@
 					-->
 					<groupId>net.alchim31.maven</groupId>
 					<artifactId>scala-maven-plugin</artifactId>
-					<version>4.8.1</version>
+					<version>4.9.2</version>
 					<executions>
 						<execution>
 							<id>doc</id>
