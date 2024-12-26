@@ -20,7 +20,17 @@
 			</includes>
 		</fileSet>
 
+		<fileSet>
+			<directory>${basedir}/../docs</directory>
+			<outputDirectory>.</outputDirectory>
+			<includes>
+				<include>LICENSE.txt</include>
+				<include>README.md</include>
+			</includes>
+		</fileSet>
+
 	</fileSets>
 
 </assembly>
+
 
