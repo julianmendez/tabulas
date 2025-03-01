@@ -1,7 +1,9 @@
 ---
 # CI configuration
 # https://docs.github.com/en/actions/guides/building-and-testing-java-with-maven
+# https://github.com/actions/checkout
 # https://github.com/actions/setup-java
+# https://github.com/coursier/setup-action
 
 name: Scala CI
 
